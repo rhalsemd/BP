@@ -25,5 +25,5 @@ spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://15.164.73.251:3306/S08P12D104?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
-    username: S08P12D104
+    username: root
     password: ssafy123
