@@ -4,6 +4,7 @@ import KioskHome from './kiosk/routes/KioskHome'
 import KioskLent from './kiosk/routes/KioskLent'
 import KioskLentComplete from './kiosk/routes/KioskLentComplete'
 import KioskReturn from './kiosk/routes/KioskReturn'
+import KioskReturnReceipt from './kiosk/routes/KioskReturnReceipt'
 import KioskReturnComplete from './kiosk/routes/KioskReturnComplete'
 import KioskReturnCamera from './kiosk/routes/KioskReturnCamera'
 import KioskReturnCameraCheck from './kiosk/routes/KioskReturnCameraCheck'
@@ -29,6 +30,7 @@ function App() {
           <Route path='/kiosk/return' element={<KioskReturn />}></Route>
           <Route path='/kiosk/return/camera' element={<KioskReturnCamera />}></Route>
           <Route path='/kiosk/return/camera/check' element={<KioskReturnCameraCheck />}></Route>
+          <Route path='/kiosk/return/receipt' element={<KioskReturnReceipt />}></Route>
           <Route path='/kiosk/return/complete' element={<KioskReturnComplete />}></Route>
         </Routes>
       </Router>
