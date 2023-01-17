@@ -68,7 +68,7 @@ const HomeSection = () => {
   return (
     <div css={KioskSectionStyle}>
       <div css={KioskButtons}>
-        <KioskLentBtn/>
+        <KioskLentBtn />
         <KioskReturnBtn />
       </div>
       <div css={KioskHomeWeather}>

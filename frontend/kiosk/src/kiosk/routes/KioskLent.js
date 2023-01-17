@@ -15,6 +15,7 @@ const KioskLentStyle = css`
 // 밑에는 JS 입니다.
 
 const Lent = () => {
+
   return (
     <div css={KioskLentStyle}>
       <header>
