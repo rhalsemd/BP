@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-// import { useState } from 'react'
+import KioskReturnCameraBtn from './btncomponents/KioskReturnCameraBtn'
 
 const KioskReturnSectionStyle = css`
   display: flex;
@@ -11,6 +11,7 @@ const KioskReturnSectionStyle = css`
 
   height: 60vh;
 `
+
 const KioskCameraImg = css`
   margin-left: 3vw;
 
@@ -76,9 +77,7 @@ const ReturnSection = () => {
         <div css={CamaraImg}>
 
         </div>
-        <button>
-          이미지를 클릭하면 촬영이 시작됩니다!
-        </button>
+        <KioskReturnCameraBtn />
       </div>
       <div css={KioskReturnMethod}>
         <h1>😁 반납 방법</h1>

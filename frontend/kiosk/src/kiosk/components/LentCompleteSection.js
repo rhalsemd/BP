@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
+import KioskHomeBtn from './btncomponents/KioskHomeBtn'
 
 const KioskLentSectionCompleteStyle = css`
   display: flex;
@@ -27,7 +28,7 @@ const LentCompleteSection = () => {
   return (
     <div css={KioskLentSectionCompleteStyle}>
        <p>대여가 완료되었습니다. 5번 케이스를 확인하세요.</p>
-       <button>홈으로 가기</button>
+       <KioskHomeBtn/>
     </div>
   )
 }
