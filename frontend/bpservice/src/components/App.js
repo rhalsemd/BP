@@ -6,20 +6,35 @@ import Home from "../routes/Home";
 import Login from "../routes/auth/Login";
 import SignUp from "../routes/auth/SignUp";
 
+import LoginAdmin from '../routes/admin/LoginAdmin' 
+import TotalChart from '../routes/admin/TotalChart';
+import RevenueTrend from '../routes/admin/RevenueTrend';
+import Useage from '../routes/admin/Useage'
+
+
+export const GlobalStyle = css`
+    body {
+        margin: 0px;
+    }
+`
 function App() {
-  const globalStyle = css`
-    margin: 0;
-  `;
   return (
-    <div className="App" css={globalStyle}>
+    // <div className="App" css={globalStyle}>
       <Router>
+      <Global styles={GlobalStyle} />
         <Routes>
           <Route path="/" exact element={<Home />}></Route>
           <Route path="/bp/login" element={<Login />}></Route>
           <Route path="/bp/signup" element={<SignUp />}></Route>
+
+          <Route path="/admin" element={ <LoginAdmin /> } />
+          <Route path="/admin/total_income" element={ <TotalChart /> } />
+          <Route path="/admin/total_useage" element={ <TotalChart /> } />
+          <Route path="/admin/revenue_trend" element={ <RevenueTrend /> } />
+          <Route path="/admin/Useage" element={ <Useage /> } />
         </Routes>
       </Router>
-    </div>
+    // </div>
   );
 }
 

@@ -386,7 +386,6 @@ function SignUp() {
             </div>
           </div>
         </div>
-
         <footer>
           <Footer />
         </footer>
