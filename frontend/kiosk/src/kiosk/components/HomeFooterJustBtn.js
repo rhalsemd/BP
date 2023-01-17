@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
+import KioskGoBackBtn from './btncomponents/KioskGoBackBtn'
 
 const KioskFooterStyle = css`
   display: flex;
@@ -8,7 +9,7 @@ const KioskFooterStyle = css`
   border: 1px solid black;
   height: 100vh;
   width: 16vw;
-  button {
+  div {
     margin-right: 2vw;
     margin-bottom: 2vw;
 
@@ -23,9 +24,9 @@ const KioskFooterStyle = css`
 const HomeFooter = () => {
   return (
     <div css={KioskFooterStyle}>
-      <button>
-        뒤로가기
-      </button>
+      <div>
+        <KioskGoBackBtn/>
+      </div>
     </div>
   )
 }

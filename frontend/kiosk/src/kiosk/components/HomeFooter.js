@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
+import KioskGoBackBtn from './btncomponents/KioskGoBackBtn'
 
 const KioskFooterStyle = css`
   display: flex;
@@ -26,6 +27,15 @@ const KioskGoBack = css`
 
 // 위에는 Emotion.js 입니다.
 // 밑에는 JS 입니다.s
+// const Footer = () => {
+//   if (window.location.pathname === '/timer') return null;
+//   return (
+//     <>
+//     	...컴포넌트들
+//     </>
+//     );
+// }
+
 
 const HomeFooter = () => {
   return (
@@ -35,9 +45,9 @@ const HomeFooter = () => {
         <p>보안 책임자: 김태헌, 이주형, 한재용, 한상우, 정명관, 한승준</p>
         <p>행복한 이용 되세요 ㅎㅅㅎ</p>
       </pre>
-      <button css={KioskGoBack}>
-        뒤로가기
-      </button>
+      <div css={KioskGoBack}>
+        <KioskGoBackBtn/>
+      </div>
     </div>
   )
 }
