@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-// import { useState } from 'react'
+import PaymentQR from './QR/PaymentQR'
 
 const KioskLentSectionStyle = css`
   display: flex;
@@ -25,8 +25,6 @@ const KioskLentQR = css`
 `
 
 const QR = css`
-  background-color: black;
-
   width: 298px;
   height: 298px;
 `
@@ -65,7 +63,9 @@ const LentSection = () => {
   return (
     <div css={KioskLentSectionStyle}>
       <div css={KioskLentQR}>
-        <div css={QR}></div>
+        <div css={QR}>
+          <PaymentQR/>
+        </div>
       </div>
       <div css={KioskLentMethod}>
         <h1>😁 대여 방법</h1>

@@ -2,6 +2,7 @@ import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 
 import KioskHome from './kiosk/routes/KioskHome'
 import KioskLent from './kiosk/routes/KioskLent'
+// import PaymentQR from './kiosk/components/QR/PaymentQR'
 import KioskLentComplete from './kiosk/routes/KioskLentComplete'
 import KioskReturn from './kiosk/routes/KioskReturn'
 import KioskReturnReceipt from './kiosk/routes/KioskReturnReceipt'
@@ -26,6 +27,7 @@ function App() {
         <Routes>
           <Route path='/' exact element={<KioskHome />}></Route>
           <Route path='/kiosk/lent' element={<KioskLent />}></Route>
+          {/* <Route path='/kiosk/lent/qrcode' element={<PaymentQR />}></Route> */}
           <Route path='/kiosk/lent/complete' element={<KioskLentComplete />}></Route>
           <Route path='/kiosk/return' element={<KioskReturn />}></Route>
           <Route path='/kiosk/return/camera' element={<KioskReturnCamera />}></Route>
