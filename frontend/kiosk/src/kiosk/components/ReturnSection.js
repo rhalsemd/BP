@@ -9,7 +9,7 @@ const KioskReturnSectionStyle = css`
 
   border: 1px solid black;
 
-  height: 60vh;
+  height: 80vh;
 `
 
 const KioskCameraImg = css`

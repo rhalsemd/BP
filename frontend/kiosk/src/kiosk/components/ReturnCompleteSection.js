@@ -10,7 +10,7 @@ const KioskReturnSectionCompleteStyle = css`
 
   border: 1px solid black;
 
-  height: 60vh;
+  height: 80vh;
   p {
     font-size: 2.2rem;
     margin-bottom: 20px;

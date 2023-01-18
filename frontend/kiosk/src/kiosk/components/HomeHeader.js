@@ -5,7 +5,7 @@ const KioskHeaderStyle = css`
   display: flex;
   justify-content: space-between;
   align-items: start;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   height: 20vh;
 `
 
