@@ -10,7 +10,7 @@ server:
 spring:
   jpa:
     hibernate:
-      ddl-auto: vaildate
+      ddl-auto: validate
       naming:
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
         physical-strategy: kr.co.bpservice.config.CamelCaseToSnakeAndUpperCaseStrategy
@@ -18,7 +18,6 @@ spring:
       hibernate:
         format_sql: true
         show_sql: true
-
 
 
   logging:
