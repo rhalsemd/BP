@@ -11,6 +11,7 @@ import TotalChart from "../routes/admin/TotalChart";
 import RevenueTrend from "../routes/admin/RevenueTrend";
 import Useage from "../routes/admin/Useage";
 import History from "../routes/admin/History";
+import UserToU from "../routes/auth/UserToU";
 
 export const GlobalStyle = css`
   body {
@@ -26,6 +27,7 @@ function App() {
         <Route path="/" exact element={<Home />}></Route>
         <Route path="/bp/login" element={<Login />}></Route>
         <Route path="/bp/signup" element={<SignUp />}></Route>
+        <Route path="/bp/terms" element={<UserToU />}></Route>
 
         <Route path="/admin" element={<LoginAdmin />} />
         <Route path="/admin/total_income" element={<TotalChart />} />
