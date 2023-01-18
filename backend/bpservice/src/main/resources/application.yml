@@ -20,7 +20,6 @@ spring:
         show_sql: true
 
 
-
   logging:
     level:
       org.hibernate:
@@ -32,3 +31,23 @@ spring:
     url: jdbc:mariadb://15.164.73.251:3306/S08P12D104?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
     username: root
     password: ssafy123
+
+jwt:
+  header: Authorization
+  secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
+  token-validity-in-seconds: 86400
+
+mail:
+  smtp:
+    auth: true
+    starttls:
+      required: true
+      enable: true
+    socketFactory:
+      class: jakarta.net.ssl.SSLSocketFactory
+      fallback: false
+      port: 465
+    port: 465
+AdminMail:
+  id: ssafy8th.gumi@gmail.com
+  password: mgskcmzufwphqyua
