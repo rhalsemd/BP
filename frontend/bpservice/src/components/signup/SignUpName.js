@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 
 import { connect } from "react-redux";
-import { userInfo } from "../../store";
+import { userInfo } from "../../modules/signUp";
 
-function SignUpName({ state, nameTyping }) {
+function SignUpName({ signUp, nameTyping }) {
   const [userName, setUserName] = useState("");
 
   // userName 정규 표현식
@@ -38,8 +38,8 @@ function SignUpName({ state, nameTyping }) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return { state };
+const mapStateToProps = ({ signUp }) => {
+  return { signUp };
 };
 
 const mapDispatchToProps = (dispatch) => {

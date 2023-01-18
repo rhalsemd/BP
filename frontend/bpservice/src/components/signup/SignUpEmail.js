@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 
 import { connect } from "react-redux";
-import { userInfo } from "../../store";
+import { userInfo } from "../../modules/signUp";
 
-function SignUpEmail({ state, emailTyping }) {
+function SignUpEmail({ signUp, emailTyping }) {
   const [email, setEmail] = useState("");
 
   // email 정규 표현식
@@ -37,8 +37,8 @@ function SignUpEmail({ state, emailTyping }) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return { state };
+const mapStateToProps = ({ signUp }) => {
+  return { signUp };
 };
 
 const mapDispatchToProps = (dispatch) => {

@@ -1,16 +1,16 @@
 import React from "react";
 
 import { connect } from "react-redux";
-import { userInfo } from "../../store";
+import { userInfo } from "../../modules/signUp";
 
-function SignUpRePwd({ state, rePwdTyping }) {
+function SignUpRePwd({ signUp, rePwdTyping }) {
   // 비밀번호 확인
   const typeRePwd = (e) => {
     const rePwdInput = e.target.value;
-    if (rePwdInput !== state.pwd && state.pwd) {
+    if (rePwdInput !== signUp.pwd && rePwdInput) {
       rePwdTyping(true);
     }
-    if (rePwdInput === "" || e.target.value === state.pwd) {
+    if (rePwdInput === "" || e.target.value === signUp.pwd) {
       rePwdTyping(false);
     }
   };
@@ -26,7 +26,7 @@ function SignUpRePwd({ state, rePwdTyping }) {
           onChange={typeRePwd}
         />
       </div>
-      {state.rePwd ? (
+      {signUp.rePwd ? (
         <div>
           <span style={{ color: "red" }}>비밀번호를 확인해주세요.</span>
         </div>
@@ -35,8 +35,8 @@ function SignUpRePwd({ state, rePwdTyping }) {
   );
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return { state };
+const mapStateToProps = ({ signUp }, ownProps) => {
+  return { signUp };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
