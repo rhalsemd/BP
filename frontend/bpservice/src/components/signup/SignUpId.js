@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { userInfo } from "../../store";
+import { userInfo } from "../../modules/signUp";
 
-function SignUpId({ state, idTyping }) {
+function SignUpId({ signUp, idTyping }) {
   const [ID, setId] = useState("");
 
   // id 정규 표현식
@@ -44,8 +44,8 @@ function SignUpId({ state, idTyping }) {
   );
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return { state };
+const mapStateToProps = ({ signUp }, ownProps) => {
+  return { signUp };
 };
 
 const mapDispatchToProps = (dispatch) => {

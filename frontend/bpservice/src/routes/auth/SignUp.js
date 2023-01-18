@@ -37,7 +37,7 @@ const title = css`
   text-align: center;
 `;
 
-function SignUp({ State }) {
+function SignUp({ signUp }) {
   return (
     <div>
       <header>
@@ -73,12 +73,12 @@ function SignUp({ State }) {
                 <SignUpEmail />
 
                 {/* 회원가입 버튼 */}
-                {State.idConfirm &&
-                State.pwdConfirm &&
-                !State.rePwd &&
-                State.nameConfirm &&
-                State.isCertification &&
-                State.emailConfirm ? (
+                {signUp.idConfirm &&
+                signUp.pwdConfirm &&
+                !signUp.rePwd &&
+                signUp.nameConfirm &&
+                signUp.isCertification &&
+                signUp.emailConfirm ? (
                   <input type="submit" value="회원가입" />
                 ) : null}
               </form>
@@ -94,8 +94,8 @@ function SignUp({ State }) {
   );
 }
 
-const mapStateToProps = (State) => {
-  return { State };
+const mapStateToProps = ({ signUp }) => {
+  return { signUp };
 };
 
 export default connect(mapStateToProps)(SignUp);
