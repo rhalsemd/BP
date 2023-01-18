@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 @Table(name = "MWS_USER")
 @Getter
 @Setter
+@NoArgsConstructor
 public class User {
 
     @Id
@@ -20,7 +22,7 @@ public class User {
     private String id;
 
     @Column(length = 200)
-    private String pw;
+    private String pwd;
 
     @Column(length = 50)
     private String name;
@@ -44,5 +46,7 @@ public class User {
 
     private LocalDateTime expDt;
 
-    private boolean activeState;
+//    @Enumerated(EnumType.STRING)
+//    private Authority authority;
+
 }

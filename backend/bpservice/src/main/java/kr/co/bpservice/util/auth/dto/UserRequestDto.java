@@ -2,7 +2,7 @@ package kr.co.bpservice.util.auth.dto;
 
 
 import kr.co.bpservice.util.auth.entity.Authority;
-import kr.co.bpservice.util.auth.entity.Member;
+import kr.co.bpservice.util.auth.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,13 +14,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MemberRequestDto {
+public class UserRequestDto {
+    private String userId;
+    private String pwd;
+    private String userName;
+    private String phoneNum;
+    private String sido;
+    private String sigugun;
+    private String dong;
     private String email;
-    private String password;
-    private String nickname;
 
-    public Member toMember(PasswordEncoder passwordEncoder) {
-        return Member.builder()
+    public User toMember(PasswordEncoder passwordEncoder) {
+        return User.builder()
                 .email(email)
                 .password(passwordEncoder.encode(password))
                 .nickname(nickname)
