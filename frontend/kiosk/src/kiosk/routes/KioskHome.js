@@ -2,11 +2,10 @@
 import { css } from '@emotion/react'
 import KioskHeader from '../components/HomeHeader'
 import KioskSection from '../components/HomeSection'
-import KioskFooter from '../components/HomeFooter'
 
 const KioskHomeStyle = css`
   box-sizing: border-box;
-  border : 1px solid black;
+  /* border : 1px solid black; */
   width : 100vw;
   height : 100vh;
 `
@@ -24,9 +23,6 @@ const Home = () => {
       <section>
         <KioskSection/>
       </section>
-      <footer>
-        <KioskFooter/>
-      </footer>
     </div>
   )
 }

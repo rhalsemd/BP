@@ -2,11 +2,9 @@
 import { css } from '@emotion/react'
 import KioskHeader from '../components/HomeHeader'
 import KioskReturnReceipt from '../components/ReturnReceipt'
-import KioskFooter from '../components/HomeFooter'
 
 const KioskReturnReceiptStyle = css`
   box-sizing: border-box;
-  border : 1px solid black;
   width : 100vw;
   height : 100vh;
 `
@@ -23,9 +21,6 @@ const ReturnReceipt = () => {
       <section>
         <KioskReturnReceipt/>
       </section>
-      <footer>
-        <KioskFooter/>
-      </footer>
     </div>
   )
 }

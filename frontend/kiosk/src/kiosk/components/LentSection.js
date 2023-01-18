@@ -9,7 +9,7 @@ const KioskLentSectionStyle = css`
 
   border: 1px solid black;
 
-  height: 60vh;
+  height: 80vh;
 `
 const KioskLentQR = css`
   margin-left: 3vw;
@@ -52,7 +52,13 @@ const KioskLentMethod = css`
     }
   } 
 `
+const KioskGoBack = css`
+  margin-right: 2vw;
+  margin-bottom: 2vw;
 
+  width: 100px;
+  height: 30px;
+`
 // 위에는 Emotion.js 입니다.
 // 밑에는 JS 입니다.
 

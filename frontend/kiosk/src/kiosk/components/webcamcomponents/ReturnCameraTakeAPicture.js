@@ -5,25 +5,25 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 const KioskReturnCameraTakeAPicture = () => {
   let videoRef = useRef(null)
   let photoRef = useRef(null)
-  
+
   // get access to user webcamera
 
   const getUserCamera = () => {
     navigator.mediaDevices.getUserMedia({
-      video:true
+      video: true
     })
-    .then((stream) => {
-      // console.log(stream)
-      // attach the stream to the video tag
+      .then((stream) => {
+        // console.log(stream)
+        // attach the stream to the video tag
 
-      let video = videoRef.current
-      // console.log(video)
-      video.srcObject = stream
-      video.play()
-    })
-    .catch((error) => {
-      console.error(error)
-    })
+        let video = videoRef.current
+        // console.log(video)
+        video.srcObject = stream
+        video.play()
+      })
+      .catch((error) => {
+        console.error(error)
+      })
   }
 
   // to take picture of user
@@ -31,8 +31,8 @@ const KioskReturnCameraTakeAPicture = () => {
   const takePicture = () => {
     // width and height
 
-    let width = 400
-    let height = width / (16/9)
+    let width = 500
+    let height = width / (16 / 9)
 
     let photo = photoRef.current
     let video = videoRef.current
@@ -47,7 +47,7 @@ const KioskReturnCameraTakeAPicture = () => {
 
     console.log(ctx)
   }
-  
+
   // clear out the image from the screen
 
   const clearPicture = () => {
