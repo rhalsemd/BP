@@ -1,7 +1,10 @@
 package kr.co.bpservice.entity.common;
 
 import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -10,6 +13,7 @@ import java.time.LocalDateTime;
 @Table(name = "MWS_MAIL_AUTH")
 @Getter
 @Setter
+@RequiredArgsConstructor
 public class MailAuth {
 
     @Id
