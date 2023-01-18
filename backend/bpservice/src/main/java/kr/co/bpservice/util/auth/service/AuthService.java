@@ -1,10 +1,10 @@
 package kr.co.bpservice.util.auth.service;
 
 
+import kr.co.bpservice.entity.user.User;
+import kr.co.bpservice.util.auth.dto.TokenDto;
 import kr.co.bpservice.util.auth.dto.UserRequestDto;
 import kr.co.bpservice.util.auth.dto.UserResponseDto;
-import kr.co.bpservice.util.auth.dto.TokenDto;
-import kr.co.bpservice.util.auth.entity.User;
 import kr.co.bpservice.util.auth.jwt.TokenProvider;
 import kr.co.bpservice.util.auth.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +29,7 @@ public class AuthService {
             throw new RuntimeException("이미 가입되어 있는 유저입니다");
         }
 
-        User user = requestDto.toMember(passwordEncoder);
+        User user = requestDto.toUser(passwordEncoder);
         return UserResponseDto.of(userRepository.save(user));
     }
 

@@ -1,7 +1,7 @@
 package kr.co.bpservice.util.auth.dto;
 
 
-import kr.co.bpservice.util.auth.entity.User;
+import kr.co.bpservice.entity.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,14 +11,28 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+
+// 나중에 수정해야함.
 public class UserResponseDto {
-    private String email;
+    private String userId;
+    private String userName;
+    private String phoneNum;
+    private String sido;
+    private String sigugun;
+    private String dong;
     private String nickname;
+    private String email;
 
     public static UserResponseDto of(User user) {
         return UserResponseDto.builder()
+                .userId(user.getId())
+                .userName(user.getName())
+                .phoneNum(user.getPhoneNum())
+                .sido(user.getSido())
+                .sigugun(user.getSigugun())
+                .dong(user.getDong())
                 .email(user.getEmail())
-                .nickname(user.getNickname())
                 .build();
     }
+
 }

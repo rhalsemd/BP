@@ -1,9 +1,8 @@
 package kr.co.bpservice.entity.user;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import kr.co.bpservice.util.auth.entity.Authority;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -46,7 +45,19 @@ public class User {
 
     private LocalDateTime expDt;
 
-//    @Enumerated(EnumType.STRING)
-//    private Authority authority;
+    @Transient
+    private Authority authority;
 
+    @Builder
+    public User(String id, String pwd, String name, String phoneNum, String sido, String sigugun, String dong, String email, Authority authority) {
+        this.id = id;
+        this.pwd = pwd;
+        this.name = name;
+        this.phoneNum = phoneNum;
+        this.sido = sido;
+        this.sigugun = sigugun;
+        this.dong = dong;
+        this.email = email;
+        this.authority = authority;
+    }
 }
