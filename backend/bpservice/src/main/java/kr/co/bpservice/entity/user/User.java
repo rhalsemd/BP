@@ -48,6 +48,7 @@ public class User {
     private boolean activeState;
 
     @Transient
+    @Enumerated(EnumType.STRING)
     private Authority authority;
 
     @Builder

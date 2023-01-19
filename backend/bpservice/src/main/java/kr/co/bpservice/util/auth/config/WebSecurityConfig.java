@@ -45,6 +45,7 @@ public class WebSecurityConfig {
                 .and()
                 .authorizeRequests()
                 .requestMatchers("/auth/**").permitAll() //antimatchers는 지원안해서 바꿔줘야함!!!!!!!!!!!!!
+                .requestMatchers("/**").permitAll()
                 .anyRequest().authenticated()
 
                 .and()

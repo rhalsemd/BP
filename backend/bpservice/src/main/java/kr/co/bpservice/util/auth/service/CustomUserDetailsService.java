@@ -1,5 +1,6 @@
 package kr.co.bpservice.util.auth.service;
 
+import kr.co.bpservice.util.auth.entity.Authority;
 import kr.co.bpservice.util.auth.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,6 +25,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     private UserDetails createUserDetails(kr.co.bpservice.entity.user.User user) {
+        user.setAuthority(Authority.ROLE_USER);
         GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(user.getAuthority().toString());
 
         return new org.springframework.security.core.userdetails.User(
