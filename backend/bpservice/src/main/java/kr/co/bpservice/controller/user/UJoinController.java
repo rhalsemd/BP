@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/auth/user")
+@RequestMapping("/api/user")
 public class UJoinController {
     private final AuthService authService;
 

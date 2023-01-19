@@ -7,13 +7,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/user")
 public class ULoginController {
     private final AuthService authService;
-    @PostMapping("/auth/login")
+    @PostMapping("/login")
     public ResponseEntity<TokenDto> login(@RequestBody UserRequestDto requestDto) {
         return ResponseEntity.ok(authService.login(requestDto));
     }

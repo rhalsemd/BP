@@ -5,6 +5,7 @@ import kr.co.bpservice.entity.user.User;
 import kr.co.bpservice.util.auth.dto.TokenDto;
 import kr.co.bpservice.util.auth.dto.UserRequestDto;
 import kr.co.bpservice.util.auth.dto.UserResponseDto;
+import kr.co.bpservice.util.auth.entity.Authority;
 import kr.co.bpservice.util.auth.jwt.TokenProvider;
 import kr.co.bpservice.util.auth.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -55,11 +56,13 @@ public class AuthService {
         User user = requestDto.toUser(passwordEncoder);
         user.setRegDt(LocalDateTime.now());
         user.setActiveState(true);
+        user.setAuthority(Authority.ROLE_USER);
         return UserResponseDto.of(userRepository.save(user));
     }
 
     public TokenDto login(UserRequestDto requestDto) {
         UsernamePasswordAuthenticationToken authenticationToken = requestDto.toAuthentication();
+        System.out.println("authenticationToken = " + authenticationToken);
 
         Authentication authentication = managerBuilder.getObject().authenticate(authenticationToken);
 
