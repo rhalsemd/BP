@@ -15,5 +15,5 @@ public class Admin {
     private String id;
 
     @Column(length = 200)
-    private String pw;
+    private String pwd;
 }

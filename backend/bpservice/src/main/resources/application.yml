@@ -8,18 +8,21 @@ server:
       force: true
 
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
   jpa:
     hibernate:
       ddl-auto: validate
       naming:
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
         physical-strategy: kr.co.bpservice.config.CamelCaseToSnakeAndUpperCaseStrategy
+
     properties:
       hibernate:
         format_sql: true
         show_sql: true
-
-
 
   logging:
     level:
@@ -32,3 +35,22 @@ spring:
     url: jdbc:mariadb://15.164.73.251:3306/S08P12D104?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
     username: root
     password: ssafy123
+
+springdoc:
+  version: '@project.version@'
+  packages-to-scan: kr.co.bpservice.controller
+  api-docs:
+    path: /api-docs/json
+    groups:
+      enable: true
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
+  swagger-ui:
+    operations-sorter: alpha
+    tags-sorter: alpha
+    path: /swagger-ui.html
+    disable-swagger-default-url: true
+    display-query-params-without-oauth2: true
+    doc-expansion: none
+  paths-to-match:
+    - /api/**
