@@ -8,6 +8,7 @@ export const rootReducer = combineReducers({
 });
 
 export function* rootSaga() {
+  console.log("루트사가 이거도 ㄸ,ㅡ면 좆망");
   yield all([signUpSaga()]);
 }
 

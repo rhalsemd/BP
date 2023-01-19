@@ -1,7 +1,6 @@
 import { createAction, handleActions } from "redux-actions";
-import { call, fork, put, takeEvery } from "redux-saga/effects";
+import { call, fork, put, takeEvery, select } from "redux-saga/effects";
 import axios from "axios";
-import { select } from "d3";
 
 const ADD_USER_ID = "signUp/ADD_USER_ID";
 const ADD_USER_PWD = "signUp/ADD_USER_PWD";
@@ -92,35 +91,51 @@ const signUpReducer = handleActions(
       return { ...state, email: action.payload, emailConfirm };
     },
     [SEND_EMAIL]: (state) => {
+      // console.log("SEND_EMAIL");
+      // console.log(state);
       return state;
     },
     [TEST_EMAIL]: (state, action) => {
-      console.log(action.payload);
+      // console.log(action.payload, "fseafse");
       return { ...state, test: action.payload };
     },
   },
   initialState
 );
 
-const API = `http://localhost:8080/auth-email`;
+const API = `http://localhost:8080/auth/sendemail`;
+// const API = `https://www.naver.com/`;
 
 function* getEmailApi() {
-  const { email } = yield select((state) => state.signUp.email);
+  console.log("saga다음 ");
+  const { signUp } = yield select((state) => state);
+  console.log(signUp.email);
+  console.log("이메일?????");
   let data = "";
   axios({
-    method: "put",
+    method: "post",
     url: API,
-    params: {
-      sendEmail: email,
+    data: {
+      email: signUp.email,
+    },
+    headers: {
+      "Content-Type ": "application/json",
+      "Access-Control-Allow-Origin": "*",
     },
   }).then((res) => {
     data = res.data();
   });
+  // const data = "123";
+  // axios({
+  //   method: "get",
+  //   url: API,
+  // });
 
   yield put({ type: TEST_EMAIL, data: data });
 }
 
 export function* signUpSaga() {
+  console.log("saga 이거왜뜸?");
   yield takeEvery(SEND_EMAIL, getEmailApi);
 }
 

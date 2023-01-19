@@ -21,7 +21,10 @@ function SignUpEmail({ signUp, emailTyping, sendEmail }) {
   };
 
   // email 인증 확인
-  const send = () => {
+  const send = (e) => {
+    e.preventDefault();
+    // console.log(signUp);
+    console.log("여기서 시작 눌리면 안됨 처음에");
     sendEmail();
   };
 
@@ -32,15 +35,16 @@ function SignUpEmail({ signUp, emailTyping, sendEmail }) {
         type="email"
         id="email"
         autoComplete="off"
-        pattern=".+@globex\.com"
         size="30"
         required
         placeholder="이메일@EXAMPLE.COM"
         onChange={typeEmail}
       />
       <div>
-        <button onClick={sendEmail}>test</button>
+        <button onClick={send}>test</button>
       </div>
+      <input text="number" />
+      <button>확인</button>
     </div>
   );
 }
@@ -55,7 +59,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(userInfo.emailTyping(email));
     },
     sendEmail() {
-      dispatch(userInfo.send());
+      console.log("디스패치센ㄷ드이메일");
+      dispatch(userInfo.sendEmail());
     },
   };
 };
