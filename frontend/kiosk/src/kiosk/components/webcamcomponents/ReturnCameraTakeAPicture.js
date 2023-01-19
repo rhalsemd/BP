@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
-
 import 'bootstrap/dist/css/bootstrap.min.css'
+import axios from 'axios';
 
 const KioskReturnCameraTakeAPicture = () => {
   let videoRef = useRef(null)
@@ -45,7 +45,26 @@ const KioskReturnCameraTakeAPicture = () => {
     let ctx = photo.getContext('2d')
     ctx.drawImage(video, 0, 0, photo.width, photo.height)
 
-    console.log(ctx)
+    // console.log(ctx)
+  }
+
+  // save canvas Image in server
+
+  const posting = async () => {
+    // 데이터 URL로 그대로 보내기
+    const canvas = await document.getElementById("canvas");
+    const dataUrl = await canvas.toDataURL('image/png');
+    // const data = await fetch(`${dataUrl}`)
+    // const blob = await data.blob();
+
+    // const blobUrl = URL.createObjectURL(blob)
+    // console.log(blobUrl);
+
+    axios.post('http://localhost:3001/posts', {
+      dataUrl,
+    })
+    .then((response) => console.log(response.status))
+    .catch((error) => console.error(error));
   }
 
   // clear out the image from the screen
@@ -65,8 +84,12 @@ const KioskReturnCameraTakeAPicture = () => {
     <div className='container'>
       <video className='container' ref={videoRef}></video>
       <button onClick={takePicture} className='btn btn-danger container'>찰칵찰칵</button>
-      <canvas className="container" ref={photoRef}></canvas>
+      <canvas id="canvas" className="container" ref={photoRef}></canvas>
       <button onClick={clearPicture} className='btn btn-primary container'>재촬영</button>
+      <div>1</div>
+      <div>2</div>
+      <div>3</div>
+      <button onClick={posting} className='btn btn-primary container'>이미지 파일 확인용</button>
     </div>
   );
 };
