@@ -63,9 +63,10 @@ function SignUpPhone({
 
       {/* 인증 번호 입력 */}
       <input
-        type="number"
+        type="tel"
         id="certifiNumber"
         required
+        pattern="[0-9]{11}"
         placeholder="인증번호 입력"
         onChange={typeCertificationTyping}
       />

@@ -40,7 +40,8 @@ const title = css`
 `;
 
 function SignUp({ signUp, getApi }) {
-  const setSignUp = () => {
+  const setSignUp = (e) => {
+    e.preventDefault();
     getApi();
   };
 
