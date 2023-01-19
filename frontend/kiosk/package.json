@@ -1,5 +1,6 @@
 {
   "name": "kiosk",
+  "homepage": "/kiosk",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -9,6 +10,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.2.3",
     "bootstrap": "^5.2.3",
+    "expo-permissions": "^14.0.0",
     "json-server": "^0.17.1",
     "qrcode.react": "^3.1.0",
     "react": "^18.2.0",
@@ -20,7 +22,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set PORT=80 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

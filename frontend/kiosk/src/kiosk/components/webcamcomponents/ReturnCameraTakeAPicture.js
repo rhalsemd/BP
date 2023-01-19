@@ -5,12 +5,12 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 const KioskReturnCameraTakeAPicture = () => {
   let videoRef = useRef(null)
   let photoRef = useRef(null)
-
   // get access to user webcamera
 
   const getUserCamera = () => {
     navigator.mediaDevices.getUserMedia({
       video: true
+
     })
       .then((stream) => {
         // console.log(stream)
@@ -31,8 +31,8 @@ const KioskReturnCameraTakeAPicture = () => {
   const takePicture = () => {
     // width and height
 
-    let width = 500
-    let height = width / (16 / 9)
+    let width = 640
+    let height = width / (4 / 3)
 
     let photo = photoRef.current
     let video = videoRef.current
