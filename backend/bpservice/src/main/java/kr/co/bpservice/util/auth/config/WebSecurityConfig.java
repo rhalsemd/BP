@@ -42,6 +42,13 @@ public class WebSecurityConfig {
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .accessDeniedHandler(jwtAccessDeniedHandler)
 
+                // 로그아웃 구현 시도
+//                .and()
+//                .logout()
+//                .logoutUrl("/api/auth/user/logout")
+//                .logoutSuccessUrl("/")
+//                .deleteCookies("JSESSIONID", "remember-me")
+
                 .and()
                 .authorizeRequests()
                 .requestMatchers("/auth/**").permitAll() //antimatchers는 지원안해서 바꿔줘야함!!!!!!!!!!!!!
