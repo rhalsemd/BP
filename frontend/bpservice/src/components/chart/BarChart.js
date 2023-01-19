@@ -1,30 +1,10 @@
 /** @jsxImportSource @emotion/react */
 
 import { css } from "@emotion/react";
-// import { Bar } from "react-chartjs-2";
-
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
-import { Bar } from "react-chartjs-2";
-// import faker from "faker";
-
+import { useEffect, useRef, useState } from "react";
 import DropDown from "../UI/DropDown";
 import dayjs from "dayjs";
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
+import * as d3 from "d3";
 
 ///////////////////////////////////////////////
 //////////// EMOTION /////////////////////////
@@ -66,67 +46,46 @@ for (let i = 7; i >= 0; i--) {
 /////////////// DATA 받기(임시) ////////////////
 ///////////////////////////////////////////////
 
-const 데이터 = [108000, 54000, 90000, 35000, 49000, 0, 198000, 0];
-
-///////////////////////////////////////////////
-///////////////////////////////////////////////
-///////////////////////////////////////////////
-
-///////////////////////////////////////////////
-///////////////// 차트 정보 ////////////////////
-///////////////////////////////////////////////
-const data = {
-  labels: [...days],
-  datasets: [
-    {
-      type: "bar",
-      label: "Dataset 1",
-      backgroundColor: "rgb(255, 99, 132)",
-      borderWidth: 3,
-      barThickness: 30,
-      data: 데이터,
-      // scale: 300,
-    },
-  ],
-};
-///////////////////////////////////////////////
-//////////// 차트 옵션 /////////////////////////
-///////////////////////////////////////////////
-
-export const options = {
-  maintainAspectRatio: false,
-  responsive: false,
-  // responsive: false,
-  plugins: {
-    legend: {
-      position: "top",
-    },
-    title: {
-      display: true,
-      text: "차트(임시)",
-    },
-  },
-  scales: {
-    x: {
-      grid: {
-        display: false,
-      },
-    },
-    yAxes: {
-      ticks: {
-        min: -100,
-        setpSize: 1000,
-        fontSize: 1,
-      },
-    },
-  },
-};
-
-//////////////////////////////////////////////////
-//////////////////////////////////////////////////
-//////////////////////////////////////////////////
+const 데이터 = [100, 10, 30, 50, 10, 70, 200, 90, 40, 20, 10, 50];
+const 데이터2 = [10, 20, 30, 40, 50, 20, 10, 220, 155, 120, 30, 60];
 
 export default function BarChart() {
+  const barChart = useRef();
+
+  let [mt, mr, mb, ml] = [20, 20, 20, 20];
+  const width = 782.8;
+  const height = 549.11;
+
+  const graphWidth = width - ml - mr;
+  const grapHeight = height - mt - mb;
+
+  useEffect(() => {
+    const svg = d3.select(barChart.current);
+    // svg.attr("transform", `translate(${ml}, ${mt})`);
+    const x = d3
+      .scaleBand()
+      .domain(데이터.map((d, idx) => idx))
+      .range([0, graphWidth])
+      .padding(0.1);
+
+    const y = d3
+      .scaleLinear()
+      .domain([0, d3.max(데이터)])
+      .range([grapHeight, 0]);
+
+    svg
+      .selectAll(".bar")
+      .data(데이터)
+      .join("rect")
+      .attr("class", (d, idx) => `bar${idx}`)
+      .attr("height", (d) => grapHeight - y(d))
+      .attr("width", x.bandwidth() - 10)
+      .attr("fill", "hotpink")
+      .attr("x", (d, idx) => x(idx))
+      .attr("y", (d) => y(d))
+      .attr("transform", `translate(${ml}, ${mt})`);
+  }, [데이터]);
+
   return (
     <>
       <div css={rightRight}>
@@ -134,13 +93,7 @@ export default function BarChart() {
       </div>
       <div css={centerCenter}>
         <div css={chartStyle}>
-          <h1>Chart</h1>
-          <Bar
-            data={data}
-            options={options}
-            style={{ position: "relative", height: "300px", width: "120vw" }}
-          />
-          {/* <Line type="line" data={data} options={options} /> */}
+          <svg width="200%" height="100%" ref={barChart} />
         </div>
       </div>
     </>
