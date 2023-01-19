@@ -5,7 +5,6 @@ import { userInfo } from "../../modules/signUp";
 
 function SignUpEmail({ signUp, emailTyping }) {
   const [email, setEmail] = useState("");
-
   // email 정규 표현식
   const emailRegExp = new RegExp(
     "([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|\"([]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|[[\t -Z^-~]*])"

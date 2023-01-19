@@ -2,17 +2,19 @@
 import { css } from "@emotion/react";
 
 import { useEffect } from "react";
+import { connect } from "react-redux";
+import { mapInfo } from "../../modules/mapStore";
 
 const { kakao } = window;
-const Hardness = "36.106726"; // 경도
-const Latitude = "128.417275"; // 위도
+let Hardness = "36.106726"; // 경도
+let Latitude = "128.417275"; // 위도
 
 const mapbox = css`
   width: 100vw;
-  height: 81vh;
+  height: 60vh;
 `;
 
-function Map() {
+function Map({ mapStore, searchResult }) {
   const floatingMap = () => {
     const container = document.getElementById("myMap");
     const options = {
@@ -34,17 +36,25 @@ function Map() {
   };
 
   useEffect(() => {
+    // 마커 표시
     floatingMap();
 
+    // 장소 검색 결과
     const places = new kakao.maps.services.Places();
     const callback = function (result, status) {
       if (status === kakao.maps.services.Status.OK) {
-        console.log(result);
+        // console.log(result);
+        // 검색 결과를 store에 저장한다.
+        searchResult(result);
       }
     };
 
-    places.keywordSearch("판교 치킨", callback);
-  }, []);
+    // 검색 결과를 적용
+    places.keywordSearch(
+      mapStore.searchValue || "구미 삼성디지털 프라자",
+      callback
+    );
+  }, [mapStore.searchValue]);
 
   return (
     <div>
@@ -53,4 +63,16 @@ function Map() {
   );
 }
 
-export default Map;
+const mapStateToProps = ({ mapStore }) => {
+  return { mapStore };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    searchResult(data) {
+      dispatch(mapInfo.searchResult(data));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Map);
