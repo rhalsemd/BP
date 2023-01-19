@@ -6,10 +6,8 @@ const KioskReturnReceiptStyle = css`
   display: flex;
   align-items: center;
 
-  border: 1px solid black;
-
   width: 100vw;
-  height: 60vh;
+  height: 80vh;
 `
 const KioskReceiptImg = css`
   width: 50vw;
@@ -98,8 +96,6 @@ const KioskReturnReceipt = css`
         
         border: 1px solid transparent;
         border-bottom: 1px solid black;
-  
-        margin-bottom: 3vh;
       }
   
       .ReceiptDetail {

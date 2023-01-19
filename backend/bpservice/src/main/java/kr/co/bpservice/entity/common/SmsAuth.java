@@ -1,4 +1,4 @@
-package kr.co.bpservice.entity.user;
+package kr.co.bpservice.entity.common;
 
 import jakarta.persistence.*;
 import lombok.Getter;

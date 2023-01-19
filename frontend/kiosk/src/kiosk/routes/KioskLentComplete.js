@@ -2,7 +2,6 @@
 import { css } from '@emotion/react'
 import KioskHeader from '../components/HomeHeader'
 import KioskLentCompleteSection from '../components/LentCompleteSection'
-import KioskFooter from '../components/HomeFooter'
 
 const KioskLentStyle = css`
   box-sizing: border-box;
@@ -23,9 +22,6 @@ const LentComplete = () => {
       <section>
         <KioskLentCompleteSection/>
       </section>
-      <footer>
-        <KioskFooter/>
-      </footer>
     </div>
   )
 }

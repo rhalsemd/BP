@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
+import KioskReturnCameraTakeAPicture from './webcamcomponents/ReturnCameraTakeAPicture'
 
 const KioskCameraStyle = css`
   width: 68vw;
@@ -13,25 +14,13 @@ const KioskCameraStyle = css`
   align-items: center;
 
   .KioskCameraCheckDiv {
-    background-color: black;
+    background-color: transparent;
     width: 60vw;
     height: 80vh;
 
     margin-top: 5vh;
-  }
 
-  .KioskCameraCheckButton {
-    width: 60vw;
-    height: 20vh;
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .KioskCameraCheckButton button {
-    width: 400px;
-    height: 50px;
+    border: 1px solid black;
   }
 `
 
@@ -39,12 +28,7 @@ const ReturnCameraView = () => {
   return (
     <div css={KioskCameraStyle}>
       <div className='KioskCameraCheckDiv'>
-
-      </div>
-      <div className='KioskCameraCheckButton'>
-        <button>
-          찰칵찰칵
-        </button>
+        <KioskReturnCameraTakeAPicture/>
       </div>
     </div>
   );

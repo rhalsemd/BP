@@ -2,7 +2,6 @@
 import { css } from '@emotion/react'
 import KioskHeader from '../components/HomeHeaderJustLogo'
 import KioskReturnCameraCheckView from '../components/ReturnCameraCheckView'
-import KioskFooter from '../components/HomeFooterJustBtn'
 
 const KioskReturnCameraCheckStyle = css`
   box-sizing: border-box;
@@ -24,7 +23,6 @@ const ReturnCameraCheck = () => {
     <div css={KioskReturnCameraCheckStyle}>
         <KioskHeader/>
         <KioskReturnCameraCheckView/>
-        <KioskFooter/>
     </div>
   )
 }
