@@ -20,7 +20,6 @@ public class UserResponseDto {
     private String sido;
     private String sigugun;
     private String dong;
-    private String nickname;
     private String email;
 
     public static UserResponseDto of(User user) {

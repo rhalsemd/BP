@@ -18,7 +18,6 @@ public class UserInfoController {
     @GetMapping("/info") //사용자 정보 반환
     public ResponseEntity<UserResponseDto> getMyUserInfo() {
         UserResponseDto myInfoBySecurity = userService.getMyInfoBySecurity();
-        System.out.println(myInfoBySecurity.getNickname());
         return ResponseEntity.ok((myInfoBySecurity));
         // return ResponseEntity.ok(userService.getMyInfoBySecurity());
     }

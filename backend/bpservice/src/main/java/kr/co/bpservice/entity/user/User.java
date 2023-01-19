@@ -45,6 +45,8 @@ public class User {
 
     private LocalDateTime expDt;
 
+    private boolean activeState;
+
     @Transient
     private Authority authority;
 

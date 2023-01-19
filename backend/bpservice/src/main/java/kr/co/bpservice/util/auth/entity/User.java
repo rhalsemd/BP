@@ -1,3 +1,6 @@
+// 사용안하는 엔티티임.
+// 혹시 몰라서 백업 용도로 저장.
+
 //package kr.co.bpservice.util.auth.entity;
 //
 //import jakarta.persistence.*;

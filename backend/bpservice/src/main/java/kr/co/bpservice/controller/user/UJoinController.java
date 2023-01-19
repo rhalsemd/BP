@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/user")
+@RequestMapping("/auth/user")
 public class UJoinController {
     private final AuthService authService;
+
     @PostMapping("/join")
     public ResponseEntity<UserResponseDto> join(@RequestBody UserRequestDto requestDto) {
         return ResponseEntity.ok(authService.join(requestDto));
