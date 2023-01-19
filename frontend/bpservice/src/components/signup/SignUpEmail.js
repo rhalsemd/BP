@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { userInfo } from "../../modules/signUp";
 
-function SignUpEmail({ signUp, emailTyping }) {
+function SignUpEmail({ signUp, emailTyping, sendEmail }) {
   const [email, setEmail] = useState("");
 
   // email 정규 표현식
@@ -20,6 +20,11 @@ function SignUpEmail({ signUp, emailTyping }) {
     }
   };
 
+  // email 인증 확인
+  const send = () => {
+    sendEmail();
+  };
+
   return (
     <div>
       <label htmlFor="email">Email : </label>
@@ -33,6 +38,9 @@ function SignUpEmail({ signUp, emailTyping }) {
         placeholder="이메일@EXAMPLE.COM"
         onChange={typeEmail}
       />
+      <div>
+        <button onClick={sendEmail}>test</button>
+      </div>
     </div>
   );
 }
@@ -45,6 +53,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     emailTyping(email) {
       dispatch(userInfo.emailTyping(email));
+    },
+    sendEmail() {
+      dispatch(userInfo.send());
     },
   };
 };

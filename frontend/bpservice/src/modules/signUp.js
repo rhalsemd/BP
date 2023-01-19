@@ -1,5 +1,7 @@
 import { createAction, handleActions } from "redux-actions";
 import { call, fork, put, takeEvery } from "redux-saga/effects";
+import axios from "axios";
+import { select } from "d3";
 
 const ADD_USER_ID = "signUp/ADD_USER_ID";
 const ADD_USER_PWD = "signUp/ADD_USER_PWD";
@@ -10,6 +12,8 @@ const ADD_USER_CERTIFYCATION = "signUp/ADD_USER_CERTIFYCATION";
 const ADD_USER_IS_CERTIFYCATION = "signUp/ADD_USER_IS_CERTIFYCATION";
 const ADD_USER_SIDO = "signUp/ADD_USER_SIDO";
 const ADD_USER_EMAIL = "signUp/ADD_USER_EMAIL";
+const SEND_EMAIL = "signUp/SEND_EMAIL";
+const TEST_EMAIL = "signUp/TEST_EMAIL";
 
 const idTyping = createAction(ADD_USER_ID, (userId) => userId);
 const pwdTyping = createAction(ADD_USER_PWD, (pwd) => pwd);
@@ -26,6 +30,8 @@ const isCertificationTyping = createAction(
 );
 const sidoTyping = createAction(ADD_USER_SIDO, (sido) => sido);
 const emailTyping = createAction(ADD_USER_EMAIL, (email) => email);
+const sendEmail = createAction(SEND_EMAIL);
+const testEmail = createAction(TEST_EMAIL, (data) => data);
 
 const idRegExp = /[!@#%&;'":<>`~.*+?^${}()|[\]\\A-Zㄱ-ㅎ]/g;
 const pwDregExp = /[;'":<>`~.+?{}()|[\]\\A-Z]/g;
@@ -85,9 +91,38 @@ const signUpReducer = handleActions(
       const emailConfirm = action.payload.match(emailRegExp) ? true : false;
       return { ...state, email: action.payload, emailConfirm };
     },
+    [SEND_EMAIL]: (state) => {
+      return state;
+    },
+    [TEST_EMAIL]: (state, action) => {
+      console.log(action.payload);
+      return { ...state, test: action.payload };
+    },
   },
   initialState
 );
+
+const API = `http://localhost:8080/auth-email`;
+
+function* getEmailApi() {
+  const { email } = yield select((state) => state.signUp.email);
+  let data = "";
+  axios({
+    method: "put",
+    url: API,
+    params: {
+      sendEmail: email,
+    },
+  }).then((res) => {
+    data = res.data();
+  });
+
+  yield put({ type: TEST_EMAIL, data: data });
+}
+
+export function* signUpSaga() {
+  yield takeEvery(SEND_EMAIL, getEmailApi);
+}
 
 export const userInfo = {
   idTyping,
@@ -99,6 +134,7 @@ export const userInfo = {
   isCertificationTyping,
   sidoTyping,
   emailTyping,
+  sendEmail,
 };
 
 export default signUpReducer;
