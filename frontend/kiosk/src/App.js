@@ -26,7 +26,7 @@ function App() {
 
       <Router>
         <Routes>
-          <Route path='/' exact element={<KioskHome />}></Route>
+          <Route path='/kiosk' exact element={<KioskHome />}></Route>
           <Route path='/kiosk/lent' element={<KioskLent />}></Route>
           {/* <Route path='/kiosk/lent/qrcode' element={<PaymentQR />}></Route> */}
           <Route path='/kiosk/lent/complete' element={<KioskLentComplete />}></Route>

@@ -52,13 +52,13 @@ const KioskHomeWeatherImg = css`
   height: 15vw;
 `
 
-const KioskGoBackBtnStyle = css`
-  margin-right: 2vw;
-  margin-bottom: 2vw;
+// const KioskGoBackBtnStyle = css`
+//   margin-right: 2vw;
+//   margin-bottom: 2vw;
 
-  width: 100px;
-  height: 30px;
-`
+//   width: 100px;
+//   height: 30px;
+// `
 
 // 위에는 Emotion.js 입니다.
 // 밑에는 JS 입니다.
