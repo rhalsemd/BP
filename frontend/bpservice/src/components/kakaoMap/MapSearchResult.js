@@ -1,11 +1,12 @@
 /** @jsxImportSource @emotion/react */
-import { jsx, css } from "@emotion/react";
-import { useCallback, useState } from "react";
+import { css } from "@emotion/react";
+import { useState } from "react";
 import { connect } from "react-redux";
+import { mapInfo } from "../../modules/mapStore";
 
 const resultBox = css`
-  width: 100vw;
-  height: 30vh;
+  width: 95vw;
+  height: 150px;
   background-color: white;
   overflow: scroll;
 `;
@@ -15,14 +16,23 @@ const resultContent = css`
   cursor: pointer;
 `;
 
-function MapSearchResult({ mapStore }) {
-  const [placeId, setPlaceId] = useState("");
+function MapSearchResult({ mapStore, goToPlace }) {
+  const [placeLocation, setPlaceLocation] = useState({});
   // 장소를 클릭했을 때
-  const goToPlace = (e) => {
-    console.log(e.target.id);
-    setPlaceId(e.target.id);
+  const getPlace = (e) => {
+    const placeId = e.target.id;
+    const placeArr = mapStore.searchResult;
+    placeArr.forEach((place) => {
+      if (place.id === placeId) {
+        setPlaceLocation((current) => {
+          current.x = place.x;
+          current.y = place.y;
+          return current;
+        });
+      }
+    });
+    goToPlace(placeLocation);
   };
-
   return (
     <div css={resultBox}>
       <span>
@@ -33,7 +43,7 @@ function MapSearchResult({ mapStore }) {
                   <li
                     key={item.id}
                     css={resultContent}
-                    onClick={goToPlace}
+                    onClick={getPlace}
                     id={item.id}
                   >
                     {item.place_name}
@@ -51,4 +61,12 @@ const mapStateToProps = ({ mapStore }) => {
   return { mapStore };
 };
 
-export default connect(mapStateToProps)(MapSearchResult);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    goToPlace(location) {
+      dispatch(mapInfo.goToPlace(location));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MapSearchResult);
