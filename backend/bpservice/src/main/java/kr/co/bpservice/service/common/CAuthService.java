@@ -3,7 +3,6 @@ package kr.co.bpservice.service.common;
 import jakarta.mail.Message.RecipientType;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
-import jakarta.transaction.Transactional;
 import kr.co.bpservice.entity.common.MailAuth;
 import kr.co.bpservice.entity.common.SmsAuth;
 import kr.co.bpservice.repository.common.MailAuthRepository;
@@ -27,8 +26,6 @@ import java.net.URL;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CAuthService {

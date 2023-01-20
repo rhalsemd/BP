@@ -8,10 +8,6 @@ server:
       force: true
 
 spring:
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
-
   jpa:
     hibernate:
       ddl-auto: validate
@@ -56,3 +52,9 @@ mail:
 AdminMail:
   id: ssafy8th.gumi@gmail.com
   password: mgskcmzufwphqyua
+
+naver-cloud-sms:
+  accessKey: hZMpYNUxSNTcNY73KTBW
+  serviceKey: qt5P7NEBOLXPtDG6K8eNpjgopeYNjxII6Dzdmjuk
+  serviceId: ncp:sms:kr:257282496643:sms_example
+  senderPhone: 01085241881
