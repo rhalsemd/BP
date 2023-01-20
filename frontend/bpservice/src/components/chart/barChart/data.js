@@ -5,6 +5,7 @@ const gaussianRandom = (mean = 0, stdev = 1) => {
   return z * stdev + mean;
 };
 
-export const data = Array.from({ length: 1000 }, () => gaussianRandom(60, 10));
+// export const data = [Array.from({ length: 50 }, () => gaussianRandom(60, 10))];
+export const data = [30, 10, 20, 50, 40, 30, 20, 19, 100, 80, 10];
 
-export const data2 = Array.from({ length: 1000 }, () => gaussianRandom(40, 10));
+export const data2 = Array.from({ length: 15 }, () => gaussianRandom(40, 10));

@@ -1,5 +1,9 @@
 import { useSpring, animated } from "@react-spring/web";
 
+const onclick = (bucket) => {
+  alert(`나중에 링크 연결할거임 값 : ${bucket}`);
+};
+
 export const Rectangle = (props) => {
   const { x, y, width, height } = props;
 
@@ -17,6 +21,7 @@ export const Rectangle = (props) => {
 
   return (
     <animated.rect
+      onClick={() => onclick(props.jijum)}
       x={springProps.x}
       y={springProps.y}
       width={springProps.width}
