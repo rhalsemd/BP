@@ -3,6 +3,7 @@ package kr.co.bpservice.util.auth.service;
 
 import kr.co.bpservice.entity.user.User;
 import kr.co.bpservice.util.auth.config.SecurityUtil;
+import kr.co.bpservice.util.auth.dto.UserRequestDto;
 import kr.co.bpservice.util.auth.dto.UserResponseDto;
 import kr.co.bpservice.util.auth.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +38,17 @@ public class UserService {
             throw new RuntimeException("비밀번호가 맞지 않습니다");
         }
         user.setPwd(passwordEncoder.encode((newPassword)));
+        return UserResponseDto.of(userRepository.save(user));
+    }
+
+    @Transactional
+    public UserResponseDto changeUserInfo(UserRequestDto requestDto) {
+        User user = userRepository.findById(SecurityUtil.getCurrentUserId()).orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다"));
+        user.setEmail(requestDto.getEmail());
+        user.setPhoneNum(requestDto.getPhoneNum());
+        user.setSido(requestDto.getSido());
+        user.setSigugun(requestDto.getSigugun());
+        user.setDong(requestDto.getDong());
         return UserResponseDto.of(userRepository.save(user));
     }
 }

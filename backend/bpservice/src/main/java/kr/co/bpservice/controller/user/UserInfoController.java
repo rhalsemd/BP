@@ -1,6 +1,7 @@
 package kr.co.bpservice.controller.user;
 
 import kr.co.bpservice.util.auth.dto.ChangePasswordRequestDto;
+import kr.co.bpservice.util.auth.dto.UserRequestDto;
 import kr.co.bpservice.util.auth.dto.UserResponseDto;
 import kr.co.bpservice.util.auth.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +17,15 @@ public class UserInfoController {
     @GetMapping("") //사용자 정보 반환
     public ResponseEntity<UserResponseDto> getMyUserInfo() {
         UserResponseDto myInfoBySecurity = userService.getMyInfoBySecurity();
-        return ResponseEntity.ok((myInfoBySecurity));
+        return ResponseEntity.ok(myInfoBySecurity);
         // return ResponseEntity.ok(userService.getMyInfoBySecurity());
+    }
+
+    @PutMapping("") // 사용자 정보 수정
+    public ResponseEntity<UserResponseDto> changeUserInfo(@RequestBody UserRequestDto requestDto) {
+        UserResponseDto responseDto = userService.changeUserInfo(requestDto);
+        return ResponseEntity.ok(responseDto);
+
     }
 
 //    @PostMapping("/nickname") //사용자 이름 변경
