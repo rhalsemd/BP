@@ -23,7 +23,7 @@ class AuthServiceTest {
     @DisplayName("회원가입: 정상적인 회원가입")
     public void joinTest() {
         String userId = "test3333";
-        String pwd = "33333333";
+        String pwd = "abcd1234!@#$%^&*";
         String userName = "테스트333";
         String phoneNum = "01011111111";
         String sido = "대구광역시";
@@ -165,12 +165,12 @@ class AuthServiceTest {
     }
 
     @Test
-    @DisplayName("회원가입: 비밀번호 특수문자 포함")
+    @DisplayName("회원가입: 비밀번호에 허용되지 않은 특수문자 포함")
     public void joinPwdException1Test() {
 
         // 아이디 정규표현식 검증 (자릿수 4글자 이하)
         String userId = "test333";
-        String pwd = "333333!@#";
+        String pwd = "333333()";
         String userName = "테스트333";
         String phoneNum = "01011111111";
         String sido = "대구광역시";
