@@ -33,6 +33,7 @@ dependencies {
 	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.2'
 	implementation 'org.springframework.boot:spring-boot-starter-mail' //메일 인증 라이브러리
 	implementation 'com.sun.mail:jakarta.mail:2.0.1'//메일 인증 라이브러리
+	implementation 'org.json:json:20220924'//json라이브러리
 }
 
 tasks.named('test') {
