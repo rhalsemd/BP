@@ -31,13 +31,14 @@ public class AuthService {
     public UserResponseDto join(UserRequestDto requestDto) {
         String userId = requestDto.getUserId();
         String pwd = requestDto.getPwd();
-        String strPattern = "^[a-z0-9]*$";
+        String idPattern = "^[a-z0-9]*$";
+        String pwdPattern = "^[a-z0-9!@#$%^&*]*$";
 
         if(userId.length() < 8 || userId.length() > 20) {
             throw new RuntimeException("아이디는 8~20자로 설정해야합니다.");
         }
 
-        if(Pattern.matches(strPattern, userId) == false) {
+        if(Pattern.matches(idPattern, userId) == false) {
             throw new RuntimeException("아이디는 영어소문자, 숫자만 가능합니다.");
         }
 
@@ -49,7 +50,7 @@ public class AuthService {
             throw new RuntimeException("비밀번호는 8~20자로 설정해야합니다.");
         }
 
-        if(Pattern.matches(strPattern, pwd) == false) {
+        if(Pattern.matches(pwdPattern, pwd) == false) {
             throw new RuntimeException("비밀번호는 영어소문자, 숫자만 가능합니다.");
         }
 
