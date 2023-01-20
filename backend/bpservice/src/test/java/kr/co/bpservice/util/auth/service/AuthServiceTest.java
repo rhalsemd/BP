@@ -1,5 +1,6 @@
 package kr.co.bpservice.util.auth.service;
 
+import kr.co.bpservice.util.auth.dto.TokenDto;
 import kr.co.bpservice.util.auth.dto.UserRequestDto;
 import kr.co.bpservice.util.auth.dto.UserResponseDto;
 import org.junit.jupiter.api.Assertions;
@@ -275,4 +276,42 @@ class AuthServiceTest {
             UserResponseDto responseDto = authService.join(requestDto);
         });
     }
+
+    @Test
+    @DisplayName("로그인 테스트")
+    public void loginTest() {
+        // 회원가입 로직
+        String userId = "test9999";
+        String pwd = "99999999";
+        String userName = "테스트9999";
+        String phoneNum = "01011111111";
+        String sido = "대구광역시";
+        String sigugun = "수성구";
+        String dong = "황금동";
+        String email = "test999@naver.com";
+
+        UserRequestDto requestDto = new UserRequestDto().builder()
+                .userId(userId)
+                .pwd(pwd)
+                .userName(userName)
+                .phoneNum(phoneNum)
+                .sido(sido)
+                .sigugun(sigugun)
+                .dong(dong)
+                .email(email)
+                .build();
+
+        UserResponseDto responseDto = authService.join(requestDto);
+        assertThat(responseDto).isNotNull(); // null인지 체크
+        assertThat(responseDto.getUserId()).isEqualTo(userId);
+        assertThat(responseDto.getEmail()).isEqualTo(email);
+
+        // 로그인 체크
+        TokenDto token = authService.login(requestDto);
+        assertThat(token).isNotNull();
+        assertThat(token.getAccessToken()).isNotNull();
+        assertThat(token.getTokenExpiresIn()).isNotNull();
+        assertThat(token.getGrantType()).isNotNull();
+    }
+
 }
