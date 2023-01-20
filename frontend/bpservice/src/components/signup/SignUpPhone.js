@@ -3,10 +3,10 @@ import React, { useState } from "react";
 import Timer from "../../components/signup/Timer";
 
 import { connect } from "react-redux";
-import { userInfo } from "../../store";
+import { userInfo } from "../../modules/signUp";
 
 function SignUpPhone({
-  state,
+  signUp,
   phoneTyping,
   certificationTyping,
   isCertificationTyping,
@@ -63,13 +63,14 @@ function SignUpPhone({
 
       {/* 인증 번호 입력 */}
       <input
-        type="number"
+        type="tel"
         id="certifiNumber"
         required
+        pattern="[0-9]{11}"
         placeholder="인증번호 입력"
         onChange={typeCertificationTyping}
       />
-      {state.isCertification ? (
+      {signUp.isCertification ? (
         <span>
           <Timer />
           <button onClick={getConfirm}>확인</button>
@@ -79,8 +80,8 @@ function SignUpPhone({
   );
 }
 
-const mapStateToProps = (state) => {
-  return { state };
+const mapStateToProps = ({ signUp }) => {
+  return { signUp };
 };
 
 const mapDispatchToProps = (dispatch) => {

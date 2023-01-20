@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 
 import { connect } from "react-redux";
-import { userInfo } from "../../store";
+import { userInfo } from "../../modules/signUp";
 
-function SignUpAddress({ state, sidoTyping }) {
+function SignUpAddress({ signUp, sidoTyping }) {
   // 지역 객체
   const [cityObj, setCityObj] = useState({});
 
@@ -67,23 +67,23 @@ function SignUpAddress({ state, sidoTyping }) {
       </select>
 
       {/* 구 */}
-      {userInfo.isSido ? (
+      {/* {userInfo.isSido ? (
         <select>
           <option>1</option>
         </select>
-      ) : null}
+      ) : null} */}
       {/* 동 */}
-      {userInfo.isGu ? (
+      {/* {userInfo.isGu ? (
         <select>
           <option>1</option>
         </select>
-      ) : null}
+      ) : null} */}
     </div>
   );
 }
 
-const mapStateToProps = (state) => {
-  return { state };
+const mapStateToProps = ({signUp}) => {
+  return { signUp };
 };
 
 const mapDispatchToProps = (dispatch) => {

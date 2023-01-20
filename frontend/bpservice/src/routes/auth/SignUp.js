@@ -13,6 +13,8 @@ import SignUpName from "../../components/signup/SignUpName";
 import SignUpPhone from "../../components/signup/SignUpPhone";
 import SignUpAddress from "../../components/signup/SignUpAddress";
 import SignUpEmail from "../../components/signup/SignUpEmail";
+import { userInfo } from "../../modules/signUp";
+import { useEffect } from "react";
 
 const loginArea = css`
   width: 100%;
@@ -37,7 +39,12 @@ const title = css`
   text-align: center;
 `;
 
-function SignUp({ State }) {
+function SignUp({ signUp, getApi }) {
+  const setSignUp = (e) => {
+    e.preventDefault();
+    getApi();
+  };
+
   return (
     <div>
       <header>
@@ -73,13 +80,13 @@ function SignUp({ State }) {
                 <SignUpEmail />
 
                 {/* 회원가입 버튼 */}
-                {State.idConfirm &&
-                State.pwdConfirm &&
-                !State.rePwd &&
-                State.nameConfirm &&
-                State.isCertification &&
-                State.emailConfirm ? (
-                  <input type="submit" value="회원가입" />
+                {signUp.idConfirm &&
+                signUp.pwdConfirm &&
+                !signUp.rePwd &&
+                signUp.nameConfirm &&
+                signUp.isCertification &&
+                signUp.emailConfirm ? (
+                  <input type="submit" value="회원가입" onClick={setSignUp} />
                 ) : null}
               </form>
             </div>
@@ -94,8 +101,16 @@ function SignUp({ State }) {
   );
 }
 
-const mapStateToProps = (State) => {
-  return { State };
+const mapStateToProps = ({ signUp }) => {
+  return { signUp };
 };
 
-export default connect(mapStateToProps)(SignUp);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getApi() {
+      dispatch(userInfo.getApi());
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

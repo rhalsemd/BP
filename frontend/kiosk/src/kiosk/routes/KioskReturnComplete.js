@@ -2,7 +2,6 @@
 import { css } from '@emotion/react'
 import KioskHeader from '../components/HomeHeader'
 import KioskReturnCompleteSection from '../components/ReturnCompleteSection'
-import KioskFooter from '../components/HomeFooter'
 
 const KioskReturnStyle = css`
   box-sizing: border-box;
@@ -23,9 +22,6 @@ const ReturnComplete = () => {
       <section>
         <KioskReturnCompleteSection/>
       </section>
-      <footer>
-        <KioskFooter/>
-      </footer>
     </div>
   )
 }

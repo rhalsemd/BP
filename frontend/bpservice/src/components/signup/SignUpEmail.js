@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 
 import { connect } from "react-redux";
-import { userInfo } from "../../store";
+import { userInfo } from "../../modules/signUp";
 
-function SignUpEmail({ state, emailTyping }) {
+function SignUpEmail({ signUp, emailTyping, sendEmail }) {
   const [email, setEmail] = useState("");
 
   // email 정규 표현식
@@ -20,6 +20,14 @@ function SignUpEmail({ state, emailTyping }) {
     }
   };
 
+  // email 인증 확인
+  const send = (e) => {
+    e.preventDefault();
+    // console.log(signUp);
+    console.log("여기서 시작 눌리면 안됨 처음에");
+    sendEmail();
+  };
+
   return (
     <div>
       <label htmlFor="email">Email : </label>
@@ -27,24 +35,32 @@ function SignUpEmail({ state, emailTyping }) {
         type="email"
         id="email"
         autoComplete="off"
-        pattern=".+@globex\.com"
         size="30"
         required
         placeholder="이메일@EXAMPLE.COM"
         onChange={typeEmail}
       />
+      <div>
+        <button onClick={send}>test</button>
+      </div>
+      <input text="number" />
+      <button>확인</button>
     </div>
   );
 }
 
-const mapStateToProps = (state) => {
-  return { state };
+const mapStateToProps = ({ signUp }) => {
+  return { signUp };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     emailTyping(email) {
       dispatch(userInfo.emailTyping(email));
+    },
+    sendEmail() {
+      console.log("디스패치센ㄷ드이메일");
+      dispatch(userInfo.sendEmail());
     },
   };
 };

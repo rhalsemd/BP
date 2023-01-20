@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 
-import { userInfo } from "../../store";
+import { userInfo } from "../../modules/signUp";
 
-function SignUpPwd({ state, pwdTyping }) {
+function SignUpPwd({ signUp, pwdTyping }) {
   const [pwd, setPwd] = useState("");
   // password 정규 표현식
   const pwDregExp = /[;'":<>`~.+?{}()|[\]\\A-Z]/g;
@@ -44,8 +44,8 @@ function SignUpPwd({ state, pwdTyping }) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return { state };
+const mapStateToProps = ({ signUp }) => {
+  return { signUp };
 };
 
 const mapDispatchToProps = (dispatch) => {

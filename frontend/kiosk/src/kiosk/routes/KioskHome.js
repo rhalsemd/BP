@@ -2,11 +2,10 @@
 import { css } from '@emotion/react'
 import KioskHeader from '../components/HomeHeader'
 import KioskSection from '../components/HomeSection'
-import KioskFooter from '../components/HomeFooter'
 
 const KioskHomeStyle = css`
   box-sizing: border-box;
-  border : 1px solid black;
+  /* border : 1px solid black; */
   width : 100vw;
   height : 100vh;
 `
@@ -15,6 +14,7 @@ const KioskHomeStyle = css`
 // 밑에는 JS 입니다.
 
 const Home = () => {
+  
   return (
     <div css={KioskHomeStyle}>
       <header>
@@ -23,9 +23,6 @@ const Home = () => {
       <section>
         <KioskSection/>
       </section>
-      <footer>
-        <KioskFooter/>
-      </footer>
     </div>
   )
 }
