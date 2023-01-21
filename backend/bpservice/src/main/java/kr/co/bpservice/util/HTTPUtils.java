@@ -1,16 +1,9 @@
 package kr.co.bpservice.util;
 
 public class HTTPUtils {
-    public static int HTTP_OK = 200;
-
-    public static int HTTP_BAD_REQUEST = 401;
-    public static int HTTP_FORBIDDEN = 403;
-    public static int HTTP_PAGE_NOT_FOUND = 404;
-    public static int HTTP_METHOD_NOT_ALLOWED = 405;
-
-    public static int HTTP_INTERNAL_SERVER_ERROR = 500;
-    public static int HTTP_BAD_GATEWAY = 502;
-    public static int HTTP_SERVICE_UNAVAILABLE = 503;
-    public static int HTTP_GATEWAY_TIMEOUT = 504;
+    public static String CONNECTION = "keep-alive";
+    public static String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36";
+    public static String ACCEPT_ENCODING = "gzip, deflate, br";
+    public static String ACCEPT_LANGUAGE = "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7,ja-JP;q=0.6,ja;q=0.5";
 
 }

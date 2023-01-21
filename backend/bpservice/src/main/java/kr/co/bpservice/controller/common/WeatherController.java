@@ -27,13 +27,13 @@ public class WeatherController {
                 ,@Parameter(name = "lng", description = "날씨를 조회할 지역의 경도")
     })
     public JSONObject currentWeather(@RequestParam float lat, @RequestParam float lng) throws IOException {
-        URL currentWeatheUrl = new URL(String.format("https://api.openweathermap.org/data/2.5/weather?lang=kr&units=metric&lat=%s&lon=%s&appid=%s", String.valueOf(lat), String.valueOf(lng), APP_ID));
-        HttpURLConnection conn = (HttpURLConnection) currentWeatheUrl.openConnection();
+        URL currentWeatherUrl = new URL(String.format("https://api.openweathermap.org/data/2.5/weather?lang=kr&units=metric&lat=%s&lon=%s&appid=%s", String.valueOf(lat), String.valueOf(lng), APP_ID));
+        HttpURLConnection conn = (HttpURLConnection) currentWeatherUrl.openConnection();
 
         JSONObject jsonObject = new JSONObject();
 
         int responseCode = conn.getResponseCode();
-        if (responseCode != HTTPUtils.HTTP_OK) {
+        if (responseCode != HttpURLConnection.HTTP_OK) {
             jsonObject.put("response-code", responseCode);
             return jsonObject;
         }
