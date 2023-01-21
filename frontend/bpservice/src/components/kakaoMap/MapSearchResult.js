@@ -8,7 +8,7 @@ const resultBox = css`
   width: 95vw;
   height: 150px;
   background-color: white;
-  overflow: scroll;
+  /* overflow: scroll; */
 `;
 
 const resultContent = css`
@@ -37,7 +37,7 @@ function MapSearchResult({ mapStore, goToPlace }) {
     <div css={resultBox}>
       <span>
         <ul>
-          {mapStore.searchResult
+          {/* {mapStore.searchResult
             ? mapStore.searchResult.map((item) => {
                 return (
                   <li
@@ -50,7 +50,7 @@ function MapSearchResult({ mapStore, goToPlace }) {
                   </li>
                 );
               })
-            : null}
+            : null} */}
         </ul>
       </span>
     </div>
