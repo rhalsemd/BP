@@ -13,6 +13,7 @@ function SignUpPhone({
 }) {
   // 전화번호
   const [phone, setPhone] = useState("");
+  const phoneRegExp = /^(\d{2,3})(\d{3,4})(\d{4})$/;
 
   // 인증번호
   const [certificationNumber, setCertificationNumber] = useState("");
@@ -21,7 +22,9 @@ function SignUpPhone({
   const typePhone = (e) => {
     const phoneInput = e.target.value;
     setPhone(phoneInput);
-    phoneTyping(phoneInput);
+    if (phoneRegExp.test(phone)) {
+      phoneTyping(phoneInput);
+    }
   };
 
   // 인증 번호 받기
@@ -54,6 +57,7 @@ function SignUpPhone({
         type="number"
         id="phone"
         required
+        pattern="[0-9]+"
         placeholder="-를 빼고 입력해주세요."
         onChange={typePhone}
       />
@@ -61,12 +65,19 @@ function SignUpPhone({
       {/* 인증 받기 버튼*/}
       <button onClick={getCertification}>인증 받기</button>
 
+      {/* 유효성 검사 */}
+      {phoneRegExp.test(phone) || phone.length === 0 ? null : (
+        <div>
+          <span style={{ color: "red" }}>uncomplete : </span>
+          <span>{"ex) 01012345678"}</span>
+        </div>
+      )}
+
       {/* 인증 번호 입력 */}
       <input
-        type="tel"
+        type="number"
         id="certifiNumber"
         required
-        pattern="[0-9]{11}"
         placeholder="인증번호 입력"
         onChange={typeCertificationTyping}
       />

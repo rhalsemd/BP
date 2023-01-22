@@ -6,12 +6,17 @@ function SignUpId({ signUp, idTyping }) {
   const [ID, setId] = useState("");
 
   // id 정규 표현식
-  const idRegExp = /[!@#%&;'":<>`~.*+?^${}()|[\]\\A-Zㄱ-ㅎ]/g;
+  const idRegExp = /^[a-z]+[a-z0-9]{7,20}$/g;
   // 아이디 입력
   const typeId = (e) => {
     const idInput = e.target.value;
     setId(idInput);
-    idTyping(idInput);
+    if (
+      (idRegExp.test(ID) && ID.length >= 8 && ID.length <= 20) ||
+      ID.length === 0
+    ) {
+      idTyping(idInput);
+    }
   };
   return (
     <div>
@@ -29,15 +34,11 @@ function SignUpId({ signUp, idTyping }) {
       </div>
 
       {/* 아이디 조건 */}
-      {ID.match(idRegExp) ? (
+      {(idRegExp.test(ID) && ID.length >= 8 && ID.length <= 20) ||
+      ID.length === 0 ? null : (
         <div>
           <span style={{ color: "red" }}>uncomplete : </span>
-          <span>영어 소문자 / 숫자만 가능합니다.</span>
-        </div>
-      ) : (ID.length >= 8 && ID.length <= 20) || ID.length === 0 ? null : (
-        <div>
-          <span style={{ color: "red" }}>uncomplete : </span>
-          <span>8~20로 아이디를 설정해주세요</span>
+          <span>영문자로 시작하는 영문자 또는 숫자 8~20자 </span>
         </div>
       )}
     </div>

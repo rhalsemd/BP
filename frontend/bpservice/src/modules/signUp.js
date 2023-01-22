@@ -32,44 +32,21 @@ const emailTyping = createAction(ADD_USER_EMAIL, (email) => email);
 const sendEmail = createAction(SEND_EMAIL);
 const testEmail = createAction(TEST_EMAIL, (data) => data);
 
-const idRegExp = /[!@#%&;'":<>`~.*+?^${}()|[\]\\A-Zㄱ-ㅎ]/g;
-const pwDregExp = /[;'":<>`~.+?{}()|[\]\\A-Z]/g;
-const nameRegExp = /[!@#%&;'":<>`~.*+?^${}()|[\]\\a-zA-Z0-9]/g;
-const emailRegExp = new RegExp(
-  "([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|\"([]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|[[\t -Z^-~]*])"
-);
-
 const initialState = {};
 
 const signUpReducer = handleActions(
   {
     [ADD_USER_ID]: (state, action) => {
-      const idConfirm =
-        !action.payload.match(idRegExp) &&
-        action.payload.length >= 8 &&
-        action.payload.length <= 20
-          ? true
-          : false;
-      return { ...state, userId: action.payload, idConfirm };
+      return { ...state, userId: action.payload, idConfirm: true };
     },
     [ADD_USER_PWD]: (state, action) => {
-      const pwdConfirm =
-        !action.payload.match(pwDregExp) &&
-        action.payload.length >= 8 &&
-        action.payload.length <= 20
-          ? true
-          : false;
-      return { ...state, pwd: action.payload, pwdConfirm };
+      return { ...state, pwd: action.payload, pwdConfirm: true };
     },
     [ADD_USER_RE_PWD]: (state, action) => {
       return { ...state, rePwd: action.payload };
     },
     [ADD_USER_NAME]: (state, action) => {
-      const nameConfirm =
-        !action.payload.match(nameRegExp) && action.payload.length !== 0
-          ? true
-          : false;
-      return { ...state, userName: action.payload, nameConfirm };
+      return { ...state, userName: action.payload, nameConfirm: true };
     },
     [ADD_USER_PHONE_NUM]: (state, action) => {
       return { ...state, phone: action.payload };
@@ -87,16 +64,12 @@ const signUpReducer = handleActions(
       return { ...state, sido: action.payload };
     },
     [ADD_USER_EMAIL]: (state, action) => {
-      const emailConfirm = action.payload.match(emailRegExp) ? true : false;
-      return { ...state, email: action.payload, emailConfirm };
+      return { ...state, email: action.payload, emailConfirm: true };
     },
     [SEND_EMAIL]: (state) => {
-      // console.log("SEND_EMAIL");
-      // console.log(state);
       return state;
     },
     [TEST_EMAIL]: (state, action) => {
-      // console.log(action.payload, "fseafse");
       return { ...state, test: action.payload };
     },
   },
@@ -104,13 +77,9 @@ const signUpReducer = handleActions(
 );
 
 const API = `http://localhost:8080/auth/sendemail`;
-// const API = `https://www.naver.com/`;
 
 function* getEmailApi() {
-  console.log("saga다음 ");
   const { signUp } = yield select((state) => state);
-  console.log(signUp.email);
-  console.log("이메일?????");
   let data = "";
   axios({
     method: "post",
@@ -125,17 +94,11 @@ function* getEmailApi() {
   }).then((res) => {
     data = res.data();
   });
-  // const data = "123";
-  // axios({
-  //   method: "get",
-  //   url: API,
-  // });
 
   yield put({ type: TEST_EMAIL, data: data });
 }
 
 export function* signUpSaga() {
-  console.log("saga 이거왜뜸?");
   yield takeEvery(SEND_EMAIL, getEmailApi);
 }
 

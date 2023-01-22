@@ -13,7 +13,9 @@ function SignUpName({ signUp, nameTyping }) {
   const typeName = (e) => {
     const nameInput = e.target.value;
     setUserName(nameInput);
-    nameTyping(nameInput);
+    if (!userName.match(nameRegExp) || userName.length === 0) {
+      nameTyping(nameInput);
+    }
   };
 
   return (
