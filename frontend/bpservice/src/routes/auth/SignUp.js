@@ -39,10 +39,10 @@ const title = css`
   text-align: center;
 `;
 
-function SignUp({ signUp, getApi }) {
+function SignUp({ signUp, sighUpRequirement }) {
   const setSignUp = (e) => {
     e.preventDefault();
-    getApi();
+    sighUpRequirement();
   };
 
   return (
@@ -107,8 +107,8 @@ const mapStateToProps = ({ signUp }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getApi() {
-      dispatch(userInfo.getApi());
+    sighUpRequirement() {
+      dispatch(userInfo.sighUpRequirement());
     },
   };
 };

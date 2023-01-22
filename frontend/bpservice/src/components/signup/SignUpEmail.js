@@ -3,29 +3,20 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { userInfo } from "../../modules/signUp";
 
-function SignUpEmail({ signUp, emailTyping, sendEmail }) {
+function SignUpEmail({ signUp, emailTyping }) {
   const [email, setEmail] = useState("");
 
   // email 정규 표현식
-  const emailRegExp = new RegExp(
-    "([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|\"([]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|[[\t -Z^-~]*])"
-  );
+  const emailRegExp =
+    /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
 
   // email 입력
   const typeEmail = (e) => {
     const emailInput = e.target.value;
+    setEmail(emailInput);
     if (emailRegExp.test(emailInput)) {
-      setEmail(emailInput);
       emailTyping(emailInput);
     }
-  };
-
-  // email 인증 확인
-  const send = (e) => {
-    e.preventDefault();
-    // console.log(signUp);
-    console.log("여기서 시작 눌리면 안됨 처음에");
-    sendEmail();
   };
 
   return (
@@ -41,10 +32,13 @@ function SignUpEmail({ signUp, emailTyping, sendEmail }) {
         onChange={typeEmail}
       />
       <div>
-        <button onClick={send}>test</button>
+        {emailRegExp.test(email) || email.length === 0 ? null : (
+          <div>
+            <span style={{ color: "red" }}>uncomplete : </span>
+            <span>{"ex) 이메일@EXAMPLE.COM"}</span>
+          </div>
+        )}
       </div>
-      <input text="number" />
-      <button>확인</button>
     </div>
   );
 }
@@ -59,7 +53,6 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(userInfo.emailTyping(email));
     },
     sendEmail() {
-      console.log("디스패치센ㄷ드이메일");
       dispatch(userInfo.sendEmail());
     },
   };
