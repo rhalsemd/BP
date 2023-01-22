@@ -2,7 +2,7 @@ import { Suspense, lazy } from "react";
 
 import { useState } from "react";
 import { Map } from "react-kakao-maps-sdk";
-import styled from "../style/Map.module.css";
+import CurrentBtn from "../components/kakaoMap/CurrentBtn";
 // import EventMarkerContainer from "../components/kakaoMap/EventMarkerContainer";
 const EventMarkerContainer = lazy(() =>
   import("../components/kakaoMap/EventMarkerContainer")
@@ -31,11 +31,10 @@ function KakaoMap() {
       isOpen: false,
     },
   ];
-  const [location, setLocation] = useState({ lat: 33.450705, lng: 126.570677 });
-
-  const currentBtn = () => {
-    console.log("wqrew");
-  };
+  const [mapLocation, setMapLocation] = useState({
+    lat: 33.450705,
+    lng: 126.570677,
+  });
 
   return (
     <>
@@ -49,7 +48,7 @@ function KakaoMap() {
         <Map // 지도를 표시할 Container
           id={`map`}
           // 지도의 중심좌표
-          center={location}
+          center={mapLocation}
           style={{
             // 지도의 크기
             width: "100%",
@@ -66,9 +65,7 @@ function KakaoMap() {
               />
             </div>
           ))}
-          <button className={styled.currentBtn} onClick={currentBtn}>
-            +
-          </button>
+          <CurrentBtn />
         </Map>
       </Suspense>
     </>

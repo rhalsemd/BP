@@ -1,6 +1,7 @@
 import { memo, useState } from "react";
 import { MapMarker, CustomOverlayMap, useMap } from "react-kakao-maps-sdk";
 import styled from "../../style/EventMarkerContainer.module.css";
+import markerImg from "../../style/umbrella.png";
 
 function EventMarkerContainer({ position, index, positions }) {
   const [isOpen, setIsOpen] = useState(Array(positions.length).fill(false));
@@ -10,6 +11,19 @@ function EventMarkerContainer({ position, index, positions }) {
     <>
       <MapMarker
         position={position.latlng}
+        image={{
+          src: markerImg,
+          size: {
+            width: 64,
+            height: 60,
+          },
+          options: {
+            offset: {
+              x: 34.6,
+              y: 60,
+            },
+          },
+        }}
         onClick={(marker) => {
           map.panTo(marker.getPosition());
           setIsOpen((position) => {
