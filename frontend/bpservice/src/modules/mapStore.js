@@ -1,40 +1,52 @@
+import axios from "axios";
 import { createAction, handleActions } from "redux-actions";
+import { call, put, takeEvery } from "redux-saga/effects";
 
-const SEARCH_VALUE = "map/SEARCH_VALUE";
-const SEARCH_RESULT = "map/SEARCH_RESULT";
-const GO_TO_CURRENT = "map/GO_TO_CURRENT";
-// const COMPLETE_PLACE = "map/COMPLETE_PLACE";
+const GET_MAP_INFO = "map/GET_MAP_INFO";
+const SET_MAP_INFO = "map/SET_MAP_INFO";
+const CURRENT_MARKER_INFO = "map/CURRENT_MARKER_INFO";
 
-const searchValue = createAction(SEARCH_VALUE, (input) => input);
-const searchResult = createAction(SEARCH_RESULT, (result) => result);
-const goToCurrent = createAction(GO_TO_CURRENT, (location) => location);
-// const completePlace = createAction(COMPLETE_PLACE, (state) => state);
+const getMapInfo = createAction(GET_MAP_INFO, () => undefined);
+const setMapInfo = createAction(SET_MAP_INFO, (data) => data);
+const currentMarkerInfo = createAction(CURRENT_MARKER_INFO, (info) => info);
+
+function* setApi() {
+  const API = `https://jsonplaceholder.typicode.com/todos/1`;
+  try {
+    const get = yield call(() =>
+      axios({
+        method: "get",
+        url: API,
+      })
+    );
+    yield put({ type: SET_MAP_INFO, payload: get.data });
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export function* mapSaga() {
+  yield takeEvery(GET_MAP_INFO, setApi);
+}
 
 const initialState = {};
 
 const mapReducer = handleActions(
   {
-    [SEARCH_VALUE]: (state, action) => {
-      return { ...state, searchValue: action.payload };
+    [SET_MAP_INFO]: (state, action) => {
+      return { ...state, data: action.payload };
     },
-    [SEARCH_RESULT]: (state, action) => {
-      return { ...state, searchResult: action.payload };
+    [CURRENT_MARKER_INFO]: (state, action) => {
+      return { ...state, currentInfo: action.payload };
     },
-    [GO_TO_CURRENT]: (state, action) => {
-      return { ...state, location: action.payload };
-    },
-    // [COMPLETE_PLACE]: (state, action) => {
-    //   return { ...state, isLocation: action.payload };
-    // },
   },
   initialState
 );
 
 export const mapInfo = {
-  searchValue,
-  searchResult,
-  goToCurrent,
-  // completePlace,
+  getMapInfo,
+  setMapInfo,
+  currentMarkerInfo,
 };
 
 export default mapReducer;

@@ -1,15 +1,21 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect } from "react";
 
 import { useState } from "react";
 import { Map } from "react-kakao-maps-sdk";
-import BackBtn from "../components/kakaoMap/BackBtn";
-import CurrentBtn from "../components/kakaoMap/CurrentBtn";
+import { connect } from "react-redux";
+import { mapInfo } from "../modules/mapStore";
+// import BackBtn from "../components/kakaoMap/BackBtn";
+const BackBtn = lazy(() => import("../components/kakaoMap/BackBtn"));
+// import CurrentBtn from "../components/kakaoMap/CurrentBtn";
+const CurrentBtn = lazy(() => import("../components/kakaoMap/CurrentBtn"));
+// import MarkerInfo from "../components/kakaoMap/MarkerInfo";
+const MarkerInfo = lazy(() => import("../components/kakaoMap/MarkerInfo"));
 // import EventMarkerContainer from "../components/kakaoMap/EventMarkerContainer";
 const EventMarkerContainer = lazy(() =>
   import("../components/kakaoMap/EventMarkerContainer")
 );
 
-function KakaoMap() {
+function KakaoMap({ mapStore, getMapInfo }) {
   const positions = [
     {
       title: "카카오",
@@ -36,6 +42,10 @@ function KakaoMap() {
     lat: 33.450705,
     lng: 126.570677,
   });
+
+  useEffect(() => {
+    getMapInfo();
+  }, []);
 
   return (
     <>
@@ -68,10 +78,23 @@ function KakaoMap() {
           ))}
           <BackBtn />
           <CurrentBtn />
+          <MarkerInfo />
         </Map>
       </Suspense>
     </>
   );
 }
 
-export default KakaoMap;
+const mapStateToProps = ({ mapStore }) => {
+  return { mapStore };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getMapInfo() {
+      dispatch(mapInfo.getMapInfo());
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(KakaoMap);

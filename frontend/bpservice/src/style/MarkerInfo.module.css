@@ -1,0 +1,17 @@
+.outerBox {
+  align-items: center;
+  justify-content: center;
+}
+
+.infoBox {
+  width: 90vw;
+  height: 18vh;
+  border: 1px, beige solid;
+  background-color: beige;
+  position: fixed;
+  top: 78vh;
+  z-index: 3;
+  margin-left: 5vw;
+  display: flex;
+  justify-content: space-around;
+}

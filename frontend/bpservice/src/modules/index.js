@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 import signUp from "./signUp";
-import mapStore from "./mapStore";
+import mapStore, { mapSaga } from "./mapStore";
 import { all } from "redux-saga/effects";
 
 export const rootReducer = combineReducers({
@@ -9,7 +9,7 @@ export const rootReducer = combineReducers({
 });
 
 export function* rootSaga() {
-  yield all([]);
+  yield all([mapSaga()]);
 }
 
 export default rootReducer;

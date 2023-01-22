@@ -1,9 +1,16 @@
 import { memo, useState } from "react";
 import { MapMarker, CustomOverlayMap, useMap } from "react-kakao-maps-sdk";
+import { connect } from "react-redux";
+import { mapInfo } from "../../modules/mapStore";
 import styled from "../../style/EventMarkerContainer.module.css";
 import markerImg from "../../style/umbrella.png";
 
-function EventMarkerContainer({ position, index, positions }) {
+function EventMarkerContainer({
+  position,
+  index,
+  positions,
+  currentMarkerInfo,
+}) {
   const [isOpen, setIsOpen] = useState(Array(positions.length).fill(false));
   const map = useMap();
 
@@ -26,10 +33,11 @@ function EventMarkerContainer({ position, index, positions }) {
         }}
         onClick={(marker) => {
           map.panTo(marker.getPosition());
-          setIsOpen((position) => {
-            position[index] = true;
-            return [...position];
+          setIsOpen((isOpen) => {
+            isOpen[index] = true;
+            return [...isOpen];
           });
+          currentMarkerInfo(position);
         }}
       />
       {isOpen[index] && (
@@ -41,9 +49,9 @@ function EventMarkerContainer({ position, index, positions }) {
                 <div
                   className={styled.close}
                   onClick={() => {
-                    setIsOpen((position) => {
-                      position[index] = false;
-                      return [...position];
+                    setIsOpen((isOpen) => {
+                      isOpen[index] = false;
+                      return [...isOpen];
                     });
                   }}
                   title="닫기"
@@ -86,4 +94,12 @@ function EventMarkerContainer({ position, index, positions }) {
   );
 }
 
-export default memo(EventMarkerContainer);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    currentMarkerInfo(info) {
+      dispatch(mapInfo.currentMarkerInfo(info));
+    },
+  };
+};
+
+export default connect(null, mapDispatchToProps)(memo(EventMarkerContainer));
