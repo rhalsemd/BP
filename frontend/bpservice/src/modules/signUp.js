@@ -13,6 +13,7 @@ const ADD_USER_SIDO = "signUp/ADD_USER_SIDO";
 const ADD_USER_EMAIL = "signUp/ADD_USER_EMAIL";
 const GET_CERTIFYCATION = "signUp/GET_CERTIFYCATION";
 const SET_CERTIFYCATION = "signUp/SET_CERTIFYCATION";
+const SIGN_UP_REQUIREMENT = "signUp/SIGN_UP_REQUIREMENT";
 
 const idTyping = createAction(ADD_USER_ID, (userId) => userId);
 const pwdTyping = createAction(ADD_USER_PWD, (pwd) => pwd);
@@ -31,6 +32,7 @@ const sidoTyping = createAction(ADD_USER_SIDO, (sido) => sido);
 const emailTyping = createAction(ADD_USER_EMAIL, (email) => email);
 const getCertification = createAction(GET_CERTIFYCATION, () => undefined);
 const setCertification = createAction(SET_CERTIFYCATION, (data) => data);
+const sighUpRequirement = createAction(SIGN_UP_REQUIREMENT, () => undefined);
 
 // 인증번호 요청 saga
 function* getCertifi() {
@@ -49,8 +51,27 @@ function* getCertifi() {
   }
 }
 
+// 회원가입 요청 Saga
+function* getSignUp() {
+  const API = `https://jsonplaceholder.typicode.com/todos/1`;
+  try {
+    const get = yield call(() => {
+      axios({
+        method: "post",
+        url: API,
+        data: {},
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    });
+    console.log(get);
+  } catch {}
+}
+
 export function* certifiSaga() {
   yield takeEvery(GET_CERTIFYCATION, getCertifi);
+  yield takeEvery(SIGN_UP_REQUIREMENT, getSignUp);
 }
 
 const initialState = {};
@@ -105,6 +126,7 @@ export const userInfo = {
   sidoTyping,
   emailTyping,
   getCertification,
+  sighUpRequirement,
 };
 
 export default signUpReducer;
