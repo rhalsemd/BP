@@ -1,0 +1,6 @@
+.currentBtn {
+  position: fixed;
+  top: 90vh;
+  margin-left: 85vw;
+  z-index: 2;
+}
