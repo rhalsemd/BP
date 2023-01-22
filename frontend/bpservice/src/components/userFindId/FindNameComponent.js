@@ -10,6 +10,8 @@ function FindNameComponent({ findUserName, setFindUserName }) {
       <input
         type="text"
         id="userName"
+        autoComplete="off"
+        required
         placeholder="이름"
         onChange={nameOnChange}
       />

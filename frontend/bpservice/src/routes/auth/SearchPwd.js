@@ -1,13 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-
 import { useState } from "react";
 import { connect } from "react-redux";
 import Footer from "../../components/Footer";
 import Nav from "../../components/Nav";
-import FindEmailComponent from "../../components/userFindId/FindEmailComponent";
-import FindNameComponent from "../../components/userFindId/FindNameComponent";
-import { findIdInfo } from "../../modules/findId";
+import FindPwdEmailComponent from "../../components/userFindPwd/FindPwdEmailComponent";
+import FindPwdIdComponent from "../../components/userFindPwd/FindPwdIdComponent";
+import { findPwdInfo } from "../../modules/findPwd";
 
 const searchIdArea = css`
   width: 100%;
@@ -32,18 +31,15 @@ const title = css`
   text-align: center;
 `;
 
-function SeachId({ setFindIdInfo, getFindId }) {
+function SearchPwd({ setFindPwdInfo, getFindPwd }) {
+  const [Id, setId] = useState("");
   const [email, setEmail] = useState("");
-  const [findUserName, setFindUserName] = useState("");
 
-  const findId = () => {
-    if (email && findUserName) {
-      setFindIdInfo({ email, findUserName });
-      getFindId();
-    } else {
-      alert("아이디와 이름을 입력해주세요.");
-    }
+  const findPwd = () => {
+    setFindPwdInfo({ Id, email });
+    getFindPwd();
   };
+
   return (
     <div>
       <header>
@@ -54,20 +50,15 @@ function SeachId({ setFindIdInfo, getFindId }) {
         <div css={searchModalPosition}>
           <div css={searchModal}>
             <div css={title}>
-              <h1>아이디 찾기</h1>
+              <h1>비밀번호 찾기</h1>
 
               {/* 아이디 */}
-              <FindEmailComponent email={email} setEmail={setEmail} />
-
-              {/* 이름 */}
-              <FindNameComponent
-                findUserName={findUserName}
-                setFindUserName={setFindUserName}
-              />
-
-              {/* 아이디 찾기 버튼 */}
+              <FindPwdIdComponent Id={Id} setId={setId} />
+              {/* 이메일 */}
+              <FindPwdEmailComponent email={email} setEmail={setEmail} />
+              {/* 비밀번호 찾기 버튼 */}
               <div>
-                <button onClick={findId}>아이디 찾기</button>
+                <button onClick={findPwd}>비밀번호 찾기</button>
               </div>
             </div>
           </div>
@@ -83,13 +74,13 @@ function SeachId({ setFindIdInfo, getFindId }) {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setFindIdInfo(info) {
-      dispatch(findIdInfo.setFindIdInfo(info));
+    setFindPwdInfo(info) {
+      dispatch(findPwdInfo.setFindPwdInfo(info));
     },
-    getFindId() {
-      dispatch(findIdInfo.getFindId());
+    getFindPwd() {
+      dispatch(findPwdInfo.getFindPwd());
     },
   };
 };
 
-export default connect(null, mapDispatchToProps)(SeachId);
+export default connect(null, mapDispatchToProps)(SearchPwd);

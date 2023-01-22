@@ -67,7 +67,7 @@ function Login({ userLogin, loginRequest, setLoginInfo }) {
 
               {/* 찾기 */}
               <div>
-                <Link to="">비밀번호 찾기</Link> |{" "}
+                <Link to="/bp/search/pwd">비밀번호 찾기</Link> |{" "}
                 <Link to="/bp/search/id">아이디 찾기</Link> |{" "}
                 <Link to="/bp/signup">회원가입</Link>
               </div>

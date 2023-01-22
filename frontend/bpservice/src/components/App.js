@@ -13,8 +13,9 @@ import Useage from "../routes/admin/Useage";
 import History from "../routes/admin/History";
 import UserToU from "../routes/auth/UserToU";
 import CompletePage from "../routes/auth/CompletePage";
-import SeachId from "../routes/auth/SearchId";
+import SearchId from "../routes/auth/SearchId";
 import KakaoMap from "../routes/KakaoMap";
+import SearchPwd from "../routes/auth/SearchPwd";
 
 export const GlobalStyle = css`
   body {
@@ -32,8 +33,9 @@ function App() {
         <Route path="/bp/signup" element={<SignUp />}></Route>
         <Route path="/bp/terms" element={<UserToU />}></Route>
         <Route path="/bp/complete" element={<CompletePage />}></Route>
-        <Route path="/bp/search/id" element={<SeachId />}></Route>
+        <Route path="/bp/search/id" element={<SearchId />}></Route>
         <Route path="/bp/map" element={<KakaoMap />}></Route>
+        <Route path="/bp/search/pwd" element={<SearchPwd />}></Route>
 
         <Route path="/admin" element={<LoginAdmin />} />
         <Route path="/admin/total_income" element={<TotalChart />} />

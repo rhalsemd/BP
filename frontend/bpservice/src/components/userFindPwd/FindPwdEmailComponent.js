@@ -1,4 +1,4 @@
-function FindEmailComponent({ email, setEmail }) {
+function FindPwdEmailComponent({ email, setEmail }) {
   const emailOnChange = (e) => {
     const inputValue = e.target.value;
     setEmail(inputValue);
@@ -6,10 +6,10 @@ function FindEmailComponent({ email, setEmail }) {
 
   return (
     <div>
-      <label htmlFor="userEmail">email : </label>
+      <label htmlFor="userEamil">email : </label>
       <input
         type="email"
-        id="userEmail"
+        id="userEamil"
         autoComplete="off"
         required
         placeholder="이메일"
@@ -19,4 +19,4 @@ function FindEmailComponent({ email, setEmail }) {
   );
 }
 
-export default FindEmailComponent;
+export default FindPwdEmailComponent;
