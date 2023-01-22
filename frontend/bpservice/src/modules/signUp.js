@@ -1,5 +1,5 @@
 import { createAction, handleActions } from "redux-actions";
-import { call, fork, put, takeEvery, select } from "redux-saga/effects";
+import { call, fork, put, takeEvery, select, take } from "redux-saga/effects";
 import axios from "axios";
 
 const ADD_USER_ID = "signUp/ADD_USER_ID";
@@ -11,8 +11,8 @@ const ADD_USER_CERTIFYCATION = "signUp/ADD_USER_CERTIFYCATION";
 const ADD_USER_IS_CERTIFYCATION = "signUp/ADD_USER_IS_CERTIFYCATION";
 const ADD_USER_SIDO = "signUp/ADD_USER_SIDO";
 const ADD_USER_EMAIL = "signUp/ADD_USER_EMAIL";
-const SEND_EMAIL = "signUp/SEND_EMAIL";
-const TEST_EMAIL = "signUp/TEST_EMAIL";
+const GET_CERTIFYCATION = "signUp/GET_CERTIFYCATION";
+const SET_CERTIFYCATION = "signUp/SET_CERTIFYCATION";
 
 const idTyping = createAction(ADD_USER_ID, (userId) => userId);
 const pwdTyping = createAction(ADD_USER_PWD, (pwd) => pwd);
@@ -29,8 +29,29 @@ const isCertificationTyping = createAction(
 );
 const sidoTyping = createAction(ADD_USER_SIDO, (sido) => sido);
 const emailTyping = createAction(ADD_USER_EMAIL, (email) => email);
-const sendEmail = createAction(SEND_EMAIL);
-const testEmail = createAction(TEST_EMAIL, (data) => data);
+const getCertification = createAction(GET_CERTIFYCATION, () => undefined);
+const setCertification = createAction(SET_CERTIFYCATION, (data) => data);
+
+// 인증번호 요청 saga
+function* getCertifi() {
+  const API = `https://jsonplaceholder.typicode.com/todos/1`;
+  try {
+    const get = yield call(() => {
+      return axios({
+        method: "get",
+        url: API,
+      });
+    });
+    console.log(get.data, "인증번호 달라");
+    yield put({ type: SET_CERTIFYCATION, payload: get.data });
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export function* certifiSaga() {
+  yield takeEvery(GET_CERTIFYCATION, getCertifi);
+}
 
 const initialState = {};
 
@@ -66,41 +87,12 @@ const signUpReducer = handleActions(
     [ADD_USER_EMAIL]: (state, action) => {
       return { ...state, email: action.payload, emailConfirm: true };
     },
-    [SEND_EMAIL]: (state) => {
-      return state;
-    },
-    [TEST_EMAIL]: (state, action) => {
-      return { ...state, test: action.payload };
+    [SET_CERTIFYCATION]: (state, action) => {
+      return { ...state, certifyNum: action.payload };
     },
   },
   initialState
 );
-
-const API = `http://localhost:8080/auth/sendemail`;
-
-function* getEmailApi() {
-  const { signUp } = yield select((state) => state);
-  let data = "";
-  axios({
-    method: "post",
-    url: API,
-    data: {
-      email: signUp.email,
-    },
-    headers: {
-      "Content-Type ": "application/json",
-      "Access-Control-Allow-Origin": "*",
-    },
-  }).then((res) => {
-    data = res.data();
-  });
-
-  yield put({ type: TEST_EMAIL, data: data });
-}
-
-export function* signUpSaga() {
-  yield takeEvery(SEND_EMAIL, getEmailApi);
-}
 
 export const userInfo = {
   idTyping,
@@ -112,7 +104,7 @@ export const userInfo = {
   isCertificationTyping,
   sidoTyping,
   emailTyping,
-  sendEmail,
+  getCertification,
 };
 
 export default signUpReducer;

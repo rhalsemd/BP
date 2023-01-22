@@ -7,7 +7,6 @@ function SignUpRePwd({ signUp, rePwdTyping }) {
   // 비밀번호 확인
   const typeRePwd = (e) => {
     const rePwdInput = e.target.value;
-    console.log(signUp.pwd);
     if (rePwdInput !== signUp.pwd && rePwdInput) {
       rePwdTyping(true);
     }

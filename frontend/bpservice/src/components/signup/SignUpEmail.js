@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { userInfo } from "../../modules/signUp";
 
-function SignUpEmail({ signUp, emailTyping, sendEmail }) {
+function SignUpEmail({ signUp, emailTyping }) {
   const [email, setEmail] = useState("");
 
   // email 정규 표현식
@@ -17,12 +17,6 @@ function SignUpEmail({ signUp, emailTyping, sendEmail }) {
     if (emailRegExp.test(emailInput)) {
       emailTyping(emailInput);
     }
-  };
-
-  // email 인증 확인
-  const send = (e) => {
-    e.preventDefault();
-    sendEmail();
   };
 
   return (
@@ -44,7 +38,6 @@ function SignUpEmail({ signUp, emailTyping, sendEmail }) {
             <span>{"ex) 이메일@EXAMPLE.COM"}</span>
           </div>
         )}
-        <button onClick={send}>test</button>
       </div>
     </div>
   );
