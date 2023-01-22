@@ -2,6 +2,7 @@ import { Suspense, lazy } from "react";
 
 import { useState } from "react";
 import { Map } from "react-kakao-maps-sdk";
+import BackBtn from "../components/kakaoMap/BackBtn";
 import CurrentBtn from "../components/kakaoMap/CurrentBtn";
 // import EventMarkerContainer from "../components/kakaoMap/EventMarkerContainer";
 const EventMarkerContainer = lazy(() =>
@@ -65,6 +66,7 @@ function KakaoMap() {
               />
             </div>
           ))}
+          <BackBtn />
           <CurrentBtn />
         </Map>
       </Suspense>

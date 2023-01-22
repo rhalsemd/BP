@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useMap } from "react-kakao-maps-sdk";
 
-import styled from "../../style/CurrentBtn.module.css";
+import styled from "../../style/MapBtn.module.css";
 
 const { kakao } = window;
 
