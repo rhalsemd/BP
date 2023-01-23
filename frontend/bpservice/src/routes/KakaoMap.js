@@ -1,4 +1,4 @@
-import { Suspense, lazy, useEffect } from "react";
+import { Suspense, lazy, useEffect, useCallback } from "react";
 
 import { useState } from "react";
 import { Map } from "react-kakao-maps-sdk";
@@ -45,43 +45,41 @@ function KakaoMap({ getMapInfo }) {
 
   useEffect(() => {
     getMapInfo();
-  });
+  }, []);
 
   return (
-    <>
-      <Suspense
-        fallback={
-          <div>
-            <h1>Loding</h1>
-          </div>
-        }
+    <Suspense
+      fallback={
+        <div>
+          <h1>Loding</h1>
+        </div>
+      }
+    >
+      <Map // 지도를 표시할 Container
+        id={`map`}
+        // 지도의 중심좌표
+        center={mapLocation}
+        style={{
+          // 지도의 크기
+          width: "100%",
+          height: "100vh",
+        }}
+        level={1} // 지도의 확대 레벨
       >
-        <Map // 지도를 표시할 Container
-          id={`map`}
-          // 지도의 중심좌표
-          center={mapLocation}
-          style={{
-            // 지도의 크기
-            width: "100%",
-            height: "100vh",
-          }}
-          level={1} // 지도의 확대 레벨
-        >
-          {positions.map((position, index) => (
-            <div key={`${position.title}-${position.latlng}`}>
-              <EventMarkerContainer
-                position={position}
-                index={index}
-                positions={positions}
-              />
-            </div>
-          ))}
-          <BackBtn />
-          <CurrentBtn />
-          <MarkerInfo />
-        </Map>
-      </Suspense>
-    </>
+        {positions.map((position, index) => (
+          <div key={`${position.title}-${position.latlng}`}>
+            <EventMarkerContainer
+              position={position}
+              index={index}
+              positions={positions}
+            />
+          </div>
+        ))}
+        <BackBtn />
+        <CurrentBtn />
+        <MarkerInfo />
+      </Map>
+    </Suspense>
   );
 }
 

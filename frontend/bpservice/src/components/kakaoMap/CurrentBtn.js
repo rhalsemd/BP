@@ -44,6 +44,7 @@ function CurrentBtn() {
       option
     );
   };
+
   return (
     <>
       <button className={styled.currentBtn} onClick={currentBtn}>
