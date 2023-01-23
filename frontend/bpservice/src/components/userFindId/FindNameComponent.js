@@ -1,4 +1,4 @@
-function FindNameComponent({ findUserName, setFindUserName }) {
+function FindNameComponent({ setFindUserName }) {
   const nameOnChange = (e) => {
     const inputValue = e.target.value;
     setFindUserName(inputValue);

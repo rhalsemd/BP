@@ -1,4 +1,4 @@
-function PwdComponent({ pwd, setPwd }) {
+function PwdComponent({ setPwd }) {
   const pwdTyping = (e) => {
     const pwdInput = e.target.value;
     setPwd(pwdInput);

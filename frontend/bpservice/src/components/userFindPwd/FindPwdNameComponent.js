@@ -1,4 +1,4 @@
-function FindPwdNameComponent({ userName, setUserName }) {
+function FindPwdNameComponent({ setUserName }) {
   const nameOnChange = (e) => {
     const inputValue = e.target.value;
     setUserName(inputValue);

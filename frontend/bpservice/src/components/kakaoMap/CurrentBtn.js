@@ -18,8 +18,6 @@ function CurrentBtn() {
       enableHighAccuracy: true,
     };
 
-    console.log(markerArr);
-
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = {

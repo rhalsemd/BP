@@ -63,7 +63,7 @@ function Login({ userLogin, loginRequest, setLoginInfo }) {
               <IdComponent id={id} setId={setId} />
 
               {/* 비밀번호 */}
-              <PwdComponent pwd={pwd} setPwd={setPwd} />
+              <PwdComponent setPwd={setPwd} />
 
               {/* 찾기 */}
               <div>

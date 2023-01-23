@@ -10,14 +10,17 @@ function ModifyPwdNext({ next, setNext, pwdRegExp, current, setIsNext }) {
   };
   return (
     <div>
-      <label htmlFor="nextPwd">변경 비밀번호 : </label>
-      <input
-        type="password"
-        id="nextPwd"
-        required
-        placeholder="변경 비밀번호"
-        onChange={onChange}
-      />
+      <form>
+        <label htmlFor="nextPwd">변경 비밀번호 : </label>
+        <input
+          type="password"
+          id="nextPwd"
+          autoComplete="off"
+          required
+          placeholder="변경 비밀번호"
+          onChange={onChange}
+        />
+      </form>
     </div>
   );
 }

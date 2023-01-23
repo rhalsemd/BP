@@ -17,14 +17,17 @@ function ModifyPwdConfirm({
 
   return (
     <div>
-      <label htmlFor="nextPwdConfirm">변경 비밀번호 확인 : </label>
-      <input
-        type="password"
-        id="nextPwdConfirm"
-        required
-        placeholder="변경 비밀번호 확인"
-        onChange={onChange}
-      />
+      <form>
+        <label htmlFor="nextPwdConfirm">변경 비밀번호 확인 : </label>
+        <input
+          type="password"
+          id="nextPwdConfirm"
+          autoComplete="off"
+          required
+          placeholder="변경 비밀번호 확인"
+          onChange={onChange}
+        />
+      </form>
     </div>
   );
 }

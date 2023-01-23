@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { userInfo } from "../../modules/signUp";
 
-function SignUpName({ signUp, nameTyping }) {
+function SignUpName({ nameTyping }) {
   const [userName, setUserName] = useState("");
 
   // userName 정규 표현식

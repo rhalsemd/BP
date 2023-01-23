@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
-import { jsx, css } from "@emotion/react";
+import { css } from "@emotion/react";
 
-import React from "react";
 // import styled from "./Nav.module.css";
 
 function Nav() {

@@ -35,7 +35,7 @@ const title = css`
   text-align: center;
 `;
 
-function ModifyPwd({ setModifyPwd }) {
+function ModifyPwd({ setModifyPwd, setNewPwd }) {
   const [current, setCurrent] = useState("");
   const [next, setNext] = useState("");
   const [isNext, setIsNext] = useState(false);
@@ -52,9 +52,8 @@ function ModifyPwd({ setModifyPwd }) {
       next,
     };
     setModifyPwd(info);
+    setNewPwd();
   };
-
-  console.log(isConfirm, isNext);
 
   return (
     <div>
@@ -81,7 +80,12 @@ function ModifyPwd({ setModifyPwd }) {
               />
               {/* 비밀번호 조건 */}
               {(pwdRegExp.test(next) && next !== current) ||
-              next.length === 0 ? null : (
+              next.length === 0 ? null : next === current ? (
+                <div>
+                  <span style={{ color: "red" }}>uncomplete : </span>
+                  <span>현재 비밀번호와 같습니다.</span>
+                </div>
+              ) : (
                 <div>
                   <span style={{ color: "red" }}>uncomplete : </span>
                   <span>8~20로 비밀번호를 설정해주세요</span>
@@ -103,7 +107,7 @@ function ModifyPwd({ setModifyPwd }) {
               ) : null}
 
               {/* 수정 버튼 */}
-              {isNext && isConfirm && next === confirmPwd ? (
+              {current && isNext && isConfirm && next === confirmPwd ? (
                 <button onClick={requestModify}>수정하기</button>
               ) : null}
             </div>
@@ -122,6 +126,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setModifyPwd(info) {
       dispatch(modifyPwdInfo.setModifyPwd(info));
+    },
+    setNewPwd() {
+      dispatch(modifyPwdInfo.setNewPwd());
     },
   };
 };

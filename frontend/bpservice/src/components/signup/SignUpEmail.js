@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { userInfo } from "../../modules/signUp";
 
-function SignUpEmail({ signUp, emailTyping }) {
+function SignUpEmail({ emailTyping }) {
   const [email, setEmail] = useState("");
   // email 정규 표현식
   const emailRegExp =

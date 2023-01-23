@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { connect } from "react-redux";
 import { userInfo } from "../../modules/signUp";
 
-function SignUpAddress({ signUp, sidoTyping }) {
+function SignUpAddress({ sidoTyping }) {
   // 지역 객체
   const [cityObj, setCityObj] = useState({});
 
@@ -82,7 +82,7 @@ function SignUpAddress({ signUp, sidoTyping }) {
   );
 }
 
-const mapStateToProps = ({signUp}) => {
+const mapStateToProps = ({ signUp }) => {
   return { signUp };
 };
 

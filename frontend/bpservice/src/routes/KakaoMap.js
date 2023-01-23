@@ -45,7 +45,7 @@ function KakaoMap({ getMapInfo }) {
 
   useEffect(() => {
     getMapInfo();
-  }, []);
+  });
 
   return (
     <>

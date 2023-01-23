@@ -1,4 +1,4 @@
-function FindEmailComponent({ email, setEmail }) {
+function FindEmailComponent({ setEmail }) {
   const emailOnChange = (e) => {
     const inputValue = e.target.value;
     setEmail(inputValue);

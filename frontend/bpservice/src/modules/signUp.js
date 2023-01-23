@@ -1,5 +1,5 @@
 import { createAction, handleActions } from "redux-actions";
-import { call, fork, put, takeEvery, select, take } from "redux-saga/effects";
+import { call, put, takeEvery } from "redux-saga/effects";
 import axios from "axios";
 
 const ADD_USER_ID = "signUp/ADD_USER_ID";

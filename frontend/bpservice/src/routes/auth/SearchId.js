@@ -57,13 +57,10 @@ function SeachId({ setFindIdInfo, getFindId }) {
               <h1>아이디 찾기</h1>
 
               {/* 아이디 */}
-              <FindEmailComponent email={email} setEmail={setEmail} />
+              <FindEmailComponent setEmail={setEmail} />
 
               {/* 이름 */}
-              <FindNameComponent
-                findUserName={findUserName}
-                setFindUserName={setFindUserName}
-              />
+              <FindNameComponent setFindUserName={setFindUserName} />
 
               {/* 아이디 찾기 버튼 */}
               <div>

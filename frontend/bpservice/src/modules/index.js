@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 import signUp, { certifiSaga } from "./signUp";
 import mapStore, { mapSaga } from "./mapStore";
-import modifyPwd from "./modifyPwd";
+import modifyPwd, { modifyPwdSaga } from "./modifyPwd";
 import userLogin, { loginSaga } from "./userLogin";
 import findIdReducer, { findIdSaga } from "./findId";
 import findPwdReducer, { findPwdSaga } from "./findPwd";
@@ -23,6 +23,7 @@ export function* rootSaga() {
     loginSaga(),
     findIdSaga(),
     findPwdSaga(),
+    modifyPwdSaga(),
   ]);
 }
 

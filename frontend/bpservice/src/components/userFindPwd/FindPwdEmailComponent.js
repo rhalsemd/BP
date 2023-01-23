@@ -1,4 +1,4 @@
-function FindPwdEmailComponent({ email, setEmail }) {
+function FindPwdEmailComponent({ setEmail }) {
   const emailOnChange = (e) => {
     const inputValue = e.target.value;
     setEmail(inputValue);

@@ -38,8 +38,12 @@ function SearchPwd({ setFindPwdInfo, getFindPwd }) {
   const [userName, setUserName] = useState("");
 
   const findPwd = () => {
-    setFindPwdInfo({ Id, email, userName });
-    getFindPwd();
+    if (Id && email && userName) {
+      setFindPwdInfo({ Id, email, userName });
+      getFindPwd();
+    } else {
+      alert("내용을 입력해주세요.");
+    }
   };
 
   return (
@@ -55,16 +59,13 @@ function SearchPwd({ setFindPwdInfo, getFindPwd }) {
               <h1>비밀번호 찾기</h1>
 
               {/* 아이디 */}
-              <FindPwdIdComponent Id={Id} setId={setId} />
+              <FindPwdIdComponent setId={setId} />
 
               {/* 이름 */}
-              <FindPwdNameComponent
-                userName={userName}
-                setUserName={setUserName}
-              />
+              <FindPwdNameComponent setUserName={setUserName} />
 
               {/* 이메일 */}
-              <FindPwdEmailComponent email={email} setEmail={setEmail} />
+              <FindPwdEmailComponent setEmail={setEmail} />
 
               {/* 비밀번호 찾기 버튼 */}
               <div>

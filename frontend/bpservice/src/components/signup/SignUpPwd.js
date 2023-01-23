@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import { userInfo } from "../../modules/signUp";
 
-function SignUpPwd({ signUp, pwdTyping }) {
+function SignUpPwd({ pwdTyping }) {
   const [pwd, setPwd] = useState("");
   // password 정규 표현식
   const pwdRegExp = /^(?=.*[a-z])(?=.*[0-9])(?=.*[$!@$!%*#^?&]).{8,20}$/;
@@ -19,16 +19,17 @@ function SignUpPwd({ signUp, pwdTyping }) {
 
   return (
     <div>
-      <div>
+      <form>
         <label htmlFor="password1">PASSWORD1 : </label>
         <input
           type="password"
           id="password1"
           placeholder="비밀번호"
+          autoComplete="off"
           required
           onChange={typePwd}
         />
-      </div>
+      </form>
 
       {/* 비밀번호 조건 */}
       {pwdRegExp.test(pwd) || pwd.length === 0 ? null : (

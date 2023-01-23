@@ -1,4 +1,4 @@
-function FindPwdIdComponent({ Id, setId }) {
+function FindPwdIdComponent({ setId }) {
   const idOnChange = (e) => {
     const inputValue = e.target.value;
     setId(inputValue);

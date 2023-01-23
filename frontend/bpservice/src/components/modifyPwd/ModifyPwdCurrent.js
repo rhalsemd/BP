@@ -5,14 +5,17 @@ function ModifyPwdCurrent({ setCurrent }) {
   };
   return (
     <div>
-      <label htmlFor="currentPwd">현재 비밀번호 : </label>
-      <input
-        type="password"
-        id="currentPwd"
-        required
-        placeholder="현재 비밀번호"
-        onChange={onChange}
-      />
+      <form>
+        <label htmlFor="currentPwd">현재 비밀번호 : </label>
+        <input
+          type="password"
+          id="currentPwd"
+          autoComplete="off"
+          required
+          placeholder="현재 비밀번호"
+          onChange={onChange}
+        />
+      </form>
     </div>
   );
 }
