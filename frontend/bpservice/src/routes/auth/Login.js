@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
-import { jsx, css } from "@emotion/react";
+import { css } from "@emotion/react";
 import { Link } from "react-router-dom";
 
-import React, { useState } from "react";
+import { useState } from "react";
 
 import Nav from "../../components/Nav";
 import Footer from "../../components/Footer";

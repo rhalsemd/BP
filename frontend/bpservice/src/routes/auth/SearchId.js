@@ -1,32 +1,33 @@
 /** @jsxImportSource @emotion/react */
-import { jsx, css } from "@emotion/react";
+import { css } from "@emotion/react";
+
 import Footer from "../../components/Footer";
 import Nav from "../../components/Nav";
 
+const searchIdArea = css`
+  width: 100%;
+  height: 72vh;
+  border: 1px black solid;
+`;
+
+const searchModalPosition = css`
+  height: 72vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const searchModal = css`
+  width: 35vh;
+  height: 45vh;
+  border: 1px black solid;
+`;
+
+const title = css`
+  text-align: center;
+`;
+
 function SeachId() {
-  const searchIdArea = css`
-    width: 100%;
-    height: 72vh;
-    border: 1px black solid;
-  `;
-
-  const searchModalPosition = css`
-    height: 72vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  `;
-
-  const searchModal = css`
-    width: 35vh;
-    height: 45vh;
-    border: 1px black solid;
-  `;
-
-  const title = css`
-    text-align: center;
-  `;
-
   return (
     <div>
       <header>

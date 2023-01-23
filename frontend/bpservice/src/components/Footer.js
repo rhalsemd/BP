@@ -12,6 +12,7 @@ function Footer() {
     height: 20vh;
     border: 1px black solid;
   `;
+
   return (
     <div css={outerBox}>
       <div css={container}>

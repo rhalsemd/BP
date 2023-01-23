@@ -15,7 +15,7 @@ const EventMarkerContainer = lazy(() =>
   import("../components/kakaoMap/EventMarkerContainer")
 );
 
-function KakaoMap({ mapStore, getMapInfo }) {
+function KakaoMap({ getMapInfo }) {
   const positions = [
     {
       title: "카카오",

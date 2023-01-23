@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { jsx, css } from "@emotion/react";
+import { css } from "@emotion/react";
 
 import { connect } from "react-redux";
 
@@ -14,7 +14,6 @@ import SignUpPhone from "../../components/signup/SignUpPhone";
 import SignUpAddress from "../../components/signup/SignUpAddress";
 import SignUpEmail from "../../components/signup/SignUpEmail";
 import { userInfo } from "../../modules/signUp";
-import { useEffect } from "react";
 
 const loginArea = css`
   width: 100%;
