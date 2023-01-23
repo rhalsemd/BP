@@ -1,6 +1,8 @@
 package kr.co.bpservice.controller.common;
 
 import kr.co.bpservice.util.HTTPUtils;
+import kr.co.bpservice.util.network.Get;
+import kr.co.bpservice.util.network.Header;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
@@ -30,37 +32,21 @@ class WeatherRequestTest {
     }
 
     private JSONObject currentWeather(float lat, float lng) throws IOException {
-        URL currentWeatherUrl = new URL(String.format("https://api.openweathermap.org/data/2.5/weather?lang=kr&units=metric&lat=%s&lon=%s&appid=%s", String.valueOf(lat), String.valueOf(lng), APP_ID));
-        System.out.println(currentWeatherUrl);
+        String currentWeatherUrl = String.format("https://api.openweathermap.org/data/2.5/weather?lang=kr&units=metric&lat=%s&lon=%s&appid=%s", String.valueOf(lat), String.valueOf(lng), APP_ID);
 
-        HttpURLConnection conn = (HttpURLConnection) currentWeatherUrl.openConnection();
-        conn.setRequestMethod("GET");
-        conn.setRequestProperty("User-Agent", HTTPUtils.USER_AGENT);
-        conn.setRequestProperty("Accept-Language", HTTPUtils.ACCEPT_LANGUAGE);
-        conn.setRequestProperty("Accept-Encoding", HTTPUtils.ACCEPT_ENCODING);
-        conn.setRequestProperty("Connection", HTTPUtils.CONNECTION);
+        Header header = new Header();
+        header.append("User-Agent", HTTPUtils.USER_AGENT);
+        header.append("Accept-Language", HTTPUtils.ACCEPT_LANGUAGE);
+        header.append("Accept-Encoding", HTTPUtils.ACCEPT_ENCODING);
+        header.append("Connection", HTTPUtils.CONNECTION);
 
-        JSONObject jsonObject = new JSONObject();
+        Get get = new Get(currentWeatherUrl, header);
 
-        int responseCode = conn.getResponseCode();
+        int responseCode = get.getResponseCode();
         if (responseCode != HttpURLConnection.HTTP_OK) {
-            jsonObject.put("response-code", responseCode);
-            return jsonObject;
+            return null;
         }
 
-        Charset charset = Charset.forName("UTF-8");
-        try(BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), charset))) {
-            String inputLine;
-            StringBuffer sb = new StringBuffer();
-
-            while ((inputLine = in.readLine()) != null) {
-                sb.append(inputLine);
-            }
-            jsonObject = new JSONObject(sb.toString());
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
-        return jsonObject;
+        return get.get();
     }
 }
