@@ -6,6 +6,7 @@ import Footer from "../../components/Footer";
 import Nav from "../../components/Nav";
 import FindPwdEmailComponent from "../../components/userFindPwd/FindPwdEmailComponent";
 import FindPwdIdComponent from "../../components/userFindPwd/FindPwdIdComponent";
+import FindPwdNameComponent from "../../components/userFindPwd/FindPwdNameComponent";
 import { findPwdInfo } from "../../modules/findPwd";
 
 const searchIdArea = css`
@@ -34,9 +35,10 @@ const title = css`
 function SearchPwd({ setFindPwdInfo, getFindPwd }) {
   const [Id, setId] = useState("");
   const [email, setEmail] = useState("");
+  const [userName, setUserName] = useState("");
 
   const findPwd = () => {
-    setFindPwdInfo({ Id, email });
+    setFindPwdInfo({ Id, email, userName });
     getFindPwd();
   };
 
@@ -54,8 +56,16 @@ function SearchPwd({ setFindPwdInfo, getFindPwd }) {
 
               {/* 아이디 */}
               <FindPwdIdComponent Id={Id} setId={setId} />
+
+              {/* 이름 */}
+              <FindPwdNameComponent
+                userName={userName}
+                setUserName={setUserName}
+              />
+
               {/* 이메일 */}
               <FindPwdEmailComponent email={email} setEmail={setEmail} />
+
               {/* 비밀번호 찾기 버튼 */}
               <div>
                 <button onClick={findPwd}>비밀번호 찾기</button>

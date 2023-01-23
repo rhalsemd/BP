@@ -6,7 +6,7 @@ function FindPwdEmailComponent({ email, setEmail }) {
 
   return (
     <div>
-      <label htmlFor="userEamil">email : </label>
+      <label htmlFor="userEamil">Email : </label>
       <input
         type="email"
         id="userEamil"
