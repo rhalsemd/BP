@@ -1,7 +1,12 @@
-function ModifyPwdNext({ next, setNext, pwdRegExp }) {
+function ModifyPwdNext({ next, setNext, pwdRegExp, current, setIsNext }) {
   const onChange = (e) => {
     const inputValue = e.target.value;
     setNext(inputValue);
+    if (pwdRegExp.test(next) && inputValue !== current) {
+      setIsNext(true);
+    } else {
+      setIsNext(false);
+    }
   };
   return (
     <div>
@@ -13,14 +18,6 @@ function ModifyPwdNext({ next, setNext, pwdRegExp }) {
         placeholder="변경 비밀번호"
         onChange={onChange}
       />
-
-      {/* 비밀번호 조건 */}
-      {pwdRegExp.test(next) || next.length === 0 ? null : (
-        <div>
-          <span style={{ color: "red" }}>uncomplete : </span>
-          <span>8~20로 비밀번호를 설정해주세요</span>
-        </div>
-      )}
     </div>
   );
 }
