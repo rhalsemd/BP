@@ -1,8 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
+import { useState } from "react";
+import { connect } from "react-redux";
 import Footer from "../../components/Footer";
 import Nav from "../../components/Nav";
+import FindEmailComponent from "../../components/userFindId/FindEmailComponent";
+import FindNameComponent from "../../components/userFindId/FindNameComponent";
+import { findIdInfo } from "../../modules/findId";
 
 const searchIdArea = css`
   width: 100%;
@@ -27,7 +32,18 @@ const title = css`
   text-align: center;
 `;
 
-function SeachId() {
+function SeachId({ setFindIdInfo, getFindId }) {
+  const [email, setEmail] = useState("");
+  const [findUserName, setFindUserName] = useState("");
+
+  const findId = () => {
+    if (email && findUserName) {
+      setFindIdInfo({ email, findUserName });
+      getFindId();
+    } else {
+      alert("아이디와 이름을 입력해주세요.");
+    }
+  };
   return (
     <div>
       <header>
@@ -41,20 +57,17 @@ function SeachId() {
               <h1>아이디 찾기</h1>
 
               {/* 아이디 */}
-              <div>
-                <label htmlFor="userId">ID : </label>
-                <input type="text" id="userId" placeholder="아이디" />
-              </div>
+              <FindEmailComponent email={email} setEmail={setEmail} />
 
               {/* 이름 */}
-              <div>
-                <label htmlFor="userName">userName : </label>
-                <input type="text" id="userName" placeholder="이름" />
-              </div>
+              <FindNameComponent
+                findUserName={findUserName}
+                setFindUserName={setFindUserName}
+              />
 
-              {/* 로그인 버튼 */}
+              {/* 아이디 찾기 버튼 */}
               <div>
-                <button>아이디 찾기</button>
+                <button onClick={findId}>아이디 찾기</button>
               </div>
             </div>
           </div>
@@ -68,4 +81,15 @@ function SeachId() {
   );
 }
 
-export default SeachId;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setFindIdInfo(info) {
+      dispatch(findIdInfo.setFindIdInfo(info));
+    },
+    getFindId() {
+      dispatch(findIdInfo.getFindId());
+    },
+  };
+};
+
+export default connect(null, mapDispatchToProps)(SeachId);
