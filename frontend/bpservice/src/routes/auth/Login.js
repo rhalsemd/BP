@@ -1,11 +1,15 @@
 /** @jsxImportSource @emotion/react */
-import { jsx, css } from "@emotion/react";
+import { css } from "@emotion/react";
 import { Link } from "react-router-dom";
 
-import React, { useState } from "react";
+import { useState } from "react";
 
 import Nav from "../../components/Nav";
 import Footer from "../../components/Footer";
+import IdComponent from "../../components/userLogin/IdComponent";
+import PwdComponent from "../../components/userLogin/PwdComponent";
+import { connect } from "react-redux";
+import { loginInfo } from "../../modules/userLogin";
 
 const loginArea = css`
   width: 100%;
@@ -30,22 +34,17 @@ const title = css`
   text-align: center;
 `;
 
-function Login() {
+function Login({ userLogin, loginRequest, setLoginInfo }) {
   const [id, setId] = useState("");
   const [pwd, setPwd] = useState("");
 
-  const idTyping = (e) => {
-    const idInput = e.target.value;
-    setId(idInput);
-  };
-
-  const pwdTyping = (e) => {
-    const pwdInput = e.target.value;
-    setPwd(pwdInput);
-  };
-
   const getLogin = () => {
-    console.log("로그인 비동기 요청");
+    if (id && pwd) {
+      setLoginInfo({ id, pwd });
+      loginRequest();
+    } else {
+      alert("아이디와 비밀번호를 입력해주세요.");
+    }
   };
 
   return (
@@ -61,32 +60,15 @@ function Login() {
               <h1>Login</h1>
 
               {/* 아이디 */}
-              <div>
-                <label htmlFor="userId">ID : </label>
-                <input
-                  type="text"
-                  id="userId"
-                  placeholder="아이디"
-                  onChange={idTyping}
-                  value={id}
-                />
-              </div>
+              <IdComponent id={id} setId={setId} />
 
               {/* 비밀번호 */}
-              <div>
-                <label htmlFor="password">PASSWORD : </label>
-                <input
-                  type="password"
-                  id="password"
-                  placeholder="비밀번호"
-                  onChange={pwdTyping}
-                />
-              </div>
+              <PwdComponent pwd={pwd} setPwd={setPwd} />
 
               {/* 찾기 */}
               <div>
-                <Link to="">비밀번호 찾기</Link> |{" "}
-                <Link to="">아이디 찾기</Link> |{" "}
+                <Link to="/bp/search/pwd">비밀번호 찾기</Link> |{" "}
+                <Link to="/bp/search/id">아이디 찾기</Link> |{" "}
                 <Link to="/bp/signup">회원가입</Link>
               </div>
 
@@ -106,4 +88,19 @@ function Login() {
   );
 }
 
-export default Login;
+const mapStateToProps = ({ userLogin }) => {
+  return { userLogin };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loginRequest() {
+      dispatch(loginInfo.loginRequest());
+    },
+    setLoginInfo(info) {
+      dispatch(loginInfo.setLoginInfo(info));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
