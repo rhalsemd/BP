@@ -9,7 +9,7 @@ export const Histogram = ({ width, height, data }) => {
 
   const BUCKET_NUMBER = data.length;
   const BUCKET_PADDING = 4;
-  console.log(data.length);
+  // console.log(data.length);
   const axesRef = useRef(null);
   const boundsWidth = width - MARGIN.right - MARGIN.left;
   const boundsHeight = height - MARGIN.top - MARGIN.bottom;
@@ -52,6 +52,7 @@ export const Histogram = ({ width, height, data }) => {
       .call(xAxisGenerator);
 
     const yAxisGenerator = d3.axisLeft(yScale);
+
     svgElement.append("g").call(yAxisGenerator);
   }, [xScale, yScale, boundsHeight]);
 
@@ -60,7 +61,7 @@ export const Histogram = ({ width, height, data }) => {
     // if (x0 == undefined || x1 == undefined) {
     //   return null;
     // }
-    // console.log("//////////////////////////////////");
+    // `console`.log("//////////////////////////////////");
     // console.log("값", bucket);
     // console.log("x의 위치", xScale(i));
     // console.log("넓이", xScale.bandwidth());
@@ -68,8 +69,8 @@ export const Histogram = ({ width, height, data }) => {
     return (
       <Rectangle
         key={i}
-        x={xScale(i) + BUCKET_PADDING / 2}
-        width={xScale.bandwidth()}
+        x={xScale(i) + BUCKET_PADDING / 2 + 5}
+        width={xScale.bandwidth() - 10}
         y={boundsHeight - 300 + yScale(bucket)}
         height={300 - yScale(bucket)}
         jijum={bucket}

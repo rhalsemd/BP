@@ -1,7 +1,12 @@
 import { useSpring, animated } from "@react-spring/web";
+import { useRef } from "react";
 
 const onclick = (bucket) => {
   alert(`나중에 링크 연결할거임 값 : ${bucket}`);
+};
+
+const onMouseOver = () => {
+  console.log(1);
 };
 
 export const Rectangle = (props) => {
@@ -21,6 +26,7 @@ export const Rectangle = (props) => {
 
   return (
     <animated.rect
+      onMouseLeave={() => onMouseOver()}
       onClick={() => onclick(props.jijum)}
       x={springProps.x}
       y={springProps.y}

@@ -107,10 +107,8 @@ const API = `http://localhost:8080/auth/sendemail`;
 // const API = `https://www.naver.com/`;
 
 function* getEmailApi() {
-  console.log("saga다음 ");
   const { signUp } = yield select((state) => state);
   console.log(signUp.email);
-  console.log("이메일?????");
   let data = "";
   axios({
     method: "post",
