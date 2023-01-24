@@ -1,7 +1,9 @@
-function FindPwdIdComponent({ setId }) {
+function FindPwdIdComponent({ setInfo }) {
   const idOnChange = (e) => {
     const inputValue = e.target.value;
-    setId(inputValue);
+    setInfo((info) => {
+      return { ...info, id: inputValue };
+    });
   };
   return (
     <div>

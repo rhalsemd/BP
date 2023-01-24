@@ -32,15 +32,16 @@ const title = css`
   text-align: center;
 `;
 
-function SearchPwd({ setFindPwdInfo, getFindPwd }) {
-  const [Id, setId] = useState("");
-  const [email, setEmail] = useState("");
-  const [userName, setUserName] = useState("");
+function SearchPwd({ setFindPwdInfo }) {
+  const [info, setInfo] = useState({});
 
   const findPwd = () => {
-    if (Id && email && userName) {
-      setFindPwdInfo({ Id, email, userName });
-      getFindPwd();
+    if (info.id && info.email && info.userName) {
+      setFindPwdInfo({
+        id: info.id,
+        email: info.email,
+        userName: info.userName,
+      });
     } else {
       alert("내용을 입력해주세요.");
     }
@@ -59,13 +60,13 @@ function SearchPwd({ setFindPwdInfo, getFindPwd }) {
               <h1>비밀번호 찾기</h1>
 
               {/* 아이디 */}
-              <FindPwdIdComponent setId={setId} />
+              <FindPwdIdComponent setInfo={setInfo} />
 
               {/* 이름 */}
-              <FindPwdNameComponent setUserName={setUserName} />
+              <FindPwdNameComponent setInfo={setInfo} />
 
               {/* 이메일 */}
-              <FindPwdEmailComponent setEmail={setEmail} />
+              <FindPwdEmailComponent setInfo={setInfo} />
 
               {/* 비밀번호 찾기 버튼 */}
               <div>
@@ -87,9 +88,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setFindPwdInfo(info) {
       dispatch(findPwdInfo.setFindPwdInfo(info));
-    },
-    getFindPwd() {
-      dispatch(findPwdInfo.getFindPwd());
     },
   };
 };

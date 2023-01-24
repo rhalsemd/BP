@@ -1,7 +1,9 @@
-function FindEmailComponent({ setEmail }) {
+function FindEmailComponent({ setInfo }) {
   const emailOnChange = (e) => {
     const inputValue = e.target.value;
-    setEmail(inputValue);
+    setInfo((info) => {
+      return { ...info, email: inputValue };
+    });
   };
 
   return (

@@ -1,18 +1,21 @@
-function PwdComponent({ setPwd }) {
+function PwdComponent({ setInfo }) {
   const pwdTyping = (e) => {
-    const pwdInput = e.target.value;
-    setPwd(pwdInput);
+    const inputValue = e.target.value;
+    setInfo((info) => {
+      return { ...info, pwd: inputValue };
+    });
   };
   return (
-    <div>
+    <form>
       <label htmlFor="password">PASSWORD : </label>
       <input
         type="password"
         id="password"
+        autoComplete="off"
         placeholder="비밀번호"
         onChange={pwdTyping}
       />
-    </div>
+    </form>
   );
 }
 

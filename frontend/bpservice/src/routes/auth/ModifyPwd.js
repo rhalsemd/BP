@@ -6,9 +6,11 @@ import { useState } from "react";
 import { connect } from "react-redux";
 
 import Footer from "../../components/Footer";
+import ConfirmCondition from "../../components/modifyPwd/ConfirmCondition";
 import ModifyPwdConfirm from "../../components/modifyPwd/ModifyPwdConfirm";
 import ModifyPwdCurrent from "../../components/modifyPwd/ModifyPwdCurrent";
 import ModifyPwdNext from "../../components/modifyPwd/ModifyPwdNext";
+import NextPwdCondition from "../../components/modifyPwd/NextPwdCondition";
 import Nav from "../../components/Nav";
 import { modifyPwdInfo } from "../../modules/modifyPwd";
 
@@ -78,19 +80,13 @@ function ModifyPwd({ setModifyPwd, setNewPwd }) {
                 current={current}
                 setIsNext={setIsNext}
               />
-              {/* 비밀번호 조건 */}
-              {(pwdRegExp.test(next) && next !== current) ||
-              next.length === 0 ? null : next === current ? (
-                <div>
-                  <span style={{ color: "red" }}>uncomplete : </span>
-                  <span>현재 비밀번호와 같습니다.</span>
-                </div>
-              ) : (
-                <div>
-                  <span style={{ color: "red" }}>uncomplete : </span>
-                  <span>8~20로 비밀번호를 설정해주세요</span>
-                </div>
-              )}
+
+              {/* 수정 비밀번호 유효성 검사 */}
+              <NextPwdCondition
+                pwdRegExp={pwdRegExp}
+                next={next}
+                current={current}
+              />
 
               {/* 수정 비밀번호 확인 */}
               <ModifyPwdConfirm
@@ -99,15 +95,15 @@ function ModifyPwd({ setModifyPwd, setNewPwd }) {
                 setConfirmPwd={setConfirmPwd}
               />
 
-              {/* 유효성 검사 */}
-              {next !== confirmPwd && confirmPwd ? (
-                <div>
-                  <span style={{ color: "red" }}>비밀번호를 확인해주세요.</span>
-                </div>
-              ) : null}
+              {/* 수정 비밀번호 확인 유효성 검사 */}
+              <ConfirmCondition next={next} confirmPwd={confirmPwd} />
 
-              {/* 수정 버튼 */}
-              {current && isNext && isConfirm && next === confirmPwd ? (
+              {/* 수정하기 버튼*/}
+              {current &&
+              isNext &&
+              isConfirm &&
+              next === confirmPwd &&
+              next !== current ? (
                 <button onClick={requestModify}>수정하기</button>
               ) : null}
             </div>

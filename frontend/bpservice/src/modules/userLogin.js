@@ -3,15 +3,12 @@ import { createAction, handleActions } from "redux-actions";
 import { call, takeEvery, select } from "redux-saga/effects";
 
 const SET_LOGIN_INFO = "userLogin/SET_LOGIN_INFO";
-const LOGIN_REQUEST = "userLogin/LOGIN_REQUEST";
 
 const setLoginInfo = createAction(SET_LOGIN_INFO, (data) => data);
-const loginRequest = createAction(LOGIN_REQUEST, () => undefined);
 
 function* setLoginFnc() {
   const API = `https://jsonplaceholder.typicode.com/todos/1`;
   const { loginInfo } = yield select((state) => state.userLogin);
-
   try {
     const get = yield call(() => {
       return axios({
@@ -33,7 +30,7 @@ function* setLoginFnc() {
 }
 
 export function* loginSaga() {
-  yield takeEvery(LOGIN_REQUEST, setLoginFnc);
+  yield takeEvery(SET_LOGIN_INFO, setLoginFnc);
 }
 
 const initialState = {};
@@ -49,7 +46,6 @@ const userLoginReducer = handleActions(
 
 export const loginInfo = {
   setLoginInfo,
-  loginRequest,
 };
 
 export default userLoginReducer;

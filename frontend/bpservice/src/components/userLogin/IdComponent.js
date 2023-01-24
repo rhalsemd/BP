@@ -1,7 +1,9 @@
-function IdComponent({ id, setId }) {
+function IdComponent({ setInfo }) {
   const idTyping = (e) => {
-    const idInput = e.target.value;
-    setId(idInput);
+    const inputValue = e.target.value;
+    setInfo((info) => {
+      return { ...info, id: inputValue };
+    });
   };
 
   return (
@@ -10,9 +12,9 @@ function IdComponent({ id, setId }) {
       <input
         type="text"
         id="userId"
+        autoComplete="off"
         placeholder="아이디"
         onChange={idTyping}
-        value={id}
       />
     </div>
   );
