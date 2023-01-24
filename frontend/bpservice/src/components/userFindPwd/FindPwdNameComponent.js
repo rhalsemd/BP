@@ -1,7 +1,9 @@
-function FindPwdNameComponent({ userName, setUserName }) {
+function FindPwdNameComponent({ setInfo }) {
   const nameOnChange = (e) => {
     const inputValue = e.target.value;
-    setUserName(inputValue);
+    setInfo((info) => {
+      return { ...info, userName: inputValue };
+    });
   };
 
   return (

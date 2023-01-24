@@ -18,8 +18,6 @@ function CurrentBtn() {
       enableHighAccuracy: true,
     };
 
-    console.log(markerArr);
-
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = {
@@ -46,6 +44,7 @@ function CurrentBtn() {
       option
     );
   };
+
   return (
     <>
       <button className={styled.currentBtn} onClick={currentBtn}>

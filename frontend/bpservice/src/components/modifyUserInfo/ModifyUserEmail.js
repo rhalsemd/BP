@@ -1,5 +1,5 @@
-function FindEmailComponent({ setInfo }) {
-  const emailOnChange = (e) => {
+function ModifyUserEmail({ setInfo }) {
+  const onChange = (e) => {
     const inputValue = e.target.value;
     setInfo((info) => {
       return { ...info, email: inputValue };
@@ -12,13 +12,11 @@ function FindEmailComponent({ setInfo }) {
       <input
         type="email"
         id="userEmail"
-        autoComplete="off"
-        required
         placeholder="이메일"
-        onChange={emailOnChange}
+        onChange={onChange}
       />
     </div>
   );
 }
 
-export default FindEmailComponent;
+export default ModifyUserEmail;

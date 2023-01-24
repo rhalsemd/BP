@@ -34,14 +34,12 @@ const title = css`
   text-align: center;
 `;
 
-function Login({ userLogin, loginRequest, setLoginInfo }) {
-  const [id, setId] = useState("");
-  const [pwd, setPwd] = useState("");
+function Login({ setLoginInfo }) {
+  const [info, setInfo] = useState({});
 
   const getLogin = () => {
-    if (id && pwd) {
-      setLoginInfo({ id, pwd });
-      loginRequest();
+    if (info.id && info.pwd) {
+      setLoginInfo({ id: info.id, pwd: info.pwd });
     } else {
       alert("아이디와 비밀번호를 입력해주세요.");
     }
@@ -60,10 +58,10 @@ function Login({ userLogin, loginRequest, setLoginInfo }) {
               <h1>Login</h1>
 
               {/* 아이디 */}
-              <IdComponent id={id} setId={setId} />
+              <IdComponent setInfo={setInfo} />
 
               {/* 비밀번호 */}
-              <PwdComponent pwd={pwd} setPwd={setPwd} />
+              <PwdComponent setInfo={setInfo} />
 
               {/* 찾기 */}
               <div>
@@ -94,9 +92,6 @@ const mapStateToProps = ({ userLogin }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loginRequest() {
-      dispatch(loginInfo.loginRequest());
-    },
     setLoginInfo(info) {
       dispatch(loginInfo.setLoginInfo(info));
     },

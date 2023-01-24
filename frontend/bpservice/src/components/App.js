@@ -15,6 +15,9 @@ import UserToU from "../routes/auth/UserToU";
 import CompletePage from "../routes/auth/CompletePage";
 import SearchId from "../routes/auth/SearchId";
 import KakaoMap from "../routes/KakaoMap";
+import MyPage from "../routes/auth/MyPage";
+import ModifyUserInfo from "../routes/auth/ModifyUserInfo";
+import ModifyPwd from "../routes/auth/ModifyPwd";
 import SearchPwd from "../routes/auth/SearchPwd";
 
 export const GlobalStyle = css`
@@ -34,8 +37,11 @@ function App() {
         <Route path="/bp/terms" element={<UserToU />}></Route>
         <Route path="/bp/complete" element={<CompletePage />}></Route>
         <Route path="/bp/search/id" element={<SearchId />}></Route>
-        <Route path="/bp/map" element={<KakaoMap />}></Route>
         <Route path="/bp/search/pwd" element={<SearchPwd />}></Route>
+        <Route path="/bp/map" element={<KakaoMap />}></Route>
+        <Route path="/bp/mypage/:id" element={<MyPage />}></Route>
+        <Route path="/bp/modify/user/:id" element={<ModifyUserInfo />}></Route>
+        <Route path="/bp/modify/pwd/:id" element={<ModifyPwd />}></Route>
 
         <Route path="/admin" element={<LoginAdmin />} />
         <Route path="/admin/total_income" element={<TotalChart />} />

@@ -16,16 +16,17 @@ function SignUpRePwd({ signUp, rePwdTyping }) {
   };
   return (
     <div>
-      <div>
+      <form>
         <label htmlFor="password2">PASSWORD2 : </label>
         <input
           type="password"
           id="password2"
           required
-          placeholder="비밀번호"
+          autoComplete="off"
+          placeholder="비밀번호 확인"
           onChange={typeRePwd}
         />
-      </div>
+      </form>
       {signUp.rePwd ? (
         <div>
           <span style={{ color: "red" }}>비밀번호를 확인해주세요.</span>
@@ -35,11 +36,11 @@ function SignUpRePwd({ signUp, rePwdTyping }) {
   );
 }
 
-const mapStateToProps = ({ signUp }, ownProps) => {
+const mapStateToProps = ({ signUp }) => {
   return { signUp };
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch) => {
   return {
     rePwdTyping(rePwd) {
       dispatch(userInfo.rePwdTyping(rePwd));
