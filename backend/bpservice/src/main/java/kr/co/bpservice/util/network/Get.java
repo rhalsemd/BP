@@ -12,13 +12,7 @@ import java.util.List;
 
 public class Get {
     HttpURLConnection conn;
-    Charset charset = Charset.forName("UTF-8");;
-
-    public Get(String getUrl) throws IOException {
-        URL url = new URL(getUrl);
-        conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
-    }
+    Charset charset = Charset.forName("UTF-8");
 
     public Get(String getUrl, Header header) throws IOException {
         URL url = new URL(getUrl);
@@ -43,8 +37,7 @@ public class Get {
         charset = Charset.forName(charsetName);
     }
 
-    public JSONObject get() {
-        JSONObject jsonObject = new JSONObject();
+    public String get() {
         try(BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), charset))) {
             String inputLine;
             StringBuffer sb = new StringBuffer();
@@ -52,11 +45,12 @@ public class Get {
             while ((inputLine = in.readLine()) != null) {
                 sb.append(inputLine);
             }
-            jsonObject = new JSONObject(sb.toString());
+
+            return sb.toString();
         } catch (Exception e) {
             System.out.println(e);
         }
 
-        return jsonObject;
+        return null;
     }
 }
