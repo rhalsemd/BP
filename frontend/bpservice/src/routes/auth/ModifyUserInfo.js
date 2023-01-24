@@ -33,9 +33,12 @@ const title = css`
   text-align: center;
 `;
 
+const emailRegExp =
+  /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+const phoneRegExp = /^(\d{2,3})(\d{3,4})(\d{4})$/;
+
 function ModifyUserInfo({ setNewUserInfo }) {
   const [info, setInfo] = useState({});
-  console.log(info);
 
   const goToModify = () => {
     setNewUserInfo(info);
@@ -56,8 +59,23 @@ function ModifyUserInfo({ setNewUserInfo }) {
               {/* 이메일 */}
               <ModifyUserEmail setInfo={setInfo} />
 
+              {/* 이메일 유효성 검사 */}
+              {emailRegExp.test(info.email) ? null : (
+                <div>
+                  <span style={{ color: "red" }}>uncomplete : </span>
+                  <span>{"ex) 이메일@EXAMPLE.COM"}</span>
+                </div>
+              )}
+
               {/* 전화번호 */}
               <ModifyUserPhone setInfo={setInfo} />
+              {/* 전화번호호 유효성 검사 */}
+              {phoneRegExp.test(info.phone) ? null : (
+                <div>
+                  <span style={{ color: "red" }}>uncomplete : </span>
+                  <span>{"ex) 01012345678"}</span>
+                </div>
+              )}
 
               {/* 주소 */}
               <ModifyUserAddress setInfo={setInfo} />
