@@ -27,7 +27,9 @@ function* modifyPwdFnc() {
       });
     });
     console.log(post);
-  } catch {}
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 export function* modifyPwdSaga() {

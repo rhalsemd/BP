@@ -5,6 +5,7 @@ import modifyPwd, { modifyPwdSaga } from "./modifyPwd";
 import userLogin, { loginSaga } from "./userLogin";
 import findIdReducer, { findIdSaga } from "./findId";
 import findPwdReducer, { findPwdSaga } from "./findPwd";
+import modifyUserInfoReducer, { modifyUserInfoSaga } from "./modifyUserInfo";
 import { all } from "redux-saga/effects";
 
 export const rootReducer = combineReducers({
@@ -14,6 +15,7 @@ export const rootReducer = combineReducers({
   userLogin,
   findIdReducer,
   findPwdReducer,
+  modifyUserInfoReducer,
 });
 
 export function* rootSaga() {
@@ -24,6 +26,7 @@ export function* rootSaga() {
     findIdSaga(),
     findPwdSaga(),
     modifyPwdSaga(),
+    modifyUserInfoSaga(),
   ]);
 }
 

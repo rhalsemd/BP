@@ -1,11 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import { useState } from "react";
+import { connect } from "react-redux";
 
 import Footer from "../../components/Footer";
 import ModifyUserAddress from "../../components/modifyUserInfo/ModifyUserAddress";
 import ModifyUserEmail from "../../components/modifyUserInfo/ModifyUserEmail";
 import ModifyUserPhone from "../../components/modifyUserInfo/ModifyUserPhone";
 import Nav from "../../components/Nav";
+import { modifyUserInfo } from "../../modules/modifyUserInfo";
 
 const modifyUserArea = css`
   width: 100%;
@@ -30,7 +33,14 @@ const title = css`
   text-align: center;
 `;
 
-function ModifyUserInfo() {
+function ModifyUserInfo({ setNewUserInfo }) {
+  const [info, setInfo] = useState({});
+  console.log(info);
+
+  const goToModify = () => {
+    setNewUserInfo(info);
+  };
+
   return (
     <div>
       <header>
@@ -44,16 +54,16 @@ function ModifyUserInfo() {
               <h1>회원정보 수정</h1>
 
               {/* 이메일 */}
-              <ModifyUserEmail />
+              <ModifyUserEmail setInfo={setInfo} />
 
               {/* 전화번호 */}
-              <ModifyUserPhone />
+              <ModifyUserPhone setInfo={setInfo} />
 
               {/* 주소 */}
-              <ModifyUserAddress />
+              <ModifyUserAddress setInfo={setInfo} />
 
               {/* 수정 버튼 */}
-              <button>수정하기</button>
+              <button onClick={goToModify}>수정하기</button>
             </div>
           </div>
         </div>
@@ -66,4 +76,12 @@ function ModifyUserInfo() {
   );
 }
 
-export default ModifyUserInfo;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setNewUserInfo(info) {
+      dispatch(modifyUserInfo.setNewUserInfo(info));
+    },
+  };
+};
+
+export default connect(null, mapDispatchToProps)(ModifyUserInfo);

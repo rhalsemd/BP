@@ -23,7 +23,9 @@ function* findPwdFnc() {
       });
     });
     console.log(get);
-  } catch {}
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 export function* findPwdSaga() {
