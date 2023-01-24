@@ -47,6 +47,7 @@ class WeatherRequestTest {
             return null;
         }
 
-        return get.get();
+        String content = get.get();
+        return new JSONObject(content);
     }
 }
