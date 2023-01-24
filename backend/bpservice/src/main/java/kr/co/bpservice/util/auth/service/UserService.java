@@ -11,6 +11,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.regex.Pattern;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -32,12 +34,16 @@ public class UserService {
 //    }
 
     @Transactional
-    public UserResponseDto changeUserPassword(String id, String exPassword, String newPassword) {
+    public UserResponseDto changeUserPassword(String userId, String exPwd, String newPwd) {
         User user = userRepository.findById(SecurityUtil.getCurrentUserId()).orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다"));
-        if (!passwordEncoder.matches(exPassword, user.getPwd())) {
-            throw new RuntimeException("비밀번호가 맞지 않습니다");
+        if (!passwordEncoder.matches(exPwd, user.getPwd())) {
+            throw new RuntimeException("기존 비밀번호가 맞지 않습니다");
         }
-        user.setPwd(passwordEncoder.encode((newPassword)));
+
+        if(!checkPasswordFormat(newPwd))
+            throw new RuntimeException("변경할 비밀번호 형식이 올바르지 않습니다.");
+
+        user.setPwd(passwordEncoder.encode((newPwd)));
         return UserResponseDto.of(userRepository.save(user));
     }
 
@@ -50,5 +56,18 @@ public class UserService {
         user.setSigugun(requestDto.getSigugun());
         user.setDong(requestDto.getDong());
         return UserResponseDto.of(userRepository.save(user));
+    }
+
+    public boolean checkPasswordFormat(String pwd) {
+        String pwdPattern = "^[a-z0-9!@#$%^&*]*$";
+        if(pwd.length() < 8 || pwd.length() > 20) {
+            return false;
+        }
+
+        if(Pattern.matches(pwdPattern, pwd) == false) {
+            return false;
+        }
+
+        return true;
     }
 }
