@@ -33,8 +33,8 @@ public class UserInfoController {
 //        return ResponseEntity.ok(userService.changeUserNickname(request.getEmail(), request.getNickname()));
 //    }
 
-    @PostMapping("/password") //사용자 비밀번호 변경
-    public ResponseEntity<UserResponseDto> setUserPassword(@RequestBody ChangePasswordRequestDto request) {
-        return ResponseEntity.ok(userService.changeUserPassword(request.getId(),request.getExPassword(), request.getNewPassword()));
+    @PatchMapping("/pwd") //사용자 비밀번호 변경
+    public ResponseEntity<UserResponseDto> changeUserPassword(@RequestBody ChangePasswordRequestDto requestDto) {
+        return ResponseEntity.ok(userService.changeUserPassword(requestDto.getUserId(),requestDto.getExPwd(), requestDto.getNewPwd()));
     }
 }
