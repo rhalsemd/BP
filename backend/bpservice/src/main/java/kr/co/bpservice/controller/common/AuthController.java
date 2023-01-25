@@ -5,10 +5,12 @@ import kr.co.bpservice.entity.common.MailAuth;
 import kr.co.bpservice.entity.common.SmsAuth;
 import kr.co.bpservice.service.common.CAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+@CrossOrigin(originPatterns = "*")
 @RestController
 public class AuthController {
     @Autowired
