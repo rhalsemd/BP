@@ -115,40 +115,6 @@ const signUpReducer = handleActions(
   initialState
 );
 
-const API = `http://localhost:8080/auth/sendemail`;
-// const API = `https://www.naver.com/`;
-
-function* getEmailApi() {
-  const { signUp } = yield select((state) => state);
-  console.log(signUp.email);
-  let data = "";
-  axios({
-    method: "post",
-    url: API,
-    data: {
-      email: signUp.email,
-    },
-    headers: {
-      "Content-Type ": "application/json",
-      "Access-Control-Allow-Origin": "*",
-    },
-  }).then((res) => {
-    data = res.data();
-  });
-  // const data = "123";
-  // axios({
-  //   method: "get",
-  //   url: API,
-  // });
-
-  yield put({ type: TEST_EMAIL, data: data });
-}
-
-export function* signUpSaga() {
-  console.log("saga 이거왜뜸?");
-  yield takeEvery(SEND_EMAIL, getEmailApi);
-}
-
 export const userInfo = {
   idTyping,
   pwdTyping,
