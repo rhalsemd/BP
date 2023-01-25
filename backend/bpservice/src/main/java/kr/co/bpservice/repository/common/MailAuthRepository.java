@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MailAuthRepository extends JpaRepository<MailAuth, Integer> {
 
-    @Query(value = "CALL make_mail_auth_number(:email);", nativeQuery = true)
+    @Query(value = "CALL MAKE_MAIL_AUTH_NUMBER(:email);", nativeQuery = true)
     MailAuth getMailAuth(@Param("email") String email);
 
     @Query(value = "SELECT * FROM MWS_MAIL_AUTH WHERE TIMESTAMPDIFF(MINUTE, NOW(), EXP_DT) < 5 and AUTH_NUM LIKE :auth_num and email LIKE :email and STATUS = 0;", nativeQuery = true)
