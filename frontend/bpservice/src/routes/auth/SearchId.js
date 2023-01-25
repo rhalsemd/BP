@@ -36,9 +36,6 @@ const title = css`
 function SeachId({ setFindIdInfo }) {
   const [info, setInfo] = useState({});
 
-  // console.log(findIdReducer, "state 찾기");
-  // console.log(info);
-
   const findIdFnc = () => {
     if (info.email && info.userName) {
       setFindIdInfo({ email: info.email, userName: info.userName });

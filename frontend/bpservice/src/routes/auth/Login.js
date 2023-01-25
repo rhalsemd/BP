@@ -2,7 +2,7 @@
 import { css } from "@emotion/react";
 import { Link } from "react-router-dom";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import Nav from "../../components/Nav";
 import Footer from "../../components/Footer";
@@ -34,7 +34,7 @@ const title = css`
   text-align: center;
 `;
 
-function Login({ setLoginInfo }) {
+function Login({ userLogin, setLoginInfo }) {
   const [info, setInfo] = useState({});
 
   const getLogin = () => {
@@ -44,6 +44,12 @@ function Login({ setLoginInfo }) {
       alert("아이디와 비밀번호를 입력해주세요.");
     }
   };
+
+  useEffect(() => {
+    if (userLogin.error) {
+      alert("아이디와 비밀번호가 틀렸습니다.");
+    }
+  }, [userLogin.error]);
 
   return (
     <div>
