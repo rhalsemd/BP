@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/auth/user")
-public class UserInfoController {
+@CrossOrigin("*")
+public class UInfoController {
     private final UserService userService;
 
     @GetMapping("") //사용자 정보 반환
