@@ -1,12 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { HistogramDatasetTransition } from "../../components/chart/barChart/HistogramDatasetTransition";
 import Nav from "../../components/Nav";
 import Footer from "../../components/Footer";
 import UseageTable from "../../components/chart/UseageTable";
-import DropDown from "../../components/UI/DropDown";
+import DayPicker from "../../components/UI/DayPicker";
+import MonthPicker from "../../components/UI/MonthPicker";
 
 const barChartStyle = css`
   height: 400px;
@@ -28,17 +29,33 @@ const divStyle = css`
 `;
 
 export default function TotalIncome() {
+  const [monthOn, setMonthOn] = useState(false);
+  const [weekOn, setWeekOn] = useState(false);
   const urlName = useLocation().pathname;
-  if (urlName === "/admin/total_income") {
-  } else {
-  }
   return (
     <div css={divStyle}>
       <Nav />
+      <button
+        onClick={() => {
+          setMonthOn((prev) => !prev);
+          setWeekOn(false);
+        }}
+      >
+        Month
+      </button>
+      <button
+        onClick={() => {
+          setWeekOn((prev) => !prev);
+          setMonthOn(false);
+        }}
+      >
+        Year
+      </button>
+      {monthOn && <DayPicker />}
+      {weekOn && <MonthPicker />}
       <h1 css={h1Style}>
         {urlName === "/admin/total_income" ? "TOTAL INCOME" : "TOTAL USEAGE"}
       </h1>
-      <DropDown />
       <div css={barChartStyle}>
         <HistogramDatasetTransition width={700} height={400} />
       </div>

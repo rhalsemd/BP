@@ -6,7 +6,10 @@ import userLogin, { loginSaga } from "./userLogin";
 import findIdReducer, { findIdSaga } from "./findId";
 import findPwdReducer, { findPwdSaga } from "./findPwd";
 import modifyUserInfoReducer, { modifyUserInfoSaga } from "./modifyUserInfo";
+import histogramReducer from "./histogram";
 import { all } from "redux-saga/effects";
+import { histogramSaga } from "./histogram";
+import getUseageReducer, { getUseageSaga } from "./TotalUseage";
 
 export const rootReducer = combineReducers({
   signUp,
@@ -16,6 +19,8 @@ export const rootReducer = combineReducers({
   findIdReducer,
   findPwdReducer,
   modifyUserInfoReducer,
+  histogramReducer,
+  getUseageReducer,
 });
 
 export function* rootSaga() {
@@ -27,7 +32,8 @@ export function* rootSaga() {
     findPwdSaga(),
     modifyPwdSaga(),
     modifyUserInfoSaga(),
-    // histogramSaga(),
+    histogramSaga(),
+    getUseageSaga(),
   ]);
 }
 

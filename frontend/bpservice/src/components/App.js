@@ -9,7 +9,7 @@ import SignUp from "../routes/auth/SignUp";
 import LoginAdmin from "../routes/admin/LoginAdmin";
 import TotalChart from "../routes/admin/TotalChart";
 import RevenueTrend from "../routes/admin/RevenueTrend";
-import Useage from "../routes/admin/Useage";
+// import Useage from "../routes/admin/Usesage";
 import History from "../routes/admin/History";
 import UserToU from "../routes/auth/UserToU";
 import CompletePage from "../routes/auth/CompletePage";
@@ -19,6 +19,7 @@ import MyPage from "../routes/auth/MyPage";
 import ModifyUserInfo from "../routes/auth/ModifyUserInfo";
 import ModifyPwd from "../routes/auth/ModifyPwd";
 import SearchPwd from "../routes/auth/SearchPwd";
+import Payment from "../routes/auth/Payment";
 
 export const GlobalStyle = css`
   body {
@@ -42,12 +43,13 @@ function App() {
         <Route path="/bp/mypage/:id" element={<MyPage />}></Route>
         <Route path="/bp/modify/user/:id" element={<ModifyUserInfo />}></Route>
         <Route path="/bp/modify/pwd/:id" element={<ModifyPwd />}></Route>
+        <Route path="/bp/payment" element={<Payment />} />
 
         <Route path="/admin" element={<LoginAdmin />} />
         <Route path="/admin/total_income" element={<TotalChart />} />
         <Route path="/admin/total_useage" element={<TotalChart />} />
         <Route path="/admin/revenue_trend" element={<RevenueTrend />} />
-        <Route path="/admin/useage" element={<Useage />} />
+        {/* <Route path="/admin/useage" element={<Useage />} /> */}
         <Route path="/admin/useage/:id" element={<History />} />
       </Routes>
     </Router>
