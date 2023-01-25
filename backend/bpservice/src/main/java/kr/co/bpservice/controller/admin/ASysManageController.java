@@ -2,8 +2,10 @@ package kr.co.bpservice.controller.admin;
 
 import kr.co.bpservice.service.admin.ASysManageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -15,17 +17,27 @@ public class ASysManageController {
 
     @GetMapping("/admin/KioskMoneyDay/{day}")
     public List<Map<String, String>> KioskMoneyDay(@PathVariable("day") String day){
-        String start = day+" 00:00:00";
-        String end = day+" 23:59:00";
-        List<Map<String, String>> returnDay = aSysManageService.SKioskMoneyDay(start, end);
+        List<Map<String, String>> returnDay = aSysManageService.SKioskMoneyDay(day);
         return returnDay;
     }
 
-    @GetMapping("/admin/KioskMoneyDay/{month}/{year}")
-    public List<Map<String, String>> KioskMoneyMonth(@PathVariable("month") String month,@PathVariable("year") String year){
-        String start = month+" 00:00:00";
-        String end = year+" 23:59:00";
-        List<Map<String, String>> returnDay = aSysManageService.SKioskMoneyDay(start, end);
+    @GetMapping("/admin/KioskMoneyMonth/{month}/{year}")
+    public List<Map<String, String>> KioskMoneyMonth(@PathVariable("month") String month, @PathVariable("year") String year){
+        String callMonth=year+"-"+month;
+        List<Map<String, String>> returnMonth = aSysManageService.SKioskMoneyMonth(callMonth);
+        return returnMonth;
+    }
+
+    @GetMapping("/admin/KioskCountDay/{day}")
+    public List<Map<String, String>> KioskCountDay(@PathVariable("day") String day){
+        List<Map<String, String>> returnDay = aSysManageService.SKioskCountDay(day);
         return returnDay;
+    }
+
+    @GetMapping("/admin/KioskCountMonth/{month}/{year}")
+    public List<Map<String, String>> KioskCountMonth(@PathVariable("month") String month, @PathVariable("year") String year){
+        String callMonth=year+"-"+month;
+        List<Map<String, String>> returnMonth = aSysManageService.SKioskCountMonth(callMonth);
+        return returnMonth;
     }
 }
