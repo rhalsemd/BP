@@ -15,12 +15,11 @@ import java.net.HttpURLConnection;
 public class WeatherService {
     private final String APP_ID = "d99a9cbb680b4e229b71185d0c2f7e0c";
 
-    public JSONObject currentWeather(double lat, double lng) {
+    public String currentWeather(double lat, double lng) {
         try {
             JSONObject weatherData = requestCurrentWeather(lat, lng);
             JSONObject obj = new JSONObject();
 
-            obj.put("address", getAddress(lat, lng));
             obj.put("lat", lat);                                    // 위도
             obj.put("lng", lng);                                    // 경도
             obj.put("temp", getTemp(weatherData));                  // 현재 기온
@@ -32,16 +31,12 @@ public class WeatherService {
             obj.put("rain", getRain(weatherData));                  // 시간당 강수량
             obj.put("icon", getIcon(weatherData));                  // 날씨 이미지
 
-            return obj;
+            return obj.toString();
         } catch (IOException e) {
             System.out.println(e);
         }
 
         return null;
-    }
-
-    private String getAddress(double lat, double lng) {
-        return "경상북도 구미시 3공단3로 302";
     }
 
     private float getTemp(JSONObject weatherData) {
@@ -92,8 +87,7 @@ public class WeatherService {
     }
 
     private JSONObject requestCurrentWeather(double lat, double lng) throws IOException {
-        String currentWeatherUrl = String.format("https://api.openweathermap.org/data/2.5/weather?lang=kr&units=metric&lat=%s&lon=%s&appid=%s", String.valueOf(lat), String.valueOf(lng), APP_ID);
-        System.out.println(currentWeatherUrl);
+        String url = String.format("https://api.openweathermap.org/data/2.5/weather?lang=kr&units=metric&lat=%f&lon=%f&appid=%s", lat, lng, APP_ID);
 
         Header header = new Header();
         header.append("User-Agent", HTTPUtils.USER_AGENT);
@@ -101,7 +95,7 @@ public class WeatherService {
         header.append("Accept-Encoding", HTTPUtils.ACCEPT_ENCODING);
         header.append("Connection", HTTPUtils.CONNECTION);
 
-        Get get = new Get(currentWeatherUrl, header);
+        Get get = new Get(url, header);
 
         int responseCode = get.getResponseCode();
         if (responseCode != HttpURLConnection.HTTP_OK) {

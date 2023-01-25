@@ -24,9 +24,7 @@ public class WeatherController {
     @Parameters({@Parameter(name = "lat", description = "날씨를 조회할 지역의 위도")
                 ,@Parameter(name = "lng", description = "날씨를 조회할 지역의 경도")
     })
-    public String currentWeather(@RequestParam double lat, @RequestParam float lng) {
-        JSONObject temp = weatherService.currentWeather(lat, lng);
-        System.out.println(temp);
-        return temp.toString();
+    public String currentWeather(@RequestParam double lat, @RequestParam double lng) {
+        return weatherService.currentWeather(lat, lng);
     }
 }
