@@ -39,4 +39,32 @@ public class ULoginController {
             return new ResponseEntity<Map<String, String>>(resultMap, HttpStatus.BAD_REQUEST);
     }
 
+    @PostMapping("/find/pwd")
+    public ResponseEntity<?> findUserPwd(@RequestBody Map<String, String> requestMap) throws Exception { // 사용자 아이디, 이메일을 입력으로 받음.
+        Map<String, String> resultMap = authService.findUserPwd(requestMap);
+        if(resultMap.get("result").equals("success"))
+            return new ResponseEntity<>(resultMap, HttpStatus.OK);
+        else
+            return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
+    }
+
+    @PostMapping("/find/pwd/email-auth")
+    public ResponseEntity<?> findUserPwdByEmailAuth(@RequestBody Map<String, String> requestMap) {
+        Map<String, String> resultMap = authService.findUserPwdByEmailAuth(requestMap);
+        if(resultMap.get("result").equals("success"))
+            return new ResponseEntity<>(resultMap, HttpStatus.OK);
+        else
+            return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
+    }
+
+    // 비밀번호 찾기 과정에서 비밀변호 변경을 수행하는 메소드
+    @PatchMapping("/find/pwd")
+    public ResponseEntity<?> findUserPwdDo(@RequestBody Map<String, String> requestMap) {
+        Map<String, String> resultMap = authService.findUserPwdDo(requestMap);
+        if(resultMap.get("result").equals("success"))
+            return new ResponseEntity<>(resultMap, HttpStatus.OK);
+        else
+            return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
+    }
+
 }

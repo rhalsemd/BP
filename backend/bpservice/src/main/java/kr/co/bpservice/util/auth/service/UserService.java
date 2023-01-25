@@ -50,8 +50,6 @@ public class UserService {
     @Transactional
     public UserResponseDto changeUserInfo(UserRequestDto requestDto) {
         User user = userRepository.findById(SecurityUtil.getCurrentUserId()).orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다"));
-        user.setEmail(requestDto.getEmail());
-        user.setPhoneNum(requestDto.getPhoneNum());
         user.setSido(requestDto.getSido());
         user.setSigugun(requestDto.getSigugun());
         user.setDong(requestDto.getDong());
@@ -59,7 +57,7 @@ public class UserService {
     }
 
     public boolean checkPasswordFormat(String pwd) {
-        String pwdPattern = "^[a-z0-9!@#$%^&*]*$";
+        String pwdPattern = "^(?=^.{8,20}$)(?=.*\\d)(?=.*[a-z])(?=.*[!@#$%^&*])[a-z0-9!@#$%^&*]*$";
         if(pwd.length() < 8 || pwd.length() > 20) {
             return false;
         }
