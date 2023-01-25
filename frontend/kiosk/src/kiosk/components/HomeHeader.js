@@ -7,7 +7,6 @@ const KioskHeaderStyle = css`
   display: flex;
   justify-content: space-between;
   align-items: start;
-  /* border: 1px solid black; */
   height: 20vh;
 `
 
@@ -31,7 +30,7 @@ const HomeHeader = () => {
         logo
       </h3>
       <h3 css={KioskLocation}>
-        <KioskAddress/>
+        <KioskAddress />
       </h3>
     </div>
   )

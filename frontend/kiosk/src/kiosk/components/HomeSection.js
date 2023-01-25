@@ -12,7 +12,7 @@ const KioskSectionStyle = css`
 
   /* border: 1px solid black; */
 
-  height: 80vh;
+  height: 75vh;
 `
 
 const KioskButtons = css`
@@ -71,8 +71,8 @@ const HomeSection = () => {
   const [imgsrc, setImgsrc] = useState('');
 
   // const LatLonAPI = () => {
-    // let locationUrl = ``
-    // axios.get(url)
+  // let locationUrl = ``
+  // axios.get(url)
   //     .then((res) => {
   //       console.log(res)
   //     })
@@ -86,7 +86,7 @@ const HomeSection = () => {
       navigator.geolocation.getCurrentPosition((position) => {
         setLatitude(position.coords.latitude)
         setLongitude(position.coords.longitude)
-        
+
         // 위도 경도 수정될때마다 받아와서 axios 요청하기
         let url = `http://192.168.100.80:8080/api/weather/current-weather?lat=${parseInt(position.coords.latitude)}&lng=${parseInt(position.coords.longitude)}`
         axios.get(url)
@@ -118,13 +118,13 @@ const HomeSection = () => {
       </div>
       <div css={KioskHomeWeather}>
         <div css={KioskHomeWeatherImg}>
-          <img src={imgsrc}/>
+          <img src={imgsrc} />
         </div>
         <p>
-          현재온도 : 
+          현재온도 :
         </p>
         <p>
-          최고온도 : 
+          최고온도 :
         </p>
         <p>
           최저온도 :

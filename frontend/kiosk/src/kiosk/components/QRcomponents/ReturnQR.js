@@ -18,7 +18,7 @@ const ReturnQR = (props) => {
         }}
         style={{ width: '100%' }}
       />
-      <p>{data}</p>
+      {/* <p>{data}</p> */}
     </>
   );
 };

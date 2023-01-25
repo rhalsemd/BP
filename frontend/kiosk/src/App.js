@@ -31,12 +31,12 @@ function App() {
           <Route path='/kiosk/return' element={<KioskReturn />}></Route>
           <Route path='/kiosk/return/QR' element={<KioskReturnQRView />}></Route>
           <Route path='/kiosk/return/camera' element={<KioskReturnCamera />}></Route>
-          <Route path='/kiosk/return/QR' element={<KioskReturnQRView />}></Route>
           <Route path='/kiosk/return/camera/check' element={<KioskReturnCameraCheck />}></Route>
           <Route path='/kiosk/return/receipt' element={<KioskReturnReceipt />}></Route>
           <Route path='/kiosk/return/complete' element={<KioskReturnComplete />}></Route>
         </Routes>
       </Router>
+
 
     </div>
   );

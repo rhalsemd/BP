@@ -1,14 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import KioskHomeBtn from './btncomponents/KioskHomeBtn'
+import KioskCompleteHomeBtn from './btncomponents/KioskCompleteHomeBtn'
 
 const KioskLentSectionCompleteStyle = css`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  border: 1px solid black;
 
   height: 80vh;
   p {
@@ -27,8 +25,8 @@ const KioskLentSectionCompleteStyle = css`
 const LentCompleteSection = () => {
   return (
     <div css={KioskLentSectionCompleteStyle}>
-       <p>대여가 완료되었습니다. 5번 케이스를 확인하세요.</p>
-       <KioskHomeBtn/>
+      <p>대여가 완료되었습니다. 5번 케이스를 확인하세요.</p>
+      <KioskCompleteHomeBtn/>
     </div>
   )
 }

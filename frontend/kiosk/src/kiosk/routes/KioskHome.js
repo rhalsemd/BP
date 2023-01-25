@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
+import KioskHomeBtn from '../components/btncomponents/KioskHomeBtn'
 import KioskHeader from '../components/HomeHeader'
 import KioskSection from '../components/HomeSection'
 
@@ -23,6 +24,9 @@ const Home = () => {
       <section>
         <KioskSection />
       </section>
+      <footer>
+        <KioskHomeBtn/>
+      </footer>
     </div>
   )
 }
