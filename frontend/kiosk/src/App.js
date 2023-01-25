@@ -9,7 +9,7 @@ import KioskReturnReceipt from './kiosk/routes/KioskReturnReceipt'
 import KioskReturnComplete from './kiosk/routes/KioskReturnComplete'
 import KioskReturnCamera from './kiosk/routes/KioskReturnCamera'
 import KioskReturnCameraCheck from './kiosk/routes/KioskReturnCameraCheck'
-import KioskLatLon from './kiosk/components/latloncomponents/LatLon'
+import KioskLatLon from './kiosk/components/latloncomponents/Address'
 import "./App.css"
 import { Global, css } from '@emotion/react'
 
@@ -28,7 +28,6 @@ function App() {
         <Routes>
           <Route path='/kiosk' exact element={<KioskHome />}></Route>
           <Route path='/kiosk/lent' element={<KioskLent />}></Route>
-          {/* <Route path='/kiosk/lent/qrcode' element={<PaymentQR />}></Route> */}
           <Route path='/kiosk/lent/complete' element={<KioskLentComplete />}></Route>
           <Route path='/kiosk/return' element={<KioskReturn />}></Route>
           <Route path='/kiosk/return/camera' element={<KioskReturnCamera />}></Route>

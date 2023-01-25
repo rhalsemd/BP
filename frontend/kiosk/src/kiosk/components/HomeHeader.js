@@ -1,5 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
+import KioskAddress from './latloncomponents/Address'
+
 
 const KioskHeaderStyle = css`
   display: flex;
@@ -29,7 +31,7 @@ const HomeHeader = () => {
         logo
       </h3>
       <h3 css={KioskLocation}>
-        (위치아이콘)구미시 진평동
+        <KioskAddress/>
       </h3>
     </div>
   )

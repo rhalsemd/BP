@@ -14,14 +14,14 @@ const KioskHomeStyle = css`
 // 밑에는 JS 입니다.
 
 const Home = () => {
-  
+
   return (
     <div css={KioskHomeStyle}>
       <header>
-        <KioskHeader/>
+        <KioskHeader />
       </header>
       <section>
-        <KioskSection/>
+        <KioskSection />
       </section>
     </div>
   )
