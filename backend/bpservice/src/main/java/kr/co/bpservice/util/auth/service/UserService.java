@@ -57,7 +57,7 @@ public class UserService {
     }
 
     public boolean checkPasswordFormat(String pwd) {
-        String pwdPattern = "^[a-z0-9!@#$%^&*]*$";
+        String pwdPattern = "^(?=^.{8,20}$)(?=.*\\d)(?=.*[a-z])(?=.*[!@#$%^&*])[a-z0-9!@#$%^&*]*$";
         if(pwd.length() < 8 || pwd.length() > 20) {
             return false;
         }

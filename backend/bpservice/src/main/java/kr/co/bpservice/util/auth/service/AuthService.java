@@ -39,9 +39,37 @@ public class AuthService {
     public UserResponseDto join(UserRequestDto requestDto) {
         String userId = requestDto.getUserId();
         String pwd = requestDto.getPwd();
-        String idPattern = "^[a-z0-9]*$";
-        String pwdPattern = "^[a-z0-9!@#$%^&*]*$";
 
+        checkUserIdFormat(userId);
+
+        if (userRepository.existsById(userId)) {
+            throw new RuntimeException("이미 가입되어 있는 유저입니다");
+        }
+
+        checkUserPwdFormat(pwd);
+
+        User user = requestDto.toUser(passwordEncoder);
+        user.setRegDt(LocalDateTime.now());
+        user.setActiveState(true);
+        user.setAuthority(Authority.ROLE_USER);
+        return UserResponseDto.of(userRepository.save(user));
+    }
+
+    private boolean checkUserPwdFormat(String pwd) {
+        String pwdPattern = "^(?=^.{8,20}$)(?=.*\\d)(?=.*[a-z])(?=.*[!@#$%^&*])[a-z0-9!@#$%^&*]*$";
+        if(pwd.length() < 8 || pwd.length() > 20) {
+            throw new RuntimeException("비밀번호는 8~20자로 설정해야합니다.");
+        }
+
+        if(Pattern.matches(pwdPattern, pwd) == false) {
+            throw new RuntimeException("비밀번호 형식이 올바르지 않습니다.");
+        }
+
+        return true;
+    }
+
+    private boolean checkUserIdFormat(String userId) {
+        String idPattern = "^[a-z0-9]*$";
         if(userId.length() < 8 || userId.length() > 20) {
             throw new RuntimeException("아이디는 8~20자로 설정해야합니다.");
         }
@@ -50,23 +78,7 @@ public class AuthService {
             throw new RuntimeException("아이디는 영어소문자, 숫자만 가능합니다.");
         }
 
-        if (userRepository.existsById(userId)) {
-            throw new RuntimeException("이미 가입되어 있는 유저입니다");
-        }
-
-        if(pwd.length() < 8 || pwd.length() > 20) {
-            throw new RuntimeException("비밀번호는 8~20자로 설정해야합니다.");
-        }
-
-        if(Pattern.matches(pwdPattern, pwd) == false) {
-            throw new RuntimeException("비밀번호는 영어소문자, 숫자만 가능합니다.");
-        }
-
-        User user = requestDto.toUser(passwordEncoder);
-        user.setRegDt(LocalDateTime.now());
-        user.setActiveState(true);
-        user.setAuthority(Authority.ROLE_USER);
-        return UserResponseDto.of(userRepository.save(user));
+        return true;
     }
 
     public TokenDto login(UserRequestDto requestDto) {
