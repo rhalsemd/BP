@@ -9,24 +9,23 @@ const setModifyPwd = createAction(SET_MODIFY_PWD, (data) => data);
 const setNewPwd = createAction(SET_NEW_PWD, () => undefined);
 
 function* modifyPwdFnc() {
-  const API = `https://jsonplaceholder.typicode.com/todos/1`;
+  const API = `http://192.168.100.79:8080/api/auth/user/pwd`;
   const { pwdInfo } = yield select((state) => state.modifyPwd);
-  console.log(pwdInfo, "2단계");
   try {
-    const post = yield call(() => {
+    const patch = yield call(() => {
       return axios({
-        method: "post",
+        method: "patch",
         url: API,
         data: {
-          "현재 비밀번호": pwdInfo.current,
-          "변경 비밀번호": pwdInfo.next,
+          exPwd: pwdInfo.current,
+          newPwd: pwdInfo.next,
         },
         headers: {
           "Content-Type": "application/json",
         },
       });
     });
-    console.log(post);
+    console.log(patch);
   } catch (e) {
     console.log(e);
   }

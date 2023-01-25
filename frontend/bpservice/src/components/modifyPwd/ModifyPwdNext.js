@@ -1,4 +1,12 @@
-function ModifyPwdNext({ next, setNext, pwdRegExp, current, setIsNext }) {
+function ModifyPwdNext({
+  next,
+  setNext,
+  pwdRegExp,
+  current,
+  setIsNext,
+  confirmPwd,
+  setIsConfirm,
+}) {
   const onChange = (e) => {
     const inputValue = e.target.value;
     setNext(inputValue);
@@ -6,6 +14,11 @@ function ModifyPwdNext({ next, setNext, pwdRegExp, current, setIsNext }) {
       setIsNext(true);
     } else {
       setIsNext(false);
+    }
+    if (confirmPwd !== inputValue) {
+      setIsConfirm(false);
+    } else {
+      setIsConfirm(true);
     }
   };
   return (

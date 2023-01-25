@@ -45,8 +45,10 @@ function ModifyPwd({ setModifyPwd, setNewPwd }) {
   const [isConfirm, setIsConfirm] = useState(false);
 
   const pwdRegExp = useMemo(() => {
-    return /^(?=.*[a-z])(?=.*[0-9])(?=.*[$!@$!%*#^?&]).{8,20}$/;
+    return /^(?=.*[a-z])(?=.*[0-9])(?=.*[$!@$!%*#^?&]).{7,20}$/;
   }, []);
+
+  console.log(current, next, isNext, confirmPwd, isConfirm);
 
   const requestModify = () => {
     const info = {
@@ -79,6 +81,8 @@ function ModifyPwd({ setModifyPwd, setNewPwd }) {
                 next={next}
                 current={current}
                 setIsNext={setIsNext}
+                confirmPwd={confirmPwd}
+                setIsConfirm={setIsConfirm}
               />
 
               {/* 수정 비밀번호 유효성 검사 */}
