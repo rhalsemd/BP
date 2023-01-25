@@ -20,6 +20,6 @@ public interface MailAuthRepository extends JpaRepository<MailAuth, Integer> {
     void updateStatus(@Param("id") int id);
 
     // 이메일 인증을 수행했는지 확인하는 메소드
-    @Query(value = "SELECT * FROM MWS_MAIL_AUTH WHERE (TIMESTAMPDIFF(MINUTE, NOW(), EXP_DT) BETWEEN -5 AND 0) AND email LIKE :email and STATUS = 1 ORDER BY EXP_DT DESC LIMIT 1;", nativeQuery = true)
+    @Query(value = "SELECT * FROM MWS_MAIL_AUTH WHERE (TIMESTAMPDIFF(MINUTE, NOW(), EXP_DT) BETWEEN -5 AND 0) AND email LIKE :email ORDER BY EXP_DT DESC LIMIT 1;", nativeQuery = true)
     MailAuth checkMailAuth(@Param("email") String email);
 }

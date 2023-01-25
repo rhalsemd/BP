@@ -155,7 +155,7 @@ public class AuthService {
         String email = requestMap.get("email");
         MailAuth mailAuth = mailAuthRepository.checkMailAuth(email);
 
-        if(mailAuth == null) {
+        if(mailAuth == null || mailAuth.isStatus() == false) {
             resultMap.put("result", "fail");
             resultMap.put("msg", "이메일 인증이 수행되지 않았습니다.");
             return resultMap;

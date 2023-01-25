@@ -17,7 +17,7 @@ public interface SmsAuthRepository extends JpaRepository<SmsAuth, Integer> {
     void updateStatus(@Param("id") int id);
 
     // SMS 인증을 수행했는지 확인하는 메소드
-    @Query(value = "SELECT * FROM MWS_SMS_AUTH WHERE (TIMESTAMPDIFF(MINUTE, NOW(), EXP_DT) BETWEEN -5 AND 0) and PHONE_NUM LIKE :phoneNum and STATUS = 1 ORDER BY EXP_DT DESC LIMIT 1;", nativeQuery = true)
+    @Query(value = "SELECT * FROM MWS_SMS_AUTH WHERE (TIMESTAMPDIFF(MINUTE, NOW(), EXP_DT) BETWEEN -5 AND 0) and PHONE_NUM LIKE :phoneNum ORDER BY EXP_DT DESC LIMIT 1;", nativeQuery = true)
     SmsAuth checkSmsAuth(@Param("phoneNum") String phoneNum);
 
 }
