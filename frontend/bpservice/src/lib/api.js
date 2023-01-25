@@ -8,7 +8,7 @@ export const getBranchRevenue = () => {
       "Content-Type ": "application/json",
       "Access-Control-Allow-Origin": "*",
     },
-  }).then(res) {
-    console.log(res)
-  }
+  }).then((res) => {
+    console.log(res);
+  });
 };
