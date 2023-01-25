@@ -1,12 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import { useEffect } from "react";
 import { useState } from "react";
 import { connect } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer";
 import Nav from "../../components/Nav";
 import FindPwdEmailComponent from "../../components/userFindPwd/FindPwdEmailComponent";
 import FindPwdIdComponent from "../../components/userFindPwd/FindPwdIdComponent";
-import FindPwdNameComponent from "../../components/userFindPwd/FindPwdNameComponent";
+import InputCertification from "../../components/userFindPwd/InputCertification";
 import { findPwdInfo } from "../../modules/findPwd";
 
 const searchIdArea = css`
@@ -32,18 +34,26 @@ const title = css`
   text-align: center;
 `;
 
-function SearchPwd({ setFindPwdInfo }) {
+function SearchPwd({ findPwdReducer, setFindPwdInfo }) {
   const [info, setInfo] = useState({});
+  const navigation = useNavigate();
 
   const findPwd = () => {
-    if (info.id && info.email && info.userName) {
+    if (info.id && info.email) {
       setFindPwdInfo({
         id: info.id,
         email: info.email,
-        userName: info.userName,
       });
     } else {
       alert("내용을 입력해주세요.");
+    }
+  };
+
+  const goToNext = () => {
+    if (findPwdReducer.secondSuccess) {
+      navigation("/");
+    } else {
+      alert("인증번호를 확인해주세요");
     }
   };
 
@@ -62,16 +72,18 @@ function SearchPwd({ setFindPwdInfo }) {
               {/* 아이디 */}
               <FindPwdIdComponent setInfo={setInfo} />
 
-              {/* 이름 */}
-              <FindPwdNameComponent setInfo={setInfo} />
-
               {/* 이메일 */}
               <FindPwdEmailComponent setInfo={setInfo} />
 
               {/* 비밀번호 찾기 버튼 */}
               <div>
-                <button onClick={findPwd}>비밀번호 찾기</button>
+                <button onClick={findPwd}>인증번호 받기</button>
               </div>
+
+              {/* 인증번호 입력 */}
+              <InputCertification info={info} setInfo={setInfo} />
+
+              <button onClick={goToNext}>찾기</button>
             </div>
           </div>
         </div>
@@ -84,6 +96,10 @@ function SearchPwd({ setFindPwdInfo }) {
   );
 }
 
+const mapStateToProps = ({ findPwdReducer }) => {
+  return { findPwdReducer };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     setFindPwdInfo(info) {
@@ -92,4 +108,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(SearchPwd);
+export default connect(mapStateToProps, mapDispatchToProps)(SearchPwd);
