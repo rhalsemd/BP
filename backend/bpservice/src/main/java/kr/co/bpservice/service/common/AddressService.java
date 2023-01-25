@@ -1,17 +1,23 @@
 package kr.co.bpservice.service.common;
 
+import kr.co.bpservice.repository.common.AddressRepository;
 import kr.co.bpservice.util.HTTPUtils;
 import kr.co.bpservice.util.network.Get;
 import kr.co.bpservice.util.network.Header;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.util.List;
 
 @Service
 public class AddressService {
+    @Autowired
+    AddressRepository addressRepository;
+
     private final String APP_KEY = "5fcd8a6948d0eb38356fe8045792670c";
 
     public String getReverseGeo(double lat, double lng) {
@@ -53,5 +59,17 @@ public class AddressService {
 
         String content = get.get();
         return new JSONObject(content);
+    }
+
+    public List<String> getFirstDepth() {
+        return addressRepository.getFirstDepth();
+    }
+
+    public List<String> getSecondDepth(String sido) {
+        return addressRepository.getSecondDepth(sido);
+    }
+
+    public List<String> getThirdDepth(String sido, String sigungu) {
+        return addressRepository.getThirdDepth(sido, sigungu);
     }
 }
