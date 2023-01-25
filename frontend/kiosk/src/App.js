@@ -29,6 +29,7 @@ function App() {
           <Route path='/kiosk/lent' element={<KioskLent />}></Route>
           <Route path='/kiosk/lent/complete' element={<KioskLentComplete />}></Route>
           <Route path='/kiosk/return' element={<KioskReturn />}></Route>
+          <Route path='/kiosk/return/QR' element={<KioskReturnQRView />}></Route>
           <Route path='/kiosk/return/camera' element={<KioskReturnCamera />}></Route>
           <Route path='/kiosk/return/QR' element={<KioskReturnQRView />}></Route>
           <Route path='/kiosk/return/camera/check' element={<KioskReturnCameraCheck />}></Route>
