@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { jsx, css } from "@emotion/react";
+import { css } from "@emotion/react";
 
 import { connect } from "react-redux";
 
@@ -14,7 +14,6 @@ import SignUpPhone from "../../components/signup/SignUpPhone";
 import SignUpAddress from "../../components/signup/SignUpAddress";
 import SignUpEmail from "../../components/signup/SignUpEmail";
 import { userInfo } from "../../modules/signUp";
-import { useEffect } from "react";
 
 const loginArea = css`
   width: 100%;
@@ -57,42 +56,40 @@ function SignUp({ signUp, sighUpRequirement }) {
             <div css={title}>
               <h1>sign up</h1>
 
-              <form>
-                {/* 아이디 */}
-                <SignUpId />
+              {/* 아이디 */}
+              <SignUpId />
 
-                {/* 비밀번호 */}
-                <SignUpPwd />
+              {/* 비밀번호 */}
+              <SignUpPwd />
 
-                {/* 비밀번호 확인 */}
-                <SignUpRePwd />
+              {/* 비밀번호 확인 */}
+              <SignUpRePwd />
 
-                {/* 이름 */}
-                <SignUpName />
+              {/* 이름 */}
+              <SignUpName />
 
-                {/* 전화번호 / 인증 번호*/}
-                <SignUpPhone />
+              {/* 전화번호 / 인증 번호*/}
+              <SignUpPhone />
 
-                {/* 주소 */}
-                <SignUpAddress />
+              {/* 주소 */}
+              <SignUpAddress />
 
-                {/* 이메일 */}
-                <SignUpEmail />
+              {/* 이메일 */}
+              <SignUpEmail />
 
-                {/* 회원가입 버튼 */}
-                {signUp.idConfirm &&
-                signUp.pwdConfirm &&
-                !signUp.rePwd &&
-                signUp.nameConfirm &&
-                signUp.isCertification &&
-                signUp.emailConfirm ? (
-                  <input type="submit" value="회원가입" onClick={setSignUp} />
-                ) : null}
-              </form>
+              {/* 회원가입 버튼 */}
+              {signUp.idConfirm &&
+              signUp.pwdConfirm &&
+              !signUp.rePwd &&
+              signUp.nameConfirm &&
+              signUp.isCertification &&
+              signUp.emailConfirm ? (
+                <button onClick={setSignUp}>회원가입</button>
+              ) : null}
             </div>
           </div>
         </div>
-        d
+
         <footer>
           <Footer />
         </footer>

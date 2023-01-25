@@ -16,7 +16,7 @@ const buttonStyle = {
 
 export const HistogramDatasetTransition = ({ width, height }) => {
   const [selectedData, setSelectedData] = useState(data);
-
+  // console.log(height);
   return (
     <div>
       <div style={{ height: BUTTONS_HEIGHT }}>

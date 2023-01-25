@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { userInfo } from "../../modules/signUp";
 
-function SignUpId({ signUp, idTyping }) {
+function SignUpId({ idTyping }) {
   const [ID, setId] = useState("");
 
   // id 정규 표현식
@@ -45,7 +45,7 @@ function SignUpId({ signUp, idTyping }) {
   );
 }
 
-const mapStateToProps = ({ signUp }, ownProps) => {
+const mapStateToProps = ({ signUp }) => {
   return { signUp };
 };
 

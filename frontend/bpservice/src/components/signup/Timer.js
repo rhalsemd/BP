@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export default function Timer(time) {
+export default function Timer() {
   // 타이머
   const [minutes, setMinutes] = useState(2);
   const [seconds, setSeconds] = useState(0);

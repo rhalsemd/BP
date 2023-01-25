@@ -32,14 +32,12 @@ const title = css`
   text-align: center;
 `;
 
-function SeachId({ setFindIdInfo, getFindId }) {
-  const [email, setEmail] = useState("");
-  const [findUserName, setFindUserName] = useState("");
+function SeachId({ setFindIdInfo }) {
+  const [info, setInfo] = useState({});
 
   const findId = () => {
-    if (email && findUserName) {
-      setFindIdInfo({ email, findUserName });
-      getFindId();
+    if (info.email && info.userName) {
+      setFindIdInfo({ email: info.email, userName: info.userName });
     } else {
       alert("아이디와 이름을 입력해주세요.");
     }
@@ -57,13 +55,10 @@ function SeachId({ setFindIdInfo, getFindId }) {
               <h1>아이디 찾기</h1>
 
               {/* 아이디 */}
-              <FindEmailComponent email={email} setEmail={setEmail} />
+              <FindEmailComponent setInfo={setInfo} />
 
               {/* 이름 */}
-              <FindNameComponent
-                findUserName={findUserName}
-                setFindUserName={setFindUserName}
-              />
+              <FindNameComponent setInfo={setInfo} />
 
               {/* 아이디 찾기 버튼 */}
               <div>
@@ -85,9 +80,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setFindIdInfo(info) {
       dispatch(findIdInfo.setFindIdInfo(info));
-    },
-    getFindId() {
-      dispatch(findIdInfo.getFindId());
     },
   };
 };

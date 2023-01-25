@@ -6,7 +6,7 @@ import { HistogramDatasetTransition } from "../../components/chart/barChart/Hist
 import Nav from "../../components/Nav";
 import Footer from "../../components/Footer";
 import UseageTable from "../../components/chart/UseageTable";
-import Useage from "./History";
+import DropDown from "../../components/UI/DropDown";
 
 const barChartStyle = css`
   height: 400px;
@@ -29,13 +29,16 @@ const divStyle = css`
 
 export default function TotalIncome() {
   const urlName = useLocation().pathname;
+  if (urlName === "/admin/total_income") {
+  } else {
+  }
   return (
     <div css={divStyle}>
       <Nav />
       <h1 css={h1Style}>
         {urlName === "/admin/total_income" ? "TOTAL INCOME" : "TOTAL USEAGE"}
       </h1>
-      {/* <BarChart /> */}
+      <DropDown />
       <div css={barChartStyle}>
         <HistogramDatasetTransition width={700} height={400} />
       </div>

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { userInfo } from "../../modules/signUp";
 
-function SignUpEmail({ signUp, emailTyping }) {
+function SignUpEmail({ emailTyping }) {
   const [email, setEmail] = useState("");
   // email 정규 표현식
   const emailRegExp =
@@ -25,12 +25,12 @@ function SignUpEmail({ signUp, emailTyping }) {
         type="email"
         id="email"
         autoComplete="off"
-        size="30"
         required
         placeholder="이메일@EXAMPLE.COM"
         onChange={typeEmail}
       />
       <div>
+        {/* 유효성 검사 */}
         {emailRegExp.test(email) || email.length === 0 ? null : (
           <div>
             <span style={{ color: "red" }}>uncomplete : </span>

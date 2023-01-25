@@ -3,10 +3,8 @@ import { createAction, handleActions } from "redux-actions";
 import { call, takeLatest } from "redux-saga/effects";
 
 const SET_FIND_ID_INFO = "findId/SET_FIND_ID_INFO";
-const GET_FIND_ID = "findId/GET_FIND_ID";
 
 const setFindIdInfo = createAction(SET_FIND_ID_INFO, (info) => info);
-const getFindId = createAction(GET_FIND_ID, () => undefined);
 
 function* getFindIdFnc() {
   const API = `https://jsonplaceholder.typicode.com/todos/1`;
@@ -18,11 +16,13 @@ function* getFindIdFnc() {
       });
     });
     console.log(get);
-  } catch {}
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 export function* findIdSaga() {
-  yield takeLatest(GET_FIND_ID, getFindIdFnc);
+  yield takeLatest(SET_FIND_ID_INFO, getFindIdFnc);
 }
 
 const initialState = {};
@@ -38,7 +38,6 @@ const findIdReducer = handleActions(
 
 export const findIdInfo = {
   setFindIdInfo,
-  getFindId,
 };
 
 export default findIdReducer;

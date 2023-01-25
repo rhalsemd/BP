@@ -9,6 +9,7 @@ export default function BarChart() {
 
   const handleChange = (event) => {
     setAge(event.target.value);
+    console.log(event.target.value);
   };
 
   return (

@@ -1,7 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { jsx, css } from "@emotion/react";
-
-import React from "react";
+import { css } from "@emotion/react";
 
 function Footer() {
   const outerBox = css`
@@ -12,6 +10,7 @@ function Footer() {
     height: 20vh;
     border: 1px black solid;
   `;
+
   return (
     <div css={outerBox}>
       <div css={container}>
