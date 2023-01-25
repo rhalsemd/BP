@@ -50,8 +50,6 @@ public class UserService {
     @Transactional
     public UserResponseDto changeUserInfo(UserRequestDto requestDto) {
         User user = userRepository.findById(SecurityUtil.getCurrentUserId()).orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다"));
-        user.setEmail(requestDto.getEmail());
-        user.setPhoneNum(requestDto.getPhoneNum());
         user.setSido(requestDto.getSido());
         user.setSigugun(requestDto.getSigugun());
         user.setDong(requestDto.getDong());
