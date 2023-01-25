@@ -5,6 +5,7 @@ import { useState } from "react";
 import { connect } from "react-redux";
 import Footer from "../../components/Footer";
 import Nav from "../../components/Nav";
+import CertificationNumInput from "../../components/userFindId/CertificationNumInput";
 import FindEmailComponent from "../../components/userFindId/FindEmailComponent";
 import FindNameComponent from "../../components/userFindId/FindNameComponent";
 import { findIdInfo } from "../../modules/findId";
@@ -35,7 +36,10 @@ const title = css`
 function SeachId({ setFindIdInfo }) {
   const [info, setInfo] = useState({});
 
-  const findId = () => {
+  // console.log(findIdReducer, "state 찾기");
+  // console.log(info);
+
+  const findIdFnc = () => {
     if (info.email && info.userName) {
       setFindIdInfo({ email: info.email, userName: info.userName });
     } else {
@@ -54,7 +58,7 @@ function SeachId({ setFindIdInfo }) {
             <div css={title}>
               <h1>아이디 찾기</h1>
 
-              {/* 아이디 */}
+              {/* 이메일 */}
               <FindEmailComponent setInfo={setInfo} />
 
               {/* 이름 */}
@@ -62,8 +66,11 @@ function SeachId({ setFindIdInfo }) {
 
               {/* 아이디 찾기 버튼 */}
               <div>
-                <button onClick={findId}>아이디 찾기</button>
+                <button onClick={findIdFnc}>아이디 찾기</button>
               </div>
+
+              {/* 인증번호 입력 */}
+              <CertificationNumInput info={info} setInfo={setInfo} />
             </div>
           </div>
         </div>
