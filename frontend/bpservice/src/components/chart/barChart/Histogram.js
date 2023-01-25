@@ -4,32 +4,41 @@ import { Rectangle } from "./Rectangle";
 
 const MARGIN = { top: 30, right: 30, bottom: 40, left: 50 };
 
-const BUCKET_NUMBER = 70;
-const BUCKET_PADDING = 4;
-
 export const Histogram = ({ width, height, data }) => {
+  const refbars = useRef();
+
+  const BUCKET_NUMBER = data.length;
+  const BUCKET_PADDING = 4;
+  // console.log(data.length);
   const axesRef = useRef(null);
   const boundsWidth = width - MARGIN.right - MARGIN.left;
   const boundsHeight = height - MARGIN.top - MARGIN.bottom;
 
-  const domain = [0, 100];
+  const domain = [0, d3.max(data) + 50];
   const xScale = useMemo(() => {
-    return d3.scaleLinear().domain(domain).range([10, boundsWidth]);
+    return d3
+      .scaleBand()
+      .domain(data.map((d, idx) => idx))
+      .range([10, boundsWidth]);
   }, [data, width]);
 
   const buckets = useMemo(() => {
-    const bucketGenerator = d3
-      .bin()
-      .value((d) => d)
-      .domain(domain)
-      .thresholds(xScale.ticks(BUCKET_NUMBER));
+    // const bucketGenerator = d3
+    //   .bin()
+    //   .value((d) => d)
+    //   .domain(domain)
+    //   .thresholds(xScale.ticks(BUCKET_NUMBER));
 
-    return bucketGenerator(data);
+    return data;
   }, [xScale]);
 
   const yScale = useMemo(() => {
-    const max = Math.max(...buckets.map((bucket) => bucket?.length));
-    return d3.scaleLinear().range([boundsHeight, 0]).domain([0, max]).nice();
+    // const max = Math.max(...buckets.map((bucket) => bucket?.length));
+    return d3
+      .scaleLinear()
+      .range([boundsHeight, 0])
+      .domain([0, d3.max(data)]);
+    // .nice();
   }, [data, height]);
 
   useEffect(() => {
@@ -43,21 +52,28 @@ export const Histogram = ({ width, height, data }) => {
       .call(xAxisGenerator);
 
     const yAxisGenerator = d3.axisLeft(yScale);
+
     svgElement.append("g").call(yAxisGenerator);
   }, [xScale, yScale, boundsHeight]);
 
   const allRects = buckets.map((bucket, i) => {
-    const { x0, x1 } = bucket;
-    if (x0 == undefined || x1 == undefined) {
-      return null;
-    }
+    // const { x0, x1 } = bucket;
+    // if (x0 == undefined || x1 == undefined) {
+    //   return null;
+    // }
+    // `console`.log("//////////////////////////////////");
+    // console.log("값", bucket);
+    // console.log("x의 위치", xScale(i));
+    // console.log("넓이", xScale.bandwidth());
+    // console.log("yScale", yScale(bucket));
     return (
       <Rectangle
         key={i}
-        x={xScale(x0) + BUCKET_PADDING / 2}
-        width={xScale(x1) - xScale(x0) - BUCKET_PADDING}
-        y={yScale(bucket.length)}
-        height={boundsHeight - yScale(bucket.length)}
+        x={xScale(i) + BUCKET_PADDING / 2 + 5}
+        width={xScale.bandwidth() - 10}
+        y={boundsHeight - 300 + yScale(bucket)}
+        height={300 - yScale(bucket)}
+        jijum={bucket}
       />
     );
   });

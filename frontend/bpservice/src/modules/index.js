@@ -27,6 +27,7 @@ export function* rootSaga() {
     findPwdSaga(),
     modifyPwdSaga(),
     modifyUserInfoSaga(),
+    histogramSaga(),
   ]);
 }
 

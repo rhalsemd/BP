@@ -4,8 +4,12 @@ import { css } from "@emotion/react";
 
 const chartStyle = css`
   height: 60vh;
-  width: 90vw;
+  width: 95vw;
   background-color: #f9fafb;
+  overflow: scroll;
+  margin: 0 2.5vw 0vh 2.5vw;
+  border-radius: 4px;
+  border: 1px solid rgba(224, 224, 224, 1);
 `;
 const centerCenter = css`
   display: flex;
