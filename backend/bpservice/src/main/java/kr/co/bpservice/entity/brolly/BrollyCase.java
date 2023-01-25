@@ -17,7 +17,7 @@ public class BrollyCase {
     @Column(length = 50)
     private String name;
 
-    private Float lat;
+    private Double lat;
 
-    private Float lng;
+    private Double lng;
 }
