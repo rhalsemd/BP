@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/api/auth/user")
 @CrossOrigin("*")
-public class UserInfoController {
+public class UInfoController {
     private final UserService userService;
 
     @GetMapping("") //사용자 정보 반환
