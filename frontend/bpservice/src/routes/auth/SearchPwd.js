@@ -51,7 +51,7 @@ function SearchPwd({ findPwdReducer, setFindPwdInfo }) {
 
   const goToNext = () => {
     if (findPwdReducer.secondSuccess) {
-      navigation("/");
+      navigation("/bp/search/change/pwd");
     } else {
       alert("인증번호를 확인해주세요");
     }

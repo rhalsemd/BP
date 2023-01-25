@@ -1,10 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { useState } from "react";
+import { connect } from "react-redux";
 import Footer from "../../components/Footer";
 import Nav from "../../components/Nav";
 import ChangePwdInput from "../../components/userFindChangePwd/ChangePwdInput";
 import CheckPwdInput from "../../components/userFindChangePwd/CheckPwdInput";
+import { findPwdInfo } from "../../modules/findPwd";
 
 const searchChangePwdUserArea = css`
   width: 100%;
@@ -31,8 +33,14 @@ const title = css`
 
 const pwdRegExp = /^(?=.*[a-z])(?=.*[0-9])(?=.*[$!@$!%*#^?&]).{8,20}$/;
 
-function SearchChangePwd() {
-  const [info, setInfo] = useState({});
+function SearchChangePwd({ setNewPwd }) {
+  const [info, setInfo] = useState({ pwd: "", check: "" });
+
+  const onClick = () => {
+    if (info.pwd && info.check && info.pwd === info.check) {
+      setNewPwd({ pwd: info.pwd, check: info.check });
+    }
+  };
 
   return (
     <div>
@@ -53,7 +61,11 @@ function SearchChangePwd() {
               />
 
               {/* 비밀번호 확인 */}
-              <CheckPwdInput info={info} />
+              <CheckPwdInput info={info} setInfo={setInfo} />
+
+              {info.pwd === info.check && info.pwd && info.check ? (
+                <button onClick={onClick}>비밀번호 변경</button>
+              ) : null}
             </div>
           </div>
         </div>
@@ -66,4 +78,12 @@ function SearchChangePwd() {
   );
 }
 
-export default SearchChangePwd;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setNewPwd(info) {
+      dispatch(findPwdInfo.setNewPwd(info));
+    },
+  };
+};
+
+export default connect(null, mapDispatchToProps)(SearchChangePwd);

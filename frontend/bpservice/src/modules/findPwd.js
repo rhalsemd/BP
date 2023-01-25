@@ -7,6 +7,7 @@ const SET_CERTIFICATION_NUM = "findPwd/SET_CERTIFICATION_NUM";
 const SET_FIRST_SUCCESS_CERTIFICATION = "findPwd/SET_SUCCESS_CERTIFICATION";
 const SET_SECOND_SUCCESS_CERTIFICATION = "findPwd/SET_SUCCESS_CERTIFICATION";
 const SET_ERROR_CERTIFICATION = "findPwd/SET_ERROR_CERTIFICATION";
+const SET_NEW_PWD = "findPwd/SET_NEW_PWD";
 
 const setFindPwdInfo = createAction(SET_FIND_PWD_INFO, (info) => info);
 const setCertificationNum = createAction(SET_CERTIFICATION_NUM, (data) => data);
@@ -22,6 +23,7 @@ const setErrorCertification = createAction(
   SET_ERROR_CERTIFICATION,
   () => undefined
 );
+const setNewPwd = createAction(SET_NEW_PWD, (data) => data);
 
 //인증 번호 요청하는 Saga
 function* findPwdFnc() {
@@ -77,9 +79,36 @@ function* checkCertifiNum() {
   } catch (e) {}
 }
 
+// 새 비밀번호 저장 요청하는 Saga
+function* newPwdRequestFnc() {
+  const { userInfo, newPwd } = yield select((state) => state.findPwdReducer);
+  const API = `https://jsonplaceholder.typicode.com/todos/1`;
+
+  try {
+    const patch = yield call(() => {
+      return axios({
+        method: "patch",
+        url: API,
+        data: {
+          email: userInfo.email,
+          newPwd,
+        },
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    });
+
+    console.log(patch);
+  } catch (e) {
+    console.log("새 비밀번호를 저장", e);
+  }
+}
+
 export function* findPwdSaga() {
   yield takeLatest(SET_FIND_PWD_INFO, findPwdFnc);
   yield takeLatest(SET_CERTIFICATION_NUM, checkCertifiNum);
+  yield takeLatest(SET_NEW_PWD, newPwdRequestFnc);
 }
 
 const initialState = { secondSuccess: false };
@@ -101,6 +130,9 @@ const findPwdReducer = handleActions(
     [SET_ERROR_CERTIFICATION]: (state, action) => {
       return { ...state, firstError: action.error };
     },
+    [SET_NEW_PWD]: (state, action) => {
+      return { ...state, newPwd: action.payload };
+    },
   },
   initialState
 );
@@ -108,6 +140,7 @@ const findPwdReducer = handleActions(
 export const findPwdInfo = {
   setFindPwdInfo,
   setCertificationNum,
+  setNewPwd,
 };
 
 export default findPwdReducer;

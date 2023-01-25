@@ -19,8 +19,7 @@ function ChangePwdInput({ setInfo, pwdRegExp, info }) {
           onChange={onChange}
         />
         {/* 비밀번호 조건 */}
-        {pwdRegExp.test(info.pwd) ||
-        (info.pwd ? info.pwd.length === 0 : "") ? null : (
+        {pwdRegExp.test(info.pwd) || info.pwd.length === 0 ? null : (
           <div>
             <span style={{ color: "red" }}>uncomplete : </span>
             <span>8~20로 비밀번호를 설정해주세요</span>
