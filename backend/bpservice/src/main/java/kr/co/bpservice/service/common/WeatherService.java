@@ -10,28 +10,34 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.HttpURLConnection;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class WeatherService {
     private final String APP_ID = "d99a9cbb680b4e229b71185d0c2f7e0c";
 
-    public String currentWeather(double lat, double lng) {
+    public Map<String, Object> currentWeather(double lat, double lng) {
         try {
             JSONObject weatherData = requestCurrentWeather(lat, lng);
-            JSONObject obj = new JSONObject();
+            if (weatherData == null) {
+                return null;
+            }
 
-            obj.put("lat", lat);                                    // 위도
-            obj.put("lng", lng);                                    // 경도
-            obj.put("temp", getTemp(weatherData));                  // 현재 기온
-            obj.put("temp_min", getTempMin(weatherData));           // 최저온도
-            obj.put("temp_max", getTempMax(weatherData));           // 최고온도
-            obj.put("feels_like", getFeelsLike(weatherData));       // 체감온도
-            obj.put("description", getDescription(weatherData));    // 날씨
-            obj.put("wind_speed", getWindSpeed(weatherData));       // 초속 바람세기
-            obj.put("rain", getRain(weatherData));                  // 시간당 강수량
-            obj.put("icon", getIcon(weatherData));                  // 날씨 이미지
+            Map<String, Object> map = new HashMap<>();
 
-            return obj.toString();
+            map.put("lat", lat);                                    // 위도
+            map.put("lng", lng);                                    // 경도
+            map.put("temp", getTemp(weatherData));                  // 현재 기온
+            map.put("temp_min", getTempMin(weatherData));           // 최저온도
+            map.put("temp_max", getTempMax(weatherData));           // 최고온도
+            map.put("feels_like", getFeelsLike(weatherData));       // 체감온도
+            map.put("description", getDescription(weatherData));    // 날씨
+            map.put("wind_speed", getWindSpeed(weatherData));       // 초속 바람세기
+            map.put("rain", getRain(weatherData));                  // 시간당 강수량
+            map.put("icon", getIcon(weatherData));                  // 날씨 이미지
+
+            return map;
         } catch (IOException e) {
             System.out.println(e);
         }
