@@ -65,49 +65,34 @@ const KioskHomeWeatherImg = css`
 // 밑에는 JSX 입니다.
 
 const HomeSection = () => {
-  const [latitude, setLatitude] = useState('');
-  const [longitude, setLongitude] = useState('');
-  // const [imgLoading, setImgLoading] = useState('');
+  const [celsius, setCelsius] = useState(0);
+  const [fahrenheit, setFahrenheit] = useState(0);
+  const [windspeed, setWindspeed] = useState(0);
   const [imgsrc, setImgsrc] = useState('');
-
-  // const LatLonAPI = () => {
-  // let locationUrl = ``
-  // axios.get(url)
-  //     .then((res) => {
-  //       console.log(res)
-  //     })
-  //     .catch((err) => {
-  //       console.log(err)
-  //     })
-  // } 
-
-  const weatherAPI = () => {
-    if (navigator.geolocation) { // GPS를 지원하면
-      navigator.geolocation.getCurrentPosition((position) => {
-        setLatitude(position.coords.latitude)
-        setLongitude(position.coords.longitude)
-
-        // 위도 경도 수정될때마다 받아와서 axios 요청하기
-        let url = `http://192.168.100.80:8080/api/weather/current-weather?lat=${parseInt(position.coords.latitude)}&lng=${parseInt(position.coords.longitude)}`
-        axios.get(url)
-          .then((res) => {
-            setImgsrc(res.data.icon)
-            console.log(res.data)
-          })
-          .catch((err) => {
-            console.log(err)
-          })
-      }, (error) => {
-        console.error(error);
-      });
-    } else {
-      alert('GPS를 지원하지 않습니다');
-    }
-  }
+  
+  const getWeather = () => {
+    // 키오스크 geo 에서 지점에 해당하는 위도 경도값 받아오기
+    let geoURL = `http://192.168.100.80:8080/api/kiosk/home/kiosk-geo?id=1`
+    let weatherURL = ``;
+    axios.get(geoURL)
+    .then((res) => {
+      return res.data;
+    })
+    .then((data) => {
+      weatherURL = `http://192.168.100.80:8080/api/weather/current-weather?lat=${data.lat}&lng=${data.lng}`;
+      axios.get(weatherURL)
+        .then((res) => {
+          setImgsrc(res.data.icon)
+          setCelsius(res.data.temp)
+          setFahrenheit(Math.ceil((res.data.temp*1.8)+32))
+          setWindspeed(res.data.wind_speed)
+        })
+    })
+    .catch((err) => console.log(err))
+  };
 
   useEffect(() => {
-    // LatLonAPI();
-    weatherAPI();
+    getWeather();
   }, []);
 
   return (
@@ -121,13 +106,8 @@ const HomeSection = () => {
           <img src={imgsrc} />
         </div>
         <p>
-          현재온도 :
-        </p>
-        <p>
-          최고온도 :
-        </p>
-        <p>
-          최저온도 :
+          현재온도 : {celsius}ºC({fahrenheit}ºF)<br/>
+          풍속 : {windspeed}(m/s)
         </p>
       </div>
     </div>
