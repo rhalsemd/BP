@@ -6,22 +6,18 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class KHomeService {
     @Autowired
     KBrollyHomeRepository kBrollyHomeRepository;
 
-    public String getKioskGeo(int id) {
-        BrollyCase brollyCase = kBrollyHomeRepository.selectBrollyCase(id);
-        if (brollyCase == null) {
-            return null;
-        }
+    public BrollyCase getKioskGeo(int id) {
+        return kBrollyHomeRepository.selectBrollyCase(id);
+    }
 
-        JSONObject obj = new JSONObject();
-        obj.put("name", brollyCase.getName());
-        obj.put("lat", brollyCase.getLat());
-        obj.put("lng", brollyCase.getLng());
-
-        return obj.toString();
+    public List<BrollyCase> getBrollyCaseList() {
+        return kBrollyHomeRepository.findAll();
     }
 }
