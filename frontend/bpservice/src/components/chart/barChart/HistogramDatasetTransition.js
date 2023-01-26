@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { data, data2 } from "./data";
+import { connect } from "react-redux";
+import { data, data2, 임시data } from "./data";
 import { Histogram } from "./Histogram";
 
 const BUTTONS_HEIGHT = 50;
@@ -14,9 +15,10 @@ const buttonStyle = {
   opacity: 0.7,
 };
 
-export const HistogramDatasetTransition = ({ width, height }) => {
+const HistogramDatasetTransition = ({ width, height, histogram }) => {
+  console.log(임시data.map((d) => d.CASE_ID));
+  console.log("히스토그램 컴포넌트에서 데이터 불러오기", histogram);
   const [selectedData, setSelectedData] = useState(data);
-  // console.log(height);
   return (
     <div>
       <div style={{ height: BUTTONS_HEIGHT }}>
@@ -30,8 +32,14 @@ export const HistogramDatasetTransition = ({ width, height }) => {
       <Histogram
         width={width}
         height={height - BUTTONS_HEIGHT}
-        data={selectedData}
+        data={임시data}
       />
     </div>
   );
 };
+
+const mapStateToProps = ({ histogram }) => {
+  return { histogram };
+};
+
+export default connect(mapStateToProps, null)(HistogramDatasetTransition);

@@ -12,16 +12,17 @@ import { getUseage } from "../../modules/TotalUseage";
 const minDate = dayjs("2020-01-01T00:00:00.000");
 const maxDate = dayjs("2034-01-01T00:00:00.000");
 
-const SubComponentsPickers = ({ getBranchRevenue }) => {
+const SubComponentsPickers = ({ getBranchRevenue, getUseage }) => {
+  const [date, setDate] = useState(dayjs("2023-01-26"));
   const url = useLocation().pathname === "/admin/total_income";
-  const [date, setDate] = useState(dayjs("2023-01-25"));
+  const dayData = dayjs(date).format("YYYY-MM-DD");
+
   const changeMonth = (newDate) => {
     setDate(newDate);
     if (url) {
-      const dayData = dayjs(date).format("YYYY-MM-DD");
       getBranchRevenue(dayData);
-      // console.log(dayjs(date).format("YYYY-MM-DD"));
     } else {
+      getUseage(dayData);
     }
   };
   return (

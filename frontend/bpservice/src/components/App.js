@@ -48,7 +48,7 @@ function App() {
         <Route path="/admin" element={<LoginAdmin />} />
         <Route path="/admin/total_income" element={<TotalChart />} />
         <Route path="/admin/total_useage" element={<TotalChart />} />
-        <Route path="/admin/revenue_trend" element={<RevenueTrend />} />
+        <Route path="/admin/revenue_trend/:id" element={<RevenueTrend />} />
         {/* <Route path="/admin/useage" element={<Useage />} /> */}
         <Route path="/admin/useage/:id" element={<History />} />
       </Routes>

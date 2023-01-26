@@ -1,16 +1,18 @@
 import { useSpring, animated } from "@react-spring/web";
-import { useRef } from "react";
-
-const onclick = (bucket) => {
-  alert(`나중에 링크 연결할거임 값 : ${bucket}`);
-};
+import { connect } from "react-redux";
+import { getRevenueTrend } from "../../../modules/revenueTrend";
 
 const onMouseOver = () => {
   console.log(1);
 };
 
-export const Rectangle = (props) => {
-  const { x, y, width, height } = props;
+const Rectangle = ({ x, y, width, height, jijum, getRevenueTrend }) => {
+  const onclick = (bucket) => {
+    console.log("1: 클릭");
+    getRevenueTrend({ month: "01", year: "2023" });
+    alert(`나중에 링크 연결할거임 값 : ${bucket}`);
+  };
+  // const { x, y, width, height } = props;
 
   const springProps = useSpring({
     to: { x, y, width, height },
@@ -27,7 +29,7 @@ export const Rectangle = (props) => {
   return (
     <animated.rect
       onMouseLeave={() => onMouseOver()}
-      onClick={() => onclick(props.jijum)}
+      onClick={() => onclick(jijum)}
       x={springProps.x}
       y={springProps.y}
       width={springProps.width}
@@ -41,3 +43,13 @@ export const Rectangle = (props) => {
     />
   );
 };
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getRevenueTrend(data) {
+      dispatch(getRevenueTrend(data));
+    },
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Rectangle);

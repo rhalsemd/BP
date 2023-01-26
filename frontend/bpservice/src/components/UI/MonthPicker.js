@@ -5,22 +5,22 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { MonthPicker } from "@mui/x-date-pickers/MonthPicker";
 import { connect } from "react-redux";
-import { getBranchRevenue } from "../../modules/histogram";
+import { getBranchRevenueMonth } from "../../modules/histogram";
 import { useLocation } from "react-router-dom";
 
 const minDate = dayjs("2020-01-01T00:00:00.000");
 const maxDate = dayjs("2034-01-01T00:00:00.000");
 
-const SubComponentsPickers = ({ histogram, getBranchRevenue }) => {
+const SubComponentsPickers = ({ histogram, getBranchRevenueMonth }) => {
   const url = useLocation().pathname === "/admin/total_income";
-  const [date, setDate] = useState(dayjs("2023-01-25"));
+  const [date, setDate] = useState(dayjs("2023-01-26"));
   const changeDay = (newDate) => {
     setDate(newDate);
     if (url) {
-      getBranchRevenue();
       const year = dayjs(date).format("YYYY");
       const month = dayjs(date).format("MM");
-      console.log(year, month);
+      getBranchRevenueMonth(year, month);
+      console.log("여기는 month picker", year, month);
     } else {
     }
   };
@@ -44,8 +44,8 @@ const mapStateToProps = ({ histogram }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getBranchRevenue(data) {
-      dispatch(getBranchRevenue(data));
+    getBranchRevenueMonth(data) {
+      dispatch(getBranchRevenueMonth(data));
     },
   };
 };

@@ -1,3 +1,4 @@
+import { all } from "redux-saga/effects";
 import { combineReducers } from "redux";
 import signUp, { certifiSaga } from "./signUp";
 import mapStore, { mapSaga } from "./mapStore";
@@ -6,10 +7,15 @@ import userLogin, { loginSaga } from "./userLogin";
 import findIdReducer, { findIdSaga } from "./findId";
 import findPwdReducer, { findPwdSaga } from "./findPwd";
 import modifyUserInfoReducer, { modifyUserInfoSaga } from "./modifyUserInfo";
-import histogramReducer from "./histogram";
-import { all } from "redux-saga/effects";
-import { histogramSaga } from "./histogram";
+import histogramReducer, {
+  histogramSaga,
+  histogramMonthSaga,
+} from "./histogram";
 import getUseageReducer, { getUseageSaga } from "./TotalUseage";
+import revenueTrendReducer, {
+  revenueTrendSaga,
+  revenueTrendMonthSaga,
+} from "./revenueTrend";
 
 export const rootReducer = combineReducers({
   signUp,
@@ -21,6 +27,7 @@ export const rootReducer = combineReducers({
   modifyUserInfoReducer,
   histogramReducer,
   getUseageReducer,
+  revenueTrendReducer,
 });
 
 export function* rootSaga() {
@@ -34,6 +41,9 @@ export function* rootSaga() {
     modifyUserInfoSaga(),
     histogramSaga(),
     getUseageSaga(),
+    revenueTrendSaga(),
+    histogramMonthSaga(),
+    revenueTrendMonthSaga(),
   ]);
 }
 

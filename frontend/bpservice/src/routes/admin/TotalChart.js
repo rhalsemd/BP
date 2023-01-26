@@ -1,13 +1,16 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import dayjs from "dayjs";
+import { connect } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { HistogramDatasetTransition } from "../../components/chart/barChart/HistogramDatasetTransition";
+import HistogramDatasetTransition from "../../components/chart/barChart/HistogramDatasetTransition";
 import Nav from "../../components/Nav";
 import Footer from "../../components/Footer";
 import UseageTable from "../../components/chart/UseageTable";
 import DayPicker from "../../components/UI/DayPicker";
 import MonthPicker from "../../components/UI/MonthPicker";
+import { getBranchRevenue } from "../../modules/histogram";
 
 const barChartStyle = css`
   height: 400px;
@@ -28,10 +31,13 @@ const divStyle = css`
   flex-direction: column;
 `;
 
-export default function TotalIncome() {
+const TotalIncome = ({ getBranchRevenue }) => {
   const [monthOn, setMonthOn] = useState(false);
   const [weekOn, setWeekOn] = useState(false);
   const urlName = useLocation().pathname;
+  const date = dayjs("2023-01-26"); // 임시날짜 (나중에 함수로 바꿔야함)
+  const dayData = dayjs(date).format("YYYY-MM-DD");
+  useEffect(() => getBranchRevenue(dayData), []);
   return (
     <div css={divStyle}>
       <Nav />
@@ -63,4 +69,14 @@ export default function TotalIncome() {
       <Footer />
     </div>
   );
-}
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getBranchRevenue(data) {
+      dispatch(getBranchRevenue(data));
+    },
+  };
+};
+
+export default connect(null, mapDispatchToProps)(TotalIncome);
