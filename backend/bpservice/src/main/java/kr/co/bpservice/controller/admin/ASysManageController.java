@@ -14,30 +14,43 @@ import java.util.Map;
 public class ASysManageController {
     @Autowired
     private ASysManageService aSysManageService;
-
-    @GetMapping("/admin/KioskMoneyDay/{day}")
-    public List<Map<String, String>> KioskMoneyDay(@PathVariable("day") String day){
-        List<Map<String, String>> returnDay = aSysManageService.SKioskMoneyDay(day);
+    //전체 지점별 일 수익
+    @GetMapping("/admin/AllKioskMoneyDay/{day}")
+    public List<Map<String, String>> AllKioskMoneyDay(@PathVariable("day") String day){
+        List<Map<String, String>> returnDay = aSysManageService.SAllKioskMoneyDay(day);
         return returnDay;
     }
-
-    @GetMapping("/admin/KioskMoneyMonth/{month}/{year}")
-    public List<Map<String, String>> KioskMoneyMonth(@PathVariable("month") String month, @PathVariable("year") String year){
+    //전체 지점별 월 수익
+    @GetMapping("/admin/AllKioskMoneyMonth/{month}/{year}")
+    public List<Map<String, String>> AllKioskMoneyMonth(@PathVariable("month") String month, @PathVariable("year") String year){
         String callMonth=year+"-"+month;
-        List<Map<String, String>> returnMonth = aSysManageService.SKioskMoneyMonth(callMonth);
+        List<Map<String, String>> returnMonth = aSysManageService.SAllKioskMoneyMonth(callMonth);
         return returnMonth;
     }
-
-    @GetMapping("/admin/KioskCountDay/{day}")
-    public List<Map<String, String>> KioskCountDay(@PathVariable("day") String day){
-        List<Map<String, String>> returnDay = aSysManageService.SKioskCountDay(day);
+    //전체 지점별 일 이용내역
+    @GetMapping("/admin/AllKioskCountDay/{day}")
+    public List<Map<String, String>> AllKioskCountDay(@PathVariable("day") String day){
+        List<Map<String, String>> returnDay = aSysManageService.SAllKioskCountDay(day);
         return returnDay;
     }
-
-    @GetMapping("/admin/KioskCountMonth/{month}/{year}")
-    public List<Map<String, String>> KioskCountMonth(@PathVariable("month") String month, @PathVariable("year") String year){
+    //전체 지점별 월 이용내역
+    @GetMapping("/admin/AllKioskCountMonth/{month}/{year}")
+    public List<Map<String, String>> AllKioskCountMonth(@PathVariable("month") String month, @PathVariable("year") String year){
         String callMonth=year+"-"+month;
-        List<Map<String, String>> returnMonth = aSysManageService.SKioskCountMonth(callMonth);
+        List<Map<String, String>> returnMonth = aSysManageService.SAllKioskCountMonth(callMonth);
+        return returnMonth;
+    }
+    //해당 지점 일 매출
+    @GetMapping("/admin/KioskMoneyMonth/{month}/{year}/{id}")
+    public List<Map<String, String>> KioskMoneyMonth(@PathVariable("month") String month, @PathVariable("year") String year,@PathVariable("id") String id){
+        String callMonth=year+"-"+month;
+        List<Map<String, String>> returnDay = aSysManageService.SKioskMoneyMonth(callMonth,id);
+        return returnDay;
+    }
+    //해당 지점 월 매출
+    @GetMapping("/admin/KioskMoneyYear/{year}/{id}")
+    public List<Map<String, String>> KioskMoneyYear(@PathVariable("year") String year,@PathVariable("id") String id){
+        List<Map<String, String>> returnMonth = aSysManageService.SKioskMoneyYear(year,id);
         return returnMonth;
     }
 }

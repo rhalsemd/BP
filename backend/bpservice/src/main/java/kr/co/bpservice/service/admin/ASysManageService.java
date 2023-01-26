@@ -14,21 +14,29 @@ public class ASysManageService {
     @Autowired
     private ASysManageRepository aSysManageRepository;
 
-    public List<Map<String, String>> SKioskMoneyDay(String paramDay){
-        List<Map<String, String>> returnday = aSysManageRepository.RKioskMoneyDay(paramDay, "money");
+    public List<Map<String, String>> SAllKioskMoneyDay(String paramDay){
+        List<Map<String, String>> returnday = aSysManageRepository.RALLKioskMoneyDay(paramDay, "money");
         return returnday;
     }
-    public List<Map<String, String>> SKioskMoneyMonth(String paramMONTH){
-        List<Map<String, String>> returnmonth = aSysManageRepository.RKioskMoneyMonth(paramMONTH,"money");
+    public List<Map<String, String>> SAllKioskMoneyMonth(String paramMONTH){
+        List<Map<String, String>> returnmonth = aSysManageRepository.RALLKioskMoneyMonth(paramMONTH,"money");
         return returnmonth;
     }
 
-    public List<Map<String, String>> SKioskCountDay(String paramDay){
-        List<Map<String, String>> returnday = aSysManageRepository.RKioskMoneyDay(paramDay, "count");
+    public List<Map<String, String>> SAllKioskCountDay(String paramDay){
+        List<Map<String, String>> returnday = aSysManageRepository.RALLKioskMoneyDay(paramDay, "count");
         return returnday;
     }
-    public List<Map<String, String>> SKioskCountMonth(String paramMONTH){
-        List<Map<String, String>> returnmonth = aSysManageRepository.RKioskMoneyMonth(paramMONTH,"count");
+    public List<Map<String, String>> SAllKioskCountMonth(String paramMONTH){
+        List<Map<String, String>> returnmonth = aSysManageRepository.RALLKioskMoneyMonth(paramMONTH,"count");
         return returnmonth;
+    }
+    public List<Map<String, String>> SKioskMoneyMonth(String paramMonth, String paramid){
+        List<Map<String, String>> returnmonth = aSysManageRepository.RKioskMoneyYearMonth(paramMonth, paramid,"month");
+        return returnmonth;
+    }
+    public List<Map<String, String>> SKioskMoneyYear(String paramYear, String paramid){
+        List<Map<String, String>> returnyear = aSysManageRepository.RKioskMoneyYearMonth(paramYear,paramid,"year");
+        return returnyear;
     }
 }
