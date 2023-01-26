@@ -22,6 +22,9 @@ const Return = () => {
       <section>
         <KioskReturnSection/>
       </section>
+      <footer>
+        <KioskHomeBtn />
+      </footer>
     </div>
   )
 }

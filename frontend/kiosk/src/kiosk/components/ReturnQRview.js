@@ -1,61 +1,64 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-// import { useState } from 'react'
-import KioskReturnQRCheck from './QRcomponents/ReturnQR'
+import { useState } from 'react'
+import { QrReader } from 'react-qr-reader';
+import { useNavigate } from 'react-router-dom';
 import KioskHomeBtn from './btncomponents/KioskHomeBtn';
 
 const KioskReturnQRCheckStyle = css`
   width: 100vw;
-  height: 85vh;
+  height: 100vh;
 
   border: 1px solid black;
-
-  display: flex;
-
-  .KioskReturnQRCheckLeft {
-    width: 50vw;
-    height: 100%;
-    padding: 0;
+  h1 {
+    margin: 0;
   }
+`
+const KioskReturnQRCheckTitle = css`
+  text-align: center;
+`
 
-  .KioskReturnQRCheckRight {
-    width: 25vw;
-    height: 20vh;
-    padding: 0;
-
-    display: flex;
-
-    .KioskReturnQRAuto {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .KioskReturnQRHomeBtn{
-      width: 100%;
-      height: 20%;
-
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
+const KioskReturnQRCheckSection = css`
+  section > div {
+    padding-top: 50% !important;
+  }
+  .KioskReturnQRScreen {
+    width: 70vw;
   }
 `
 
 const ReturnQRView = () => {
+  const [data, setData] = useState(null);
+  const navigate = useNavigate();
+
+  if (data) {
+    navigate('/kiosk/return/camera', {
+      state:{
+        qrdata:data,
+        imgurl:null,
+      }
+    })
+  }
+
   return (
     <div css={KioskReturnQRCheckStyle}>
-      <div className='KioskReturnQRCheckLeft'>
-        <KioskReturnQRCheck/>
-      </div>
-      <div className='KioskReturnQRCheckRight'>
-        <div className='KioskReturnQRAuto'>
-          자동인식
-        </div>
-        <KioskHomeBtn />
-      </div>
+      <header css={KioskReturnQRCheckTitle}>
+        <h1>우산에 새겨져있는 qr을 화면 가까이 보여주세요!</h1>
+      </header>
+      <section css={KioskReturnQRCheckSection}>
+          <QrReader
+            onResult={(result, error) => {
+              if (!!result) {
+                setData(result?.text);
+              }
+              if (!!error) {
+                console.info(error);
+              }
+            }}
+          />
+        <p>{data ? '인식완료' : '인식하지 못하였음'}</p>
+      </section>
+      <KioskHomeBtn />
     </div>
   );
 }

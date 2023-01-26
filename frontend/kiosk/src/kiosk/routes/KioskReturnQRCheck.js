@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import KioskReturnQRview from '../components/ReturnQRview'
+import ReturnQRView from '../components/ReturnQRview'
 
 const KioskReturnQRStyle = css`
   box-sizing: border-box;
@@ -25,10 +25,7 @@ const KioskReturnQRStyle = css`
 const KioskReturnQRView = () => {
   return (
     <div css={KioskReturnQRStyle}>
-        <div className='KioskReturnQRviewGuideStyle'>
-          <h1>우산에 새겨져있는 qr을 화면 가까이 보여주세요!</h1>
-        </div>
-        <KioskReturnQRview/>
+        <ReturnQRView/>
     </div>
   )
 }
