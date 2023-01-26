@@ -8,43 +8,31 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "MWS_BROLLY_RENT_LOG")
+@Table(name = "MWS_BROLLY_PAY_LOG")
 @Getter
 @Setter
-public class BrollyRentLog {
-
+public class BrollyPayLog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "PAY_ID")
-    private BrollyPayLog payId;
+    @Column(length = 200)
+    private String receiptId;
 
-    @ManyToOne
-    @JoinColumn(name = "BROLLY_ID")
-    private Brolly brolly;
-
-    @ManyToOne
-    @JoinColumn(name = "CASE_ID")
-    private BrollyCase brollyCase;
+    private int price;
 
     @ManyToOne
     @JoinColumn(name = "USER_ID")
     private User user;
 
-    private boolean state;
+    @ManyToOne
+    @JoinColumn(name = "CASE_ID")
+    private BrollyCase brollyCase;
+
+    @Column(length = 100)
+    private String status;
 
     private LocalDateTime regDt;
 
-    private LocalDateTime expDt;
-
     private LocalDateTime uptDt;
-
-    @Column(length = 200)
-    private String imgName;
-
-    private Integer depositeMoney;
-
-    private Integer rentMoney;
 }
