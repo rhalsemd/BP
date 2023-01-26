@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import { connect } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import HistogramDatasetTransition from "../../components/chart/barChart/HistogramDatasetTransition";
+import { HistogramDatasetTransition } from "../../components/chart/barChart/HistogramDatasetTransition";
 import Nav from "../../components/Nav";
 import Footer from "../../components/Footer";
 import UseageTable from "../../components/chart/UseageTable";
@@ -34,10 +34,12 @@ const divStyle = css`
 const TotalIncome = ({ getBranchRevenue }) => {
   const [monthOn, setMonthOn] = useState(false);
   const [weekOn, setWeekOn] = useState(false);
+  const date = dayjs("2023-01-26");
   const urlName = useLocation().pathname;
-  const date = dayjs("2023-01-26"); // 임시날짜 (나중에 함수로 바꿔야함)
   const dayData = dayjs(date).format("YYYY-MM-DD");
+
   useEffect(() => getBranchRevenue(dayData), []);
+
   return (
     <div css={divStyle}>
       <Nav />

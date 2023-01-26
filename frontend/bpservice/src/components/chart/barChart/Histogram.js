@@ -1,24 +1,24 @@
 import { useEffect, useMemo, useRef } from "react";
 import * as d3 from "d3";
-import { Rectangle } from "./Rectangle";
+import Rectangle from "./Rectangle";
 
 const MARGIN = { top: 30, right: 30, bottom: 40, left: 50 };
 
 export const Histogram = ({ width, height, data }) => {
-  const refbars = useRef();
+  const cost = data.map((d) => d.TOTALMONEY);
+  const name = data.map((d) => d.NAME);
 
-  const BUCKET_NUMBER = data.length;
+  // const BUCKET_NUMBER = data.length;
   const BUCKET_PADDING = 4;
-  // console.log(data.length);
   const axesRef = useRef(null);
   const boundsWidth = width - MARGIN.right - MARGIN.left;
   const boundsHeight = height - MARGIN.top - MARGIN.bottom;
 
-  const domain = [0, d3.max(data) + 50];
+  const domain = [0, d3.max(cost) + 50];
   const xScale = useMemo(() => {
     return d3
       .scaleBand()
-      .domain(data.map((d, idx) => idx))
+      .domain(cost.map((d, idx) => idx))
       .range([10, boundsWidth]);
   }, [data, width]);
 
@@ -37,7 +37,7 @@ export const Histogram = ({ width, height, data }) => {
     return d3
       .scaleLinear()
       .range([boundsHeight, 0])
-      .domain([0, d3.max(data)]);
+      .domain([0, d3.max(cost)]);
     // .nice();
   }, [data, height]);
 
@@ -71,9 +71,9 @@ export const Histogram = ({ width, height, data }) => {
         key={i}
         x={xScale(i) + BUCKET_PADDING / 2 + 5}
         width={xScale.bandwidth() - 10}
-        y={boundsHeight - 300 + yScale(bucket)}
-        height={300 - yScale(bucket)}
-        jijum={bucket}
+        y={boundsHeight - 300 + yScale(bucket.TOTALMONEY)}
+        height={300 - yScale(bucket.TOTALMONEY)}
+        jijum={bucket.NAME}
       />
     );
   });

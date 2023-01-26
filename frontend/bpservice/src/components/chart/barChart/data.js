@@ -10,3 +10,59 @@ export const data = [0, 10, 40, 70, 80, 30, 10, 20, 30];
 
 // export const data2 = Array.from({ length: 1000 }, () => gaussianRandom(40, 10));
 export const data2 = [100, 30, 290, 40, 10, 20, 30];
+
+export const 임시data = [
+  {
+    NAME: "구미SSAFY점",
+    CASE_ID: 1,
+    TOTALMONEY: 130000,
+  },
+  {
+    CASE_ID: 2,
+    TOTALMONEY: 23000,
+    NAME: "구미역점",
+  },
+  {
+    NAME: "대구역점",
+    CASE_ID: 3,
+    TOTALMONEY: 45300,
+  },
+  {
+    NAME: "우리집점",
+    CASE_ID: 4,
+    TOTALMONEY: 1000,
+  },
+  {
+    NAME: "싸피점",
+    CASE_ID: 5,
+    TOTALMONEY: 8000,
+  },
+  {
+    NAME: "옆집점",
+    CASE_ID: 6,
+    TOTALMONEY: 23000,
+  },
+  {
+    NAME: "앞집점",
+    CASE_ID: 7,
+    TOTALMONEY: 11000,
+  },
+];
+
+// [
+//   {
+//       "NAME": "구미SSAFY점",
+//       "CASE_ID": 1,
+//       "TOTALMONEY": 0
+//   },
+//   {
+//       "CASE_ID": 2,
+//       "TOTALMONEY": 0,
+//       "NAME": "구미역점"
+//   },
+//   {
+//       "NAME": "대구역점",
+//       "CASE_ID": 3,
+//       "TOTALMONEY": 0
+//   }
+// ]
