@@ -7,6 +7,7 @@ import kr.co.bpservice.util.auth.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Component;
 public class WebSecurityConfig {
 
     private final TokenProvider tokenProvider;
+    private final RedisTemplate redisTemplate;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
     @Bean
@@ -42,7 +44,7 @@ public class WebSecurityConfig {
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .accessDeniedHandler(jwtAccessDeniedHandler)
 
-                // 로그아웃 구현 시도
+                // 로그아웃 구현 시도 (추측: 토큰 방식에선 정상동작 X)
 //                .and()
 //                .logout()
 //                .logoutUrl("/api/auth/user/logout")
@@ -56,7 +58,7 @@ public class WebSecurityConfig {
                 .anyRequest().authenticated()
 
                 .and()
-                .apply(new JwtSecurityConfig(tokenProvider));
+                .apply(new JwtSecurityConfig(tokenProvider, redisTemplate));
 
         return http.build();
     }
