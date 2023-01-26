@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import KioskReturnCameraBtn from './btncomponents/KioskReturnCameraBtn'
-
+import { useNavigate } from 'react-router-dom'
+import ReturnQRView from '../routes/KioskReturnQRCheck'
 const KioskReturnSectionStyle = css`
   display: flex;
   justify-content: center;
@@ -31,13 +31,23 @@ const KioskCameraImg = css`
   }
 `
 
-const CamaraImg = css`
+const CameraImg = css`
   background-color: black;
   
   margin-bottom: 1vw;
+  cursor: pointer;
 
   width: 250px;
   height: 150px;
+`
+
+const CameraImgClickStyle = css`
+  width: 200px;
+  height: 80px;
+
+  background-color: black;
+  color: white;
+
 `
 
 const KioskReturnMethod = css`
@@ -71,13 +81,22 @@ const KioskReturnMethod = css`
 // 밑에는 JSX 입니다.
 
 const ReturnSection = () => {
+  const navigate = useNavigate();
+
+  const nextMove = () => {
+    navigate('/kiosk/return/QR')
+  };
+
   return (
     <div css={KioskReturnSectionStyle}>
       <div css={KioskCameraImg}>
-        <div css={CamaraImg}>
-
+        <div css={CameraImg} onClick={nextMove}>
+          
         </div>
-        <KioskReturnCameraBtn />
+        <div css={CameraImgClickStyle}>
+          이미지를 클릭하세요!
+        </div>
+        {/* <ReturnQRView /> */}
       </div>
       <div css={KioskReturnMethod}>
         <h1>😁 반납 방법</h1>

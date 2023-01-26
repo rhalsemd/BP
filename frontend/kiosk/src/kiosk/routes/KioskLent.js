@@ -1,5 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import KioskHomeBtn from '../components/btncomponents/KioskHomeBtn'
 import KioskHeader from '../components/HomeHeader'
 import KioskLentSection from '../components/LentSection'
 
@@ -13,18 +17,54 @@ const KioskLentStyle = css`
 // 위에는 Emotion.js 입니다.
 // 밑에는 JS 입니다.
 
-const Lent = () => {
+const KioskLent = () => {
+  // 결제완료 확인해서 
+  const [isconfirm, setIsconfirm] = useState(null);
+  const navigate = useNavigate();
+
+  const getPayConfirm = () => {
+    let PayConfirmURL = `http://192.168.100.80:8080/api/kiosk/home/kiosk-geo?id=1`;
+    axios.get(PayConfirmURL)
+      .then((res) => {
+        setIsconfirm(res.data.name)
+        console.log(res.data.name)
+      })
+      .catch((err) => console.log(err))
+  }
+
+  useEffect(() => {
+    getPayConfirm();
+
+  }, [isconfirm])
+
+  // if (isconfirm) {
+  //   navigate('/kiosk/lent/complete', 
+  //   {
+  //     state: {
+  //       name: isconfirm,
+  //     }
+  //   }
+  //   );
+  // };
+
+  const move = () => {
+    navigate('/kiosk/lent/complete')
+  }
 
   return (
     <div css={KioskLentStyle}>
       <header>
-        <KioskHeader/>
+        <KioskHeader />
       </header>
       <section>
-        <KioskLentSection/>
+        <KioskLentSection />
+        <button onClick={move}>이동</button>
       </section>
+      <footer>
+        <KioskHomeBtn />
+      </footer>
     </div>
   )
 }
 
-export default Lent;
+export default KioskLent;

@@ -1,6 +1,17 @@
-import React, { useEffect, useRef } from 'react'
-import 'bootstrap/dist/css/bootstrap.min.css'
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react'
+import { useEffect, useRef } from 'react'
 import axios from 'axios';
+
+const canvasPhotoStyle = css`
+  position: relative;
+`
+
+const canvasPhoto = css`
+  position: absolute;
+  top: 0;
+  left: 0;
+`
 
 const KioskReturnCameraTakeAPicture = () => {
   let videoRef = useRef(null)
@@ -42,7 +53,7 @@ const KioskReturnCameraTakeAPicture = () => {
     photo.width = width
     photo.height = height
 
-    let ctx = photo.getContext('2d')
+    let ctx = photo.getContext('2d');
     ctx.drawImage(video, 0, 0, photo.width, photo.height)
 
     // console.log(ctx)
@@ -50,10 +61,10 @@ const KioskReturnCameraTakeAPicture = () => {
 
   // save canvas Image in server
 
-  const posting = async () => {
+  const posting = () => {
     // 데이터 URL로 그대로 보내기
-    const canvas = await document.getElementById("canvas");
-    const dataUrl = await canvas.toDataURL('image/png');
+    const canvas = document.getElementById("canvas");
+    const dataUrl = canvas.toDataURL('image/png');
     // const data = await fetch(`${dataUrl}`)
     // const blob = await data.blob();
 
@@ -81,17 +92,15 @@ const KioskReturnCameraTakeAPicture = () => {
   }, [videoRef])
 
   return (
-    <div className='container'>
-      <video className='container' ref={videoRef}></video>
-      <button onClick={takePicture} className='btn btn-danger container'>찰칵찰칵</button>
-      <canvas id="canvas" className="container" ref={photoRef}></canvas>
-      <button onClick={clearPicture} className='btn btn-primary container'>재촬영</button>
-      <div>1</div>
-      <div>2</div>
-      <div>3</div>
-      <button onClick={posting} className='btn btn-primary container'>이미지 파일 확인용</button>
+    <div css={canvasPhotoStyle}>
+      <video ref={videoRef}></video>
+      <button onClick={takePicture}>찰칵찰칵</button>
+      <canvas css={canvasPhoto} id="canvas" ref={photoRef}></canvas>
+      <button onClick={clearPicture}>재촬영</button>
+      <button onClick={posting}>이미지 파일 확인용</button>
     </div>
   );
 };
 
-export default KioskReturnCameraTakeAPicture
+export default KioskReturnCameraTakeAPicture;
+

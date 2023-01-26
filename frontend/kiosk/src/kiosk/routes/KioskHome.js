@@ -13,8 +13,8 @@ const KioskHomeStyle = css`
 // 위에는 Emotion.js 입니다.
 // 밑에는 JS 입니다.
 
-const Home = () => {
-  
+const KioskHome = () => {
+
   return (
     <div css={KioskHomeStyle}>
       <header>
@@ -27,4 +27,4 @@ const Home = () => {
   )
 }
 
-export default Home;
+export default KioskHome;
