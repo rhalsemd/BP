@@ -42,17 +42,34 @@ const title = css`
 function SignUp({ signUp, sighUpRequirement }) {
   const [info, setInfo] = useState({
     id: "",
+    idSuccess: false,
+    // 비밀번호 1
     pwd: "",
+    pwdSuccess: false,
+    // 비밀번호 2
     check: "",
+    // 비밀번호 1과 2가 같을 때 true
     isTrue: false,
+    // 전화번호
     phone: "",
+    phoneSuccess: false,
+    // 인증 여부
     isCertification: false,
+    // 인증 번호 일치 여부
+    isCertificationSuccess: false,
+    // 주소 선택 여부
+    addressSuccess: false,
+    // 사용자 이름
     userName: "",
+    // 사용자 이름 유효한지
+    userNameSuccess: false,
     email: "",
+    emailSuccess: false,
   });
 
+  console.log(signUp);
+
   const setSignUp = (e) => {
-    e.preventDefault();
     sighUpRequirement();
   };
 
@@ -90,12 +107,15 @@ function SignUp({ signUp, sighUpRequirement }) {
               <SignUpEmail info={info} setInfo={setInfo} />
 
               {/* 회원가입 버튼 */}
-              {signUp.idConfirm &&
-              signUp.pwdConfirm &&
-              !signUp.rePwd &&
-              signUp.nameConfirm &&
-              signUp.isCertification &&
-              signUp.emailConfirm ? (
+              {info.idSuccess &&
+              info.pwdSuccess &&
+              info.isTrue &&
+              info.phoneSuccess &&
+              info.isCertification &&
+              info.isCertificationSuccess &&
+              info.addressSuccess &&
+              info.userNameSuccess &&
+              info.emailSuccess ? (
                 <button onClick={setSignUp}>회원가입</button>
               ) : null}
             </div>

@@ -5,12 +5,27 @@ import { userInfo } from "../../modules/signUp";
 function SignUpId({ info, setInfo }) {
   // id 정규 표현식
   const idRegExp = /^[a-z]+[a-z0-9]{7,20}$/g;
+
   // 아이디 입력
   const typeId = (e) => {
     const idInput = e.target.value;
     setInfo((info) => {
       return { ...info, id: idInput };
     });
+
+    // 아이디가 유효한가?
+    if (
+      (idRegExp.test(info.id) && info.id.length >= 8 && info.id.length <= 20) ||
+      info.id.length === 0
+    ) {
+      setInfo((info) => {
+        return { ...info, idSuccess: true };
+      });
+    } else {
+      setInfo((info) => {
+        return { ...info, idSuccess: false };
+      });
+    }
   };
 
   return (

@@ -1,5 +1,4 @@
 import React from "react";
-import { useState } from "react";
 import { useEffect } from "react";
 
 import { connect } from "react-redux";
@@ -13,26 +12,42 @@ function SignUpAddress({
   getGugun,
   getDo,
 }) {
-  const [cityData, setCityData] = useState({});
-
   useEffect(() => {
     getSidoData();
   }, []);
 
   const sidoOnClick = (e) => {
     const value = e.target.value;
-    setCityData((cityData) => {
-      return { ...cityData, sido: value };
+    setInfo((info) => {
+      return { ...info, sido: value };
     });
     getGugun(value);
   };
 
   const gugunOnClick = (e) => {
     const value = e.target.value;
-    setCityData((cityData) => {
-      return { ...cityData, gugun: value };
+    setInfo((info) => {
+      return { ...info, gugun: value };
     });
-    getDo(cityData);
+    getDo({ sido: info.sido, gugun: info.gugun });
+  };
+
+  const DongOnClick = (e) => {
+    const value = e.target.value;
+    setInfo((info) => {
+      return { ...info, dong: value };
+    });
+
+    // 주소를 모두 선택했는가?
+    if (info.sido && info.gugun && info.dong) {
+      setInfo((info) => {
+        return { ...info, addressSuccess: true };
+      });
+    } else {
+      setInfo((info) => {
+        return { ...info, addressSuccess: false };
+      });
+    }
   };
 
   return (
@@ -51,26 +66,30 @@ function SignUpAddress({
       </select>
 
       {/* 구 */}
-      <select defaultValue="gugun" onClick={gugunOnClick}>
-        {signUp.gugun.map((gugun, index) => {
-          return (
-            <option key={index} value={gugun}>
-              {gugun}
-            </option>
-          );
-        })}
-      </select>
+      {signUp.sido.length !== 0 ? (
+        <select defaultValue="gugun" onClick={gugunOnClick}>
+          {signUp.gugun.map((gugun, index) => {
+            return (
+              <option key={index} value={gugun}>
+                {gugun}
+              </option>
+            );
+          })}
+        </select>
+      ) : null}
 
       {/* 동 */}
-      <select defaultValue="do">
-        {signUp.do.map((Do, index) => {
-          return (
-            <option key={index} value={Do}>
-              {Do}
-            </option>
-          );
-        })}
-      </select>
+      {signUp.gugun.length !== 0 ? (
+        <select defaultValue="dong" onClick={DongOnClick}>
+          {signUp.dong.map((dong, index) => {
+            return (
+              <option key={index} value={dong}>
+                {dong}
+              </option>
+            );
+          })}
+        </select>
+      ) : null}
     </div>
   );
 }

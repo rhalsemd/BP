@@ -11,9 +11,21 @@ function SignUpEmail({ info, setInfo }) {
   // email 입력
   const typeEmail = (e) => {
     const emailInput = e.target.value;
+
     setInfo((info) => {
       return { ...info, email: emailInput };
     });
+
+    // 이메일이 유효한가?
+    if (emailRegExp.test(info.email) || info.email.length === 0) {
+      setInfo((info) => {
+        return { ...info, emailSuccess: true };
+      });
+    } else {
+      setInfo((info) => {
+        return { ...info, emailSuccess: false };
+      });
+    }
   };
 
   return (

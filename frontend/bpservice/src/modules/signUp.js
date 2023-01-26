@@ -1,16 +1,24 @@
 import { createAction, handleActions } from "redux-actions";
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
 import axios from "axios";
 
 const GET_CERTIFYCATION = "signUp/GET_CERTIFYCATION";
 const SET_CERTIFYCATION = "signUp/SET_CERTIFYCATION";
 const SIGN_UP_REQUIREMENT = "signUp/SIGN_UP_REQUIREMENT";
+
 const GET_SIDO_DATA = "signUp/GET_SIDO_DATA";
 const SET_SIDO_DATA = "signUp/SET_SIDO_DATA";
+
 const GET_GUGUN_DATA = "signUp/GET_GUGUN_DATA";
 const SET_GUGUN_DATA = "signUp/SET_GUGUN_DATA";
-const GET_DO_DATA = "signUp/GET_DO_DATA";
-const SET_DO_DATA = "signUp/SET_DO_DATA";
+
+const GET_DONG_DATA = "signUp/GET_DONG_DATA";
+const SET_DONG_DATA = "signUp/SET_DONG_DATA";
+
+const CHECK_CERTIFICATION_NUM = "signUp/CHECK_CERTIFICATION_NUM";
+const CHECK_SUCCESS = "signUp/CHECK_SUCCESS";
+const CHECK_FAILURE = "signUp/CHECK_FAILURE";
+const CHECK_FAILURE_RESET = "signUp/CHECK_FAILURE_RESET";
 
 const getCertification = createAction(GET_CERTIFYCATION, () => undefined);
 const setCertification = createAction(SET_CERTIFYCATION, (data) => data);
@@ -22,8 +30,14 @@ const setSidoData = createAction(SET_SIDO_DATA, (data) => data);
 const getGugun = createAction(GET_GUGUN_DATA, (data) => data);
 const setGugunData = createAction(SET_GUGUN_DATA, (data) => data);
 
-const getDo = createAction(GET_DO_DATA, (data) => data);
-const setDoData = createAction(SET_DO_DATA, (data) => data);
+const getDong = createAction(GET_DONG_DATA, (data) => data);
+const setDongData = createAction(SET_DONG_DATA, (data) => data);
+
+const checkCertificationNum = createAction(
+  CHECK_CERTIFICATION_NUM,
+  (num) => num
+);
+const checkFailureReset = createAction(CHECK_FAILURE_RESET, (data) => data);
 
 // 인증번호 요청 saga
 function* getCertifi() {
@@ -39,6 +53,31 @@ function* getCertifi() {
     yield put({ type: SET_CERTIFYCATION, payload: get.data });
   } catch (e) {
     console.log(e);
+  }
+}
+
+// 인증번호 확인 Saga
+function* checkCertifiNumFnc(data) {
+  const API = `https://jsonplaceholder.typicode.com/todos/1`;
+
+  try {
+    const post = yield call(() => {
+      return axios({
+        method: "post",
+        url: API,
+        data: {
+          authNum: data.payload,
+        },
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    });
+    if (post.status === 200) {
+      yield put({ type: CHECK_SUCCESS, payload: post.data });
+    }
+  } catch (e) {
+    yield put({ type: CHECK_FAILURE, error: true });
   }
 }
 
@@ -95,12 +134,12 @@ function* getGugunFnc(data) {
       yield put({ type: SET_GUGUN_DATA, payload: get.data });
     }
   } catch (e) {
-    console.error(e);
+    console.error("구군이 안되나?", e);
   }
 }
 
-// 도 요청하는 함수
-function* getDoFnc(data) {
+// 동 요청하는 함수
+function* getDongFnc(data) {
   const API = `http://192.168.100.80:8080/api/address/third-depth`;
   console.log(data);
   try {
@@ -115,22 +154,23 @@ function* getDoFnc(data) {
       });
     });
     if (get.status === 200) {
-      yield put({ type: SET_DO_DATA, payload: get.data });
+      yield put({ type: SET_DONG_DATA, payload: get.data });
     }
   } catch (e) {
-    console.error(e);
+    console.error("동이 안되나?", e);
   }
 }
 
 export function* certifiSaga() {
-  yield takeEvery(GET_CERTIFYCATION, getCertifi);
-  yield takeEvery(SIGN_UP_REQUIREMENT, getSignUp);
-  yield takeEvery(GET_SIDO_DATA, getSidoFnc);
-  yield takeEvery(GET_GUGUN_DATA, getGugunFnc);
-  yield takeEvery(GET_DO_DATA, getDoFnc);
+  yield takeLatest(GET_CERTIFYCATION, getCertifi);
+  yield takeLatest(SIGN_UP_REQUIREMENT, getSignUp);
+  yield takeLatest(GET_SIDO_DATA, getSidoFnc);
+  yield takeLatest(GET_GUGUN_DATA, getGugunFnc);
+  yield takeLatest(GET_DONG_DATA, getDongFnc);
+  yield takeLatest(CHECK_CERTIFICATION_NUM, checkCertifiNumFnc);
 }
 
-const initialState = { sido: [], gugun: [], do: [] };
+const initialState = { sido: [], gugun: [], dong: [] };
 
 const signUpReducer = handleActions(
   {
@@ -143,8 +183,17 @@ const signUpReducer = handleActions(
     [SET_GUGUN_DATA]: (state, action) => {
       return { ...state, gugun: action.payload };
     },
-    [SET_DO_DATA]: (state, action) => {
-      return { ...state, do: action.payload };
+    [SET_DONG_DATA]: (state, action) => {
+      return { ...state, dong: action.payload };
+    },
+    [CHECK_SUCCESS]: (state, action) => {
+      return { ...state, checkSuccess: action.success };
+    },
+    [CHECK_FAILURE]: (state, action) => {
+      return { ...state, checkError: action.error };
+    },
+    [CHECK_FAILURE_RESET]: (state, action) => {
+      return { ...state, checkError: action.payload };
     },
   },
   initialState
@@ -155,7 +204,9 @@ export const userInfo = {
   sighUpRequirement,
   getSidoData,
   getGugun,
-  getDo,
+  getDong,
+  checkCertificationNum,
+  checkFailureReset,
 };
 
 export default signUpReducer;

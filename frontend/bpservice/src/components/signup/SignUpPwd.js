@@ -10,14 +10,23 @@ function SignUpPwd({ info, setInfo }) {
   // 비밀번호 입력
   const typePwd = (e) => {
     const pwdInput = e.target.value;
+
     setInfo((info) => {
       const checkPwd = pwdInput === info.check ? true : false;
 
       return { ...info, pwd: pwdInput, isTrue: checkPwd };
     });
-    // if (pwdRegExp.test(pwdInput) || pwdInput.length === 0) {
-    //   pwdTyping(e.target.value);
-    // }
+
+    // 비밀번호가 유효한가?
+    if (pwdRegExp.test(pwdInput) || pwdInput.length === 0) {
+      setInfo((info) => {
+        return { ...info, pwdSuccess: true };
+      });
+    } else {
+      setInfo((info) => {
+        return { ...info, pwdSuccess: false };
+      });
+    }
   };
 
   return (

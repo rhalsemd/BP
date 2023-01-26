@@ -13,9 +13,21 @@ function SignUpPhone({ info, setInfo, getCertification, certificationTyping }) {
   // 전화번호 입력
   const typePhone = (e) => {
     const phoneInput = e.target.value;
+
     setInfo((info) => {
       return { ...info, phone: phoneInput };
     });
+
+    // 전화번호가 유효한가?
+    if (phoneRegExp.test(info.phone) || info.phone.length === 0) {
+      setInfo((info) => {
+        return { ...info, phoneSuccess: true };
+      });
+    } else {
+      setInfo((info) => {
+        return { ...info, phoneSuccess: false };
+      });
+    }
   };
 
   // 인증 번호 받기
@@ -56,7 +68,9 @@ function SignUpPhone({ info, setInfo, getCertification, certificationTyping }) {
         </div>
       )}
 
-      <CertificationInput info={info} setInfo={setInfo} />
+      {info.isCertification ? (
+        <CertificationInput info={info} setInfo={setInfo} />
+      ) : null}
     </div>
   );
 }

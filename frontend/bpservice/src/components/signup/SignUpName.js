@@ -9,9 +9,21 @@ function SignUpName({ info, setInfo }) {
   // 이름 입력
   const typeName = (e) => {
     const nameInput = e.target.value;
+
     setInfo((info) => {
       return { ...info, userName: nameInput };
     });
+
+    // 이름이 유효한가?
+    if (!info.userName.match(nameRegExp) || info.userName.length === 0) {
+      setInfo((info) => {
+        return { ...info, userNameSuccess: true };
+      });
+    } else {
+      setInfo((info) => {
+        return { ...info, userNameSuccess: false };
+      });
+    }
   };
 
   return (
