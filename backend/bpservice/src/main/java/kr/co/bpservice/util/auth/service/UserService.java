@@ -7,10 +7,13 @@ import kr.co.bpservice.util.auth.dto.UserRequestDto;
 import kr.co.bpservice.util.auth.dto.UserResponseDto;
 import kr.co.bpservice.util.auth.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.RequestEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 @Service
@@ -19,6 +22,7 @@ import java.util.regex.Pattern;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final AuthService authService;
 
     public UserResponseDto getMyInfoBySecurity() {
         return userRepository.findById(SecurityUtil.getCurrentUserId())
@@ -67,5 +71,21 @@ public class UserService {
         }
 
         return true;
+    }
+
+    @Transactional
+    public Map<String, String> removeUser(RequestEntity<?> httpMessage) {
+        Map<String, String> resultMap = new HashMap<>();
+
+        // ActiveState를 탈퇴 상태로 표시
+        User user = userRepository.findById(SecurityUtil.getCurrentUserId()).orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다"));
+        user.setActiveState(false);
+        userRepository.save(user);
+        // 로그아웃 처리
+        authService.logout(httpMessage);
+
+        resultMap.put("result", "success");
+        resultMap.put("msg", "회원탈퇴가 완료되었습니다.");
+        return resultMap;
     }
 }
