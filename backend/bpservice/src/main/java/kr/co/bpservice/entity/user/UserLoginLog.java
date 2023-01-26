@@ -29,10 +29,6 @@ public class UserLoginLog {
     @Column(length = 50)
     private String os;
 
-    @Column(length = 400)
-    private String accessToken;
-
     private LocalDateTime regDt;
 
-    private LocalDateTime expDt;
 }
