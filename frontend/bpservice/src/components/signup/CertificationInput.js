@@ -36,7 +36,8 @@ function CertificationInput({
   const typeCertificationTyping = (e) => {
     const certificationInput = e.target.value;
     setInfo((info) => {
-      return { ...info, certifiNum: certificationInput };
+      const upperInput = certificationInput.toUpperCase();
+      return { ...info, certifiNum: upperInput };
     });
   };
 
