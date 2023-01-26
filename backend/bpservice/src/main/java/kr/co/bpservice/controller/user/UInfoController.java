@@ -5,6 +5,8 @@ import kr.co.bpservice.util.auth.dto.UserRequestDto;
 import kr.co.bpservice.util.auth.dto.UserResponseDto;
 import kr.co.bpservice.util.auth.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,5 +39,10 @@ public class UInfoController {
     @PatchMapping("/pwd") //사용자 비밀번호 변경
     public ResponseEntity<UserResponseDto> changeUserPassword(@RequestBody ChangePasswordRequestDto requestDto) {
         return ResponseEntity.ok(userService.changeUserPassword(requestDto.getUserId(),requestDto.getExPwd(), requestDto.getNewPwd()));
+    }
+
+    @DeleteMapping("") // 회원탈퇴
+    public ResponseEntity<?> removeUser(RequestEntity<?> httpMessage) {
+        return new ResponseEntity<>(userService.removeUser(httpMessage), HttpStatus.OK);
     }
 }
