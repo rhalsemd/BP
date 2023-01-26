@@ -8,7 +8,12 @@ import kr.co.bpservice.service.common.WeatherService;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 @Tag(name = "Weather", description = "날씨 정보 API")
 @RequestMapping("/api/weather")
@@ -24,7 +29,8 @@ public class WeatherController {
     @Parameters({@Parameter(name = "lat", description = "날씨를 조회할 지역의 위도")
                 ,@Parameter(name = "lng", description = "날씨를 조회할 지역의 경도")
     })
-    public String currentWeather(@RequestParam double lat, @RequestParam double lng) {
-        return weatherService.currentWeather(lat, lng);
+    public ResponseEntity<Map<String, Object>> currentWeather(@RequestParam double lat, @RequestParam double lng) {
+        Map<String, Object> map = weatherService.currentWeather(lat, lng);
+        return new ResponseEntity<>(map, HttpStatus.OK);
     }
 }
