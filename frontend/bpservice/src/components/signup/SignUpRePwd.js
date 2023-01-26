@@ -3,17 +3,22 @@ import React from "react";
 import { connect } from "react-redux";
 import { userInfo } from "../../modules/signUp";
 
-function SignUpRePwd({ signUp, rePwdTyping }) {
+function SignUpRePwd({ info, setInfo }) {
   // 비밀번호 확인
   const typeRePwd = (e) => {
     const rePwdInput = e.target.value;
-    if (rePwdInput !== signUp.pwd && rePwdInput) {
-      rePwdTyping(true);
+    if (rePwdInput !== info.pwd && rePwdInput) {
+      setInfo((info) => {
+        return { ...info, check: rePwdInput, isTrue: false };
+      });
     }
-    if (rePwdInput === "" || e.target.value === signUp.pwd) {
-      rePwdTyping(false);
+    if (rePwdInput === "" || e.target.value === info.pwd) {
+      setInfo((info) => {
+        return { ...info, check: rePwdInput, isTrue: true };
+      });
     }
   };
+
   return (
     <div>
       <form>
@@ -27,7 +32,7 @@ function SignUpRePwd({ signUp, rePwdTyping }) {
           onChange={typeRePwd}
         />
       </form>
-      {signUp.rePwd ? (
+      {(!info.isTrue || info.pwd !== info.check) && info.check ? (
         <div>
           <span style={{ color: "red" }}>비밀번호를 확인해주세요.</span>
         </div>

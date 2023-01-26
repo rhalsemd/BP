@@ -1,23 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { userInfo } from "../../modules/signUp";
 
-function SignUpId({ idTyping }) {
-  const [ID, setId] = useState("");
-
+function SignUpId({ info, setInfo }) {
   // id 정규 표현식
   const idRegExp = /^[a-z]+[a-z0-9]{7,20}$/g;
   // 아이디 입력
   const typeId = (e) => {
     const idInput = e.target.value;
-    setId(idInput);
-    if (
-      (idRegExp.test(ID) && ID.length >= 8 && ID.length <= 20) ||
-      ID.length === 0
-    ) {
-      idTyping(idInput);
-    }
+    setInfo((info) => {
+      return { ...info, id: idInput };
+    });
   };
+
   return (
     <div>
       <div>
@@ -27,15 +22,17 @@ function SignUpId({ idTyping }) {
           id="userId"
           placeholder="아이디"
           autoComplete="off"
-          value={ID}
+          value={info.id}
           required
           onChange={typeId}
         />
       </div>
 
       {/* 아이디 조건 */}
-      {(idRegExp.test(ID) && ID.length >= 8 && ID.length <= 20) ||
-      ID.length === 0 ? null : (
+      {(idRegExp.test(info.id) &&
+        info.id.length >= 8 &&
+        info.id.length <= 20) ||
+      info.id.length === 0 ? null : (
         <div>
           <span style={{ color: "red" }}>uncomplete : </span>
           <span>영문자로 시작하는 영문자 또는 숫자 8~20자 </span>

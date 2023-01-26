@@ -2,37 +2,28 @@ import { createAction, handleActions } from "redux-actions";
 import { call, put, takeEvery } from "redux-saga/effects";
 import axios from "axios";
 
-const ADD_USER_ID = "signUp/ADD_USER_ID";
-const ADD_USER_PWD = "signUp/ADD_USER_PWD";
-const ADD_USER_RE_PWD = "signUp/ADD_USER_RE_PWD";
-const ADD_USER_NAME = "signUp/ADD_USER_NAME";
-const ADD_USER_PHONE_NUM = "signUp/ADD_USER_PHONE_NUM";
-const ADD_USER_CERTIFYCATION = "signUp/ADD_USER_CERTIFYCATION";
-const ADD_USER_IS_CERTIFYCATION = "signUp/ADD_USER_IS_CERTIFYCATION";
-const ADD_USER_SIDO = "signUp/ADD_USER_SIDO";
-const ADD_USER_EMAIL = "signUp/ADD_USER_EMAIL";
 const GET_CERTIFYCATION = "signUp/GET_CERTIFYCATION";
 const SET_CERTIFYCATION = "signUp/SET_CERTIFYCATION";
 const SIGN_UP_REQUIREMENT = "signUp/SIGN_UP_REQUIREMENT";
+const GET_SIDO_DATA = "signUp/GET_SIDO_DATA";
+const SET_SIDO_DATA = "signUp/SET_SIDO_DATA";
+const GET_GUGUN_DATA = "signUp/GET_GUGUN_DATA";
+const SET_GUGUN_DATA = "signUp/SET_GUGUN_DATA";
+const GET_DO_DATA = "signUp/GET_DO_DATA";
+const SET_DO_DATA = "signUp/SET_DO_DATA";
 
-const idTyping = createAction(ADD_USER_ID, (userId) => userId);
-const pwdTyping = createAction(ADD_USER_PWD, (pwd) => pwd);
-const rePwdTyping = createAction(ADD_USER_RE_PWD, (rePwd) => rePwd);
-const nameTyping = createAction(ADD_USER_NAME, (userName) => userName);
-const phoneTyping = createAction(ADD_USER_PHONE_NUM, (phone) => phone);
-const certificationTyping = createAction(
-  ADD_USER_CERTIFYCATION,
-  (certification) => certification
-);
-const isCertificationTyping = createAction(
-  ADD_USER_IS_CERTIFYCATION,
-  (isCertification) => isCertification
-);
-const sidoTyping = createAction(ADD_USER_SIDO, (sido) => sido);
-const emailTyping = createAction(ADD_USER_EMAIL, (email) => email);
 const getCertification = createAction(GET_CERTIFYCATION, () => undefined);
 const setCertification = createAction(SET_CERTIFYCATION, (data) => data);
 const sighUpRequirement = createAction(SIGN_UP_REQUIREMENT, () => undefined);
+
+const getSidoData = createAction(GET_SIDO_DATA, () => undefined);
+const setSidoData = createAction(SET_SIDO_DATA, (data) => data);
+
+const getGugun = createAction(GET_GUGUN_DATA, (data) => data);
+const setGugunData = createAction(SET_GUGUN_DATA, (data) => data);
+
+const getDo = createAction(GET_DO_DATA, (data) => data);
+const setDoData = createAction(SET_DO_DATA, (data) => data);
 
 // 인증번호 요청 saga
 function* getCertifi() {
@@ -69,64 +60,102 @@ function* getSignUp() {
   } catch {}
 }
 
+// 시도 요청하는 함수
+function* getSidoFnc() {
+  const API = `http://192.168.100.80:8080/api/address/first-depth`;
+  try {
+    const get = yield call(() => {
+      return axios({
+        method: "get",
+        url: API,
+      });
+    });
+    if (get.status === 200) {
+      yield put({ type: SET_SIDO_DATA, payload: get.data });
+    }
+  } catch (e) {
+    console.log("시도가 안되나?", e);
+  }
+}
+
+// 구군 요청하는 함수
+function* getGugunFnc(data) {
+  const API = `http://192.168.100.80:8080/api/address/second-depth`;
+  try {
+    const get = yield call(() => {
+      return axios({
+        method: "get",
+        url: API,
+        params: {
+          sido: data.payload,
+        },
+      });
+    });
+    if (get.status === 200) {
+      yield put({ type: SET_GUGUN_DATA, payload: get.data });
+    }
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+// 도 요청하는 함수
+function* getDoFnc(data) {
+  const API = `http://192.168.100.80:8080/api/address/third-depth`;
+  console.log(data);
+  try {
+    const get = yield call(() => {
+      return axios({
+        method: "get",
+        url: API,
+        params: {
+          sido: data.payload.sido,
+          sigungu: data.payload.gugun,
+        },
+      });
+    });
+    if (get.status === 200) {
+      yield put({ type: SET_DO_DATA, payload: get.data });
+    }
+  } catch (e) {
+    console.error(e);
+  }
+}
+
 export function* certifiSaga() {
   yield takeEvery(GET_CERTIFYCATION, getCertifi);
   yield takeEvery(SIGN_UP_REQUIREMENT, getSignUp);
+  yield takeEvery(GET_SIDO_DATA, getSidoFnc);
+  yield takeEvery(GET_GUGUN_DATA, getGugunFnc);
+  yield takeEvery(GET_DO_DATA, getDoFnc);
 }
 
-const initialState = {};
+const initialState = { sido: [], gugun: [], do: [] };
 
 const signUpReducer = handleActions(
   {
-    [ADD_USER_ID]: (state, action) => {
-      return { ...state, userId: action.payload, idConfirm: true };
-    },
-    [ADD_USER_PWD]: (state, action) => {
-      return { ...state, pwd: action.payload, pwdConfirm: true };
-    },
-    [ADD_USER_RE_PWD]: (state, action) => {
-      return { ...state, rePwd: action.payload };
-    },
-    [ADD_USER_NAME]: (state, action) => {
-      return { ...state, userName: action.payload, nameConfirm: true };
-    },
-    [ADD_USER_PHONE_NUM]: (state, action) => {
-      return { ...state, phone: action.payload };
-    },
-    [ADD_USER_CERTIFYCATION]: (state, action) => {
-      return {
-        ...state,
-        certification: action.payload,
-      };
-    },
-    [ADD_USER_IS_CERTIFYCATION]: (state, action) => {
-      return { ...state, isCertification: action.payload };
-    },
-    [ADD_USER_SIDO]: (state, action) => {
-      return { ...state, sido: action.payload };
-    },
-    [ADD_USER_EMAIL]: (state, action) => {
-      return { ...state, email: action.payload, emailConfirm: true };
-    },
     [SET_CERTIFYCATION]: (state, action) => {
       return { ...state, certifyNum: action.payload };
+    },
+    [SET_SIDO_DATA]: (state, action) => {
+      return { ...state, sido: action.payload };
+    },
+    [SET_GUGUN_DATA]: (state, action) => {
+      return { ...state, gugun: action.payload };
+    },
+    [SET_DO_DATA]: (state, action) => {
+      return { ...state, do: action.payload };
     },
   },
   initialState
 );
 
 export const userInfo = {
-  idTyping,
-  pwdTyping,
-  rePwdTyping,
-  nameTyping,
-  phoneTyping,
-  certificationTyping,
-  isCertificationTyping,
-  sidoTyping,
-  emailTyping,
   getCertification,
   sighUpRequirement,
+  getSidoData,
+  getGugun,
+  getDo,
 };
 
 export default signUpReducer;

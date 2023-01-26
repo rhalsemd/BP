@@ -14,6 +14,7 @@ import SignUpPhone from "../../components/signup/SignUpPhone";
 import SignUpAddress from "../../components/signup/SignUpAddress";
 import SignUpEmail from "../../components/signup/SignUpEmail";
 import { userInfo } from "../../modules/signUp";
+import { useState } from "react";
 
 const loginArea = css`
   width: 100%;
@@ -39,6 +40,17 @@ const title = css`
 `;
 
 function SignUp({ signUp, sighUpRequirement }) {
+  const [info, setInfo] = useState({
+    id: "",
+    pwd: "",
+    check: "",
+    isTrue: false,
+    phone: "",
+    isCertification: false,
+    userName: "",
+    email: "",
+  });
+
   const setSignUp = (e) => {
     e.preventDefault();
     sighUpRequirement();
@@ -57,25 +69,25 @@ function SignUp({ signUp, sighUpRequirement }) {
               <h1>sign up</h1>
 
               {/* 아이디 */}
-              <SignUpId />
+              <SignUpId info={info} setInfo={setInfo} />
 
               {/* 비밀번호 */}
-              <SignUpPwd />
+              <SignUpPwd info={info} setInfo={setInfo} />
 
               {/* 비밀번호 확인 */}
-              <SignUpRePwd />
+              <SignUpRePwd info={info} setInfo={setInfo} />
 
               {/* 이름 */}
-              <SignUpName />
+              <SignUpName info={info} setInfo={setInfo} />
 
               {/* 전화번호 / 인증 번호*/}
-              <SignUpPhone />
+              <SignUpPhone info={info} setInfo={setInfo} />
 
               {/* 주소 */}
-              <SignUpAddress />
+              <SignUpAddress info={info} setInfo={setInfo} />
 
               {/* 이메일 */}
-              <SignUpEmail />
+              <SignUpEmail info={info} setInfo={setInfo} />
 
               {/* 회원가입 버튼 */}
               {signUp.idConfirm &&

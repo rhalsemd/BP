@@ -1,21 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { connect } from "react-redux";
-import { userInfo } from "../../modules/signUp";
 
-function SignUpName({ nameTyping }) {
-  const [userName, setUserName] = useState("");
-
+function SignUpName({ info, setInfo }) {
   // userName 정규 표현식
   const nameRegExp = /[!@#%&;'":<>`~.*+?^${}()|[\]\\a-zA-Z0-9]/g;
 
   // 이름 입력
   const typeName = (e) => {
     const nameInput = e.target.value;
-    setUserName(nameInput);
-    if (!userName.match(nameRegExp) || userName.length === 0) {
-      nameTyping(nameInput);
-    }
+    setInfo((info) => {
+      return { ...info, userName: nameInput };
+    });
   };
 
   return (
@@ -28,10 +24,10 @@ function SignUpName({ nameTyping }) {
           placeholder="이름"
           required
           onChange={typeName}
-          value={userName}
+          value={info.userName}
         />
       </div>
-      {!userName.match(nameRegExp) || userName.length === 0 ? null : (
+      {!info.userName.match(nameRegExp) || info.userName.length === 0 ? null : (
         <div>
           <span style={{ color: "red" }}>한글만 입력해주세요.</span>
         </div>
@@ -45,11 +41,7 @@ const mapStateToProps = ({ signUp }) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    nameTyping(userName) {
-      dispatch(userInfo.nameTyping(userName));
-    },
-  };
+  return {};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUpName);
