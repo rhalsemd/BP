@@ -46,7 +46,7 @@ public class AddressController {
     }
 
     @GetMapping("/third-depth")
-    @Operation(description = "동에 해당하는 지역 목록을 조회")
+    @Operation(description = "읍/면/동에 해당하는 지역 목록을 조회")
     @Parameters({
             @Parameter(name = "sido", description = "주소를 조회할 지역의 시/도")
             ,@Parameter(name = "sigungu", description = "주소를 조회할 지역의 시/군/구")
