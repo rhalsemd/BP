@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
+import KioskHomeBtn from '../components/btncomponents/KioskHomeBtn'
 import KioskHeader from '../components/HomeHeaderJustLogo'
 import KioskReturnCameraView from '../components/ReturnCameraView'
 
@@ -23,6 +24,7 @@ const ReturnCamera = () => {
     <div css={KioskReturnCameraStyle}>
         <KioskHeader/>
         <KioskReturnCameraView/>
+        <KioskHomeBtn/>
     </div>
   )
 }

@@ -6,9 +6,11 @@ import KioskHomeBtn from './btncomponents/KioskHomeBtn';
 
 const KioskReturnQRCheckStyle = css`
   width: 100vw;
-  height: 80vh;
+  height: 85vh;
 
   border: 1px solid black;
+
+  display: flex;
 
   .KioskReturnQRCheckLeft {
     width: 50vw;
@@ -18,15 +20,12 @@ const KioskReturnQRCheckStyle = css`
 
   .KioskReturnQRCheckRight {
     width: 25vw;
-    height: 100%;
+    height: 20vh;
     padding: 0;
 
     display: flex;
 
     .KioskReturnQRAuto {
-      width: 100%;
-      height: 80%;
-
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -53,14 +52,9 @@ const ReturnQRView = () => {
       </div>
       <div className='KioskReturnQRCheckRight'>
         <div className='KioskReturnQRAuto'>
-          <h1>자</h1>
-          <h1>동</h1>
-          <h1>인</h1>
-          <h1>식</h1>
+          자동인식
         </div>
-        <div className='KioskReturnQRHomeBtn'>
-          <KioskHomeBtn />
-        </div>
+        <KioskHomeBtn />
       </div>
     </div>
   );

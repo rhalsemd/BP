@@ -7,7 +7,6 @@ const KioskReturnSectionStyle = css`
   justify-content: center;
   align-items: center;
 
-  border: 1px solid black;
 
   height: 80vh;
 `
@@ -81,8 +80,8 @@ const ReturnSection = () => {
       </div>
       <div css={KioskReturnMethod}>
         <h1>😁 반납 방법</h1>
-        <br/>
-        <br/>
+        <br />
+        <br />
         <ol>
           <li>우산의 바코드를 카메라에 찍어주세요.</li>
           <li>우산 사진을 화면에 보이게 찍어주세요.</li>
