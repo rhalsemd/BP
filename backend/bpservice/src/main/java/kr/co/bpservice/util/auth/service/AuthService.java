@@ -12,6 +12,9 @@ import kr.co.bpservice.util.auth.entity.Authority;
 import kr.co.bpservice.util.auth.jwt.TokenProvider;
 import kr.co.bpservice.util.auth.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.RequestEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -23,17 +26,20 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class AuthService {
     private final AuthenticationManagerBuilder managerBuilder;
     private final UserRepository userRepository;
     private final MailAuthRepository mailAuthRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
+    private final RedisTemplate redisTemplate;
     private final CAuthService cAuthService;
 
     public UserResponseDto join(UserRequestDto requestDto) {
@@ -188,6 +194,18 @@ public class AuthService {
             resultMap.put("msg", "사용자 정보를 불러오는데에 실패했습니다.");
         }
 
+        return resultMap;
+    }
+
+    public Map<String, String> logout(RequestEntity<?> httpMessage) {
+        Map<String, String> resultMap = new HashMap<>();
+
+        String accessToken = httpMessage.getHeaders().get("Authorization").get(0).substring(7);
+        Long expiration = tokenProvider.getExpiration(accessToken);
+        redisTemplate.opsForValue().set(accessToken, "logout", expiration, TimeUnit.MILLISECONDS);
+
+        resultMap.put("result", "success");
+        resultMap.put("msg", "로그아웃 완료.");
         return resultMap;
     }
 }
