@@ -5,5 +5,5 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin("*")
-public class UBollyReturnController {
+public class UBrollyReturnController {
 }
