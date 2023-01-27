@@ -14,7 +14,7 @@ public interface MailAuthRepository extends JpaRepository<MailAuth, Integer> {
     MailAuth getMailAuth(@Param("email") String email);
 
     @Query(value = "SELECT * FROM MWS_MAIL_AUTH WHERE (TIMESTAMPDIFF(MINUTE, NOW(), EXP_DT) BETWEEN -5 AND 0) and AUTH_NUM LIKE :auth_num and email LIKE :email and STATUS = 0;", nativeQuery = true)
-    MailAuth vaildateMailAuth(@Param("email") String email, @Param("auth_num") String authNum);
+    MailAuth validatEmailAuth(@Param("email") String email, @Param("auth_num") String authNum);
 
     @Query(value = "UPDATE MWS_MAIL_AUTH SET STATUS = 1 where ID=:id", nativeQuery = true)
     void updateStatus(@Param("id") int id);

@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -26,6 +27,8 @@ import java.net.URL;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class CAuthService {
@@ -92,12 +95,12 @@ public class CAuthService {
         return ePwd;
     }
     //이메일 인증 검증
-    public void vaildateemailMessage(String email, String auth_num)throws Exception {
-        MailAuth mailAuth = mailAuthRepository.vaildateMailAuth(email, auth_num);
+    public void validateEmailMessage(String email, String authNum)throws Exception {
+        MailAuth mailAuth = mailAuthRepository.validatEmailAuth(email, authNum);
         int id = mailAuth.getId();
         mailAuthRepository.updateStatus(id);
     }
-    public String startphone(String receivePhone){
+    public Map<String, String> startphone(String receivePhone){
         SmsAuth smsAuth = smsAuthRepository.getSmsAuth(receivePhone);
         String authNum = smsAuth.getAuthNum();
 
@@ -171,10 +174,15 @@ public class CAuthService {
             System.out.println(response.toString());
 
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();;
         }
-        return authNum;
+
+        Map<String, String> resultMap = new HashMap<>();
+        resultMap.put("result", "success");
+        resultMap.put("msg", "인증번호가 전송되었습니다.");
+        return resultMap;
     }
+
     private String makeSignature(String url, String timestamp, String method) throws NoSuchAlgorithmException, InvalidKeyException {
         String space = " ";                    // one space
         String newLine = "\n";                 // new line
@@ -208,9 +216,22 @@ public class CAuthService {
 
         return encodeBase64String;
     }
-    public void vaildatesmsMessage(String phoneNum, String auth_num)throws Exception {
-        SmsAuth smsAuth = smsAuthRepository.vaildateSmsAuth(phoneNum,auth_num);
-        int id = smsAuth.getId();
-        smsAuthRepository.updateStatus(id);
+
+    @Transactional
+    public Map<String, String> validateSmsMessage(String phoneNum, String authNum)throws Exception {
+        Map<String, String> resultMap = new HashMap<>();
+        SmsAuth smsAuth = smsAuthRepository.validateSmsAuth(phoneNum,authNum);
+
+        if(smsAuth != null) {
+            smsAuth.setStatus(true);
+            smsAuthRepository.save(smsAuth);
+            resultMap.put("result", "success");
+            resultMap.put("msg", "SMS 인증 성공");
+        } else {
+            resultMap.put("result", "fail");
+            resultMap.put("msg", "SMS 인증 실패");
+        }
+
+        return resultMap;
     }
 }

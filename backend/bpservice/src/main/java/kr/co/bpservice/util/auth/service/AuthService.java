@@ -238,7 +238,7 @@ public class AuthService {
         String email = requestMap.get("email");
         String authNum = requestMap.get("authNum").toUpperCase();
         try {
-            cAuthService.vaildateemailMessage(email, authNum);
+            cAuthService.validateEmailMessage(email, authNum);
         } catch(Exception e){
             resultMap.put("result", "fail");
             resultMap.put("msg", "이메일 인증을 실패했습니다.");
