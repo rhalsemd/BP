@@ -25,10 +25,6 @@ public class BrollyPayLog {
     @JoinColumn(name = "USER_ID")
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "CASE_ID")
-    private BrollyCase brollyCase;
-
     @Column(length = 100)
     private String status;
 
