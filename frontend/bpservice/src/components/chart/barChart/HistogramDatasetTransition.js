@@ -16,19 +16,8 @@ const buttonStyle = {
 };
 
 const HistogramDatasetTransition = ({ width, height, histogram }) => {
-  console.log(임시data.map((d) => d.CASE_ID));
-  console.log("히스토그램 컴포넌트에서 데이터 불러오기", histogram);
-  const [selectedData, setSelectedData] = useState(data);
   return (
     <div>
-      <div style={{ height: BUTTONS_HEIGHT }}>
-        <button style={buttonStyle} onClick={() => setSelectedData(data)}>
-          Data 1
-        </button>
-        <button style={buttonStyle} onClick={() => setSelectedData(data2)}>
-          Data 2
-        </button>
-      </div>
       <Histogram
         width={width}
         height={height - BUTTONS_HEIGHT}

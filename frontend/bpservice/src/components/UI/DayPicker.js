@@ -37,15 +37,23 @@ const SubComponentsPickers = ({ getBranchRevenue, getUseage }) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getBranchRevenue(data) {
-      dispatch(getBranchRevenue(data));
-    },
-    getUseage(data) {
-      dispatch(getUseage(data));
-    },
-  };
-};
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     getBranchRevenue(data) {
+//       dispatch(getBranchRevenue(data));
+//     },
+//     getUseage(data) {
+//       dispatch(getUseage(data));
+//     },
+//   };
+// };
+const mapDispatchToProps = (dispatch) => ({
+  getBranchRevenue: (data) => {
+    dispatch(getBranchRevenue(data));
+  },
+  getUseage: (data) => {
+    dispatch(getUseage(data));
+  },
+});
 
 export default connect(null, mapDispatchToProps)(SubComponentsPickers);

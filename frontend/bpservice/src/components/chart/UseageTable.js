@@ -2,7 +2,7 @@
 import { css } from "@emotion/react";
 import React from "react";
 import { DataGrid } from "@mui/x-data-grid";
-
+import { 임시data } from "./barChart/data";
 const chartStyle = css`
   height: 60vh;
   width: 95vw;
@@ -11,18 +11,19 @@ const chartStyle = css`
   overflow: scroll;
 `;
 
-function makeRow(id, addr) {
+function makeRow(id, cost, addr) {
   const data = {
     id: id,
-    col1: addr,
+    cost: `${cost} 원`,
+    location: addr,
   };
   // console.log(data);
   return data;
 }
 
 const col = [
-  { field: "id" },
-  { field: "col1", headerName: "주소", width: 500 },
+  { field: "cost", headerName: "금액", width: 100 },
+  { field: "location", headerName: "주소", width: 300 },
 ];
 
 const handleCellClick = (params) => {
@@ -31,12 +32,20 @@ const handleCellClick = (params) => {
 };
 
 export default function UserTable(data) {
-  const rows = makeRow(1, "경상북도 구미시 진평동 시청앞");
+  const 임시rows = 임시data.map((d) => {
+    return makeRow(d.CASE_ID, d.TOTALMONEY, d.NAME);
+  });
+  console.log(임시rows);
+
   return (
     <>
       <div css={chartStyle}>
         <div style={{ height: 500, width: "100%" }}>
-          <DataGrid rows={[rows]} columns={col} onCellClick={handleCellClick} />
+          <DataGrid
+            rows={임시rows}
+            columns={col}
+            onCellClick={handleCellClick}
+          />
         </div>
       </div>
     </>

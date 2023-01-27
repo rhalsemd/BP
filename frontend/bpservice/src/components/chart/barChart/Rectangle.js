@@ -6,11 +6,11 @@ const onMouseOver = () => {
   console.log(1);
 };
 
-const Rectangle = ({ x, y, width, height, jijum, getRevenueTrend }) => {
+const Rectangle = ({ x, y, width, height, jijum, getRevenueTrend, caseId }) => {
   const onclick = (bucket) => {
     console.log("1: 클릭");
     getRevenueTrend({ month: "01", year: "2023" });
-    alert(`나중에 링크 연결할거임 값 : ${bucket}`);
+    alert(`나중에 링크 연결할거임 값 : ${caseId}`);
   };
   // const { x, y, width, height } = props;
 

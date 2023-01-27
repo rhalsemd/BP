@@ -1,5 +1,6 @@
 import { createAction, handleActions } from "redux-actions";
 import { call, put, takeEvery } from "redux-saga/effects";
+import { RestClient } from "@bootpay/server-rest-client";
 import axios from "axios";
 
 const ADD_USER_ID = "signUp/ADD_USER_ID";

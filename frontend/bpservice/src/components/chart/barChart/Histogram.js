@@ -7,7 +7,6 @@ const MARGIN = { top: 30, right: 30, bottom: 40, left: 50 };
 export const Histogram = ({ width, height, data }) => {
   const cost = data.map((d) => d.TOTALMONEY);
   const name = data.map((d) => d.NAME);
-
   // const BUCKET_NUMBER = data.length;
   const BUCKET_PADDING = 4;
   const axesRef = useRef(null);
@@ -18,8 +17,14 @@ export const Histogram = ({ width, height, data }) => {
   const xScale = useMemo(() => {
     return d3
       .scaleBand()
-      .domain(cost.map((d, idx) => idx))
-      .range([10, boundsWidth]);
+      .domain(name.map((d, idx) => d))
+      .range([0, boundsWidth]);
+  }, [data, width]);
+  const xScaleToProp = useMemo(() => {
+    return d3
+      .scaleBand()
+      .domain(name.map((d, idx) => idx))
+      .range([0, boundsWidth]);
   }, [data, width]);
 
   const buckets = useMemo(() => {
@@ -69,11 +74,12 @@ export const Histogram = ({ width, height, data }) => {
     return (
       <Rectangle
         key={i}
-        x={xScale(i) + BUCKET_PADDING / 2 + 5}
-        width={xScale.bandwidth() - 10}
+        x={xScaleToProp(i) + BUCKET_PADDING / 2 + 10}
+        width={xScale.bandwidth() - 20}
         y={boundsHeight - 300 + yScale(bucket.TOTALMONEY)}
         height={300 - yScale(bucket.TOTALMONEY)}
         jijum={bucket.NAME}
+        caseId={bucket.CASE_ID}
       />
     );
   });
