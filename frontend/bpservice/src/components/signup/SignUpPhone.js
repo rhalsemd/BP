@@ -47,6 +47,14 @@ function SignUpPhone({ info, setInfo, getCertification, certificationTyping }) {
     }
   };
 
+  // 전화번호 수정
+  const modifyPhone = () => {
+    setInfo((info) => {
+      return { ...info, isCertification: false };
+    });
+    inputRef.current.disabled = false;
+  };
+
   return (
     <div>
       <label htmlFor="phone">phone : </label>
@@ -62,6 +70,9 @@ function SignUpPhone({ info, setInfo, getCertification, certificationTyping }) {
 
       {/* 인증 받기 버튼*/}
       <button onClick={getCertificationNumber}>인증 받기</button>
+
+      {/* 수정 버튼 */}
+      <button onClick={modifyPhone}>수정</button>
 
       {/* 유효성 검사 */}
       {phoneRegExp.test(info.phone) || info.phone.length === 0 ? null : (

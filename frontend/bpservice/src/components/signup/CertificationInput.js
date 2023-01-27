@@ -53,7 +53,7 @@ function CertificationInput({
     <>
       {/* 인증 번호 입력 */}
       <input
-        type="number"
+        type="text"
         id="certifiNumber"
         required
         placeholder="인증번호 입력"
@@ -63,7 +63,7 @@ function CertificationInput({
       />
       {info.isCertification ? (
         <span>
-          <Timer setInfo={setInfo} inputRef={inputRef} />
+          <Timer setInfo={setInfo} inputRef={inputRef} info={info} />
           <button onClick={getConfirm}>확인</button>
         </span>
       ) : null}
