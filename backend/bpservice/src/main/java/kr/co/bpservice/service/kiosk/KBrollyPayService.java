@@ -14,15 +14,15 @@ public class KBrollyPayService {
     @Autowired
     private KBrollyPayRepository kBrollyPayRepository;
     @Transactional
-    public void insert_pay_log(BrollyPayLog brollyPayLog){
+    public void insertPayLog(BrollyPayLog brollyPayLog){
         kBrollyPayRepository.save(brollyPayLog);
     }
-    public Map<String,?> return_pay_data(String userid, int brollyid){
-        Map<String,?> returnData = kBrollyPayRepository.ReturnPayData(userid,brollyid);
+    public Map<String,?> returnPayData(String userid, int brollyid){
+        Map<String,?> returnData = kBrollyPayRepository.returnPayData(userid,brollyid);
         return returnData;
     }
     @Transactional
-    public void update_pay_log(BrollyPayLog brollyPayLog){
+    public void updatePayLog(BrollyPayLog brollyPayLog){
         BrollyPayLog returnData = kBrollyPayRepository.findByReceiptId(brollyPayLog.getReceiptId());
         returnData.setPrice(brollyPayLog.getPrice());
         returnData.setUptDt(brollyPayLog.getUptDt());

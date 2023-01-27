@@ -17,18 +17,18 @@ public class KBrollyPayController {
     private KBrollyPayService kBrollyPayService;
 
     @PostMapping("/insert")
-    public boolean InsertPayLog(@RequestBody BrollyPayLog brollyPayLog){
-        kBrollyPayService.insert_pay_log(brollyPayLog);
+    public boolean insertPayLog(@RequestBody BrollyPayLog brollyPayLog){
+        kBrollyPayService.insertPayLog(brollyPayLog);
         return true;
     }
     @GetMapping("/return/{userId}/{brollyId}")
-    public Map<String,?> ReturnPayData(@PathVariable("userId") String userId,@PathVariable("brollyId") int brollyId){
-        Map<String,?> returnData = kBrollyPayService.return_pay_data(userId, brollyId);
+    public Map<String,?> returnPayData(@PathVariable("userId") String userId,@PathVariable("brollyId") int brollyId){
+        Map<String,?> returnData = kBrollyPayService.returnPayData(userId, brollyId);
         return returnData;
     }
     @PutMapping("/update")
-    public boolean UpdatePayData(@RequestBody BrollyPayLog brollyPayLog){
-        kBrollyPayService.update_pay_log(brollyPayLog);
+    public boolean updatePayData(@RequestBody BrollyPayLog brollyPayLog){
+        kBrollyPayService.updatePayLog(brollyPayLog);
         return true;
     }
 }
