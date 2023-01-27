@@ -365,7 +365,7 @@ class AuthServiceTest {
         assertThat(responseDto.getEmail()).isEqualTo(email);
 
         // 로그인 체크
-        TokenDto token = authService.login(requestDto);
+        TokenDto token = authService.login(requestDto, null);
         assertThat(token).isNotNull();
         assertThat(token.getAccessToken()).isNotNull();
         assertThat(token.getTokenExpiresIn()).isNotNull();

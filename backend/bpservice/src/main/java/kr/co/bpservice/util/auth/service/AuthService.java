@@ -1,9 +1,12 @@
 package kr.co.bpservice.util.auth.service;
 
 
+import jakarta.servlet.http.HttpServletRequest;
 import kr.co.bpservice.entity.common.MailAuth;
 import kr.co.bpservice.entity.user.User;
+import kr.co.bpservice.entity.user.UserLoginLog;
 import kr.co.bpservice.repository.common.MailAuthRepository;
+import kr.co.bpservice.repository.user.ULogRepository;
 import kr.co.bpservice.service.common.CAuthService;
 import kr.co.bpservice.util.auth.dto.TokenDto;
 import kr.co.bpservice.util.auth.dto.UserRequestDto;
@@ -41,6 +44,7 @@ public class AuthService {
     private final TokenProvider tokenProvider;
     private final RedisTemplate redisTemplate;
     private final CAuthService cAuthService;
+    private final ULogRepository uLogRepository;
 
     public UserResponseDto join(UserRequestDto requestDto) {
         String userId = requestDto.getUserId();
@@ -87,14 +91,97 @@ public class AuthService {
         return true;
     }
 
-    public TokenDto login(UserRequestDto requestDto) {
+    @Transactional
+    public TokenDto login(UserRequestDto requestDto, HttpServletRequest request) {
+        // 사용자 인증 과정
         UsernamePasswordAuthenticationToken authenticationToken = requestDto.toAuthentication();
-        System.out.println("authenticationToken = " + authenticationToken);
-
         Authentication authentication = managerBuilder.getObject().authenticate(authenticationToken);
 
+        // 로그인 로그 삽입과정
+        User user = userRepository.findById(requestDto.getUserId()).get();  // User 엔티티
+        String agent = request.getHeader("User-Agent");
+        String os = getClientOS(agent);                         // 클라이언트 운영체제
+        String browser = getClientBrowser(agent);              // 클라이언트 브라우저
+        String ipAddr = (String)request.getHeader("X-Forwarded-For");   // 클라이언트 IP주소
+        if(ipAddr == null || ipAddr.length() == 0 || ipAddr.toLowerCase().equals("unknown")) ipAddr = (String)request.getRemoteAddr();
+        LocalDateTime regDt = LocalDateTime.now();              // 로그인 시각
+
+        UserLoginLog loginLog = new UserLoginLog();
+        loginLog.setUser(user);
+        loginLog.setBrowser(browser);
+        loginLog.setIpAddr(ipAddr);
+        loginLog.setOs(os);
+        loginLog.setRegDt(regDt);
+        uLogRepository.save(loginLog);
+
+        // 토큰 반환
         return tokenProvider.generateTokenDto(authentication);
     }
+
+    public static String getClientOS(String userAgent) {
+        String os = "";
+        userAgent = userAgent.toLowerCase();
+        if (userAgent.contains("windows nt 10.0")) {
+            os = "Windows10";
+        }else if (userAgent.contains("windows nt 6.1")) {
+            os = "Windows7";
+        }else if (userAgent.contains("windows nt 6.2") || userAgent.contains("windows nt 6.3")) {
+            os = "Windows8";
+        }else if (userAgent.contains("windows nt 6.0")) {
+            os = "WindowsVista";
+        }else if (userAgent.contains("windows nt 5.1")) {
+            os = "WindowsXP";
+        }else if (userAgent.contains("windows nt 5.0")) {
+            os = "Windows2000";
+        }else if (userAgent.contains("windows nt 4.0")) {
+            os = "WindowsNT";
+        }else if (userAgent.contains("windows 98")) {
+            os = "Windows98";
+        }else if (userAgent.contains("windows 95")) {
+            os = "Windows95";
+        }else if (userAgent.contains("iphone")) {
+            os = "iPhone";
+        }else if (userAgent.contains("ipad")) {
+            os = "iPad";
+        }else if (userAgent.contains("android")) {
+            os = "android";
+        }else if (userAgent.contains("mac")) {
+            os = "mac";
+        }else if (userAgent.contains("linux")) {
+            os = "Linux";
+        }else{
+            os = "Other";
+        }
+        return os;
+    }
+
+    public static String getClientBrowser(String userAgent) {
+        String browser = "";
+
+        if (userAgent.contains("Trident/7.0")) {
+            browser = "ie11";
+        }
+        else if (userAgent.contains("MSIE 10")) {
+            browser = "ie10";
+        }
+        else if (userAgent.contains("MSIE 9")) {
+            browser = "ie9";
+        }
+        else if (userAgent.contains("MSIE 8")) {
+            browser = "ie8";
+        }
+        else if (userAgent.contains("Chrome/")) {
+            browser = "Chrome";
+        }
+        else if (!userAgent.contains("Chrome/") && userAgent.indexOf("Safari/") >= -1) {
+            browser = "Safari";
+        }
+        else {
+            browser = "Firefox";
+        }
+        return browser;
+    }
+
 
     public Map<String, String> findUserId(UserRequestDto requestDto) throws Exception {
         Map<String, String> resultMap = new HashMap<>();
