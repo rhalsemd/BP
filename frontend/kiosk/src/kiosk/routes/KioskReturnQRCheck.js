@@ -13,10 +13,6 @@ const KioskReturnQRStyle = css`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  .KioskReturnQRviewGuideStyle {
-
-  }
 `
 
 // 위에는 Emotion.js 입니다.

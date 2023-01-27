@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
 import { useNavigate } from 'react-router-dom'
-import ReturnQRView from '../routes/KioskReturnQRCheck'
 const KioskReturnSectionStyle = css`
   display: flex;
   justify-content: center;
@@ -95,7 +94,6 @@ const ReturnSection = () => {
         <div css={CameraImgClickStyle}>
           이미지를 클릭하세요!
         </div>
-        {/* <ReturnQRView /> */}
       </div>
       <div css={KioskReturnMethod}>
         <h1>😁 반납 방법</h1>

@@ -24,11 +24,11 @@ const KioskCameraStyle = css`
   }
 `
 
-const ReturnCameraView = () => {
+const ReturnCameraView = (data) => {
   return (
     <div css={KioskCameraStyle}>
       <div className='KioskCameraCheckDiv'>
-        <KioskReturnCameraTakeAPicture/>
+        <KioskReturnCameraTakeAPicture data={data}/>
       </div>
     </div>
   );

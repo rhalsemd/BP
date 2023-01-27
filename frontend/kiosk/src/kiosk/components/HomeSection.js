@@ -103,7 +103,7 @@ const HomeSection = () => {
       </div>
       <div css={KioskHomeWeather}>
         <div css={KioskHomeWeatherImg}>
-          <img src={imgsrc} />
+          <img src={imgsrc ? imgsrc : 'loading...'} alt="weatherImage"/>
         </div>
         <p>
           현재온도 : {celsius}ºC({fahrenheit}ºF)<br/>

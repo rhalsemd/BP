@@ -1,106 +1,105 @@
-/** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react'
-import { useEffect, useRef } from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css'
 import axios from 'axios';
-
-const canvasPhotoStyle = css`
-  position: relative;
-`
-
-const canvasPhoto = css`
-  position: absolute;
-  top: 0;
-  left: 0;
-`
+import React, { useEffect, useRef } from "react";
+import FormData from 'form-data';
 
 const KioskReturnCameraTakeAPicture = () => {
-  let videoRef = useRef(null)
-  let photoRef = useRef(null)
+  let videoRef = useRef(null);
+  let photoRef = useRef(null);
+
   // get access to user webcamera
 
-  const getUserCamera = () => {
-    navigator.mediaDevices.getUserMedia({
-      video: true
-
-    })
+  const getVideo = () => {
+    navigator.mediaDevices
+      .getUserMedia({
+        video: true
+      })
       .then((stream) => {
-        // console.log(stream)
-        // attach the stream to the video tag
-
-        let video = videoRef.current
-        // console.log(video)
-        video.srcObject = stream
-        video.play()
+        let video = videoRef.current;
+        video.srcObject = stream;
+        video.play();
       })
-      .catch((error) => {
-        console.error(error)
-      })
-  }
+      .catch((err) => {
+        console.error(err);
+      });
+  };
 
   // to take picture of user
+  let ctx = ""
 
   const takePicture = () => {
-    // width and height
-
-    let width = 640
-    let height = width / (4 / 3)
-
-    let photo = photoRef.current
+    const width = 400
+    const height = width / (16 / 9)
+    
     let video = videoRef.current
-
-    // set the photo width and height
-
+    let photo = photoRef.current
+ 
     photo.width = width
     photo.height = height
-
-    let ctx = photo.getContext('2d');
-    ctx.drawImage(video, 0, 0, photo.width, photo.height)
-
-    // console.log(ctx)
+ 
+    ctx = photo.getContext('2d')
+    ctx.drawImage(video, 0, 0, width, height)
   }
 
   // save canvas Image in server
 
-  const posting = () => {
+  const saveImage = () => {
     // 데이터 URL로 그대로 보내기
-    const canvas = document.getElementById("canvas");
-    const dataUrl = canvas.toDataURL('image/png');
+    let canvas = document.getElementById("$canvas");
+    let imgdataUrl = canvas.toDataURL('image/png');
+
+    let blobBin = atob(imgdataUrl.split(',')[1]);
+    let array = [];
+    for (let i = 0; i < blobBin.length; i++) {
+      array.push(blobBin.charCodeAt(i));
+    }
+    let newfile = new Blob([new Uint8Array(array)], {type: 'image/png'});
+    let formdata = new FormData();
+    formdata.append("files", newfile);
+    
+    for (const KeyValue of formdata) console.log(KeyValue)
+
     // const data = await fetch(`${dataUrl}`)
     // const blob = await data.blob();
-
     // const blobUrl = URL.createObjectURL(blob)
     // console.log(blobUrl);
-
-    axios.post('http://localhost:3001/posts', {
-      dataUrl,
+    
+    axios.post('http://localhost:3001/posts ', {
+      data : formdata,
     })
-    .then((response) => console.log(response.status))
+    .then((response) => console.log(response.data))
     .catch((error) => console.error(error));
   }
 
   // clear out the image from the screen
 
-  const clearPicture = () => {
+  const clearImage = () => {
     let photo = photoRef.current
-
     let ctx = photo.getContext('2d')
-    ctx.clearRect(0, 0, photo.width, photo.height)
+    ctx.clearRect(0,0,photo.width,photo.height)
   }
 
   useEffect(() => {
-    getUserCamera()
+    getVideo()
   }, [videoRef])
 
   return (
-    <div css={canvasPhotoStyle}>
-      <video ref={videoRef}></video>
-      <button onClick={takePicture}>찰칵찰칵</button>
-      <canvas css={canvasPhoto} id="canvas" ref={photoRef}></canvas>
-      <button onClick={clearPicture}>재촬영</button>
-      <button onClick={posting}>이미지 파일 확인용</button>
+    <div className='container'>
+      <h1 className="text-center">Camera Selfie App in React</h1>
+
+      <video ref={videoRef} className="container"></video>
+
+      <button onClick={takePicture} className="btn btn-danger container">Take Picture</button>
+
+      <canvas id="$canvas" className="container" ref={photoRef}></canvas>
+
+      <button onClick={clearImage} className="btn btn-primary container">Clear Image</button>
+      <div>1</div>
+      <div>2</div>
+      <div>3</div>
+      <button onClick={saveImage} className='btn btn-primary container'>이미지 파일 확인용</button>
     </div>
   );
 };
 
-export default KioskReturnCameraTakeAPicture;
-
+export default KioskReturnCameraTakeAPicture

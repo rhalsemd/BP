@@ -35,7 +35,7 @@ const ReturnQRView = () => {
     navigate('/kiosk/return/camera', {
       state:{
         qrdata:data,
-        imgurl:null,
+        imgurl:'',
       }
     })
   }
