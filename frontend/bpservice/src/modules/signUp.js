@@ -4,7 +4,9 @@ import axios from "axios";
 
 const GET_CERTIFYCATION = "signUp/GET_CERTIFYCATION";
 const SET_CERTIFYCATION = "signUp/SET_CERTIFYCATION";
+
 const SIGN_UP_REQUIREMENT = "signUp/SIGN_UP_REQUIREMENT";
+const SIGN_UP_SUCCESS = "signUp/SIGN_UP_SUCCESS";
 
 const GET_SIDO_DATA = "signUp/GET_SIDO_DATA";
 const SET_SIDO_DATA = "signUp/SET_SIDO_DATA";
@@ -22,6 +24,7 @@ const CHECK_FAILURE_RESET = "signUp/CHECK_FAILURE_RESET";
 
 const getCertification = createAction(GET_CERTIFYCATION, () => undefined);
 const setCertification = createAction(SET_CERTIFYCATION, (data) => data);
+
 const sighUpRequirement = createAction(SIGN_UP_REQUIREMENT, () => undefined);
 
 const getSidoData = createAction(GET_SIDO_DATA, () => undefined);
@@ -39,9 +42,11 @@ const checkCertificationNum = createAction(
 );
 const checkFailureReset = createAction(CHECK_FAILURE_RESET, (data) => data);
 
+const API = `http://localhost:8080`;
+
 // 인증번호 요청 saga
 function* getCertifi() {
-  const API = `https://jsonplaceholder.typicode.com/todos/1`;
+  // const API = `https://jsonplaceholder.typicode.com/todos/1`;
   try {
     const get = yield call(() => {
       return axios({
@@ -58,15 +63,16 @@ function* getCertifi() {
 
 // 인증번호 확인 Saga
 function* checkCertifiNumFnc(data) {
-  const API = `https://jsonplaceholder.typicode.com/todos/1`;
+  const CERTIFICATION_NUM = data.payload;
 
   try {
     const post = yield call(() => {
       return axios({
         method: "post",
-        url: API,
+        url: `${API}/api/user/join`,
         data: {
-          authNum: data.payload,
+          authNum: CERTIFICATION_NUM.certifiNum,
+          phoneNum: CERTIFICATION_NUM.phoneNum,
         },
         headers: {
           "Content-Type": "application/json",
@@ -82,21 +88,35 @@ function* checkCertifiNumFnc(data) {
 }
 
 // 회원가입 요청 Saga
-function* getSignUp() {
-  const API = `https://jsonplaceholder.typicode.com/todos/1`;
+function* getSignUp(data) {
+  const userInfoData = data.payload;
+
   try {
-    const get = yield call(() => {
+    const post = yield call(() => {
       axios({
         method: "post",
-        url: API,
-        data: {},
+        url: `${API}/api/user/join`,
+        data: {
+          userId: userInfoData.id,
+          pwd: userInfoData.pwd,
+          userName: userInfoData.userName,
+          phoneNum: userInfoData.phone,
+          sido: userInfoData.sido,
+          sigugun: userInfoData.gungu,
+          dong: userInfoData.dong,
+          email: userInfoData.email,
+        },
         headers: {
           "Content-Type": "application/json",
         },
       });
     });
-    console.log(get);
-  } catch {}
+    if (post.status === 200) {
+      yield put({ type: SIGN_UP_SUCCESS, success: true });
+    }
+  } catch (e) {
+    console.error("회원가입??", e);
+  }
 }
 
 // 시도 요청하는 함수
@@ -107,6 +127,9 @@ function* getSidoFnc() {
       return axios({
         method: "get",
         url: API,
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
     });
     if (get.status === 200) {
@@ -127,6 +150,9 @@ function* getGugunFnc(data) {
         url: API,
         params: {
           sido: data.payload,
+        },
+        headers: {
+          "Content-Type": "application/json",
         },
       });
     });
@@ -150,6 +176,9 @@ function* getDongFnc(data) {
         params: {
           sido: data.payload.sido,
           sigungu: data.payload.gugun,
+        },
+        headers: {
+          "Content-Type": "application/json",
         },
       });
     });
@@ -194,6 +223,9 @@ const signUpReducer = handleActions(
     },
     [CHECK_FAILURE_RESET]: (state, action) => {
       return { ...state, checkError: action.payload };
+    },
+    [SIGN_UP_SUCCESS]: (state, action) => {
+      return { ...state, signUpSuccess: action.success };
     },
   },
   initialState

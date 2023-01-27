@@ -43,7 +43,10 @@ function CertificationInput({
 
   // 인증 번호 확인
   const getConfirm = () => {
-    checkCertificationNum(info.certifiNum);
+    checkCertificationNum({
+      certifiNum: info.certifiNum,
+      phoneNum: info.phone,
+    });
   };
 
   return (
@@ -54,12 +57,13 @@ function CertificationInput({
         id="certifiNumber"
         required
         placeholder="인증번호 입력"
+        autoComplete="off"
         onChange={typeCertificationTyping}
         ref={inputRef}
       />
       {info.isCertification ? (
         <span>
-          <Timer />
+          <Timer setInfo={setInfo} inputRef={inputRef} />
           <button onClick={getConfirm}>확인</button>
         </span>
       ) : null}

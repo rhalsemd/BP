@@ -15,6 +15,8 @@ import SignUpAddress from "../../components/signup/SignUpAddress";
 import SignUpEmail from "../../components/signup/SignUpEmail";
 import { userInfo } from "../../modules/signUp";
 import { useState } from "react";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const loginArea = css`
   width: 100%;
@@ -40,6 +42,14 @@ const title = css`
 `;
 
 function SignUp({ signUp, sighUpRequirement }) {
+  const navigation = useNavigate();
+
+  useEffect(() => {
+    if (signUp.signUpSuccess) {
+      navigation("/bp/login");
+    }
+  }, [signUp.signUpSuccess]);
+
   const [info, setInfo] = useState({
     id: "",
     idSuccess: false,
@@ -67,10 +77,8 @@ function SignUp({ signUp, sighUpRequirement }) {
     emailSuccess: false,
   });
 
-  console.log(signUp);
-
   const setSignUp = (e) => {
-    sighUpRequirement();
+    sighUpRequirement(info);
   };
 
   return (

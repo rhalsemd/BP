@@ -10,21 +10,22 @@ const setLoginInfo = createAction(SET_LOGIN_INFO, (data) => data);
 const getUserToken = createAction(GET_USER_TOKEN, (data) => data);
 const getUserError = createAction(GET_USER_ERROR, (data) => data);
 
-function* setLoginFnc() {
-  const API = `https://jsonplaceholder.typicode.com/todos/1`;
-  const { loginInfo } = yield select((state) => state.userLogin);
+const API = `http://localhost:8080`;
+
+function* setLoginFnc(data) {
+  const userInfo = data.payload;
 
   try {
     const post = yield call(() => {
       return axios({
         method: "post",
-        url: API,
+        url: `${API}/api/user/login`,
         headers: {
           "Content-Type": "application/json",
         },
         data: {
-          id: loginInfo.id,
-          pwd: loginInfo.pwd,
+          id: userInfo.id,
+          pwd: userInfo.pwd,
         },
       });
     });
@@ -39,13 +40,10 @@ export function* loginSaga() {
   yield takeEvery(SET_LOGIN_INFO, setLoginFnc);
 }
 
-const initialState = { error: false };
+const initialState = {};
 
 const userLoginReducer = handleActions(
   {
-    [SET_LOGIN_INFO]: (state, action) => {
-      return { ...state, loginInfo: action.payload };
-    },
     [GET_USER_TOKEN]: (state, action) => {
       return { ...state, token: action.payload };
     },

@@ -32,7 +32,10 @@ function SignUpPhone({ info, setInfo, getCertification, certificationTyping }) {
 
   // 인증 번호 받기
   const getCertificationNumber = () => {
-    if (phoneRegExp.test(info.phone) || info.phone.length === 0) {
+    if (
+      (phoneRegExp.test(info.phone) || info.phone.length === 0) &&
+      !info.isCertification
+    ) {
       setInfo((info) => {
         return { ...info, isCertification: true };
       });

@@ -1,4 +1,5 @@
 import React from "react";
+import { useRef } from "react";
 import { useEffect } from "react";
 
 import { connect } from "react-redux";
@@ -10,43 +11,57 @@ function SignUpAddress({
   signUp,
   getSidoData,
   getGugun,
-  getDo,
+  getDong,
 }) {
+  const gugunRef = useRef(null);
+  const dongRef = useRef(null);
+
   useEffect(() => {
     getSidoData();
   }, []);
 
   const sidoOnClick = (e) => {
     const value = e.target.value;
-    setInfo((info) => {
-      return { ...info, sido: value };
-    });
-    getGugun(value);
+
+    if (value !== "") {
+      setInfo((info) => {
+        return { ...info, sido: value };
+      });
+      getGugun(value);
+      gugunRef.current.value = "";
+      dongRef.current.value = "";
+    }
   };
 
   const gugunOnClick = (e) => {
     const value = e.target.value;
-    setInfo((info) => {
-      return { ...info, gugun: value };
-    });
-    getDo({ sido: info.sido, gugun: info.gugun });
+    if (value !== "") {
+      setInfo((info) => {
+        return { ...info, gugun: value };
+      });
+      getDong({ sido: info.sido, gugun: value });
+      dongRef.current.value = "";
+    }
   };
 
   const DongOnClick = (e) => {
     const value = e.target.value;
-    setInfo((info) => {
-      return { ...info, dong: value };
-    });
 
-    // 주소를 모두 선택했는가?
-    if (info.sido && info.gugun && info.dong) {
+    if (value !== "") {
       setInfo((info) => {
-        return { ...info, addressSuccess: true };
+        return { ...info, dong: value };
       });
-    } else {
-      setInfo((info) => {
-        return { ...info, addressSuccess: false };
-      });
+
+      // 주소를 모두 선택했는가?
+      if (info.sido && info.gugun && info.dong) {
+        setInfo((info) => {
+          return { ...info, addressSuccess: true };
+        });
+      } else {
+        setInfo((info) => {
+          return { ...info, addressSuccess: false };
+        });
+      }
     }
   };
 
@@ -56,6 +71,9 @@ function SignUpAddress({
 
       {/* 시 */}
       <select defaultValue="sido" onClick={sidoOnClick}>
+        <option key="defalt-value-1" value="">
+          --
+        </option>
         {signUp.sido.map((city, index) => {
           return (
             <option key={index} value={city}>
@@ -67,7 +85,10 @@ function SignUpAddress({
 
       {/* 구 */}
       {signUp.sido.length !== 0 ? (
-        <select defaultValue="gugun" onClick={gugunOnClick}>
+        <select defaultValue="gugun" onClick={gugunOnClick} ref={gugunRef}>
+          <option key="defalt-value-2" value="">
+            --
+          </option>
           {signUp.gugun.map((gugun, index) => {
             return (
               <option key={index} value={gugun}>
@@ -80,7 +101,10 @@ function SignUpAddress({
 
       {/* 동 */}
       {signUp.gugun.length !== 0 ? (
-        <select defaultValue="dong" onClick={DongOnClick}>
+        <select defaultValue="dong" onClick={DongOnClick} ref={dongRef}>
+          <option key="defalt-value-3" value="">
+            --
+          </option>
           {signUp.dong.map((dong, index) => {
             return (
               <option key={index} value={dong}>
@@ -106,8 +130,8 @@ const mapDispatchToProps = (dispatch) => {
     getGugun(data) {
       dispatch(userInfo.getGugun(data));
     },
-    getDo(data) {
-      dispatch(userInfo.getDo(data));
+    getDong(data) {
+      dispatch(userInfo.getDong(data));
     },
   };
 };
