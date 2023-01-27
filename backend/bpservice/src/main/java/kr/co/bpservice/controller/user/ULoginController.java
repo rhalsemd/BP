@@ -1,5 +1,6 @@
 package kr.co.bpservice.controller.user;
 
+import jakarta.servlet.http.HttpServletRequest;
 import kr.co.bpservice.util.auth.dto.TokenDto;
 import kr.co.bpservice.util.auth.dto.UserRequestDto;
 import kr.co.bpservice.util.auth.service.AuthService;
@@ -17,8 +18,8 @@ import java.util.Map;
 public class ULoginController {
     private final AuthService authService;
     @PostMapping("/login")
-    public ResponseEntity<TokenDto> login(@RequestBody UserRequestDto requestDto) {
-        return ResponseEntity.ok(authService.login(requestDto));
+    public ResponseEntity<TokenDto> login(@RequestBody UserRequestDto requestDto, HttpServletRequest request) {
+        return ResponseEntity.ok(authService.login(requestDto, request));
     }
 
     @PostMapping("/find/id")
