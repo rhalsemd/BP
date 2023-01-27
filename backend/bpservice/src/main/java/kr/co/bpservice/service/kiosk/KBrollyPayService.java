@@ -1,5 +1,7 @@
 package kr.co.bpservice.service.kiosk;
 
+import jakarta.transaction.Transactional;
+import jakarta.validation.Payload;
 import kr.co.bpservice.entity.brolly.BrollyPayLog;
 import kr.co.bpservice.repository.kiosk.KBrollyPayRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +13,19 @@ import java.util.Map;
 public class KBrollyPayService {
     @Autowired
     private KBrollyPayRepository kBrollyPayRepository;
-
+    @Transactional
     public void insert_pay_log(BrollyPayLog brollyPayLog){
         kBrollyPayRepository.save(brollyPayLog);
     }
-    public Map<String, String> return_pay_data(String userid, int brollyid){
-        Map<String, String> returnData = kBrollyPayRepository.ReturnPayData(userid,brollyid);
+    public Map<String,?> return_pay_data(String userid, int brollyid){
+        Map<String,?> returnData = kBrollyPayRepository.ReturnPayData(userid,brollyid);
         return returnData;
+    }
+    @Transactional
+    public void update_pay_log(BrollyPayLog brollyPayLog){
+        BrollyPayLog returnData = kBrollyPayRepository.findByReceiptId(brollyPayLog.getReceiptId());
+        returnData.setPrice(brollyPayLog.getPrice());
+        returnData.setUptDt(brollyPayLog.getUptDt());
+        kBrollyPayRepository.save(returnData);
     }
 }
