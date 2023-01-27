@@ -20,4 +20,8 @@ public class KHomeService {
     public List<BrollyCase> getBrollyCaseList() {
         return kBrollyHomeRepository.findAll();
     }
+
+    public List<BrollyCase> getBaseCoordinateBrollyCaseList(double lat, double lng) {
+        return kBrollyHomeRepository.selectBaseCoordinateBrollyCase(lat,lng);
+    }
 }
