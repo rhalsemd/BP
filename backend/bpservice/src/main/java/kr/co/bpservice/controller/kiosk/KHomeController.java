@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Tag(name = "Kiosk Home", description = "키오스크 지점 관련 정보를 제공하기 위한 API")
 @RequestMapping("/api/kiosk/home")
@@ -38,6 +39,16 @@ public class KHomeController {
     @Operation(description = "키오스크 지점 조회")
     public ResponseEntity<List<BrollyCase>> getBrollyCaseList() {
         List<BrollyCase> brollyCaseList = kHomeService.getBrollyCaseList();
+        return new ResponseEntity<>(brollyCaseList, HttpStatus.OK);
+    }
+    @GetMapping("/base-coordinate-kiosk-list")
+    @Operation(description = "현재 좌표 기준 보여줄 지점 좌표 및 우산 수량 조회")
+    @Parameters({
+            @Parameter(name = "lat", description = "본인 현재 위치 위도"),
+            @Parameter(name = "lng", description = "본인 현재 위치 경도")
+    })
+    public ResponseEntity<List<Map<String,?>>> getBaseCoordinateBrollyCaseList(@RequestParam double lat, @RequestParam double lng) {
+        List<Map<String,?>> brollyCaseList = kHomeService.getBaseCoordinateBrollyCaseList(lat,lng);
         return new ResponseEntity<>(brollyCaseList, HttpStatus.OK);
     }
 }
