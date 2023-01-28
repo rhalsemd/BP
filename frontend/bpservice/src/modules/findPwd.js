@@ -7,7 +7,10 @@ const SET_CERTIFICATION_NUM = "findPwd/SET_CERTIFICATION_NUM";
 const SET_FIRST_SUCCESS_CERTIFICATION = "findPwd/SET_SUCCESS_CERTIFICATION";
 const SET_SECOND_SUCCESS_CERTIFICATION = "findPwd/SET_SUCCESS_CERTIFICATION";
 const SET_ERROR_CERTIFICATION = "findPwd/SET_ERROR_CERTIFICATION";
+const SET_ERROR_RESET = "findPwd/SET_ERROR_RESET";
 const SET_NEW_PWD = "findPwd/SET_NEW_PWD";
+const SET_SECOND_ERROR = "findPwd/SET_SECOND_ERROR";
+const SET_SECOND_ERROR_RESET = "findPwd/SET_SECOND_ERROR_RESET";
 
 const setFindPwdInfo = createAction(SET_FIND_PWD_INFO, (info) => info);
 const setCertificationNum = createAction(SET_CERTIFICATION_NUM, (data) => data);
@@ -23,21 +26,28 @@ const setErrorCertification = createAction(
   SET_ERROR_CERTIFICATION,
   () => undefined
 );
+const setErrorReset = createAction(SET_ERROR_RESET, () => undefined);
 const setNewPwd = createAction(SET_NEW_PWD, (data) => data);
+const setSecondErrorReset = createAction(
+  SET_SECOND_ERROR_RESET,
+  () => undefined
+);
+
+const API = `http://localhost:8080`;
 
 //인증 번호 요청하는 Saga
-function* findPwdFnc() {
-  const { userInfo } = yield select((state) => state.findPwdReducer);
-  const API = `https://jsonplaceholder.typicode.com/todos/1`;
+function* findPwdFnc(data) {
+  const userInfo = data.payload;
 
   try {
     const post = yield call(() => {
       return axios({
         method: "post",
-        url: API,
+        url: `${API}/api/user/find/pwd`,
         data: {
           userId: userInfo.id,
           email: userInfo.email,
+          userName: userInfo.userName,
         },
         headers: {
           "Content-Type": "application/json",
@@ -45,7 +55,11 @@ function* findPwdFnc() {
       });
     });
     if (post.status === 200) {
-      yield put({ type: SET_FIRST_SUCCESS_CERTIFICATION, payload: post.data });
+      yield put({
+        type: SET_FIRST_SUCCESS_CERTIFICATION,
+        payload: post.data,
+        success: true,
+      });
     }
   } catch (e) {
     yield put({ type: SET_ERROR_CERTIFICATION, error: true });
@@ -53,20 +67,19 @@ function* findPwdFnc() {
 }
 
 // 인증 번호 확인하는 Saga
-function* checkCertifiNum() {
-  const { certifiNum, userInfo } = yield select(
-    (state) => state.findPwdReducer
-  );
-  const API = `https://jsonplaceholder.typicode.com/todos/1`;
+function* checkCertifiNum(data) {
+  const info = data.payload;
 
   try {
     const post = yield call(() => {
       return axios({
         method: "post",
-        url: API,
+        url: `${API}/api/user/find/pwd/email-auth`,
         data: {
-          authNum: certifiNum,
-          email: userInfo.email,
+          userId: info.id,
+          authNum: info.authNum,
+          email: info.email,
+          userName: info.userName,
         },
         headers: {
           "Content-Type": "application/json",
@@ -74,24 +87,27 @@ function* checkCertifiNum() {
       });
     });
     if (post.status === 200) {
-      yield put({ type: SET_SECOND_SUCCESS_CERTIFICATION, payload: true });
+      yield put({ type: SET_SECOND_SUCCESS_CERTIFICATION, success: true });
     }
-  } catch (e) {}
+  } catch (e) {
+    yield put({ type: SET_SECOND_ERROR, error: true });
+  }
 }
 
 // 새 비밀번호 저장 요청하는 Saga
-function* newPwdRequestFnc() {
-  const { userInfo, newPwd } = yield select((state) => state.findPwdReducer);
-  const API = `https://jsonplaceholder.typicode.com/todos/1`;
+function* newPwdRequestFnc(data) {
+  const userInfo = data.payload;
 
   try {
     const patch = yield call(() => {
       return axios({
         method: "patch",
-        url: API,
+        url: `${API}/api/user/find/pwd`,
         data: {
-          email: userInfo.email,
-          newPwd,
+          userId: userInfo.email,
+          userName: "채워야 한다.",
+          email: "채워야 한다.",
+          pwd: userInfo.pwd,
         },
         headers: {
           "Content-Type": "application/json",
@@ -99,7 +115,7 @@ function* newPwdRequestFnc() {
       });
     });
 
-    console.log(patch);
+    console.log("변경이 성공한 뒤 로직", patch);
   } catch (e) {
     console.log("새 비밀번호를 저장", e);
   }
@@ -115,23 +131,23 @@ const initialState = { secondSuccess: false };
 
 const findPwdReducer = handleActions(
   {
-    [SET_FIND_PWD_INFO]: (state, action) => {
-      return { ...state, userInfo: action.payload };
-    },
-    [SET_CERTIFICATION_NUM]: (state, action) => {
-      return { ...state, certifiNum: action.payload };
-    },
     [SET_FIRST_SUCCESS_CERTIFICATION]: (state, action) => {
-      return { ...state, data: action.payload, firstSuccess: true };
+      return { ...state, data: action.payload, firstSuccess: action.success };
     },
     [SET_SECOND_SUCCESS_CERTIFICATION]: (state, action) => {
-      return { ...state, secondSuccess: action.payload };
+      return { ...state, secondSuccess: action.success };
     },
     [SET_ERROR_CERTIFICATION]: (state, action) => {
       return { ...state, firstError: action.error };
     },
-    [SET_NEW_PWD]: (state, action) => {
-      return { ...state, newPwd: action.payload };
+    [SET_ERROR_RESET]: (state, action) => {
+      return { ...state, firstError: false };
+    },
+    [SET_SECOND_ERROR]: (state, action) => {
+      return { ...state, secondError: action.error };
+    },
+    [SET_SECOND_ERROR_RESET]: (state, action) => {
+      return { ...state, secondError: false };
     },
   },
   initialState
@@ -140,7 +156,9 @@ const findPwdReducer = handleActions(
 export const findPwdInfo = {
   setFindPwdInfo,
   setCertificationNum,
+  setErrorReset,
   setNewPwd,
+  setSecondErrorReset,
 };
 
 export default findPwdReducer;

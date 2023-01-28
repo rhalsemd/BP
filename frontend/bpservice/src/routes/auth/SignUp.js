@@ -14,9 +14,7 @@ import SignUpPhone from "../../components/signup/SignUpPhone";
 import SignUpAddress from "../../components/signup/SignUpAddress";
 import SignUpEmail from "../../components/signup/SignUpEmail";
 import { userInfo } from "../../modules/signUp";
-import { useState } from "react";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useNavigate, useEffect } from "react";
 
 const loginArea = css`
   width: 100%;

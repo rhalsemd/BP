@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { useState } from "react";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import Footer from "../../components/Footer";
 import Nav from "../../components/Nav";
 import ChangePwdInput from "../../components/userFindChangePwd/ChangePwdInput";
@@ -35,10 +35,9 @@ const pwdRegExp = /^(?=.*[a-z])(?=.*[0-9])(?=.*[$!@$!%*#^?&]).{8,20}$/;
 
 function SearchChangePwd({ setNewPwd }) {
   const [info, setInfo] = useState({ pwd: "", check: "" });
-
   const onClick = () => {
     if (info.pwd && info.check && info.pwd === info.check) {
-      setNewPwd({ pwd: info.pwd, check: info.check });
+      setNewPwd({ pwd: info.check });
     }
   };
 

@@ -1,5 +1,6 @@
-import { connect } from "react-redux";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { connect } from "react-redux";
 import { findPwdInfo } from "../../modules/findPwd";
 
 function InputCertification({
@@ -7,7 +8,11 @@ function InputCertification({
   setInfo,
   info,
   setCertificationNum,
+  setSecondErrorReset,
 }) {
+  const navigation = useNavigate();
+
+  // input 저장
   const onChange = (e) => {
     const inputValue = e.target.value;
     const upperValue = inputValue.toUpperCase();
@@ -17,9 +22,24 @@ function InputCertification({
     });
   };
 
+  // 인증번호 확인
   const onClick = () => {
-    setCertificationNum(info.certifiNum);
+    setCertificationNum({
+      authNum: info.certifiNum,
+      email: info.email,
+      id: info.id,
+      userName: info.userName,
+    });
   };
+
+  useEffect(() => {
+    if (findPwdReducer.secondError) {
+      alert("인증번호를 확인해주세요.");
+      setSecondErrorReset();
+    } else if (findPwdReducer.secondSuccess) {
+      navigation("/bp/search/change/pwd");
+    }
+  }, [findPwdReducer.secondError]);
   return (
     <>
       {!findPwdReducer.success ? (
@@ -36,10 +56,13 @@ const mapStateToProps = ({ findPwdReducer }) => {
   return { findPwdReducer };
 };
 
-const mapDispatchToProps = (disaptch) => {
+const mapDispatchToProps = (dispatch) => {
   return {
     setCertificationNum(data) {
-      disaptch(findPwdInfo.setCertificationNum(data));
+      dispatch(findPwdInfo.setCertificationNum(data));
+    },
+    setSecondErrorReset() {
+      dispatch(findPwdInfo.setSecondErrorReset());
     },
   };
 };
