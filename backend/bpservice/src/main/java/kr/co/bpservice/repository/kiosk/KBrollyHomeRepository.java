@@ -14,7 +14,7 @@ public interface KBrollyHomeRepository extends JpaRepository<BrollyCase, Integer
 
     List<BrollyCase> findAll();
 
-    @Query(value = "SELECT MBC.ID, MBC.LAT, MBC.LNG, MBC.NAME, COUNT(BROLLY_ID) as BROLLYCOUNT  FROM MWS_BROLLY_CASE MBC INNER JOIN MWS_BROLLY_HOLDER ON MWS_BROLLY_HOLDER.CASE_ID = MBC.ID \n" +
+    @Query(value = "SELECT MBC.ID, MBC.LAT, MBC.LNG, MBC.NAME, COUNT(BROLLY_ID) as BROLLYCOUNT, COUNT(*) as BROLLYTOTALCOUNT  FROM MWS_BROLLY_CASE MBC INNER JOIN MWS_BROLLY_HOLDER ON MWS_BROLLY_HOLDER.CASE_ID = MBC.ID \n" +
             "WHERE ABS(LAT-:lat) <= 0.001 AND ABS(LNG-:lng) <= 0.001\n" +
             "GROUP BY MBC.ID;", nativeQuery = true)
     List<Map<String,?>> selectBaseCoordinateBrollyCase(@Param("lat") double lat, @Param("lng") double lng);
