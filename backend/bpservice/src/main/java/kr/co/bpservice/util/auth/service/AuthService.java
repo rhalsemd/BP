@@ -3,9 +3,11 @@ package kr.co.bpservice.util.auth.service;
 
 import jakarta.servlet.http.HttpServletRequest;
 import kr.co.bpservice.entity.common.MailAuth;
+import kr.co.bpservice.entity.common.SmsAuth;
 import kr.co.bpservice.entity.user.User;
 import kr.co.bpservice.entity.user.UserLoginLog;
 import kr.co.bpservice.repository.common.MailAuthRepository;
+import kr.co.bpservice.repository.common.SmsAuthRepository;
 import kr.co.bpservice.repository.user.ULogRepository;
 import kr.co.bpservice.service.common.CAuthService;
 import kr.co.bpservice.util.auth.dto.TokenDto;
@@ -40,6 +42,7 @@ public class AuthService {
     private final AuthenticationManagerBuilder managerBuilder;
     private final UserRepository userRepository;
     private final MailAuthRepository mailAuthRepository;
+    private final SmsAuthRepository smsAuthRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
     private final RedisTemplate redisTemplate;
@@ -57,6 +60,13 @@ public class AuthService {
         }
 
         checkUserPwdFormat(pwd);
+
+        // SMS 인증을 완료했는지 검증
+        String phoneNum = requestDto.getPhoneNum();
+        SmsAuth smsAuth = smsAuthRepository.checkSmsAuth(phoneNum);
+        if(smsAuth == null) {
+            return null; // 인증하지 않았으면 null을 반환.
+        }
 
         User user = requestDto.toUser(passwordEncoder);
         user.setRegDt(LocalDateTime.now());

@@ -20,8 +20,12 @@ public class UJoinController {
     private final CAuthService cAuthService;
 
     @PostMapping("")
-    public ResponseEntity<UserResponseDto> join(@RequestBody UserRequestDto requestDto) {
-        return ResponseEntity.ok(authService.join(requestDto));
+    public ResponseEntity<?> join(@RequestBody UserRequestDto requestDto) {
+        UserResponseDto userResponseDto = authService.join(requestDto);
+        if(userResponseDto != null)
+            return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
+        else
+            return new ResponseEntity<>(new UserResponseDto(), HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping("/sms-request")
