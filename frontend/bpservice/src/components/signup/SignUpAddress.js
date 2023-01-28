@@ -1,6 +1,4 @@
-import React from "react";
-import { useRef } from "react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import { connect } from "react-redux";
 import { userInfo } from "../../modules/signUp";
@@ -18,7 +16,7 @@ function SignUpAddress({
 
   useEffect(() => {
     getSidoData();
-  }, []);
+  }, [getSidoData]);
 
   const sidoOnClick = (e) => {
     const value = e.target.value;

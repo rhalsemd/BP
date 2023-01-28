@@ -1,8 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import { useEffect } from "react";
 
 import { useState } from "react";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer";
 import Nav from "../../components/Nav";
 import CertificationNumInput from "../../components/userFindId/CertificationNumInput";
@@ -35,14 +37,36 @@ const title = css`
 
 function SeachId({ setFindIdInfo }) {
   const [info, setInfo] = useState({});
+  const { success } = useSelector(({ findIdReducer }) => findIdReducer);
+  const navigation = useNavigate();
 
   const findIdFnc = () => {
     if (info.email && info.userName) {
-      setFindIdInfo({ email: info.email, userName: info.userName });
+      setInfo((info) => {
+        return { ...info, isSend: true };
+      });
+
+      setFindIdInfo({
+        email: info.email,
+        userName: info.userName,
+      });
     } else {
       alert("아이디와 이름을 입력해주세요.");
     }
   };
+
+  const modify = () => {
+    setInfo((info) => {
+      return { ...info, isSend: false };
+    });
+  };
+
+  useEffect(() => {
+    if (success) {
+      navigation("/bp/search/id/result");
+    }
+  }, [success, navigation]);
+
   return (
     <div>
       <header>
@@ -56,18 +80,21 @@ function SeachId({ setFindIdInfo }) {
               <h1>아이디 찾기</h1>
 
               {/* 이메일 */}
-              <FindEmailComponent setInfo={setInfo} />
+              <FindEmailComponent setInfo={setInfo} info={info} />
 
               {/* 이름 */}
-              <FindNameComponent setInfo={setInfo} />
+              <FindNameComponent setInfo={setInfo} info={info} />
 
               {/* 아이디 찾기 버튼 */}
               <div>
                 <button onClick={findIdFnc}>아이디 찾기</button>
+                <button onClick={modify}>수정</button>
               </div>
 
               {/* 인증번호 입력 */}
-              <CertificationNumInput info={info} setInfo={setInfo} />
+              {info.isSend ? (
+                <CertificationNumInput info={info} setInfo={setInfo} />
+              ) : null}
             </div>
           </div>
         </div>

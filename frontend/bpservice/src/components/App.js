@@ -38,6 +38,7 @@ function App() {
         <Route path="/bp/terms" element={<UserToU />}></Route>
         <Route path="/bp/complete" element={<CompletePage />}></Route>
         <Route path="/bp/search/id" element={<SearchId />}></Route>
+        <Route path="/bp/search/id/result" element={<SearchId />}></Route>
         <Route path="/bp/search/pwd" element={<SearchPwd />}></Route>
         <Route
           path="/bp/search/change/pwd"

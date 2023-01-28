@@ -14,18 +14,6 @@ const SET_SECOND_ERROR_RESET = "findPwd/SET_SECOND_ERROR_RESET";
 
 const setFindPwdInfo = createAction(SET_FIND_PWD_INFO, (info) => info);
 const setCertificationNum = createAction(SET_CERTIFICATION_NUM, (data) => data);
-const setFistSuccessCertification = createAction(
-  SET_FIRST_SUCCESS_CERTIFICATION,
-  (data) => data
-);
-const setSecondSuccessCertification = createAction(
-  SET_SECOND_SUCCESS_CERTIFICATION,
-  (data) => data
-);
-const setErrorCertification = createAction(
-  SET_ERROR_CERTIFICATION,
-  () => undefined
-);
 const setErrorReset = createAction(SET_ERROR_RESET, () => undefined);
 const setNewPwd = createAction(SET_NEW_PWD, (data) => data);
 const setSecondErrorReset = createAction(
@@ -97,6 +85,9 @@ function* checkCertifiNum(data) {
 // 새 비밀번호 저장 요청하는 Saga
 function* newPwdRequestFnc(data) {
   const userInfo = data.payload;
+  const { userInfo: USER_INFO } = yield select(
+    (state) => state.userLoginReducer
+  );
 
   try {
     const patch = yield call(() => {
@@ -105,8 +96,8 @@ function* newPwdRequestFnc(data) {
         url: `${API}/api/user/find/pwd`,
         data: {
           userId: userInfo.email,
-          userName: "채워야 한다.",
-          email: "채워야 한다.",
+          userName: USER_INFO.userName,
+          email: USER_INFO.email,
           pwd: userInfo.pwd,
         },
         headers: {

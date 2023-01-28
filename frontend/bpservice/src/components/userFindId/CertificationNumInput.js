@@ -11,6 +11,7 @@ function CertificationNumInput({
     const inputValue = e.target.value;
     setInfo((info) => {
       const upperInput = inputValue.toUpperCase();
+
       return {
         ...info,
         certifycationNum: upperInput,
@@ -20,7 +21,11 @@ function CertificationNumInput({
 
   const onClick = () => {
     if (findIdReducer.certifiNum === info.certifycationNum) {
-      checkCertificationNum(info.certifycationNum);
+      checkCertificationNum({
+        email: info.email,
+        userName: info.userName,
+        authNum: info.info.certifycationNum,
+      });
     } else {
       alert("인증 번호를 확인해주세요.");
     }

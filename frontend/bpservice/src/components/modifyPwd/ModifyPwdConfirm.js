@@ -1,17 +1,17 @@
-function ModifyPwdConfirm({
-  next,
-
-  setIsConfirm,
-
-  setConfirmPwd,
-}) {
+function ModifyPwdConfirm({ info, setInfo }) {
   const onChange = (e) => {
     const inputValue = e.target.value;
-    setConfirmPwd(inputValue);
-    if (next === inputValue) {
-      setIsConfirm(true);
+    setInfo((info) => {
+      return { ...info, confirmPwd: inputValue };
+    });
+    if (info.next === inputValue) {
+      setInfo((info) => {
+        return { ...info, isConfirm: true };
+      });
     } else {
-      setIsConfirm(false);
+      setInfo((info) => {
+        return { ...info, isConfirm: false };
+      });
     }
   };
 

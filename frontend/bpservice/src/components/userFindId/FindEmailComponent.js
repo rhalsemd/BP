@@ -1,10 +1,23 @@
-function FindEmailComponent({ setInfo }) {
+import { useEffect } from "react";
+import { useRef } from "react";
+
+function FindEmailComponent({ setInfo, info }) {
+  const inputRef = useRef(null);
+
   const emailOnChange = (e) => {
     const inputValue = e.target.value;
     setInfo((info) => {
       return { ...info, email: inputValue };
     });
   };
+
+  useEffect(() => {
+    if (info.isSend) {
+      inputRef.current.disabled = true;
+    } else if (!info.isSend) {
+      inputRef.current.disabled = false;
+    }
+  }, [info.isSend]);
 
   return (
     <div>
@@ -16,6 +29,7 @@ function FindEmailComponent({ setInfo }) {
         required
         placeholder="이메일"
         onChange={emailOnChange}
+        ref={inputRef}
       />
     </div>
   );

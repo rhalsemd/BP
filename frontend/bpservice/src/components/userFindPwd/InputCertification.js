@@ -39,7 +39,12 @@ function InputCertification({
     } else if (findPwdReducer.secondSuccess) {
       navigation("/bp/search/change/pwd");
     }
-  }, [findPwdReducer.secondError]);
+  }, [
+    findPwdReducer.secondError,
+    navigation,
+    setSecondErrorReset,
+    findPwdReducer.secondSuccess,
+  ]);
   return (
     <>
       {!findPwdReducer.success ? (

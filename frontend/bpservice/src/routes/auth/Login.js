@@ -34,7 +34,7 @@ const title = css`
   text-align: center;
 `;
 
-function Login({ userLogin, setLoginInfo }) {
+function Login({ userLogin, setLoginInfo, getUserInfo }) {
   const [info, setInfo] = useState({});
 
   const getLogin = () => {
@@ -48,8 +48,10 @@ function Login({ userLogin, setLoginInfo }) {
   useEffect(() => {
     if (userLogin.error) {
       alert("아이디와 비밀번호가 틀렸습니다.");
+    } else if (userLogin.success) {
+      getUserInfo();
     }
-  }, [userLogin.error]);
+  }, [userLogin.error, userLogin.success, getUserInfo]);
 
   return (
     <div>
@@ -100,6 +102,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setLoginInfo(info) {
       dispatch(loginInfo.setLoginInfo(info));
+    },
+    getUserInfo() {
+      dispatch(loginInfo.getUserInfo());
     },
   };
 };

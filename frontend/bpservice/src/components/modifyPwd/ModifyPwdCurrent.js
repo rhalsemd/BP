@@ -1,8 +1,20 @@
-function ModifyPwdCurrent({ setCurrent }) {
+function ModifyPwdCurrent({ setInfo, info }) {
   const onChange = (e) => {
     const inputValue = e.target.value;
-    setCurrent(inputValue);
+    setInfo((info) => {
+      return { ...info, current: inputValue };
+    });
+    if (info.next !== inputValue) {
+      setInfo((info) => {
+        return { ...info, isNext: true };
+      });
+    } else if (info.next === inputValue) {
+      setInfo((info) => {
+        return { ...info, isNext: false };
+      });
+    }
   };
+
   return (
     <div>
       <form>

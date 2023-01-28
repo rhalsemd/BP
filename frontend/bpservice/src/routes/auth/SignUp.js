@@ -14,7 +14,8 @@ import SignUpPhone from "../../components/signup/SignUpPhone";
 import SignUpAddress from "../../components/signup/SignUpAddress";
 import SignUpEmail from "../../components/signup/SignUpEmail";
 import { userInfo } from "../../modules/signUp";
-import { useState, useNavigate, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const loginArea = css`
   width: 100%;
@@ -39,14 +40,22 @@ const title = css`
   text-align: center;
 `;
 
-function SignUp({ signUp, sighUpRequirement }) {
+function SignUp({ signUp, sighUpRequirement, signUpFailureReset }) {
   const navigation = useNavigate();
 
   useEffect(() => {
     if (signUp.signUpSuccess) {
       navigation("/bp/login");
+    } else if (signUp.signUpFailure) {
+      alert("아이디 혹은 이메일이 중복됩니다.");
+      signUpFailureReset();
     }
-  }, [signUp.signUpSuccess]);
+  }, [
+    signUp.signUpSuccess,
+    signUp.signUpFailure,
+    signUpFailureReset,
+    navigation,
+  ]);
 
   const [info, setInfo] = useState({
     id: "",
@@ -63,7 +72,7 @@ function SignUp({ signUp, sighUpRequirement }) {
     phoneSuccess: false,
     // 인증 여부
     isCertification: false,
-    // 인증 번호 일치 여부
+    // // 인증 번호 일치 여부
     isCertificationSuccess: false,
     // 주소 선택 여부
     addressSuccess: false,
@@ -144,6 +153,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     sighUpRequirement() {
       dispatch(userInfo.sighUpRequirement());
+    },
+    signUpFailureReset() {
+      dispatch(userInfo.signUpFailureReset());
     },
   };
 };

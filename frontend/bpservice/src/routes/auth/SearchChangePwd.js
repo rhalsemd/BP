@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { useState } from "react";
-import { connect, useSelector } from "react-redux";
+import { connect } from "react-redux";
 import Footer from "../../components/Footer";
 import Nav from "../../components/Nav";
 import ChangePwdInput from "../../components/userFindChangePwd/ChangePwdInput";

@@ -61,7 +61,7 @@ function SearchPwd({ findPwdReducer, setFindPwdInfo, setErrorReset }) {
       });
       setErrorReset();
     }
-  }, [findPwdReducer.firstError]);
+  }, [findPwdReducer.firstError, setErrorReset]);
 
   return (
     <div>

@@ -33,7 +33,8 @@ function SignUpPhone({ info, setInfo, getCertification, certificationTyping }) {
   // 인증 번호 받기
   const getCertificationNumber = () => {
     if (
-      (phoneRegExp.test(info.phone) || info.phone.length === 0) &&
+      phoneRegExp.test(info.phone) &&
+      info.phone.length !== 0 &&
       !info.isCertification
     ) {
       setInfo((info) => {
@@ -41,7 +42,7 @@ function SignUpPhone({ info, setInfo, getCertification, certificationTyping }) {
       });
       inputRef.current.disabled = true;
 
-      getCertification();
+      getCertification(info.phone);
     } else {
       alert("전화번호를 확인해주세요.");
     }
@@ -101,8 +102,8 @@ const mapDispatchToProps = (dispatch) => {
     certificationTyping(certification) {
       dispatch(userInfo.certificationTyping(certification));
     },
-    getCertification() {
-      dispatch(userInfo.getCertification());
+    getCertification(phone) {
+      dispatch(userInfo.getCertification(phone));
     },
   };
 };

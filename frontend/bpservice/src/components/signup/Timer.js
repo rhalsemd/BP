@@ -28,7 +28,7 @@ export default function Timer({ setInfo, inputRef, info }) {
       inputRef.current.value = "";
     }
     return () => clearInterval(countdown);
-  }, [minutes, seconds]);
+  }, [minutes, seconds, setInfo, setMinutes, setSeconds, inputRef]);
 
   return (
     <span>
