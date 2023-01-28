@@ -26,7 +26,11 @@ public class UJoinController {
 
     @PostMapping("/sms-request")
     public ResponseEntity<?> smsRequest(@RequestBody Map<String, String> requestMap) {
-        return new ResponseEntity<>(cAuthService.startphone(requestMap.get("phoneNum")), HttpStatus.OK);
+        Map<String, String> resultMap = cAuthService.requestSmsMessage(requestMap.get("phoneNum"));
+        if(resultMap.get("result").equals("success"))
+            return new ResponseEntity<>(resultMap, HttpStatus.OK);
+        else
+            return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping("/sms-auth")

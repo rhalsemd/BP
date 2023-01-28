@@ -5,8 +5,10 @@ import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import kr.co.bpservice.entity.common.MailAuth;
 import kr.co.bpservice.entity.common.SmsAuth;
+import kr.co.bpservice.entity.user.User;
 import kr.co.bpservice.repository.common.MailAuthRepository;
 import kr.co.bpservice.repository.common.SmsAuthRepository;
+import kr.co.bpservice.util.auth.repository.UserRepository;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,15 +28,14 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class CAuthService {
     @Autowired
     JavaMailSender emailSender;
-
+    @Autowired
+    private UserRepository userRepository;
     @Autowired
     private MailAuthRepository mailAuthRepository;
     @Autowired
@@ -100,7 +101,15 @@ public class CAuthService {
         int id = mailAuth.getId();
         mailAuthRepository.updateStatus(id);
     }
-    public Map<String, String> startphone(String receivePhone){
+    public Map<String, String> requestSmsMessage(String receivePhone){
+        Map<String, String> resultMap = new HashMap<>();
+        List<User> optionalUser = userRepository.findByPhoneNum(receivePhone);
+        if(optionalUser.size() > 0){
+            resultMap.put("result", "fail");
+            resultMap.put("msg", "이미 가입된 연락처입니다.");
+            return resultMap;
+        }
+
         SmsAuth smsAuth = smsAuthRepository.getSmsAuth(receivePhone);
         String authNum = smsAuth.getAuthNum();
 
@@ -177,7 +186,6 @@ public class CAuthService {
             e.printStackTrace();;
         }
 
-        Map<String, String> resultMap = new HashMap<>();
         resultMap.put("result", "success");
         resultMap.put("msg", "인증번호가 전송되었습니다.");
         return resultMap;
