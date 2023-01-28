@@ -24,11 +24,10 @@ public class UInfoController {
         // return ResponseEntity.ok(userService.getMyInfoBySecurity());
     }
 
-    @PutMapping("") // 사용자 정보 수정
+    @PatchMapping("") // 사용자 정보 수정
     public ResponseEntity<UserResponseDto> changeUserInfo(@RequestBody UserRequestDto requestDto) {
         UserResponseDto responseDto = userService.changeUserInfo(requestDto);
         return ResponseEntity.ok(responseDto);
-
     }
 
 //    @PostMapping("/nickname") //사용자 이름 변경
