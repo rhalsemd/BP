@@ -44,12 +44,10 @@ public class UBrollyBorrowController {
 
         BrollyHolder brollyHolder = (uBrollyBorrowService.getHolderNum(brollyRentLog.getBrolly()));
         int holderNumber = brollyHolder.getNum();
-        //키오스크에 몇번 홀더 열어야되는지 알려줘야함
         //null이면 안되게 할 필요있음
         brollyHolder.setBrolly(null); //홀더 우산 null로 변경
         uBrollyBorrowService.updateholder(brollyHolder.getId());
         return true;
     }
-    //키오스크에 명령어 보내기
 
 }
