@@ -38,7 +38,7 @@ public class UserService {
 //    }
 
     @Transactional
-    public UserResponseDto changeUserPassword(String userId, String exPwd, String newPwd) {
+    public UserResponseDto changeUserPassword(String exPwd, String newPwd) {
         User user = userRepository.findById(SecurityUtil.getCurrentUserId()).orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다"));
         if (!passwordEncoder.matches(exPwd, user.getPwd())) {
             throw new RuntimeException("기존 비밀번호가 맞지 않습니다");

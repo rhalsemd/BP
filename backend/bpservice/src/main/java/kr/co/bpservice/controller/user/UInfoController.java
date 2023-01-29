@@ -37,7 +37,7 @@ public class UInfoController {
 
     @PatchMapping("/pwd") //사용자 비밀번호 변경
     public ResponseEntity<UserResponseDto> changeUserPassword(@RequestBody ChangePasswordRequestDto requestDto) {
-        return ResponseEntity.ok(userService.changeUserPassword(requestDto.getUserId(),requestDto.getExPwd(), requestDto.getNewPwd()));
+        return ResponseEntity.ok(userService.changeUserPassword(requestDto.getExPwd(), requestDto.getNewPwd()));
     }
 
     @DeleteMapping("") // 회원탈퇴
