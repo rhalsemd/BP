@@ -19,11 +19,8 @@ import MyPage from "../routes/auth/MyPage";
 import ModifyUserInfo from "../routes/auth/ModifyUserInfo";
 import ModifyPwd from "../routes/auth/ModifyPwd";
 import SearchPwd from "../routes/auth/SearchPwd";
-<<<<<<< HEAD
 import Payment from "../routes/auth/Payment";
-=======
 import SearchChangePwd from "../routes/auth/SearchChangePwd";
->>>>>>> feature/FE/mypage-test
 
 export const GlobalStyle = css`
   body {
