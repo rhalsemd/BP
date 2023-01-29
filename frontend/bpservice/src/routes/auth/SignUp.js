@@ -87,7 +87,7 @@ function SignUp({ signUp, sighUpRequirement, signUpFailureReset }) {
   const setSignUp = (e) => {
     sighUpRequirement(info);
   };
-
+  console.log(info);
   return (
     <div>
       <header>
