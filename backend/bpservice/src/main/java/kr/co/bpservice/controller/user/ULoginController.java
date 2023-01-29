@@ -17,12 +17,12 @@ import java.util.Map;
 @CrossOrigin("*")
 public class ULoginController {
     private final AuthService authService;
-    @PostMapping("/login")
+    @PostMapping("/login")  // 로그인
     public ResponseEntity<TokenDto> login(@RequestBody UserRequestDto requestDto, HttpServletRequest request) {
         return ResponseEntity.ok(authService.login(requestDto, request));
     }
 
-    @PostMapping("/find/id")
+    @PostMapping("/find/id")    // 아아디 찾기: 최초 요청
     public ResponseEntity<?> findUserId(@RequestBody UserRequestDto requestDto) throws Exception {
         Map<String, String> resultMap = authService.findUserId(requestDto);
         if(resultMap.get("result").equals("success"))
@@ -31,7 +31,7 @@ public class ULoginController {
             return new ResponseEntity<Map<String, String>>(resultMap, HttpStatus.BAD_REQUEST);
     }
 
-    @PostMapping("/find/id/email-auth")
+    @PostMapping("/find/id/email-auth") // 아이디 찾기: 이메일 인증
     public ResponseEntity<?> findUserIdByEmailAuth(@RequestBody Map<String, String> requestMap) throws Exception {
         Map<String, String> resultMap = authService.findUserIdByEmailAuth(requestMap);
         if(resultMap.get("result").equals("success"))

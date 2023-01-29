@@ -196,12 +196,13 @@ public class AuthService {
     public Map<String, String> findUserId(UserRequestDto requestDto) throws Exception {
         Map<String, String> resultMap = new HashMap<>();
         String email = requestDto.getEmail();
+        String name = requestDto.getUserName();
 
-        // 사용자가 입력한 이메일이 DB에 존재하는지 확인
-        Optional<User> optionalUser = userRepository.findByEmail(email);
+        // 사용자가 입력한 이메일과 이름에 맞는 회원이 DB에 존재하는지 확인
+        Optional<User> optionalUser = userRepository.findByEmailAndName(email, name);
         if(optionalUser.isEmpty()) {
             resultMap.put("result", "fail");
-            resultMap.put("msg", "존재하지 않는 이메일입니다.");
+            resultMap.put("msg", "존재하지 않는 회원정보입니다.");
         } else {
             // 사용자 이메일로 인증번호 전송
             cAuthService.sendSimpleMessage(email);
@@ -213,8 +214,7 @@ public class AuthService {
     }
 
     public Map<String, String> findUserIdByEmailAuth(Map<String, String> requestMap) throws Exception {
-        Map<String, String> resultMap = new HashMap<>();
-        return emailAuthentication(requestMap, resultMap);
+        return emailAuthentication(requestMap);
     }
 
     public Map<String, String> findUserPwd(Map<String, String> requestMap) throws Exception {
@@ -239,13 +239,14 @@ public class AuthService {
     }
 
     public Map<String, String> findUserPwdByEmailAuth(Map<String, String> requestMap) {
-        Map<String, String> resultMap = new HashMap<>();
-        return emailAuthentication(requestMap, resultMap);
+        return emailAuthentication(requestMap);
     }
 
     // 이메일 인증을 수행하는 메소드
-    private Map<String, String> emailAuthentication(Map<String, String> requestMap, Map<String, String> resultMap) {
+    private Map<String, String> emailAuthentication(Map<String, String> requestMap) {
+        Map<String, String> resultMap = new HashMap<>();
         String email = requestMap.get("email");
+        String name = requestMap.get("userName");
         String authNum = requestMap.get("authNum").toUpperCase();
         try {
             cAuthService.validateEmailMessage(email, authNum);
@@ -255,7 +256,7 @@ public class AuthService {
             return resultMap;
         }
 
-        User user = userRepository.findByEmail(email).get();
+        User user = userRepository.findByEmailAndName(email, name).get();
         resultMap.put("userId", user.getId());
         resultMap.put("result", "success");
         resultMap.put("msg", "이메일 인증을 성공했습니다.");
