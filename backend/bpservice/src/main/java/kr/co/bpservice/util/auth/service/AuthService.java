@@ -221,20 +221,19 @@ public class AuthService {
         Map<String, String> resultMap = new HashMap<>();
         String userId = requestMap.get("userId");
         String email = requestMap.get("email");
+        String name = requestMap.get("userName");
 
-        Optional<User> optionalUser = userRepository.findById(userId);
+        Optional<User> optionalUser = userRepository.findByIdAndEmailAndName(userId, email, name);
         if(optionalUser.isPresent()) {
             User user = optionalUser.get();
-            if (email.equals(user.getEmail())) {
-                // 사용자 이메일로 인증번호 전송
-                cAuthService.sendSimpleMessage(email);
-                resultMap.put("result", "success");
-                resultMap.put("msg", "인증번호 전송 성공");
-                return resultMap;
-            }
+            // 사용자 이메일로 인증번호 전송
+            cAuthService.sendSimpleMessage(email);
+            resultMap.put("result", "success");
+            resultMap.put("msg", "인증번호 전송 성공");
+            return resultMap;
         }
         resultMap.put("result", "fail");
-        resultMap.put("msg", "입력한 아이디, 이메일과 일치하는 사용자가 없습니다.");
+        resultMap.put("msg", "입력한 회원정보와 일치하는 사용자가 없습니다.");
         return resultMap;
     }
 
@@ -245,6 +244,7 @@ public class AuthService {
     // 이메일 인증을 수행하는 메소드
     private Map<String, String> emailAuthentication(Map<String, String> requestMap) {
         Map<String, String> resultMap = new HashMap<>();
+        String userId = requestMap.get("userId");
         String email = requestMap.get("email");
         String name = requestMap.get("userName");
         String authNum = requestMap.get("authNum").toUpperCase();
@@ -256,7 +256,7 @@ public class AuthService {
             return resultMap;
         }
 
-        User user = userRepository.findByEmailAndName(email, name).get();
+        User user = userRepository.findByIdAndEmailAndName(userId, email, name).get();
         resultMap.put("userId", user.getId());
         resultMap.put("result", "success");
         resultMap.put("msg", "이메일 인증을 성공했습니다.");
@@ -266,9 +266,13 @@ public class AuthService {
     // 비밀번호 찾기에서 비밀변호 변경을 수행하는 메소드
     public Map<String, String> findUserPwdDo(Map<String, String> requestMap) {
         Map<String, String> resultMap = new HashMap<>();
+        String userId = requestMap.get("userId");
+        String name = requestMap.get("userName");
+        String email = requestMap.get("email");
+        String pwd = requestMap.get("pwd");
+
 
         // 정상적인 비밀번호 찾기인지 확인 (이메일 인증을 완료하고 5분 이내인지 확인)
-        String email = requestMap.get("email");
         MailAuth mailAuth = mailAuthRepository.checkMailAuth(email);
 
         if(mailAuth == null || mailAuth.isStatus() == false) {
@@ -278,11 +282,10 @@ public class AuthService {
         }
 
         // 비밀번호 변경 수행.
-        Optional<User> optionalUser = userRepository.findById(requestMap.get("userId"));
+        Optional<User> optionalUser = userRepository.findByIdAndEmailAndName(userId, email, name);
         if(optionalUser.isPresent()) {
+            checkUserPwdFormat(pwd);    // 새로운 비밀번호가 정규표현식에 맞지 않을 경우 예외발생.
             User user = optionalUser.get();
-            String pwd = requestMap.get("pwd");
-
             user.setPwd(passwordEncoder.encode(pwd));
             userRepository.save(user);
             resultMap.put("result", "success");
