@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import KioskCompleteHomeBtn from './btncomponents/KioskCompleteHomeBtn'
+import KioskCompleteHomeBtn from './button/KioskCompleteHomeBtn'
 
 const KioskLentSectionCompleteStyle = css`
   display: flex;

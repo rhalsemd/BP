@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import PaymentQR from './QRcomponents/PaymentQR'
+import PaymentQR from './QR/PaymentQR'
 
 const KioskLentSectionStyle = css`
   display: flex;

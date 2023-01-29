@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
+// import { useLocation } from 'react-router-dom'
 import KioskHeader from '../components/HomeHeader'
 import KioskReturnReceipt from '../components/ReturnReceipt'
 
@@ -13,6 +14,7 @@ const KioskReturnReceiptStyle = css`
 // 밑에는 JS 입니다.
 
 const ReturnReceipt = () => {
+
   return (
     <div css={KioskReturnReceiptStyle}>
       <header>
