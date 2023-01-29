@@ -17,7 +17,7 @@ function CertificationInput({ info, setInfo, checkCertificationNum, signUp }) {
 
   // 인증 번호 확인
   const getConfirm = () => {
-    if (info.certifiNum === signUp.certifyNum) {
+    if (signUp.isCertifyNum) {
       setInfo((info) => {
         return { ...info, isCertificationSuccess: true };
       });

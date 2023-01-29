@@ -20,7 +20,7 @@ function CertificationNumInput({
   };
 
   const onClick = () => {
-    if (findIdReducer.certifiNum === info.certifycationNum) {
+    if (findIdReducer.isCertifiNum) {
       checkCertificationNum({
         email: info.email,
         userName: info.userName,

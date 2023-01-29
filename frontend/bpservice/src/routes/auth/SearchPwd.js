@@ -37,7 +37,7 @@ function SearchPwd({ findPwdReducer, setFindPwdInfo, setErrorReset }) {
   const [info, setInfo] = useState({});
 
   const findPwd = () => {
-    if (info.id && info.email) {
+    if (info.id && info.email && info.userName) {
       setInfo((info) => {
         return { ...info, isSendEmail: true };
       });
