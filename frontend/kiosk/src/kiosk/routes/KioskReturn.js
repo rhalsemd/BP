@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import KioskHomeBtn from '../components/btncomponents/KioskHomeBtn'
+import KioskHomeBtn from '../components/button/KioskHomeBtn'
 import KioskHeader from '../components/HomeHeader'
 import KioskReturnSection from '../components/ReturnSection'
 
