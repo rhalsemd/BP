@@ -3,14 +3,16 @@ package kr.co.bpservice.controller.user;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import kr.co.bpservice.entity.brolly.*;
 import kr.co.bpservice.service.user.UBrollyBorrowService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.expression.spel.ast.NullLiteral;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-
+@Tag(name = "Kiosk Home", description = "대여 관련 기능을 제공하기 위한 API")
+@RequiredArgsConstructor
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/api/auth/user/brolly/borrow")
