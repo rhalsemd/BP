@@ -45,7 +45,6 @@ function* findPwdFnc(data) {
     if (post.status === 200) {
       yield put({
         type: SET_FIRST_SUCCESS_CERTIFICATION,
-        payload: post.data,
         success: true,
       });
     }
@@ -123,7 +122,7 @@ const initialState = { secondSuccess: false };
 const findPwdReducer = handleActions(
   {
     [SET_FIRST_SUCCESS_CERTIFICATION]: (state, action) => {
-      return { ...state, data: action.payload, firstSuccess: action.success };
+      return { ...state, firstSuccess: action.success };
     },
     [SET_SECOND_SUCCESS_CERTIFICATION]: (state, action) => {
       return { ...state, secondSuccess: action.success };

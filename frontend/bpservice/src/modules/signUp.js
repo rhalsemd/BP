@@ -48,7 +48,7 @@ function* getCertifi(data) {
         },
       });
     });
-    yield put({ type: SET_CERTIFYCATION, payload: post.data });
+    yield put({ type: SET_CERTIFYCATION, success: true });
   } catch (e) {
     console.log(e);
   }
@@ -195,7 +195,7 @@ const initialState = { sido: [], gugun: [], dong: [] };
 const signUpReducer = handleActions(
   {
     [SET_CERTIFYCATION]: (state, action) => {
-      return { ...state, certifyNum: action.payload };
+      return { ...state, isCertifyNum: action.success };
     },
     [SET_SIDO_DATA]: (state, action) => {
       return { ...state, sido: action.payload };

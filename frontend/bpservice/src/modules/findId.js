@@ -34,7 +34,7 @@ function* getFindIdFnc(data) {
       });
     });
     if (post.status === 200) {
-      yield put({ type: SET_CERTIFICATION_NUM, payload: post.data });
+      yield put({ type: SET_CERTIFICATION_NUM, success: true });
     }
   } catch (e) {
     console.error("아이디 찾기 오류", e);
@@ -78,7 +78,7 @@ const initialState = {};
 const findIdReducer = handleActions(
   {
     [SET_CERTIFICATION_NUM]: (state, action) => {
-      return { ...state, certifiNum: action.payload };
+      return { ...state, isCertifiNum: action.success };
     },
     [CHECK_SUCCESS]: (state, action) => {
       return { ...state, success: action.success, id: action.payload };
