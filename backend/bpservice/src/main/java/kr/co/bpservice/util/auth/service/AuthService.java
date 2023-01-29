@@ -52,17 +52,18 @@ public class AuthService {
     public UserResponseDto join(UserRequestDto requestDto) {
         String userId = requestDto.getUserId();
         String pwd = requestDto.getPwd();
+        String email = requestDto.getEmail();
+        String phoneNum = requestDto.getPhoneNum();
 
         checkUserIdFormat(userId);
 
-        if (userRepository.existsById(userId)) {
-            throw new RuntimeException("이미 가입되어 있는 유저입니다");
+        if (userRepository.existsById(userId) || userRepository.existsByEmail(email) || userRepository.existsByPhoneNum(phoneNum)) {
+            throw new RuntimeException("이미 등록된 아이디, 이메일, 또는 연락처입니다.");
         }
 
         checkUserPwdFormat(pwd);
 
         // SMS 인증을 완료했는지 검증
-        String phoneNum = requestDto.getPhoneNum();
         SmsAuth smsAuth = smsAuthRepository.checkSmsAuth(phoneNum);
         if(smsAuth == null) {
             return null; // 인증하지 않았으면 null을 반환.

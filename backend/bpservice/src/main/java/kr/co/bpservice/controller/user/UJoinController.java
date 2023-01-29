@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -24,8 +25,12 @@ public class UJoinController {
         UserResponseDto userResponseDto = authService.join(requestDto);
         if(userResponseDto != null)
             return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
-        else
-            return new ResponseEntity<>(new UserResponseDto(), HttpStatus.BAD_REQUEST);
+        else {
+            Map<String, String> resultMap = new HashMap<>();
+            resultMap.put("result", "fail");
+            resultMap.put("msg", "SMS 인증을 완료해주세요.");
+            return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping("/sms-request")
