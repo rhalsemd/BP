@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { connect } from "react-redux";
 import { userInfo } from "../../modules/signUp";
 
-function SignUpEmail({ emailTyping }) {
-  const [email, setEmail] = useState("");
+function SignUpEmail({ info, setInfo }) {
   // email 정규 표현식
   const emailRegExp =
     /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
@@ -12,9 +11,20 @@ function SignUpEmail({ emailTyping }) {
   // email 입력
   const typeEmail = (e) => {
     const emailInput = e.target.value;
-    setEmail(emailInput);
-    if (emailRegExp.test(emailInput)) {
-      emailTyping(emailInput);
+
+    setInfo((info) => {
+      return { ...info, email: emailInput };
+    });
+
+    // 이메일이 유효한가?
+    if (emailRegExp.test(info.email) || info.email.length === 0) {
+      setInfo((info) => {
+        return { ...info, emailSuccess: true };
+      });
+    } else {
+      setInfo((info) => {
+        return { ...info, emailSuccess: false };
+      });
     }
   };
 
@@ -31,7 +41,7 @@ function SignUpEmail({ emailTyping }) {
       />
       <div>
         {/* 유효성 검사 */}
-        {emailRegExp.test(email) || email.length === 0 ? null : (
+        {emailRegExp.test(info.email) || info.email.length === 0 ? null : (
           <div>
             <span style={{ color: "red" }}>uncomplete : </span>
             <span>{"ex) 이메일@EXAMPLE.COM"}</span>
@@ -48,9 +58,6 @@ const mapStateToProps = ({ signUp }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    emailTyping(email) {
-      dispatch(userInfo.emailTyping(email));
-    },
     sendEmail() {
       dispatch(userInfo.sendEmail());
     },

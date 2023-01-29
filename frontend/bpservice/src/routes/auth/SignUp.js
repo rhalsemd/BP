@@ -14,6 +14,8 @@ import SignUpPhone from "../../components/signup/SignUpPhone";
 import SignUpAddress from "../../components/signup/SignUpAddress";
 import SignUpEmail from "../../components/signup/SignUpEmail";
 import { userInfo } from "../../modules/signUp";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const loginArea = css`
   width: 100%;
@@ -38,10 +40,52 @@ const title = css`
   text-align: center;
 `;
 
-function SignUp({ signUp, sighUpRequirement }) {
+function SignUp({ signUp, sighUpRequirement, signUpFailureReset }) {
+  const navigation = useNavigate();
+
+  useEffect(() => {
+    if (signUp.signUpSuccess) {
+      navigation("/bp/login");
+    } else if (signUp.signUpFailure) {
+      alert("아이디 혹은 이메일이 중복됩니다.");
+      signUpFailureReset();
+    }
+  }, [
+    signUp.signUpSuccess,
+    signUp.signUpFailure,
+    signUpFailureReset,
+    navigation,
+  ]);
+
+  const [info, setInfo] = useState({
+    id: "",
+    idSuccess: false,
+    // 비밀번호 1
+    pwd: "",
+    pwdSuccess: false,
+    // 비밀번호 2
+    check: "",
+    // 비밀번호 1과 2가 같을 때 true
+    isTrue: false,
+    // 전화번호
+    phone: "",
+    phoneSuccess: false,
+    // 인증 여부
+    isCertification: false,
+    // // 인증 번호 일치 여부
+    isCertificationSuccess: false,
+    // 주소 선택 여부
+    addressSuccess: false,
+    // 사용자 이름
+    userName: "",
+    // 사용자 이름 유효한지
+    userNameSuccess: false,
+    email: "",
+    emailSuccess: false,
+  });
+
   const setSignUp = (e) => {
-    e.preventDefault();
-    sighUpRequirement();
+    sighUpRequirement(info);
   };
 
   return (
@@ -57,33 +101,36 @@ function SignUp({ signUp, sighUpRequirement }) {
               <h1>sign up</h1>
 
               {/* 아이디 */}
-              <SignUpId />
+              <SignUpId info={info} setInfo={setInfo} />
 
               {/* 비밀번호 */}
-              <SignUpPwd />
+              <SignUpPwd info={info} setInfo={setInfo} />
 
               {/* 비밀번호 확인 */}
-              <SignUpRePwd />
+              <SignUpRePwd info={info} setInfo={setInfo} />
 
               {/* 이름 */}
-              <SignUpName />
+              <SignUpName info={info} setInfo={setInfo} />
 
               {/* 전화번호 / 인증 번호*/}
-              <SignUpPhone />
+              <SignUpPhone info={info} setInfo={setInfo} />
 
               {/* 주소 */}
-              <SignUpAddress />
+              <SignUpAddress info={info} setInfo={setInfo} />
 
               {/* 이메일 */}
-              <SignUpEmail />
+              <SignUpEmail info={info} setInfo={setInfo} />
 
               {/* 회원가입 버튼 */}
-              {signUp.idConfirm &&
-              signUp.pwdConfirm &&
-              !signUp.rePwd &&
-              signUp.nameConfirm &&
-              signUp.isCertification &&
-              signUp.emailConfirm ? (
+              {info.idSuccess &&
+              info.pwdSuccess &&
+              info.isTrue &&
+              info.phoneSuccess &&
+              info.isCertification &&
+              info.isCertificationSuccess &&
+              info.addressSuccess &&
+              info.userNameSuccess &&
+              info.emailSuccess ? (
                 <button onClick={setSignUp}>회원가입</button>
               ) : null}
             </div>
@@ -106,6 +153,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     sighUpRequirement() {
       dispatch(userInfo.sighUpRequirement());
+    },
+    signUpFailureReset() {
+      dispatch(userInfo.signUpFailureReset());
     },
   };
 };

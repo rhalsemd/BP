@@ -1,8 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
-import { useMemo } from "react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { connect } from "react-redux";
 
 import Footer from "../../components/Footer";
@@ -37,24 +36,24 @@ const title = css`
   text-align: center;
 `;
 
-function ModifyPwd({ setModifyPwd, setNewPwd }) {
-  const [current, setCurrent] = useState("");
-  const [next, setNext] = useState("");
-  const [isNext, setIsNext] = useState(false);
-  const [confirmPwd, setConfirmPwd] = useState("");
-  const [isConfirm, setIsConfirm] = useState(false);
+function ModifyPwd({ setNewPwd }) {
+  const [info, setInfo] = useState({
+    current: "",
+    next: "",
+    isNext: false,
+    isConfirm: false,
+  });
 
   const pwdRegExp = useMemo(() => {
     return /^(?=.*[a-z])(?=.*[0-9])(?=.*[$!@$!%*#^?&]).{8,20}$/;
   }, []);
 
   const requestModify = () => {
-    const info = {
-      current,
-      next,
+    const userInfo = {
+      exPwd: info.current,
+      newPwd: info.next,
     };
-    setModifyPwd(info);
-    setNewPwd();
+    setNewPwd(userInfo);
   };
 
   return (
@@ -70,40 +69,30 @@ function ModifyPwd({ setModifyPwd, setNewPwd }) {
               <h1>비밀번호 변경</h1>
 
               {/* 현재 비밀번호 */}
-              <ModifyPwdCurrent setCurrent={setCurrent} />
+              <ModifyPwdCurrent setInfo={setInfo} info={info} />
 
               {/* 수정 비밀번호 */}
               <ModifyPwdNext
-                setNext={setNext}
+                setInfo={setInfo}
                 pwdRegExp={pwdRegExp}
-                next={next}
-                current={current}
-                setIsNext={setIsNext}
+                info={info}
               />
 
               {/* 수정 비밀번호 유효성 검사 */}
-              <NextPwdCondition
-                pwdRegExp={pwdRegExp}
-                next={next}
-                current={current}
-              />
+              <NextPwdCondition pwdRegExp={pwdRegExp} info={info} />
 
               {/* 수정 비밀번호 확인 */}
-              <ModifyPwdConfirm
-                next={next}
-                setIsConfirm={setIsConfirm}
-                setConfirmPwd={setConfirmPwd}
-              />
+              <ModifyPwdConfirm info={info} setInfo={setInfo} />
 
               {/* 수정 비밀번호 확인 유효성 검사 */}
-              <ConfirmCondition next={next} confirmPwd={confirmPwd} />
+              <ConfirmCondition info={info} />
 
               {/* 수정하기 버튼*/}
-              {current &&
-              isNext &&
-              isConfirm &&
-              next === confirmPwd &&
-              next !== current ? (
+              {info.current &&
+              info.isNext &&
+              info.isConfirm &&
+              info.next === info.confirmPwd &&
+              info.next !== info.current ? (
                 <button onClick={requestModify}>수정하기</button>
               ) : null}
             </div>
@@ -120,11 +109,8 @@ function ModifyPwd({ setModifyPwd, setNewPwd }) {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setModifyPwd(info) {
-      dispatch(modifyPwdInfo.setModifyPwd(info));
-    },
-    setNewPwd() {
-      dispatch(modifyPwdInfo.setNewPwd());
+    setNewPwd(data) {
+      dispatch(modifyPwdInfo.setNewPwd(data));
     },
   };
 };

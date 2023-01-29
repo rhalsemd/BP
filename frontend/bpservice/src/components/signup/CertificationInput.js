@@ -1,0 +1,69 @@
+import { useRef } from "react";
+import { connect } from "react-redux";
+import { userInfo } from "../../modules/signUp";
+import Timer from "./Timer";
+
+function CertificationInput({ info, setInfo, checkCertificationNum, signUp }) {
+  const inputRef = useRef(null);
+
+  // 인증 번호 입력
+  const typeCertificationTyping = (e) => {
+    const certificationInput = e.target.value;
+    setInfo((info) => {
+      const upperInput = certificationInput.toUpperCase();
+      return { ...info, certifiNum: upperInput };
+    });
+  };
+
+  // 인증 번호 확인
+  const getConfirm = () => {
+    if (info.certifiNum === signUp.certifyNum) {
+      setInfo((info) => {
+        return { ...info, isCertificationSuccess: true };
+      });
+      inputRef.current.disabled = true;
+
+      checkCertificationNum({
+        authNum: info.certifiNum,
+        phoneNum: info.phone,
+      });
+    } else {
+      alert("인증번호를 확인해주세요.");
+    }
+  };
+
+  return (
+    <>
+      {/* 인증 번호 입력 */}
+      <input
+        type="text"
+        id="certifiNumber"
+        required
+        placeholder="인증번호 입력"
+        autoComplete="off"
+        onChange={typeCertificationTyping}
+        ref={inputRef}
+      />
+      {info.isCertification ? (
+        <span>
+          <Timer setInfo={setInfo} inputRef={inputRef} info={info} />
+          <button onClick={getConfirm}>확인</button>
+        </span>
+      ) : null}
+    </>
+  );
+}
+
+const mapStateToProps = ({ signUp }) => {
+  return { signUp };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    checkCertificationNum(num) {
+      dispatch(userInfo.checkCertificationNum(num));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CertificationInput);

@@ -19,7 +19,11 @@ import MyPage from "../routes/auth/MyPage";
 import ModifyUserInfo from "../routes/auth/ModifyUserInfo";
 import ModifyPwd from "../routes/auth/ModifyPwd";
 import SearchPwd from "../routes/auth/SearchPwd";
+<<<<<<< HEAD
 import Payment from "../routes/auth/Payment";
+=======
+import SearchChangePwd from "../routes/auth/SearchChangePwd";
+>>>>>>> feature/FE/mypage-test
 
 export const GlobalStyle = css`
   body {
@@ -38,7 +42,12 @@ function App() {
         <Route path="/bp/terms" element={<UserToU />}></Route>
         <Route path="/bp/complete" element={<CompletePage />}></Route>
         <Route path="/bp/search/id" element={<SearchId />}></Route>
+        <Route path="/bp/search/id/result" element={<SearchId />}></Route>
         <Route path="/bp/search/pwd" element={<SearchPwd />}></Route>
+        <Route
+          path="/bp/search/change/pwd"
+          element={<SearchChangePwd />}
+        ></Route>
         <Route path="/bp/map" element={<KakaoMap />}></Route>
         <Route path="/bp/mypage/:id" element={<MyPage />}></Route>
         <Route path="/bp/modify/user/:id" element={<ModifyUserInfo />}></Route>

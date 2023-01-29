@@ -1,12 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import Footer from "../../components/Footer";
 import Nav from "../../components/Nav";
 import FindPwdEmailComponent from "../../components/userFindPwd/FindPwdEmailComponent";
 import FindPwdIdComponent from "../../components/userFindPwd/FindPwdIdComponent";
-import FindPwdNameComponent from "../../components/userFindPwd/FindPwdNameComponent";
+import FindPwdUsernameComponent from "../../components/userFindPwd/FindPwdUsernameComponent";
+import InputCertification from "../../components/userFindPwd/InputCertification";
 import { findPwdInfo } from "../../modules/findPwd";
 
 const searchIdArea = css`
@@ -32,11 +33,15 @@ const title = css`
   text-align: center;
 `;
 
-function SearchPwd({ setFindPwdInfo }) {
+function SearchPwd({ findPwdReducer, setFindPwdInfo, setErrorReset }) {
   const [info, setInfo] = useState({});
 
   const findPwd = () => {
-    if (info.id && info.email && info.userName) {
+    if (info.id && info.email) {
+      setInfo((info) => {
+        return { ...info, isSendEmail: true };
+      });
+
       setFindPwdInfo({
         id: info.id,
         email: info.email,
@@ -46,6 +51,17 @@ function SearchPwd({ setFindPwdInfo }) {
       alert("내용을 입력해주세요.");
     }
   };
+
+  // 회원 정보가 잘못되었을 때
+  useEffect(() => {
+    if (findPwdReducer.firstError) {
+      alert("사용자 정보가 잘못되었습니다.");
+      setInfo((info) => {
+        return { ...info, isSendEmail: false };
+      });
+      setErrorReset();
+    }
+  }, [findPwdReducer.firstError, setErrorReset]);
 
   return (
     <div>
@@ -60,18 +76,25 @@ function SearchPwd({ setFindPwdInfo }) {
               <h1>비밀번호 찾기</h1>
 
               {/* 아이디 */}
-              <FindPwdIdComponent setInfo={setInfo} />
+              <FindPwdIdComponent info={info} setInfo={setInfo} />
 
-              {/* 이름 */}
-              <FindPwdNameComponent setInfo={setInfo} />
+              {/* 유저 이름 */}
+              <FindPwdUsernameComponent info={info} setInfo={setInfo} />
 
               {/* 이메일 */}
-              <FindPwdEmailComponent setInfo={setInfo} />
+              <FindPwdEmailComponent info={info} setInfo={setInfo} />
 
               {/* 비밀번호 찾기 버튼 */}
               <div>
-                <button onClick={findPwd}>비밀번호 찾기</button>
+                <button onClick={findPwd}>인증번호 받기</button>
               </div>
+
+              {/* 인증번호 입력 */}
+              {info.isSendEmail ? (
+                <>
+                  <InputCertification info={info} setInfo={setInfo} />
+                </>
+              ) : null}
             </div>
           </div>
         </div>
@@ -84,12 +107,19 @@ function SearchPwd({ setFindPwdInfo }) {
   );
 }
 
+const mapStateToProps = ({ findPwdReducer }) => {
+  return { findPwdReducer };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     setFindPwdInfo(info) {
       dispatch(findPwdInfo.setFindPwdInfo(info));
     },
+    setErrorReset() {
+      dispatch(findPwdInfo.setErrorReset());
+    },
   };
 };
 
-export default connect(null, mapDispatchToProps)(SearchPwd);
+export default connect(mapStateToProps, mapDispatchToProps)(SearchPwd);

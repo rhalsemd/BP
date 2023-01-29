@@ -1,22 +1,137 @@
-function ModifyUserAddress({ setInfo }) {
-  const onChange = (e) => {
-    const inputValue = e.target.value;
-    setInfo((info) => {
-      return { ...info, address: inputValue };
-    });
+import { useEffect, useRef } from "react";
+
+import { connect } from "react-redux";
+import { modifyUserInfo } from "../../modules/modifyUserInfo";
+
+function ModifyUserAddress({
+  info,
+  setInfo,
+  modifyUserInfoReducer,
+  getSidoData,
+  getGugun,
+  getDong,
+}) {
+  const gugunRef = useRef(null);
+  const dongRef = useRef(null);
+
+  useEffect(() => {
+    getSidoData();
+  }, [getSidoData]);
+
+  const sidoOnClick = (e) => {
+    const value = e.target.value;
+
+    if (value !== "") {
+      setInfo((info) => {
+        return { ...info, sido: value };
+      });
+      getGugun(value);
+      gugunRef.current.value = "";
+      dongRef.current.value = "";
+    }
+  };
+
+  const gugunOnClick = (e) => {
+    const value = e.target.value;
+    if (value !== "") {
+      setInfo((info) => {
+        return { ...info, sigugun: value };
+      });
+      getDong({ sido: info.sido, gugun: value });
+      dongRef.current.value = "";
+    }
+  };
+
+  const DongOnClick = (e) => {
+    const value = e.target.value;
+
+    if (value !== "") {
+      setInfo((info) => {
+        return { ...info, dong: value };
+      });
+
+      // 주소를 모두 선택했는가?
+      if (info.sido && info.gugun && info.dong) {
+        setInfo((info) => {
+          return { ...info, addressSuccess: true };
+        });
+      } else {
+        setInfo((info) => {
+          return { ...info, addressSuccess: false };
+        });
+      }
+    }
   };
 
   return (
     <div>
-      <label htmlFor="userAddress">address : </label>
-      <input
-        type="text"
-        id="userAddress"
-        placeholder="주소"
-        onChange={onChange}
-      />
+      <span>주소</span>
+
+      {/* 시 */}
+      <select defaultValue="sido" onClick={sidoOnClick}>
+        <option key="defalt-value-1" value="">
+          --
+        </option>
+        {modifyUserInfoReducer.sido.map((city, index) => {
+          return (
+            <option key={index} value={city}>
+              {city}
+            </option>
+          );
+        })}
+      </select>
+
+      {/* 구 */}
+      {modifyUserInfoReducer.sido.length !== 0 ? (
+        <select defaultValue="gugun" onClick={gugunOnClick} ref={gugunRef}>
+          <option key="defalt-value-2" value="">
+            --
+          </option>
+          {modifyUserInfoReducer.gugun.map((gugun, index) => {
+            return (
+              <option key={index} value={gugun}>
+                {gugun}
+              </option>
+            );
+          })}
+        </select>
+      ) : null}
+
+      {/* 동 */}
+      {modifyUserInfoReducer.gugun.length !== 0 ? (
+        <select defaultValue="dong" onClick={DongOnClick} ref={dongRef}>
+          <option key="defalt-value-3" value="">
+            --
+          </option>
+          {modifyUserInfoReducer.dong.map((dong, index) => {
+            return (
+              <option key={index} value={dong}>
+                {dong}
+              </option>
+            );
+          })}
+        </select>
+      ) : null}
     </div>
   );
 }
 
-export default ModifyUserAddress;
+const mapStateToProps = ({ modifyUserInfoReducer }) => {
+  return { modifyUserInfoReducer };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getSidoData() {
+      dispatch(modifyUserInfo.getSidoData());
+    },
+    getGugun(data) {
+      dispatch(modifyUserInfo.getGugun(data));
+    },
+    getDong(data) {
+      dispatch(modifyUserInfo.getDong(data));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ModifyUserAddress);

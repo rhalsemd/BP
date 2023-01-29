@@ -1,58 +1,59 @@
-import React, { useState } from "react";
-
-import Timer from "../../components/signup/Timer";
+import React from "react";
 
 import { connect } from "react-redux";
 import { userInfo } from "../../modules/signUp";
 import { useRef } from "react";
+import CertificationInput from "./CertificationInput";
 
-function SignUpPhone({
-  signUp,
-  phoneTyping,
-  certificationTyping,
-  isCertificationTyping,
-  getCertification,
-}) {
-  // 전화번호
-  const [phone, setPhone] = useState("");
+function SignUpPhone({ info, setInfo, getCertification, certificationTyping }) {
   const phoneRegExp = /^(\d{2,3})(\d{3,4})(\d{4})$/;
 
   const inputRef = useRef(null);
 
-  // 인증번호
-  const [certificationNumber, setCertificationNumber] = useState("");
-
   // 전화번호 입력
   const typePhone = (e) => {
     const phoneInput = e.target.value;
-    setPhone(phoneInput);
-    if (phoneRegExp.test(phone)) {
-      phoneTyping(phoneInput);
+
+    setInfo((info) => {
+      return { ...info, phone: phoneInput };
+    });
+
+    // 전화번호가 유효한가?
+    if (phoneRegExp.test(info.phone) || info.phone.length === 0) {
+      setInfo((info) => {
+        return { ...info, phoneSuccess: true };
+      });
+    } else {
+      setInfo((info) => {
+        return { ...info, phoneSuccess: false };
+      });
     }
   };
 
   // 인증 번호 받기
   const getCertificationNumber = () => {
-    if (phoneRegExp.test(phone) || phone.length === 0) {
-      isCertificationTyping(true);
+    if (
+      phoneRegExp.test(info.phone) &&
+      info.phone.length !== 0 &&
+      !info.isCertification
+    ) {
+      setInfo((info) => {
+        return { ...info, isCertification: true };
+      });
       inputRef.current.disabled = true;
 
-      getCertification();
+      getCertification(info.phone);
     } else {
       alert("전화번호를 확인해주세요.");
     }
   };
 
-  // 인증 번호 입력
-  const typeCertificationTyping = (e) => {
-    const certificationInput = e.target.value;
-    setCertificationNumber(certificationInput);
-    certificationTyping(certificationInput);
-  };
-
-  // 인증 번호 확인
-  const getConfirm = () => {
-    console.log("인증번호 확인");
+  // 전화번호 수정
+  const modifyPhone = () => {
+    setInfo((info) => {
+      return { ...info, isCertification: false };
+    });
+    inputRef.current.disabled = false;
   };
 
   return (
@@ -71,27 +72,19 @@ function SignUpPhone({
       {/* 인증 받기 버튼*/}
       <button onClick={getCertificationNumber}>인증 받기</button>
 
+      {/* 수정 버튼 */}
+      <button onClick={modifyPhone}>수정</button>
+
       {/* 유효성 검사 */}
-      {phoneRegExp.test(phone) || phone.length === 0 ? null : (
+      {phoneRegExp.test(info.phone) || info.phone.length === 0 ? null : (
         <div>
           <span style={{ color: "red" }}>uncomplete : </span>
           <span>{"ex) 01012345678"}</span>
         </div>
       )}
 
-      {/* 인증 번호 입력 */}
-      <input
-        type="number"
-        id="certifiNumber"
-        required
-        placeholder="인증번호 입력"
-        onChange={typeCertificationTyping}
-      />
-      {signUp.isCertification ? (
-        <span>
-          <Timer />
-          <button onClick={getConfirm}>확인</button>
-        </span>
+      {info.isCertification ? (
+        <CertificationInput info={info} setInfo={setInfo} />
       ) : null}
     </div>
   );
@@ -109,11 +102,8 @@ const mapDispatchToProps = (dispatch) => {
     certificationTyping(certification) {
       dispatch(userInfo.certificationTyping(certification));
     },
-    isCertificationTyping(isCertification) {
-      dispatch(userInfo.isCertificationTyping(isCertification));
-    },
-    getCertification() {
-      dispatch(userInfo.getCertification());
+    getCertification(phone) {
+      dispatch(userInfo.getCertification(phone));
     },
   };
 };
