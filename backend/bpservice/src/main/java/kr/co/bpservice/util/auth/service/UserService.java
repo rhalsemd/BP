@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -80,6 +81,8 @@ public class UserService {
         // ActiveState를 탈퇴 상태로 표시
         User user = userRepository.findById(SecurityUtil.getCurrentUserId()).orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다"));
         user.setActiveState(false);
+        // 탈퇴한 시간정보 등록
+        user.setExpDt(LocalDateTime.now());
         userRepository.save(user);
         // 로그아웃 처리
         authService.logout(httpMessage);
