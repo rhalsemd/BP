@@ -5,6 +5,8 @@ import axios from "axios";
 const GET_CERTIFYCATION = "signUp/GET_CERTIFYCATION";
 const SET_CERTIFYCATION = "signUp/SET_CERTIFYCATION";
 const SUCCESS_CERTIFYCATION = "signUp/SUCCESS_CERTIFYCATION";
+const ERROR_CERTIFYCATION = "signUp/ERROR_CERTIFYCATION";
+const ERROR_CERTIFYCATION_RESET = "signUp/ERROR_CERTIFYCATION_RESET";
 
 const SIGN_UP_REQUIREMENT = "signUp/SIGN_UP_REQUIREMENT";
 const SIGN_UP_SUCCESS = "signUp/SIGN_UP_SUCCESS";
@@ -32,8 +34,12 @@ const checkCertificationNum = createAction(
   (num) => num
 );
 const signUpFailureReset = createAction(SIGN_UP_FAILURE_RESET, () => undefined);
+const errorCertifycationReset = createAction(
+  ERROR_CERTIFYCATION_RESET,
+  () => undefined
+);
 
-const API = `http://192.168.100.80:8080`;
+const API = `http://192.168.100.79:8080`;
 
 // 인증번호 요청 saga
 function* getCertifi(data) {
@@ -51,7 +57,7 @@ function* getCertifi(data) {
     });
     yield put({ type: SET_CERTIFYCATION, success: true });
   } catch (e) {
-    console.log(e);
+    yield put({ type: ERROR_CERTIFYCATION, error: true });
   }
 }
 
@@ -197,6 +203,12 @@ const signUpReducer = handleActions(
     [SET_CERTIFYCATION]: (state, action) => {
       return { ...state, isCertifyNum: action.success };
     },
+    [ERROR_CERTIFYCATION]: (state, action) => {
+      return { ...state, isCertifyNumError: action.error };
+    },
+    [ERROR_CERTIFYCATION_RESET]: (state, action) => {
+      return { ...state, isCertifyNumError: false };
+    },
     [SUCCESS_CERTIFYCATION]: (state, action) => {
       return { ...state, successCertifycation: action.success };
     },
@@ -230,6 +242,7 @@ export const userInfo = {
   getDong,
   checkCertificationNum,
   signUpFailureReset,
+  errorCertifycationReset,
 };
 
 export default signUpReducer;

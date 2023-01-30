@@ -1,12 +1,17 @@
+import { useRef } from "react";
 import { connect } from "react-redux";
 import { findIdInfo } from "../../modules/findId";
+import Timer from "./Timer";
 
 function CertificationNumInput({
   findIdReducer,
   info,
   setInfo,
   checkCertificationNum,
+  setFindIdInfoReset,
 }) {
+  const inputRef = useRef(null);
+
   const onChange = (e) => {
     const inputValue = e.target.value;
     setInfo((info) => {
@@ -33,8 +38,18 @@ function CertificationNumInput({
 
   return (
     <div>
-      <input type="text" id="certification-number" onChange={onChange} />
+      <input
+        type="text"
+        id="certification-number"
+        onChange={onChange}
+        ref={inputRef}
+      />
       <button onClick={onClick}>확인</button>
+      <Timer
+        setInfo={setInfo}
+        inputRef={inputRef}
+        setFindIdInfoReset={setFindIdInfoReset}
+      />
     </div>
   );
 }
