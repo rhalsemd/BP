@@ -14,7 +14,7 @@ const setLoginInfo = createAction(SET_LOGIN_INFO, (data) => data);
 const getUserInfo = createAction(GET_USER_INFO, () => undefined);
 const errorReset = createAction(ERROR_RESET, () => undefined);
 
-const API = `http://192.168.100.80:8080`;
+const API = `http://192.168.100.79:8080`;
 
 // 로그인 요청
 function* setLoginFnc(data) {
@@ -62,9 +62,7 @@ function* getUserInfoFnc() {
     if (get.status === 200) {
       yield put({ type: SET_USER_INFO, payload: get.data });
     }
-  } catch (e) {
-    console.error("회원 정보 가져오는데 에러", e);
-  }
+  } catch (e) {}
 }
 
 export function* loginSaga() {

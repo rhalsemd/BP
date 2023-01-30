@@ -93,8 +93,11 @@ function SeachId({ setFindIdInfo, infoErrorReset, setFindIdInfoReset }) {
 
               {/* 아이디 찾기 버튼 */}
               <div>
-                <button onClick={findIdFnc}>아이디 찾기</button>
-                {info.isSend ? <button onClick={modify}>수정</button> : null}
+                {info.isSend ? (
+                  <button onClick={modify}>수정</button>
+                ) : (
+                  <button onClick={findIdFnc}>아이디 찾기</button>
+                )}
               </div>
 
               {/* 인증번호 입력 */}

@@ -80,9 +80,7 @@ function* checkCertifiNum(data) {
         payload: post.data.userId,
       });
     }
-  } catch (e) {
-    console.error("일치 확인 에러", e);
-  }
+  } catch (e) {}
 }
 
 export function* findIdSaga() {

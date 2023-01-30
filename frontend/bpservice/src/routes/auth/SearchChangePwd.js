@@ -40,12 +40,6 @@ function SearchChangePwd({ setNewPwd }) {
   const { pwdSuccess } = useSelector(({ findPwdReducer }) => findPwdReducer);
   const navigation = useNavigate();
 
-  const onClick = () => {
-    if (info.pwd && info.check && info.pwd === info.check) {
-      setNewPwd({ pwd: info.check });
-    }
-  };
-
   useEffect(() => {
     if (pwdSuccess) {
       navigation("/bp/login");
@@ -72,10 +66,6 @@ function SearchChangePwd({ setNewPwd }) {
 
               {/* 비밀번호 확인 */}
               <CheckPwdInput info={info} setInfo={setInfo} />
-
-              {info.pwd === info.check && info.pwd && info.check ? (
-                <button onClick={onClick}>비밀번호 변경</button>
-              ) : null}
             </div>
           </div>
         </div>

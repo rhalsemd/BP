@@ -5,6 +5,9 @@ import { call, put, select, takeLatest } from "redux-saga/effects";
 const SET_FIND_PWD_INFO = "findPwd/SET_FIND_PWD_INFO";
 const SET_CERTIFICATION_NUM = "findPwd/SET_CERTIFICATION_NUM";
 const SET_FIRST_SUCCESS_CERTIFICATION = "findPwd/SET_SUCCESS_CERTIFICATION";
+const SET_FIRST_SUCCESS_CERTIFICATION_RESET =
+  "findPwd/SET_FIRST_SUCCESS_CERTIFICATION_RESET";
+
 const SET_SECOND_SUCCESS_CERTIFICATION =
   "findPwd/SET_SECOND_SUCCESS_CERTIFICATION";
 const SET_ERROR_CERTIFICATION = "findPwd/SET_ERROR_CERTIFICATION";
@@ -16,6 +19,10 @@ const SUCCESS_PWD_CHANGE = "findPwd/SUCCESS_PWD_CHANGE";
 
 const setFindPwdInfo = createAction(SET_FIND_PWD_INFO, (info) => info);
 const setCertificationNum = createAction(SET_CERTIFICATION_NUM, (data) => data);
+const setFirstSuccessCertificationReset = createAction(
+  SET_FIRST_SUCCESS_CERTIFICATION_RESET,
+  () => undefined
+);
 const setErrorReset = createAction(SET_ERROR_RESET, () => undefined);
 const setNewPwd = createAction(SET_NEW_PWD, (data) => data);
 const setSecondErrorReset = createAction(
@@ -44,8 +51,6 @@ function* findPwdFnc(data) {
         },
       });
     });
-
-    console.log(post, "1");
 
     if (post.status === 200) {
       yield put({
@@ -111,9 +116,7 @@ function* newPwdRequestFnc(data) {
     });
 
     yield put({ type: SUCCESS_PWD_CHANGE, pwdSuccess: true });
-  } catch (e) {
-    console.log("새 비밀번호를 저장", e);
-  }
+  } catch (e) {}
 }
 
 export function* findPwdSaga() {
@@ -127,12 +130,14 @@ const initialState = { secondSuccess: false };
 const findPwdReducer = handleActions(
   {
     [SET_FIRST_SUCCESS_CERTIFICATION]: (state, action) => {
-      console.log(action.payload, "2");
       return {
         ...state,
         firstSuccess: action.success,
         userInfo: action.payload,
       };
+    },
+    [SET_FIRST_SUCCESS_CERTIFICATION_RESET]: (state, action) => {
+      return { ...state, firstSuccess: false, userInfo: "" };
     },
     [SET_SECOND_SUCCESS_CERTIFICATION]: (state, action) => {
       return { ...state, secondSuccess: action.success };
@@ -159,6 +164,7 @@ const findPwdReducer = handleActions(
 export const findPwdInfo = {
   setFindPwdInfo,
   setCertificationNum,
+  setFirstSuccessCertificationReset,
   setErrorReset,
   setNewPwd,
   setSecondErrorReset,

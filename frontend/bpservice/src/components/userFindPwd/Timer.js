@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
 
-export default function Timer({ setInfo, inputRef, setFindIdInfoReset }) {
+export default function Timer({
+  setInfo,
+  inputRef,
+  setFirstSuccessCertificationReset,
+}) {
   // 타이머
   const [minutes, setMinutes] = useState(5);
   const [seconds, setSeconds] = useState(0);
@@ -23,10 +27,10 @@ export default function Timer({ setInfo, inputRef, setFindIdInfoReset }) {
       setMinutes(5);
       setSeconds(0);
       setInfo((info) => {
-        return { ...info, isSend: false };
+        return { ...info, isSendEmail: false };
       });
       inputRef.current.value = "";
-      setFindIdInfoReset();
+      setFirstSuccessCertificationReset();
     }
     return () => clearInterval(countdown);
   }, [
@@ -35,8 +39,8 @@ export default function Timer({ setInfo, inputRef, setFindIdInfoReset }) {
     setMinutes,
     setSeconds,
     inputRef,
-    setFindIdInfoReset,
     setInfo,
+    setFirstSuccessCertificationReset,
   ]);
 
   return (

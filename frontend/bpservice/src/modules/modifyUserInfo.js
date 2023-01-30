@@ -34,9 +34,7 @@ function* getSidoFnc() {
     if (get.status === 200) {
       yield put({ type: SET_SIDO_DATA, payload: get.data });
     }
-  } catch (e) {
-    console.log("시도가 안되나?", e);
-  }
+  } catch (e) {}
 }
 
 // 구군 요청하는 함수
@@ -58,9 +56,7 @@ function* getGugunFnc(data) {
     if (get.status === 200) {
       yield put({ type: SET_GUGUN_DATA, payload: get.data });
     }
-  } catch (e) {
-    console.error("구군이 안되나?", e);
-  }
+  } catch (e) {}
 }
 
 // 동 요청하는 함수
@@ -84,9 +80,7 @@ function* getDongFnc(data) {
     if (get.status === 200) {
       yield put({ type: SET_DONG_DATA, payload: get.data });
     }
-  } catch (e) {
-    console.error("동이 안되나?", e);
-  }
+  } catch (e) {}
 }
 
 // 수정 요청
@@ -111,10 +105,7 @@ function* modifyUserInfoFnc(data) {
         },
       });
     });
-    console.log(patch);
-  } catch (e) {
-    console.log(e);
-  }
+  } catch (e) {}
 }
 
 export function* modifyUserInfoSaga() {

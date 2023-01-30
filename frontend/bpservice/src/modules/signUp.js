@@ -82,15 +82,12 @@ function* checkCertifiNumFnc(data) {
     if (post.status === 200) {
       yield put({ type: SUCCESS_CERTIFYCATION, success: true });
     }
-  } catch (e) {
-    console.error("인증번호 확인 에러", e);
-  }
+  } catch (e) {}
 }
 
 // 회원가입 요청 Saga
 function* getSignUp(data) {
   const userInfoData = data.payload;
-  console.log(userInfoData, "여기 아이디 있나?");
   try {
     const post = yield call(() => {
       axios({
@@ -114,7 +111,6 @@ function* getSignUp(data) {
 
     yield put({ type: SIGN_UP_SUCCESS, success: true });
   } catch (e) {
-    console.error("회원가입 실패", e);
     yield put({ type: SIGN_UP_FAILURE, error: true });
   }
 }
@@ -134,9 +130,7 @@ function* getSidoFnc() {
     if (get.status === 200) {
       yield put({ type: SET_SIDO_DATA, payload: get.data });
     }
-  } catch (e) {
-    console.log("시도가 안되나?", e);
-  }
+  } catch (e) {}
 }
 
 // 구군 요청하는 함수
@@ -157,9 +151,7 @@ function* getGugunFnc(data) {
     if (get.status === 200) {
       yield put({ type: SET_GUGUN_DATA, payload: get.data });
     }
-  } catch (e) {
-    console.error("구군이 안되나?", e);
-  }
+  } catch (e) {}
 }
 
 // 동 요청하는 함수
@@ -182,9 +174,7 @@ function* getDongFnc(data) {
     if (get.status === 200) {
       yield put({ type: SET_DONG_DATA, payload: get.data });
     }
-  } catch (e) {
-    console.error("동이 안되나?", e);
-  }
+  } catch (e) {}
 }
 
 export function* certifiSaga() {
