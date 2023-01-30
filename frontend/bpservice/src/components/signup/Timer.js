@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 export default function Timer({ setInfo, inputRef, info }) {
   // 타이머
-  const [minutes, setMinutes] = useState(1);
+  const [minutes, setMinutes] = useState(5);
   const [seconds, setSeconds] = useState(0);
 
   useEffect(() => {

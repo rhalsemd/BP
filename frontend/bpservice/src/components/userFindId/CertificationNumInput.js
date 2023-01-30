@@ -24,7 +24,7 @@ function CertificationNumInput({
       checkCertificationNum({
         email: info.email,
         userName: info.userName,
-        authNum: info.info.certifycationNum,
+        authNum: info.certifycationNum,
       });
     } else {
       alert("인증 번호를 확인해주세요.");

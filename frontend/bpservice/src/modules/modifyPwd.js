@@ -6,7 +6,7 @@ const SET_NEW_PWD = "modifyPwd/SET_NEW_PWD";
 
 const setNewPwd = createAction(SET_NEW_PWD, (data) => data);
 
-const API = `http://localhost:8080`;
+const API = `http://192.168.100.79:8080`;
 
 function* modifyPwdFnc(data) {
   const pwdInfo = data.payload;
@@ -22,6 +22,7 @@ function* modifyPwdFnc(data) {
         },
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("login-token")}`,
         },
       });
     });

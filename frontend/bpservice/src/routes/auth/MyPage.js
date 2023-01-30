@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import Footer from "../../components/Footer";
 import Nav from "../../components/Nav";
-import { deleteUser, getUserLog } from "../../modules/mypage";
+import { deleteUser, getUserLog, logOut } from "../../modules/mypage";
 
 const myPageArea = css`
   width: 100%;
@@ -48,15 +48,19 @@ function MyPage() {
   console.log(log);
 
   const goToModifyInfo = () => {
-    navigation(`/bp/modify/user/${id}`);
+    navigation(`/bp/modify/user`);
   };
 
   const goToModifyPwd = () => {
-    navigation(`/bp/modify/pwd/${id}`);
+    navigation(`/bp/modify/pwd`);
   };
 
   const goToDeleteUser = () => {
     dispatch(deleteUser());
+  };
+
+  const goToLogOut = () => {
+    dispatch(logOut());
   };
 
   useEffect(() => {
@@ -95,6 +99,11 @@ function MyPage() {
               {/* 회원 탈퇴 */}
               <div>
                 <button onClick={goToDeleteUser}>회원 탈퇴</button>
+              </div>
+
+              {/* 로그아웃 */}
+              <div>
+                <button onClick={goToLogOut}>로그아웃</button>
               </div>
             </div>
           </div>

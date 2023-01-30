@@ -13,7 +13,7 @@ const checkCertificationNum = createAction(
   CHECK_CERTIFICATION_NUM,
   (info) => info
 );
-const API = `http://localhost:8080`;
+const API = `http://192.168.100.79:8080`;
 
 // 인증번호 요청
 function* getFindIdFnc(data) {
@@ -60,8 +60,15 @@ function* checkCertifiNum(data) {
         },
       });
     });
+
+    console.log("인증 성공", post.data.userId);
+
     if (post.status === 200) {
-      yield put({ type: CHECK_SUCCESS, success: true, payload: post.data });
+      yield put({
+        type: CHECK_SUCCESS,
+        success: true,
+        payload: post.data.userId,
+      });
     }
   } catch (e) {
     console.error("일치 확인 에러", e);
@@ -81,6 +88,7 @@ const findIdReducer = handleActions(
       return { ...state, isCertifiNum: action.success };
     },
     [CHECK_SUCCESS]: (state, action) => {
+      console.log(action.payload);
       return { ...state, success: action.success, id: action.payload };
     },
   },

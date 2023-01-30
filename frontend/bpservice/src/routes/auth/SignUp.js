@@ -87,7 +87,7 @@ function SignUp({ signUp, sighUpRequirement, signUpFailureReset }) {
   const setSignUp = (e) => {
     sighUpRequirement(info);
   };
-  console.log(info);
+
   return (
     <div>
       <header>
@@ -151,8 +151,8 @@ const mapStateToProps = ({ signUp }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    sighUpRequirement() {
-      dispatch(userInfo.sighUpRequirement());
+    sighUpRequirement(data) {
+      dispatch(userInfo.sighUpRequirement(data));
     },
     signUpFailureReset() {
       dispatch(userInfo.signUpFailureReset());

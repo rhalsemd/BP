@@ -5,12 +5,14 @@ import { call, put, select, takeLatest } from "redux-saga/effects";
 const SET_FIND_PWD_INFO = "findPwd/SET_FIND_PWD_INFO";
 const SET_CERTIFICATION_NUM = "findPwd/SET_CERTIFICATION_NUM";
 const SET_FIRST_SUCCESS_CERTIFICATION = "findPwd/SET_SUCCESS_CERTIFICATION";
-const SET_SECOND_SUCCESS_CERTIFICATION = "findPwd/SET_SUCCESS_CERTIFICATION";
+const SET_SECOND_SUCCESS_CERTIFICATION =
+  "findPwd/SET_SECOND_SUCCESS_CERTIFICATION";
 const SET_ERROR_CERTIFICATION = "findPwd/SET_ERROR_CERTIFICATION";
 const SET_ERROR_RESET = "findPwd/SET_ERROR_RESET";
 const SET_NEW_PWD = "findPwd/SET_NEW_PWD";
 const SET_SECOND_ERROR = "findPwd/SET_SECOND_ERROR";
 const SET_SECOND_ERROR_RESET = "findPwd/SET_SECOND_ERROR_RESET";
+const SUCCESS_PWD_CHANGE = "findPwd/SUCCESS_PWD_CHANGE";
 
 const setFindPwdInfo = createAction(SET_FIND_PWD_INFO, (info) => info);
 const setCertificationNum = createAction(SET_CERTIFICATION_NUM, (data) => data);
@@ -21,7 +23,7 @@ const setSecondErrorReset = createAction(
   () => undefined
 );
 
-const API = `http://localhost:8080`;
+const API = `http://192.168.100.79:8080`;
 
 //인증 번호 요청하는 Saga
 function* findPwdFnc(data) {
@@ -42,10 +44,14 @@ function* findPwdFnc(data) {
         },
       });
     });
+
+    console.log(post, "1");
+
     if (post.status === 200) {
       yield put({
         type: SET_FIRST_SUCCESS_CERTIFICATION,
         success: true,
+        payload: userInfo,
       });
     }
   } catch (e) {
@@ -83,10 +89,9 @@ function* checkCertifiNum(data) {
 
 // 새 비밀번호 저장 요청하는 Saga
 function* newPwdRequestFnc(data) {
-  const userInfo = data.payload;
-  const { userInfo: USER_INFO } = yield select(
-    (state) => state.userLoginReducer
-  );
+  const info = data.payload;
+
+  const { userInfo } = yield select(({ findPwdReducer }) => findPwdReducer);
 
   try {
     const patch = yield call(() => {
@@ -94,10 +99,10 @@ function* newPwdRequestFnc(data) {
         method: "patch",
         url: `${API}/api/user/find/pwd`,
         data: {
-          userId: userInfo.email,
-          userName: USER_INFO.userName,
-          email: USER_INFO.email,
-          pwd: userInfo.pwd,
+          userId: userInfo.id,
+          userName: userInfo.userName,
+          email: userInfo.email,
+          pwd: info.pwd,
         },
         headers: {
           "Content-Type": "application/json",
@@ -105,7 +110,7 @@ function* newPwdRequestFnc(data) {
       });
     });
 
-    console.log("변경이 성공한 뒤 로직", patch);
+    yield put({ type: SUCCESS_PWD_CHANGE, pwdSuccess: true });
   } catch (e) {
     console.log("새 비밀번호를 저장", e);
   }
@@ -122,7 +127,12 @@ const initialState = { secondSuccess: false };
 const findPwdReducer = handleActions(
   {
     [SET_FIRST_SUCCESS_CERTIFICATION]: (state, action) => {
-      return { ...state, firstSuccess: action.success };
+      console.log(action.payload, "2");
+      return {
+        ...state,
+        firstSuccess: action.success,
+        userInfo: action.payload,
+      };
     },
     [SET_SECOND_SUCCESS_CERTIFICATION]: (state, action) => {
       return { ...state, secondSuccess: action.success };
@@ -138,6 +148,9 @@ const findPwdReducer = handleActions(
     },
     [SET_SECOND_ERROR_RESET]: (state, action) => {
       return { ...state, secondError: false };
+    },
+    [SUCCESS_PWD_CHANGE]: (state, action) => {
+      return { ...state, pwdSuccess: action.pwdSuccess };
     },
   },
   initialState

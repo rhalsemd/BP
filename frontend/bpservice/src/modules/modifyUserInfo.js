@@ -1,6 +1,6 @@
 import axios from "axios";
 import { createAction, handleActions } from "redux-actions";
-import { call, put, takeLatest } from "redux-saga/effects";
+import { call, put, select, takeLatest } from "redux-saga/effects";
 
 const GET_SIDO_DATA = "signUp/GET_SIDO_DATA";
 const SET_SIDO_DATA = "signUp/SET_SIDO_DATA";
@@ -91,13 +91,14 @@ function* getDongFnc(data) {
 
 // 수정 요청
 function* modifyUserInfoFnc(data) {
-  const API = `http://localhost:8080/api/auth/user`;
+  const API = `http://192.168.100.79:8080/api/auth/user`;
   const info = data.payload;
+  const { token } = yield select(({ userLogin }) => userLogin);
 
   try {
-    const put = yield call(() => {
+    const patch = yield call(() => {
       return axios({
-        method: "put",
+        method: "patch",
         url: API,
         data: {
           sido: info.sido,
@@ -106,10 +107,11 @@ function* modifyUserInfoFnc(data) {
         },
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("login-token")}`,
         },
       });
     });
-    console.log(put);
+    console.log(patch);
   } catch (e) {
     console.log(e);
   }

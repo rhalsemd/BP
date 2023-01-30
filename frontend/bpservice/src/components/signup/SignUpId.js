@@ -4,7 +4,7 @@ import { userInfo } from "../../modules/signUp";
 
 function SignUpId({ info, setInfo }) {
   // id 정규 표현식
-  const idRegExp = /^[a-z]+[a-z0-9]{8,20}$/g;
+  const idRegExp = /^[a-z][0-9a-z]{6,19}$/g;
 
   // 아이디 입력
   const typeId = (e) => {
@@ -13,8 +13,10 @@ function SignUpId({ info, setInfo }) {
       return { ...info, id: idInput };
     });
 
+    idRegExp.test(idInput);
+
     // 아이디가 유효한가?
-    if (idRegExp.test(idInput) && info.id.length >= 8 && info.id.length <= 20) {
+    if (idRegExp.test(idInput) && idInput.length >= 8 && idInput.length <= 20) {
       setInfo((info) => {
         return { ...info, idSuccess: true };
       });

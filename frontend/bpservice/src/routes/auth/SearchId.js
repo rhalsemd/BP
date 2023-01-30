@@ -37,7 +37,7 @@ const title = css`
 
 function SeachId({ setFindIdInfo }) {
   const [info, setInfo] = useState({});
-  const { success } = useSelector(({ findIdReducer }) => findIdReducer);
+  const { success, id } = useSelector(({ findIdReducer }) => findIdReducer);
   const navigation = useNavigate();
 
   const findIdFnc = () => {

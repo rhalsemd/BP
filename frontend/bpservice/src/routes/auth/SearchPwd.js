@@ -38,10 +38,6 @@ function SearchPwd({ findPwdReducer, setFindPwdInfo, setErrorReset }) {
 
   const findPwd = () => {
     if (info.id && info.email && info.userName) {
-      setInfo((info) => {
-        return { ...info, isSendEmail: true };
-      });
-
       setFindPwdInfo({
         id: info.id,
         email: info.email,
@@ -60,8 +56,12 @@ function SearchPwd({ findPwdReducer, setFindPwdInfo, setErrorReset }) {
         return { ...info, isSendEmail: false };
       });
       setErrorReset();
+    } else if (findPwdReducer.firstSuccess) {
+      setInfo((info) => {
+        return { ...info, isSendEmail: true };
+      });
     }
-  }, [findPwdReducer.firstError, setErrorReset]);
+  }, [findPwdReducer.firstError, setErrorReset, findPwdReducer.firstSuccess]);
 
   return (
     <div>

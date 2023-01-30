@@ -5,14 +5,16 @@ import { call, takeEvery, put } from "redux-saga/effects";
 const SET_LOGIN_INFO = "userLogin/SET_LOGIN_INFO";
 const GET_USER_TOKEN = "userLogin/GET_USER_TOKEN";
 const GET_USER_ERROR = "userLogin/GET_USER_ERROR";
+const ERROR_RESET = "userLogin/ERROR_RESET";
 
 const GET_USER_INFO = "userLogin/GET_USER_INFO";
 const SET_USER_INFO = "userLogin/SET_USER_INFO";
 
 const setLoginInfo = createAction(SET_LOGIN_INFO, (data) => data);
 const getUserInfo = createAction(GET_USER_INFO, () => undefined);
+const errorReset = createAction(ERROR_RESET, () => undefined);
 
-const API = `http://localhost:8080`;
+const API = `http://192.168.100.80:8080`;
 
 // 로그인 요청
 function* setLoginFnc(data) {
@@ -27,13 +29,21 @@ function* setLoginFnc(data) {
           "Content-Type": "application/json",
         },
         data: {
-          id: userInfo.id,
+          userId: userInfo.id,
           pwd: userInfo.pwd,
         },
       });
     });
 
-    yield put({ type: GET_USER_TOKEN, payload: post.data, success: true });
+    if (post.status === 200) {
+      localStorage.setItem("login-token", post.data.accessToken);
+
+      yield put({
+        type: GET_USER_TOKEN,
+        payload: `Bearer ${post.data.accessToken}`,
+        success: true,
+      });
+    }
   } catch (e) {
     yield put({ type: GET_USER_ERROR, error: true });
   }
@@ -62,7 +72,7 @@ export function* loginSaga() {
   yield takeEvery(GET_USER_INFO, getUserInfoFnc);
 }
 
-const initialState = {};
+const initialState = { token: "" };
 
 const userLoginReducer = handleActions(
   {
@@ -75,6 +85,9 @@ const userLoginReducer = handleActions(
     [SET_USER_INFO]: (state, action) => {
       return { ...state, userInfo: action.payload };
     },
+    [ERROR_RESET]: (state, action) => {
+      return { ...state, error: false };
+    },
   },
   initialState
 );
@@ -82,6 +95,7 @@ const userLoginReducer = handleActions(
 export const loginInfo = {
   setLoginInfo,
   getUserInfo,
+  errorReset,
 };
 
 export default userLoginReducer;

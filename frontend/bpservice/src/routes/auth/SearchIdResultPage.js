@@ -41,6 +41,7 @@ function SearchIdResultPage() {
         <div css={resultModalPosition}>
           <div css={resultModal}>
             <div css={title}>
+              <h1>아이디 찾기</h1>
               <h2>{id}</h2>
             </div>
           </div>
