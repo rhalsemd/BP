@@ -17,6 +17,6 @@ public interface UBrollyBorrowRepository extends JpaRepository<BrollyRentLog,Int
     @Query(value = "SELECT * FROM  MWS_BROLLY_HOLDER WHERE BROLLY_ID = :brollyId",nativeQuery = true)
     BrollyHolder getHolderNum(@Param("brollyId") Brolly brollyId);
 
-    @Query(value = "UPDATE MWS_BROLLY_HOLDER SET BROLLY_ID = NULL WHERE ID = :brollyHolderId",nativeQuery = true)
+    @Query(value = "UPDATE MWS_BROLLY_HOLDER SET BROLLY_ID IS NULL WHERE ID = :brollyHolderId",nativeQuery = true)
     void updateholder(@Param("brollyHolderId") int brollyHolderId);
 }

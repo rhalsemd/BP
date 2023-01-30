@@ -1,8 +1,5 @@
 package kr.co.bpservice.service.kiosk;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.transaction.Transactional;
 import kr.co.bootpay.Bootpay;
 import kr.co.bootpay.model.request.Cancel;
 import kr.co.bpservice.entity.brolly.BrollyRentLog;
@@ -26,27 +23,30 @@ public class KBrollyReturnService {
     private UBrollyPayRepository uBrollyPayRepository;
 
     @Autowired
-    private KBrollyReturnRepository kBrollyPayRepository;
+    private KBrollyReturnRepository kBrollyReturnRepository;
 
     @Value("${BootPay.applicationID}")
     public String applicationID;
 
     @Value("${BootPay.privateKey}")
     public String privateKey;
-    //결제 환불 전 결제 결제 아이디 프론트로 발송
-    public boolean returnPayData(int brollyid){
-        Map<String,?> returnData = uBrollyPayRepository.returnPayData(brollyid);
+    //결제 환불 및 DB 변경
+    public Map<String,Object> returnPayData(String brollyid, int caseId){
+        String brollyRentLogId = kBrollyReturnRepository.getRentlogId(brollyid);
+        //qr데이터를 이용한 rentlogid 반환
+        Map<String,?> returnData = uBrollyPayRepository.returnPayData(Integer.parseInt(brollyRentLogId));
+        //결제 취소 데이터 가져오기
         String receiptId = returnData.get("RECEIPT_ID").toString();
         String userid = returnData.get("USER_ID").toString();
         double price = Double.parseDouble(returnData.get("PRICE").toString());
         if(price <= 0.0){ //이 부분 환불할 필요없다는걸 알려줘야함
-            return false;
+            return null;
         }
         try {
             Bootpay bootpay = new Bootpay(applicationID, privateKey);
             HashMap<String, Object> token = bootpay.getAccessToken();
             if(token.get("error_code") != null) { //failed
-                return false;
+                return null;
             }
             Cancel cancel = new Cancel();
             cancel.receiptId = receiptId;
@@ -63,19 +63,29 @@ public class KBrollyReturnService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        updatePayLog(userid,receiptId,10000.0-price, LocalDateTime.now());
-        return true;
+        LocalDateTime uptDt = LocalDateTime.now();
+        updatePayLog(brollyRentLogId,receiptId,10000.0-price, uptDt);
+        //아래에 있는 db 업데이트 메소드
+
+        int holderNum= kBrollyReturnRepository.getHolderID(caseId);
+        //holder번호 반환
+        Map<String, Object> returndata = new HashMap<>();
+        returndata.put("price",10000.0-price);
+        returndata.put("uptDt",uptDt);
+        returndata.put("holderNum", holderNum);
+
+        //결제 취소 정보 및 열여야 되는 홀더 숫자 데이터
+        return returndata;
     }
     //결제 환불 후 데이터 업데이트 기능
-    public void updatePayLog(String userId,String receiptId,double price, LocalDateTime uptDt){
-        uBrollyPayRepository.updatePayData(receiptId, (int)price, uptDt);
-
-
+    public void updatePayLog(String brollyRentLogId,String receiptId,double rentMoney, LocalDateTime uptDt){
+        kBrollyReturnRepository.updatePayData(receiptId, (int)rentMoney, uptDt);
+        kBrollyReturnRepository.updateRentlogData(brollyRentLogId,(int)rentMoney,uptDt);
     }
     //이미지 저장
     public boolean returnUpdateImg(Map<String, Object> param)throws Exception{
         String qrdata = param.get("brolly_id").toString();
-        String brollyRentLogId = kBrollyPayRepository.getRentlogId(qrdata);
+        String brollyRentLogId = kBrollyReturnRepository.getRentlogId(qrdata);
         //이미지 넣을 rentlog id 가져옴
 
         ModelMap map = new ModelMap();
@@ -94,6 +104,7 @@ public class KBrollyReturnService {
             stream.write(file);
             stream.close();
             System.out.println("캡처 저장");
+            kBrollyReturnRepository.updateRentlogImg(imgURL,Integer.parseInt(brollyRentLogId));
 
         }catch(Exception e){
             e.printStackTrace();
@@ -103,7 +114,6 @@ public class KBrollyReturnService {
                 stream.close();
             }
         }
-        
 
         return true;
     }

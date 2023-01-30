@@ -18,9 +18,6 @@ public interface UBrollyPayRepository extends JpaRepository<BrollyPayLog,Integer
     Map<String,?> returnPayData(@Param("brollyId") int brollyId);
 
 
-    @Query(value ="UPDATE MWS_BROLLY_PAY_LOG SET PRICE = :price AND UPT_DT = :uptDt WHERE = RECEIPT_ID = :receipt_id",nativeQuery = true)
-    void updatePayData(@Param("receipt_id") String receipt_id, int price, LocalDateTime uptDt);
-
     @Query(value ="SELECT ID FROM MWS_BROLLY_PAY_LOG WHERE RECEIPT_ID = :receipt_id AND USER_ID = :user_id",nativeQuery = true)
     BrollyPayLog getRentlogID(@Param("receipt_id") String receipt_id, @Param("user_id") User user_id);
 }

@@ -28,11 +28,10 @@ public class KBrollyReturnController {
     }
     //결제 환불 전 결제 결제 아이디 프론트로 발송
     @Operation(description = "반납 시 결제 환불 데이터를 받아 대여 로그 작성하는 기능")
-    @GetMapping("/pay/return/{brollyId}")
-    public boolean returnPayData(@PathVariable("brollyId") int brollyId){
-        boolean returnData = kBrollyReturnService.returnPayData(brollyId);
+    @GetMapping("/pay/return/{brollyId}/{caseId}")
+    public Map<String,Object> returnPayData(@PathVariable("brollyId") String brollyId, @PathVariable("caseId") int caseId){
+        Map<String,Object> returnData = kBrollyReturnService.returnPayData(brollyId,caseId);
 
         return returnData;
     }
-    //사진 정보 DB 저장 부분 들어가야함
 }
