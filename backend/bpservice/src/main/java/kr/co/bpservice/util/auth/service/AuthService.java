@@ -245,7 +245,6 @@ public class AuthService {
     // 이메일 인증을 수행하는 메소드
     private Map<String, String> emailAuthentication(Map<String, String> requestMap) {
         Map<String, String> resultMap = new HashMap<>();
-        String userId = requestMap.get("userId");
         String email = requestMap.get("email");
         String name = requestMap.get("userName");
         String authNum = requestMap.get("authNum").toUpperCase();
@@ -257,7 +256,7 @@ public class AuthService {
             return resultMap;
         }
 
-        User user = userRepository.findByIdAndEmailAndName(userId, email, name).get();
+        User user = userRepository.findByEmailAndName(email, name).get();
         resultMap.put("userId", user.getId());
         resultMap.put("result", "success");
         resultMap.put("msg", "이메일 인증을 성공했습니다.");
