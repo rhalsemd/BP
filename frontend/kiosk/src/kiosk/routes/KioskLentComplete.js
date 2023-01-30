@@ -5,7 +5,6 @@ import KioskLentCompleteSection from '../components/LentCompleteSection'
 
 const KioskLentStyle = css`
   box-sizing: border-box;
-  border : 1px solid black;
   width : 100vw;
   height : 100vh;
 `

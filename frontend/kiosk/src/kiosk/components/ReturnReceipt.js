@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
+import { useNavigate } from 'react-router-dom'
 // import { useState } from 'react'
 
 const KioskReturnReceiptStyle = css`
@@ -125,13 +126,20 @@ const KioskReturnReceipt = css`
 // 밑에는 JSX 입니다.
 
 const ReturnReceipt = () => {
+
+  const navigate = useNavigate();
+  
+  const move = () => {
+    navigate('/kiosk/return/complete')
+  }
+
   return (
     <div css={KioskReturnReceiptStyle}>
       <div css={KioskReceiptImg}>
         <div css={ReceiptImg}>
 
         </div>
-        <button>
+        <button onClick={move}>
           반납하기
         </button>
       </div>
@@ -142,11 +150,11 @@ const ReturnReceipt = () => {
           <p className='Payment'>6,500<span>원</span></p>
           <div className='ReceiptDetailView'>
             <div className='FirstHorizon'></div>
-            <p className='ReceiptDetail'><div className='FontColorGray'>보증금</div><div>10,000</div></p>
-            <p className='ReceiptDetail'><div className='FontColorGray'>이용 시간</div><div>2:30</div></p>
-            <p className='ReceiptDetail'><div className='FontColorGray'>이용 금액</div><div>3,500</div></p>
+            <div className='ReceiptDetail'><div className='FontColorGray'>보증금</div><div>10,000</div></div>
+            <div className='ReceiptDetail'><div className='FontColorGray'>이용 시간</div><div>2:30</div></div>
+            <div className='ReceiptDetail'><div className='FontColorGray'>이용 금액</div><div>3,500</div></div>
             <div className='SecondHorizon'></div>
-            <p className='ReceiptDetail'><div className='FontSizeBig'>환급 금액</div><div>6,500</div></p>
+            <div className='ReceiptDetail'><div className='FontSizeBig'>환급 금액</div><div>6,500</div></div>
           </div>
         </div>
       </div>

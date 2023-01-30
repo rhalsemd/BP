@@ -1,11 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
+import KioskAddress from './address/Address'
+
 
 const KioskHeaderStyle = css`
   display: flex;
   justify-content: space-between;
   align-items: start;
-  /* border: 1px solid black; */
   height: 20vh;
 `
 
@@ -29,7 +30,7 @@ const HomeHeader = () => {
         logo
       </h3>
       <h3 css={KioskLocation}>
-        (위치아이콘)구미시 진평동
+        <KioskAddress />
       </h3>
     </div>
   )

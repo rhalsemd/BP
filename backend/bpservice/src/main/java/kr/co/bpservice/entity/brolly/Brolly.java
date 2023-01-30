@@ -14,8 +14,6 @@ public class Brolly {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Integer num;
-
     @Column(length = 50)
     private String name;
 }

@@ -1,11 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
+import KioskHomeBtn from '../components/button/KioskHomeBtn'
 import KioskHeader from '../components/HomeHeader'
 import KioskReturnSection from '../components/ReturnSection'
 
 const KioskReturnStyle = css`
   box-sizing: border-box;
-  border : 1px solid black;
   width : 100vw;
   height : 100vh;
 `
@@ -22,6 +22,9 @@ const Return = () => {
       <section>
         <KioskReturnSection/>
       </section>
+      <footer>
+        <KioskHomeBtn />
+      </footer>
     </div>
   )
 }

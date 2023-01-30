@@ -14,7 +14,7 @@ const KioskHeaderStyle = css`
 
 const KioskLogo = css`
   margin-left: 3vw;
-  margin-top: 1vw;
+  margin-top: 1vw;
 `
 
 // 위에는 Emotion.js 입니다.
@@ -31,3 +31,4 @@ const HomeHeader = () => {
 }
 
 export default HomeHeader;
+

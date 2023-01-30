@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import KioskHomeMove from './btncomponents/KioskHomeBtn'
+import KioskHomeMove from './button/KioskHomeBtn'
 
 const KioskReturnSectionCompleteStyle = css`
   display: flex;

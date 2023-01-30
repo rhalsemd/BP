@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
+import KioskHomeBtn from '../components/button/KioskHomeBtn'
 import KioskHeader from '../components/HomeHeader'
 import KioskSection from '../components/HomeSection'
 
@@ -13,18 +14,21 @@ const KioskHomeStyle = css`
 // 위에는 Emotion.js 입니다.
 // 밑에는 JS 입니다.
 
-const Home = () => {
-  
+const KioskHome = () => {
+
   return (
     <div css={KioskHomeStyle}>
       <header>
-        <KioskHeader/>
+        <KioskHeader />
       </header>
       <section>
-        <KioskSection/>
+        <KioskSection />
       </section>
+      <footer>
+        <KioskHomeBtn/>
+      </footer>
     </div>
   )
 }
 
-export default Home;
+export default KioskHome;

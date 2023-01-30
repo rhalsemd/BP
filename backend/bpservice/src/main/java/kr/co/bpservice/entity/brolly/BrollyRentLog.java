@@ -18,6 +18,10 @@ public class BrollyRentLog {
     private Integer id;
 
     @ManyToOne
+    @JoinColumn(name = "PAY_ID")
+    private BrollyPayLog payId;
+
+    @ManyToOne
     @JoinColumn(name = "BROLLY_ID")
     private Brolly brolly;
 

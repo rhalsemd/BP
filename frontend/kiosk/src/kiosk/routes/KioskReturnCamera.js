@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react'
-import KioskHeader from '../components/HomeHeaderJustLogo'
-import KioskReturnCameraView from '../components/ReturnCameraView'
+import { css } from '@emotion/react';
+import { useLocation } from 'react-router-dom';
+import KioskReturnCameraView from '../components/ReturnCameraView';
 
 const KioskReturnCameraStyle = css`
   box-sizing: border-box;
@@ -18,13 +18,16 @@ const KioskReturnCameraStyle = css`
 // 위에는 Emotion.js 입니다.
 // 밑에는 JS 입니다.
 
-const ReturnCamera = () => {
+const KioskReturnCamera = () => {
+  // 데이터 수령
+  const location = useLocation();
+  const qrdata = location.state.qrdata;
+  
   return (
     <div css={KioskReturnCameraStyle}>
-        <KioskHeader/>
-        <KioskReturnCameraView/>
+      <KioskReturnCameraView data={qrdata}/>
     </div>
   )
 }
 
-export default ReturnCamera;
+export default KioskReturnCamera;

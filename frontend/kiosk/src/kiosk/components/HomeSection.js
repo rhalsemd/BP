@@ -1,7 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import KioskLentBtn from '../components/btncomponents/KioskLentBtn'
-import KioskReturnBtn from '../components/btncomponents/KioskReturnBtn'
+import KioskLentBtn from './button/KioskLentBtn'
+import KioskReturnBtn from './button/KioskReturnBtn'
+import KioskWeather from './weather/KioskWeather'
 
 const KioskSectionStyle = css`
   display: flex;
@@ -10,7 +11,7 @@ const KioskSectionStyle = css`
 
   /* border: 1px solid black; */
 
-  height: 80vh;
+  height: 75vh;
 `
 
 const KioskButtons = css`
@@ -28,30 +29,6 @@ const KioskButtons = css`
   align-items: center;
 `
 
-const KioskHomeWeather = css`
-  margin-right: 3vw;
-
-  border: 1px solid black;
-  border-radius: 30px;
-
-  width: 25vw;
-  height: 50vh;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`
-
-const KioskHomeWeatherImg = css`
-  background-color: blue;
-
-  border: 1px solid black;
-  
-  width: 15vw;
-  height: 15vw;
-`
-
 // const KioskGoBackBtnStyle = css`
 //   margin-right: 2vw;
 //   margin-bottom: 2vw;
@@ -63,27 +40,20 @@ const KioskHomeWeatherImg = css`
 // 위에는 Emotion.js 입니다.
 // 밑에는 JS 입니다.
 
+
 // 위에는 JS 입니다.
 // 밑에는 JSX 입니다.
 
 const HomeSection = () => {
+  
+
   return (
     <div css={KioskSectionStyle}>
       <div css={KioskButtons}>
         <KioskLentBtn />
         <KioskReturnBtn />
       </div>
-      <div css={KioskHomeWeather}>
-        <div css={KioskHomeWeatherImg}>
-
-        </div>
-        <p>
-          현재온도
-        </p>
-        <p>
-          일교차
-        </p>
-      </div>
+        <KioskWeather/>
     </div>
   )
 }
