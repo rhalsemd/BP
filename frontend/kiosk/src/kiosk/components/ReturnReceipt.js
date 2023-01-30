@@ -126,8 +126,9 @@ const KioskReturnReceipt = css`
 // 밑에는 JSX 입니다.
 
 const ReturnReceipt = () => {
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
+  
   const move = () => {
     navigate('/kiosk/return/complete')
   }

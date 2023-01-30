@@ -51,6 +51,7 @@ const buttonDiv = css`
 
 const KioskReturnCameraTakeAPicture = (data) => {
   const [iscapture, setIscapture] = useState(false);
+  const [imageCount, setImageCount] = useState(1);
 
   let videoRef = useRef(null);
   let photoRef = useRef(null);
@@ -93,6 +94,9 @@ const KioskReturnCameraTakeAPicture = (data) => {
     ctx.drawImage(video, 0, 0, width, height);
   };
 
+  useEffect(() => {
+    getVideo();
+  }, [videoRef]);
   // save canvas Image in server
 
   const saveImage = () => {
@@ -102,8 +106,9 @@ const KioskReturnCameraTakeAPicture = (data) => {
 
     // 1. 이미지 다운로드 후 업로드
     const link = document.createElement("a");
+    // 이거는 download 폴더로 바로
     link.href = imgdataUrl;
-    link.download = "PaintIMG_1";
+    link.download = `ReturnIMG_${imageCount}`;
 
     link.click();
 
@@ -135,18 +140,19 @@ const KioskReturnCameraTakeAPicture = (data) => {
   const setFile = (e) => {
     if (e.target.files[0]) {
       const img = new FormData();
+      setImageCount(imageCount + 1)
       axios
-      .post("http://localhost:3001/posts", img)
-      .then((res) => {
-        setIscapture(true);
-        return res
-      })
-      .then((res2) => {
-        QRdataSend();
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+        .post("http://localhost:3001/posts", img)
+        .then((res) => {
+          setIscapture(true);
+          return res
+        })
+        .then((res2) => {
+          QRdataSend();
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     }
   };
 
@@ -156,16 +162,12 @@ const KioskReturnCameraTakeAPicture = (data) => {
         .post("http://localhost:3001/posts", qrdata)
         .then((res) => {
           console.log(res)
+          navigate("../kiosk/return/receipt")
         })
         .catch((err) => {
           console.error(err);
         });
     }
-  }
-
-  // 이미지가 이미 전송되었다면,
-  if (iscapture) {
-    navigate("../kiosk/return/receipt");
   }
 
   // clear out the image from the screen
@@ -176,9 +178,6 @@ const KioskReturnCameraTakeAPicture = (data) => {
     ctx.clearRect(0, 0, photo.width, photo.height);
   };
 
-  useEffect(() => {
-    getVideo();
-  }, [videoRef]);
 
   return (
     <div css={ReturnCameraTakeAPictureDiv}>
@@ -204,6 +203,7 @@ const KioskReturnCameraTakeAPicture = (data) => {
         <input
           onChange={setFile}
           type="file"
+          id="imageUpload"
           accept="image/*"
           className="btn btn-warning"
         />
