@@ -28,8 +28,17 @@ const KioskReturnQRCheckSection = css`
 `;
 
 const ReturnQRView = () => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState("");
   const navigate = useNavigate();
+
+  if (data) {
+    navigate("/kiosk/return/camera", {
+          state: {
+            qrdata: data,
+          },
+        }
+      );
+  }
 
   return (
     <div css={KioskReturnQRCheckStyle}>
@@ -41,18 +50,12 @@ const ReturnQRView = () => {
           onResult={(result, error) => {
             if (!!result) {
               setData(result?.text);
-              navigate("/kiosk/return/camera", {
-                state: {
-                  qrdata: data,
-                },
-              });
             }
             if (!!error) {
               console.info(error);
             }
           }}
         />
-        <p>{data ? "인식완료" : "현재 미인식"}</p>
       </section>
       <KioskHomeBtn />
     </div>

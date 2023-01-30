@@ -13,6 +13,6 @@ const KioskReturnCameraView = (data) => {
       <KioskReturnCameraTakeAPicture data={data}/>
     </div>
   );
-};
+}
 
 export default KioskReturnCameraView;

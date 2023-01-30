@@ -16,7 +16,6 @@ const KioskCompleteHomeBtn = () => {
 
     // 2. 홈으로 이동
     navigate('/kiosk')
-    
   }
 
   return (
