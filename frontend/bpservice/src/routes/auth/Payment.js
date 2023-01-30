@@ -9,7 +9,7 @@ const startPay = async (dispatch) => {
   try {
     const response = await Bootpay.requestPayment({
       application_id: "63d0816b3049c8001a5dc07b",
-      price: 100,
+      price: 200,
       order_name: "테스트결제",
       order_id: "TEST_ORDER_ID",
       pg: "kcp",
@@ -26,7 +26,7 @@ const startPay = async (dispatch) => {
           id: "item_id",
           name: "테스트아이템",
           qty: 1,
-          price: 100,
+          price: 200,
         },
       ],
       extra: {

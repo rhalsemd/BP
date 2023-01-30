@@ -10,7 +10,7 @@ import IdComponent from "../../components/userLogin/IdComponent";
 import PwdComponent from "../../components/userLogin/PwdComponent";
 import { connect, useDispatch } from "react-redux";
 import { loginInfo } from "../../modules/userLogin";
-import { cencleBootpay } from "../../modules/payment";
+// import { cencleBootpay } from "../../modules/payment";
 
 const loginArea = css`
   width: 100%;
@@ -40,13 +40,11 @@ function Login({ setLoginInfo }) {
   const [info, setInfo] = useState({});
 
   const getLogin = () => {
-    // if (info.id && info.pwd) {
-    //   setLoginInfo({ id: info.id, pwd: info.pwd });
-    // } else {
-    //   alert("아이디와 비밀번호를 입력해주세요.");
-    // }
-
-    dispatch(cencleBootpay());
+    if (info.id && info.pwd) {
+      setLoginInfo({ id: info.id, pwd: info.pwd });
+    } else {
+      alert("아이디와 비밀번호를 입력해주세요.");
+    }
   };
 
   return (

@@ -42,10 +42,10 @@ export function* rootSaga() {
     modifyPwdSaga(),
     modifyUserInfoSaga(),
     histogramSaga(),
-    getUseageSaga(),
-    revenueTrendSaga(),
     histogramMonthSaga(),
+    revenueTrendSaga(),
     revenueTrendMonthSaga(),
+    getUseageSaga(),
     paymentSaga(),
   ]);
 }
