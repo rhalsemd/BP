@@ -56,7 +56,7 @@ public class UserService {
     public UserResponseDto changeUserInfo(UserRequestDto requestDto) {
         User user = userRepository.findById(SecurityUtil.getCurrentUserId()).orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다"));
         user.setSido(requestDto.getSido());
-        user.setSigugun(requestDto.getSigugun());
+        user.setSigungu(requestDto.getSigungu());
         user.setDong(requestDto.getDong());
         return UserResponseDto.of(userRepository.save(user));
     }
