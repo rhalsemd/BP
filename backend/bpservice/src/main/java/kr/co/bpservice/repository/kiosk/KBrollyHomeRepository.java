@@ -4,13 +4,15 @@ import kr.co.bpservice.entity.brolly.BrollyCase;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
 
+@Repository
 public interface KBrollyHomeRepository extends JpaRepository<BrollyCase, Integer> {
     @Query(value = "SELECT ID, NAME, LAT, LNG FROM MWS_BROLLY_CASE WHERE ID = :id", nativeQuery = true)
-    BrollyCase selectBrollyCase(@Param("id") Integer id);
+    BrollyCase selectBrollyCase(@Param("id") int id);
 
     List<BrollyCase> findAll();
 
