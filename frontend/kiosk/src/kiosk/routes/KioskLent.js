@@ -31,9 +31,21 @@ const KioskLent = () => {
       .catch((err) => console.log(err))
   }
 
+  const miliUnit = 1000
+  const seconds = 60 * miliUnit
+
+  // 홈화면으로
+  useEffect(() => {
+    let myTimer = setTimeout(() => {
+      navigate('/kiosk')
+    }, seconds)
+    return () => {
+      clearTimeout(myTimer)
+    }
+  },[])
+  
   useEffect(() => {
     getPayConfirm();
-
   }, [isconfirm])
 
   const move = () => {

@@ -1,5 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import KioskHomeBtn from '../components/button/KioskHomeBtn'
 import KioskHeader from '../components/HomeHeader'
 import KioskReturnSection from '../components/ReturnSection'
@@ -14,6 +16,21 @@ const KioskReturnStyle = css`
 // 밑에는 JS 입니다.
 
 const Return = () => {
+  const navigate = useNavigate();
+
+  const miliUnit = 1000
+  const seconds = 60 * miliUnit
+
+  // 홈화면으로
+  useEffect(() => {
+    let myTimer = setTimeout(() => {
+      navigate('/kiosk')
+    }, seconds)
+    return () => {
+      clearTimeout(myTimer)
+    }
+  },[])
+
   return (
     <div css={KioskReturnStyle}>
       <header>

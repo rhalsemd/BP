@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import KioskReturnCameraView from '../components/ReturnCameraView';
 
 const KioskReturnCameraStyle = css`
@@ -21,7 +22,22 @@ const KioskReturnCameraStyle = css`
 const KioskReturnCamera = () => {
   // 데이터 수령
   const location = useLocation();
-  console.log(location.state.qrdata)
+  console.log(location.state.qrdata);
+
+  const navigate = useNavigate();
+
+  const miliUnit = 1000
+  const seconds = 60 * miliUnit
+
+  // 홈화면으로
+  useEffect(() => {
+    let myTimer = setTimeout(() => {
+      navigate('/kiosk')
+    }, seconds)
+    return () => {
+      clearTimeout(myTimer)
+    }
+  }, [])
 
   return (
     <div css={KioskReturnCameraStyle}>
