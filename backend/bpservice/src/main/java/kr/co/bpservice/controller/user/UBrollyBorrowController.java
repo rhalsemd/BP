@@ -31,20 +31,14 @@ public class UBrollyBorrowController {
         //결제 정보 등록
         BrollyPayLog payId = uBrollyBorrowService.getPayLogId(brollyPayLog.getReceiptId(),brollyPayLog.getUser());
         //결제 내역 id 가져오기
-        BrollyRentLog brollyRentLog = new BrollyRentLog();
-        brollyRentLog.setPayId(payId);
-        brollyRentLog.setBrolly(uBrollyBorrowService.getBrollyId(caseId));
-        brollyRentLog.setBrollyCase(caseId);
-        brollyRentLog.setState(false);
-        brollyRentLog.setRegDt(LocalDateTime.now());
-        brollyRentLog.setUptDt(brollyRentLog.getRegDt().plusDays(7));
-        brollyRentLog.setUser(brollyPayLog.getUser());
-        brollyRentLog.setDepositeMoney(10000);
-        uBrollyBorrowService.insertRentLog(brollyRentLog);
-
+        BrollyRentLog brollyRentLog = uBrollyBorrowService.insertRentLog(payId, caseId,brollyPayLog);
+        //우산 rentlog 등록
         BrollyHolder brollyHolder = (uBrollyBorrowService.getHolderNum(brollyRentLog.getBrolly()));
+        
         int holderNumber = brollyHolder.getNum();
-        //null이면 안되게 할 필요있음
+        //홀더에 빈칸이 없다면 null 반환 예상, null이면 안되게 할 필요있음 구현 필요
+        
+        //키오스크에 몇번 열어야 되는지 보내야 하는 부분 구현해야함
         brollyHolder.setBrolly(null); //홀더 우산 null로 변경
         uBrollyBorrowService.updateholder(brollyHolder.getId());
         return true;

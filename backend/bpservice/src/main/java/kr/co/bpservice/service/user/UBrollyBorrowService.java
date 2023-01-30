@@ -8,6 +8,8 @@ import kr.co.bpservice.repository.user.UBrollyBorrowRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class UBrollyBorrowService {
     @Autowired
@@ -22,7 +24,19 @@ public class UBrollyBorrowService {
     }
 
     @Transactional
-    public void insertRentLog(BrollyRentLog brollyRentLog){uBrollyBorrowRepository.save(brollyRentLog);}
+    public BrollyRentLog insertRentLog(BrollyPayLog payId, BrollyCase caseId, BrollyPayLog brollyPayLog){
+        BrollyRentLog brollyRentLog = new BrollyRentLog();
+        brollyRentLog.setPayId(payId);
+        brollyRentLog.setBrolly(getBrollyId(caseId));
+        brollyRentLog.setBrollyCase(caseId);
+        brollyRentLog.setState(false);
+        brollyRentLog.setRegDt(LocalDateTime.now());
+        brollyRentLog.setUptDt(brollyRentLog.getRegDt().plusDays(7));
+        brollyRentLog.setUser(brollyPayLog.getUser());
+        brollyRentLog.setDepositeMoney(10000);
+        uBrollyBorrowRepository.save(brollyRentLog);
+        return brollyRentLog;
+    }
 
     @Transactional
     public void updateholder(int brollyHolder){
@@ -40,4 +54,6 @@ public class UBrollyBorrowService {
     public BrollyHolder getHolderNum(Brolly brollyId){
         return uBrollyBorrowRepository.getHolderNum(brollyId);
     }
+
+
 }
