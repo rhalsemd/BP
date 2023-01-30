@@ -3,6 +3,7 @@ import { css } from '@emotion/react'
 import axios from 'axios'
 import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import KioskHeader from '../components/HomeHeader'
 import KioskReturnComplete from '../components/ReturnComplete'
 
@@ -31,10 +32,24 @@ const ReturnComplete = () => {
     .then((res) => console.log(res.data))
     .catch((err) => console.error(err))
   }
-
   useEffect(() => {
     getPayment();
   }, []);
+
+  const navigate = useNavigate();
+
+  const miliUnit = 1000
+  const seconds = 60 * miliUnit
+
+  // 홈화면으로
+  useEffect(() => {
+    let myTimer = setTimeout(() => {
+      navigate('/kiosk')
+    }, seconds)
+    return () => {
+      clearTimeout(myTimer)
+    }
+  }, [])
 
   return (
     <div css={KioskReturnReceiptStyle}>

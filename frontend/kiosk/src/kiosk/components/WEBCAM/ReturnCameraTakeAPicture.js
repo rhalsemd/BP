@@ -107,8 +107,8 @@ const KioskReturnCameraTakeAPicture = (data) => {
 
     axios({
       method: 'POST',
-      // url: 'http://192.168.100.176:8080/api/auth/user/brolly/return/update/img',
-      url: 'http://localhost:3001/posts',
+      url: 'http://192.168.100.176:8080/api/auth/user/brolly/return/update/img',
+      // url: 'http://bp.ssaverytime.kr:8080/api/auth/user/brolly/return/update/img',
       data: {
         "brolly_id": qrdata,
         "img_url": imgURL,
