@@ -28,7 +28,7 @@ function SignUpAddress({
       getGugun(value);
       gugunRef.current.value = "시/군/구";
       if (dongRef.current) {
-        dongRef.current.value = "읍/면/리/동";
+        dongRef.current.value = "읍/면/동";
       }
     }
   };
@@ -41,20 +41,20 @@ function SignUpAddress({
         return { ...info, gugun: value };
       });
       getDong({ sido: info.sido, gugun: value });
-      dongRef.current.value = "읍/면/리/동";
+      dongRef.current.value = "읍/면/동";
     }
   };
 
   const DongOnClick = (e) => {
     const value = e.target.value;
 
-    if (value !== "읍/면/리/동") {
+    if (value !== "읍/면/동") {
       setInfo((info) => {
         return { ...info, dong: value };
       });
 
       // 주소를 모두 선택했는가?
-      if (info.sido && info.gugun && value !== "읍/면/리/동") {
+      if (info.sido && info.gugun && value !== "읍/면/동") {
         setInfo((info) => {
           return { ...info, addressSuccess: true };
         });
@@ -104,8 +104,8 @@ function SignUpAddress({
       {signUp.gugun.length !== 0 ? (
         <select defaultValue="dong" onClick={DongOnClick} ref={dongRef}>
           (
-          <option key="defalt-value-3" value="읍/면/리/동">
-            읍/면/리/동
+          <option key="defalt-value-3" value="읍/면/동">
+            읍/면/동
           </option>
           )
           {signUp.dong.map((dong, index) => {
