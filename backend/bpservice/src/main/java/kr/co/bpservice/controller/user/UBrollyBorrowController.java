@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-@Tag(name = "Kiosk Home", description = "대여 관련 기능을 제공하기 위한 API")
+@Tag(name = "UBrollyBorrowController", description = "유저 대여 관련 기능을 제공하기 위한 API")
 @RequiredArgsConstructor
 @RestController
 @CrossOrigin("*")
@@ -21,7 +21,7 @@ public class UBrollyBorrowController {
     private UBrollyBorrowService uBrollyBorrowService;
     
     //결제 후 결제 로그 db에 저장
-    @PostMapping("/pay/insert/{case}")
+    @PostMapping("/pay/insert")
     @Operation(description = "대여 시 결제 데이터를 받아 대여 로그 작성하는 기능")
     @Parameters({
             @Parameter(name = "case", description = "케이스 번호")
