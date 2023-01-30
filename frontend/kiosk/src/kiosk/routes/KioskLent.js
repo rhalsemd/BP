@@ -27,7 +27,6 @@ const KioskLent = () => {
     axios.get(PayConfirmURL)
       .then((res) => {
         setIsconfirm(res.data.name)
-        console.log(res.data.name)
       })
       .catch((err) => console.log(err))
   }
