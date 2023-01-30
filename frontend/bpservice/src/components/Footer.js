@@ -7,7 +7,7 @@ function Footer() {
   `;
   const container = css`
     width: 100%;
-    height: 20vh;
+    height: 18vh;
     background-color: #191f28;
   `;
 

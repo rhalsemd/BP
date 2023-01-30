@@ -28,16 +28,14 @@ const Rectangle = ({ x, y, width, height, jijum, getRevenueTrend, caseId }) => {
 
   return (
     <animated.rect
-      onMouseLeave={() => onMouseOver()}
-      onClick={() => onclick(jijum)}
       x={springProps.x}
       y={springProps.y}
       width={springProps.width}
       height={springProps.height}
       opacity={0.7}
-      stroke="#9d174d"
-      fill="#9d174d"
-      fillOpacity={0.3}
+      stroke="black"
+      fill="steelblue"
+      fillOpacity={1}
       strokeWidth={1}
       rx={1}
     />

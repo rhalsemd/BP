@@ -5,17 +5,17 @@ import { useState } from "react";
 const loginModalStyle = css`
   height: 40vh;
   width: 95vw;
-  margin: 16vh 2.5vw 16vh;
+  margin: 15vh 2.5vw 19vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   border-radius: 10px;
   align-items: center;
   background-color: rgba(249, 250, 251, 0.9);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   .card-1:hover {
-    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.55), 0 10px 10px rgba(0, 0, 0, 0.52);
   }
   input::placeholder {
     color: transparent;
