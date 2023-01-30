@@ -36,6 +36,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-mail' //메일 인증 라이브러리
 	implementation 'com.sun.mail:jakarta.mail:2.0.1'//메일 인증 라이브러리
 	implementation 'org.json:json:20220924'//json라이브러리
+	implementation 'org.apache.httpcomponents:httpclient:4.5.13' // http통신 gradle
+	implementation 'io.github.bootpay:backend:+' //부트페이 gradle
 }
 
 tasks.named('test') {
