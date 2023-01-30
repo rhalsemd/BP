@@ -33,7 +33,7 @@ public class User {
     private String sido;
 
     @Column(length = 50)
-    private String sigugun;
+    private String sigungu;
 
     @Column(length = 50)
     private String dong;
@@ -52,13 +52,13 @@ public class User {
     private Authority authority;
 
     @Builder
-    public User(String id, String pwd, String name, String phoneNum, String sido, String sigugun, String dong, String email, Authority authority) {
+    public User(String id, String pwd, String name, String phoneNum, String sido, String sigungu, String dong, String email, Authority authority) {
         this.id = id;
         this.pwd = pwd;
         this.name = name;
         this.phoneNum = phoneNum;
         this.sido = sido;
-        this.sigugun = sigugun;
+        this.sigungu = sigungu;
         this.dong = dong;
         this.email = email;
         this.authority = authority;

@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react'
-import { useState } from 'react'
-import { QrReader } from 'react-qr-reader';
-import { useNavigate } from 'react-router-dom';
-import KioskHomeBtn from './btncomponents/KioskHomeBtn';
+import { css } from "@emotion/react";
+import { useState } from "react";
+import { QrReader } from "react-qr-reader";
+import { useNavigate } from "react-router-dom";
+import KioskHomeBtn from "./button/KioskHomeBtn";
 
 const KioskReturnQRCheckStyle = css`
   width: 100vw;
@@ -13,10 +13,10 @@ const KioskReturnQRCheckStyle = css`
   h1 {
     margin: 0;
   }
-`
+`;
 const KioskReturnQRCheckTitle = css`
   text-align: center;
-`
+`;
 
 const KioskReturnQRCheckSection = css`
   section > div {
@@ -25,19 +25,19 @@ const KioskReturnQRCheckSection = css`
   .KioskReturnQRScreen {
     width: 70vw;
   }
-`
+`;
 
 const ReturnQRView = () => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState("");
   const navigate = useNavigate();
 
   if (data) {
-    navigate('/kiosk/return/camera', {
-      state:{
-        qrdata:data,
-        imgurl:'',
-      }
-    })
+    navigate("/kiosk/return/camera", {
+          state: {
+            qrdata: data,
+          },
+        }
+      );
   }
 
   return (
@@ -46,21 +46,20 @@ const ReturnQRView = () => {
         <h1>우산에 새겨져있는 qr을 화면 가까이 보여주세요!</h1>
       </header>
       <section css={KioskReturnQRCheckSection}>
-          <QrReader
-            onResult={(result, error) => {
-              if (!!result) {
-                setData(result?.text);
-              }
-              if (!!error) {
-                console.info(error);
-              }
-            }}
-          />
-        <p>{data ? '인식완료' : '인식하지 못하였음'}</p>
+        <QrReader
+          onResult={(result, error) => {
+            if (!!result) {
+              setData(result?.text);
+            }
+            if (!!error) {
+              console.info(error);
+            }
+          }}
+        />
       </section>
       <KioskHomeBtn />
     </div>
   );
-}
+};
 
-export default ReturnQRView
+export default ReturnQRView;

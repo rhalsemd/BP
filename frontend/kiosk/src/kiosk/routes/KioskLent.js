@@ -3,7 +3,7 @@ import { css } from '@emotion/react'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import KioskHomeBtn from '../components/btncomponents/KioskHomeBtn'
+import KioskHomeBtn from '../components/button/KioskHomeBtn'
 import KioskHeader from '../components/HomeHeader'
 import KioskLentSection from '../components/LentSection'
 
@@ -27,7 +27,6 @@ const KioskLent = () => {
     axios.get(PayConfirmURL)
       .then((res) => {
         setIsconfirm(res.data.name)
-        console.log(res.data.name)
       })
       .catch((err) => console.log(err))
   }
@@ -36,16 +35,6 @@ const KioskLent = () => {
     getPayConfirm();
 
   }, [isconfirm])
-
-  // if (isconfirm) {
-  //   navigate('/kiosk/lent/complete', 
-  //   {
-  //     state: {
-  //       name: isconfirm,
-  //     }
-  //   }
-  //   );
-  // };
 
   const move = () => {
     navigate('/kiosk/lent/complete')

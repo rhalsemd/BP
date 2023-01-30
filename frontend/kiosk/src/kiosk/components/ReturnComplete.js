@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-// import { useState } from 'react'
+import KioskHomeMove from './button/KioskCompleteHomeBtn'
 
 const KioskReturnReceiptStyle = css`
   display: flex;
@@ -23,15 +23,6 @@ const KioskReceiptImg = css`
     width: 250px;
     height: 80px;
   }
-`
-
-const ReceiptImg = css`
-  background-color: black;
-  
-  margin-bottom: 1vw;
-
-  width: 300px;
-  height: 200px;
 `
 
 const KioskReturnReceiptView = css`
@@ -114,8 +105,25 @@ const KioskReturnReceipt = css`
         color: black !important;
       }
     }
+`
 
+const KioskReturnSectionCompleteStyle = css`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
+  border: 1px solid black;
+
+  height: 80vh;
+  p {
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+  }
+  button {
+    width: 450px;
+    height: 50px;
+  }
 `
 
 // 위에는 Emotion.js 입니다.
@@ -125,15 +133,14 @@ const KioskReturnReceipt = css`
 // 밑에는 JSX 입니다.
 
 const ReturnReceipt = () => {
+
   return (
     <div css={KioskReturnReceiptStyle}>
       <div css={KioskReceiptImg}>
-        <div css={ReceiptImg}>
-
+        <div css={KioskReturnSectionCompleteStyle}>
+          <p>6번 케이스에 넣어주세요. 감사합니다!</p>
+          <KioskHomeMove />
         </div>
-        <button>
-          반납하기
-        </button>
       </div>
       <div css={KioskReturnReceiptView}>
         <h1>요금 사항</h1>
@@ -142,11 +149,11 @@ const ReturnReceipt = () => {
           <p className='Payment'>6,500<span>원</span></p>
           <div className='ReceiptDetailView'>
             <div className='FirstHorizon'></div>
-            <p className='ReceiptDetail'><div className='FontColorGray'>보증금</div><div>10,000</div></p>
-            <p className='ReceiptDetail'><div className='FontColorGray'>이용 시간</div><div>2:30</div></p>
-            <p className='ReceiptDetail'><div className='FontColorGray'>이용 금액</div><div>3,500</div></p>
+            <div className='ReceiptDetail'><div className='FontColorGray'>보증금</div><div>10,000</div></div>
+            <div className='ReceiptDetail'><div className='FontColorGray'>이용 시간</div><div>2:30</div></div>
+            <div className='ReceiptDetail'><div className='FontColorGray'>이용 금액</div><div>3,500</div></div>
             <div className='SecondHorizon'></div>
-            <p className='ReceiptDetail'><div className='FontSizeBig'>환급 금액</div><div>6,500</div></p>
+            <div className='ReceiptDetail'><div className='FontSizeBig'>환급 금액</div><div>6,500</div></div>
           </div>
         </div>
       </div>

@@ -1,11 +1,26 @@
-function ModifyPwdNext({ next, setNext, pwdRegExp, current, setIsNext }) {
+function ModifyPwdNext({ setInfo, pwdRegExp, info }) {
   const onChange = (e) => {
     const inputValue = e.target.value;
-    setNext(inputValue);
-    if (pwdRegExp.test(next) && inputValue !== current) {
-      setIsNext(true);
+    setInfo((info) => {
+      return { ...info, next: inputValue };
+    });
+    if (pwdRegExp.test(info.next) && inputValue !== info.current) {
+      setInfo((info) => {
+        return { ...info, isNext: true };
+      });
     } else {
-      setIsNext(false);
+      setInfo((info) => {
+        return { ...info, isNext: false };
+      });
+    }
+    if (info.confirmPwd !== inputValue) {
+      setInfo((info) => {
+        return { ...info, isConfirm: false };
+      });
+    } else {
+      setInfo((info) => {
+        return { ...info, isConfirm: true };
+      });
     }
   };
   return (

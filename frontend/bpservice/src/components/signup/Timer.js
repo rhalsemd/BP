@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 
-export default function Timer() {
+export default function Timer({ setInfo, inputRef, info }) {
   // 타이머
-  const [minutes, setMinutes] = useState(2);
+  const [minutes, setMinutes] = useState(1);
   const [seconds, setSeconds] = useState(0);
 
   useEffect(() => {
@@ -19,8 +19,17 @@ export default function Timer() {
         }
       }
     }, 1000);
+    if (minutes === 0 && seconds === 0) {
+      setInfo((info) => {
+        return { ...info, isCertification: false };
+      });
+      setMinutes(2);
+      setSeconds(0);
+      inputRef.current.value = "";
+    }
     return () => clearInterval(countdown);
-  }, [minutes, seconds]);
+  }, [minutes, seconds, setInfo, setMinutes, setSeconds, inputRef]);
+
   return (
     <span>
       {minutes}:{seconds < 10 ? `0${seconds}` : seconds}

@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import KioskAddress from './addresscomponents/Address'
+import KioskAddress from './address/Address'
 
 
 const KioskHeaderStyle = css`

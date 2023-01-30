@@ -2,11 +2,10 @@
 import { css } from "@emotion/react";
 import { useState } from "react";
 import { connect } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 
 import Footer from "../../components/Footer";
 import ModifyUserAddress from "../../components/modifyUserInfo/ModifyUserAddress";
-import ModifyUserEmail from "../../components/modifyUserInfo/ModifyUserEmail";
-import ModifyUserPhone from "../../components/modifyUserInfo/ModifyUserPhone";
 import Nav from "../../components/Nav";
 import { modifyUserInfo } from "../../modules/modifyUserInfo";
 
@@ -33,16 +32,20 @@ const title = css`
   text-align: center;
 `;
 
-const emailRegExp =
-  // eslint-disable-next-line
-  /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-const phoneRegExp = /^(\d{2,3})(\d{3,4})(\d{4})$/;
-
 function ModifyUserInfo({ setNewUserInfo }) {
   const [info, setInfo] = useState({});
+  const navigation = useNavigate();
+  const { id } = useParams();
 
   const goToModify = () => {
-    setNewUserInfo(info);
+    if (window.confirm("저장하시겠습니까?")) {
+      // They clicked Yes
+      setNewUserInfo(info);
+      navigation(`/bp/mypage/${id}`);
+    } else {
+      // They clicked no
+      return false;
+    }
   };
 
   return (
@@ -57,32 +60,13 @@ function ModifyUserInfo({ setNewUserInfo }) {
             <div css={title}>
               <h1>회원정보 수정</h1>
 
-              {/* 이메일 */}
-              <ModifyUserEmail setInfo={setInfo} />
-
-              {/* 이메일 유효성 검사 */}
-              {emailRegExp.test(info.email) ? null : (
-                <div>
-                  <span style={{ color: "red" }}>uncomplete : </span>
-                  <span>{"ex) 이메일@EXAMPLE.COM"}</span>
-                </div>
-              )}
-
-              {/* 전화번호 */}
-              <ModifyUserPhone setInfo={setInfo} />
-              {/* 전화번호호 유효성 검사 */}
-              {phoneRegExp.test(info.phone) ? null : (
-                <div>
-                  <span style={{ color: "red" }}>uncomplete : </span>
-                  <span>{"ex) 01012345678"}</span>
-                </div>
-              )}
-
               {/* 주소 */}
-              <ModifyUserAddress setInfo={setInfo} />
+              <ModifyUserAddress setInfo={setInfo} info={info} />
 
               {/* 수정 버튼 */}
-              <button onClick={goToModify}>수정하기</button>
+              {info.sido && info.sigugun && info.dong ? (
+                <button onClick={goToModify}>수정하기</button>
+              ) : null}
             </div>
           </div>
         </div>
