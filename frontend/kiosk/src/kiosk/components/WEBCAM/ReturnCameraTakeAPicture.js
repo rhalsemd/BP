@@ -51,15 +51,12 @@ const buttonDiv = css`
 
 const KioskReturnCameraTakeAPicture = (data) => {
   const [iscapture, setIscapture] = useState(false);
-  const [imageCount, setImageCount] = useState(1);
 
   let videoRef = useRef(null);
   let photoRef = useRef(null);
 
   const qrdata = data.data.data;
   const navigate = useNavigate();
-
-  // get access to user webcamera
 
   const getVideo = () => {
     navigator.mediaDevices
@@ -76,13 +73,11 @@ const KioskReturnCameraTakeAPicture = (data) => {
       });
   };
 
-  // to take picture of user
   let ctx = "";
 
   const takePicture = () => {
-    const width = 1024;
-    // const height = width / (4 / 3)
-    const height = 600;
+    const width = 256;
+    const height = 150;
 
     let video = videoRef.current;
     let photo = photoRef.current;
@@ -91,69 +86,17 @@ const KioskReturnCameraTakeAPicture = (data) => {
     photo.height = height;
 
     ctx = photo.getContext("2d");
-    ctx.drawImage(video, 0, 0, width, height);
+    const pic = ctx.drawImage(video, 0, 0, width, height);
+    console.log(pic);
   };
 
   useEffect(() => {
     getVideo();
   }, [videoRef]);
-  // save canvas Image in server
 
   const saveImage = () => {
-    // 데이터 URL로 그대로 보내기
     const canvas = document.getElementById("$canvas");
     const imgdataUrl = canvas.toDataURL("image/png");
-
-    // 1. 이미지 다운로드 후 업로드
-    const link = document.createElement("a");
-    // 이거는 download 폴더로 바로
-    link.href = imgdataUrl;
-    link.download = `ReturnIMG_${imageCount}`;
-
-    link.click();
-
-    // 2. blob으로 변환해서 서버로 보내기
-
-    // let blobBin = atob(imgdataUrl.split(',')[1]);
-    // let array = [];
-    // for (let i = 0; i < blobBin.length; i++) {
-    //   array.push(blobBin.charCodeAt(i));
-    // }
-    // let newfile = new Blob([new Uint8Array(array)], {type: 'image/png'});
-    // let formdata = new FormData();
-    // formdata.append("files", newfile);
-
-    // for (const KeyValue of formdata) console.log(KeyValue)
-
-    // const data = await fetch(`${dataUrl}`)
-    // const blob = await data.blob();
-    // const blobUrl = URL.createObjectURL(blob)
-    // console.log(blobUrl);
-    // axios.post('http://localhost:3001/posts ', {
-    //   data : formdata,
-    // })
-    // .then((response) => console.log(response.data))
-    // .catch((error) => console.error(error));
-  };
-
-  // 이미지 및 qrdata 전송
-  const setFile = (e) => {
-    if (e.target.files[0]) {
-      const img = new FormData();
-      setImageCount(imageCount + 1)
-      axios
-        .post("http://localhost:3001/posts", img)
-        .then((res) => {
-          setIscapture(true);
-          return res
-        })
-        .then((res2) => {
-          QRdataSend();
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    }
   };
 
   const QRdataSend = async () => {
@@ -161,14 +104,14 @@ const KioskReturnCameraTakeAPicture = (data) => {
       axios
         .post("http://localhost:3001/posts", qrdata)
         .then((res) => {
-          console.log(res)
-          navigate("../kiosk/return/receipt")
+          console.log(res);
+          navigate("../kiosk/return/receipt");
         })
         .catch((err) => {
           console.error(err);
         });
     }
-  }
+  };
 
   // clear out the image from the screen
 
@@ -177,7 +120,6 @@ const KioskReturnCameraTakeAPicture = (data) => {
     let ctx = photo.getContext("2d");
     ctx.clearRect(0, 0, photo.width, photo.height);
   };
-
 
   return (
     <div css={ReturnCameraTakeAPictureDiv}>
@@ -197,16 +139,11 @@ const KioskReturnCameraTakeAPicture = (data) => {
         <button onClick={clearImage} className="btn btn-primary">
           Clear Image
         </button>
-        <button onClick={saveImage} className="btn btn-primary">
-          Image Download
-        </button>
-        <input
-          onChange={setFile}
-          type="file"
-          id="imageUpload"
-          accept="image/*"
-          className="btn btn-warning"
-        />
+        {
+          <button onClick={saveImage} className="btn btn-primary">
+            Image Download
+          </button>
+        }
       </div>
     </div>
   );
