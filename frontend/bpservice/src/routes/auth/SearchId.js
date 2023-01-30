@@ -35,17 +35,15 @@ const title = css`
   text-align: center;
 `;
 
-function SeachId({ setFindIdInfo }) {
+function SeachId({ setFindIdInfo, infoErrorReset, setFindIdInfoReset }) {
   const [info, setInfo] = useState({});
-  const { success } = useSelector(({ findIdReducer }) => findIdReducer);
+  const { success, isCertifiNum, infoError } = useSelector(
+    ({ findIdReducer }) => findIdReducer
+  );
   const navigation = useNavigate();
 
   const findIdFnc = () => {
     if (info.email && info.userName) {
-      setInfo((info) => {
-        return { ...info, isSend: true };
-      });
-
       setFindIdInfo({
         email: info.email,
         userName: info.userName,
@@ -59,13 +57,21 @@ function SeachId({ setFindIdInfo }) {
     setInfo((info) => {
       return { ...info, isSend: false };
     });
+    setFindIdInfoReset();
   };
 
   useEffect(() => {
     if (success) {
       navigation("/bp/search/id/result");
+    } else if (isCertifiNum) {
+      setInfo((info) => {
+        return { ...info, isSend: true };
+      });
+    } else if (infoError) {
+      alert("입력한 정보가 존재하지 않습니다.");
+      infoErrorReset();
     }
-  }, [success, navigation]);
+  }, [success, navigation, isCertifiNum, infoError, infoErrorReset]);
 
   return (
     <div>
@@ -87,13 +93,20 @@ function SeachId({ setFindIdInfo }) {
 
               {/* 아이디 찾기 버튼 */}
               <div>
-                <button onClick={findIdFnc}>아이디 찾기</button>
-                <button onClick={modify}>수정</button>
+                {info.isSend ? (
+                  <button onClick={modify}>수정</button>
+                ) : (
+                  <button onClick={findIdFnc}>아이디 찾기</button>
+                )}
               </div>
 
               {/* 인증번호 입력 */}
               {info.isSend ? (
-                <CertificationNumInput info={info} setInfo={setInfo} />
+                <CertificationNumInput
+                  info={info}
+                  setInfo={setInfo}
+                  setFindIdInfoReset={setFindIdInfoReset}
+                />
               ) : null}
             </div>
           </div>
@@ -111,6 +124,12 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setFindIdInfo(info) {
       dispatch(findIdInfo.setFindIdInfo(info));
+    },
+    infoErrorReset() {
+      dispatch(findIdInfo.infoErrorReset());
+    },
+    setFindIdInfoReset() {
+      dispatch(findIdInfo.setFindIdInfoReset());
     },
   };
 };

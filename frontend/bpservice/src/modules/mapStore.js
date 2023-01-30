@@ -20,9 +20,7 @@ function* setApi() {
       })
     );
     yield put({ type: SET_MAP_INFO, payload: get.data });
-  } catch (e) {
-    console.log(e);
-  }
+  } catch (e) {}
 }
 
 export function* mapSaga() {

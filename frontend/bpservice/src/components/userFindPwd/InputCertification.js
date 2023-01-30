@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import { findPwdInfo } from "../../modules/findPwd";
+import Timer from "./Timer";
+import { useRef } from "react";
 
 function InputCertification({
   findPwdReducer,
@@ -9,8 +11,10 @@ function InputCertification({
   info,
   setCertificationNum,
   setSecondErrorReset,
+  setFirstSuccessCertificationReset,
 }) {
   const navigation = useNavigate();
+  const inputRef = useRef(null);
 
   // input 저장
   const onChange = (e) => {
@@ -49,8 +53,20 @@ function InputCertification({
     <>
       {!findPwdReducer.success ? (
         <div>
-          <input placeholder="인증번호" type="text" onChange={onChange} />
+          <input
+            placeholder="인증번호"
+            type="text"
+            onChange={onChange}
+            ref={inputRef}
+          />
           <button onClick={onClick}>확인</button>
+          <Timer
+            setInfo={setInfo}
+            inputRef={inputRef}
+            setFirstSuccessCertificationReset={
+              setFirstSuccessCertificationReset
+            }
+          />
         </div>
       ) : null}
     </>

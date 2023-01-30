@@ -151,8 +151,8 @@ const mapStateToProps = ({ signUp }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    sighUpRequirement() {
-      dispatch(userInfo.sighUpRequirement());
+    sighUpRequirement(data) {
+      dispatch(userInfo.sighUpRequirement(data));
     },
     signUpFailureReset() {
       dispatch(userInfo.signUpFailureReset());

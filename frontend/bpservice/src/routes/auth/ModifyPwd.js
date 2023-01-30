@@ -1,8 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import { useEffect } from "react";
 
 import { useMemo, useState } from "react";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import Footer from "../../components/Footer";
 import ConfirmCondition from "../../components/modifyPwd/ConfirmCondition";
@@ -11,7 +13,7 @@ import ModifyPwdCurrent from "../../components/modifyPwd/ModifyPwdCurrent";
 import ModifyPwdNext from "../../components/modifyPwd/ModifyPwdNext";
 import NextPwdCondition from "../../components/modifyPwd/NextPwdCondition";
 import Nav from "../../components/Nav";
-import { modifyPwdInfo } from "../../modules/modifyPwd";
+import { newPwdErrorReset } from "../../modules/modifyPwd";
 
 const modifyUserArea = css`
   width: 100%;
@@ -36,25 +38,29 @@ const title = css`
   text-align: center;
 `;
 
-function ModifyPwd({ setNewPwd }) {
+function ModifyPwd() {
   const [info, setInfo] = useState({
     current: "",
     next: "",
     isNext: false,
     isConfirm: false,
   });
+  const { error, success } = useSelector(({ modifyPwd }) => modifyPwd);
+  const dispatch = useDispatch();
+  const navigation = useNavigate();
 
   const pwdRegExp = useMemo(() => {
     return /^(?=.*[a-z])(?=.*[0-9])(?=.*[$!@$!%*#^?&]).{8,20}$/;
   }, []);
 
-  const requestModify = () => {
-    const userInfo = {
-      exPwd: info.current,
-      newPwd: info.next,
-    };
-    setNewPwd(userInfo);
-  };
+  useEffect(() => {
+    if (error) {
+      alert("현재 비밀번호가 잘못되었습니다.");
+      dispatch(newPwdErrorReset());
+    } else if (success) {
+      navigation("/");
+    }
+  }, [error, dispatch, success, navigation]);
 
   return (
     <div>
@@ -86,15 +92,6 @@ function ModifyPwd({ setNewPwd }) {
 
               {/* 수정 비밀번호 확인 유효성 검사 */}
               <ConfirmCondition info={info} />
-
-              {/* 수정하기 버튼*/}
-              {info.current &&
-              info.isNext &&
-              info.isConfirm &&
-              info.next === info.confirmPwd &&
-              info.next !== info.current ? (
-                <button onClick={requestModify}>수정하기</button>
-              ) : null}
             </div>
           </div>
         </div>
@@ -107,12 +104,4 @@ function ModifyPwd({ setNewPwd }) {
   );
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setNewPwd(data) {
-      dispatch(modifyPwdInfo.setNewPwd(data));
-    },
-  };
-};
-
-export default connect(null, mapDispatchToProps)(ModifyPwd);
+export default ModifyPwd;

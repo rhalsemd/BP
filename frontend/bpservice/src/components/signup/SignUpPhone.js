@@ -1,14 +1,23 @@
 import React from "react";
 
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { userInfo } from "../../modules/signUp";
 import { useRef } from "react";
 import CertificationInput from "./CertificationInput";
+import { useEffect } from "react";
 
-function SignUpPhone({ info, setInfo, getCertification, certificationTyping }) {
+function SignUpPhone({
+  info,
+  setInfo,
+  getCertification,
+  errorCertifycationReset,
+}) {
   const phoneRegExp = /^(\d{2,3})(\d{3,4})(\d{4})$/;
 
   const inputRef = useRef(null);
+  const { isCertifyNumError, isCertifyNum } = useSelector(
+    ({ signUp }) => signUp
+  );
 
   // 전화번호 입력
   const typePhone = (e) => {
@@ -32,14 +41,12 @@ function SignUpPhone({ info, setInfo, getCertification, certificationTyping }) {
 
   // 인증 번호 받기
   const getCertificationNumber = () => {
+    errorCertifycationReset();
     if (
       phoneRegExp.test(info.phone) &&
       info.phone.length !== 0 &&
       !info.isCertification
     ) {
-      setInfo((info) => {
-        return { ...info, isCertification: true };
-      });
       inputRef.current.disabled = true;
 
       getCertification(info.phone);
@@ -47,6 +54,16 @@ function SignUpPhone({ info, setInfo, getCertification, certificationTyping }) {
       alert("전화번호를 확인해주세요.");
     }
   };
+
+  useEffect(() => {
+    if (isCertifyNum) {
+      setInfo((info) => {
+        return { ...info, isCertification: true };
+      });
+    } else if (isCertifyNumError) {
+      alert("중복된 전화번호입니다.");
+    }
+  }, [isCertifyNum, setInfo, isCertifyNumError]);
 
   // 전화번호 수정
   const modifyPhone = () => {
@@ -104,6 +121,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     getCertification(phone) {
       dispatch(userInfo.getCertification(phone));
+    },
+    errorCertifycationReset() {
+      dispatch(userInfo.errorCertifycationReset());
     },
   };
 };
