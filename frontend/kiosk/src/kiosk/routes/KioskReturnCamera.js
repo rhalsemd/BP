@@ -21,11 +21,11 @@ const KioskReturnCameraStyle = css`
 const KioskReturnCamera = () => {
   // 데이터 수령
   const location = useLocation();
-  const qrdata = location.state.qrdata;
-  
+  console.log(location.state.qrdata)
+
   return (
     <div css={KioskReturnCameraStyle}>
-      <KioskReturnCameraView data={qrdata}/>
+      <KioskReturnCameraView data={location.state}/>
     </div>
   )
 }

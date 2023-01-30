@@ -4,9 +4,9 @@ const PaymentQR = () => {
   return (
     <div>
       <QRCodeSVG 
-        value={"https://www.naver.com/"}
+        value={"http://192.168.100.177:85/kiosk/lent/complete"}
         size={295}
-        imageSettings={{ src:'https://www.naver.com/', width: 10, height: 10 }}
+        imageSettings={{ src:'http://192.168.100.177:85/kiosk/lent/complete', width: 10, height: 10 }}
         id="qr-gen"
         level={"H"}
         includeMargin={true}
