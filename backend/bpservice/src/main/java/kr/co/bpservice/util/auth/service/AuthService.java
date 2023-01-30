@@ -3,9 +3,11 @@ package kr.co.bpservice.util.auth.service;
 
 import jakarta.servlet.http.HttpServletRequest;
 import kr.co.bpservice.entity.common.MailAuth;
+import kr.co.bpservice.entity.common.SmsAuth;
 import kr.co.bpservice.entity.user.User;
 import kr.co.bpservice.entity.user.UserLoginLog;
 import kr.co.bpservice.repository.common.MailAuthRepository;
+import kr.co.bpservice.repository.common.SmsAuthRepository;
 import kr.co.bpservice.repository.user.ULogRepository;
 import kr.co.bpservice.service.common.CAuthService;
 import kr.co.bpservice.util.auth.dto.TokenDto;
@@ -40,6 +42,7 @@ public class AuthService {
     private final AuthenticationManagerBuilder managerBuilder;
     private final UserRepository userRepository;
     private final MailAuthRepository mailAuthRepository;
+    private final SmsAuthRepository smsAuthRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
     private final RedisTemplate redisTemplate;
@@ -49,14 +52,22 @@ public class AuthService {
     public UserResponseDto join(UserRequestDto requestDto) {
         String userId = requestDto.getUserId();
         String pwd = requestDto.getPwd();
+        String email = requestDto.getEmail();
+        String phoneNum = requestDto.getPhoneNum();
 
         checkUserIdFormat(userId);
 
-        if (userRepository.existsById(userId)) {
-            throw new RuntimeException("이미 가입되어 있는 유저입니다");
+        if (userRepository.existsById(userId) || userRepository.existsByEmail(email) || userRepository.existsByPhoneNum(phoneNum)) {
+            throw new RuntimeException("이미 등록된 아이디, 이메일, 또는 연락처입니다.");
         }
 
         checkUserPwdFormat(pwd);
+
+        // SMS 인증을 완료했는지 검증
+        SmsAuth smsAuth = smsAuthRepository.checkSmsAuth(phoneNum);
+        if(smsAuth == null) {
+            return null; // 인증하지 않았으면 null을 반환.
+        }
 
         User user = requestDto.toUser(passwordEncoder);
         user.setRegDt(LocalDateTime.now());
@@ -186,12 +197,13 @@ public class AuthService {
     public Map<String, String> findUserId(UserRequestDto requestDto) throws Exception {
         Map<String, String> resultMap = new HashMap<>();
         String email = requestDto.getEmail();
+        String name = requestDto.getUserName();
 
-        // 사용자가 입력한 이메일이 DB에 존재하는지 확인
-        Optional<User> optionalUser = userRepository.findByEmail(email);
+        // 사용자가 입력한 이메일과 이름에 맞는 회원이 DB에 존재하는지 확인
+        Optional<User> optionalUser = userRepository.findByEmailAndName(email, name);
         if(optionalUser.isEmpty()) {
             resultMap.put("result", "fail");
-            resultMap.put("msg", "존재하지 않는 이메일입니다.");
+            resultMap.put("msg", "존재하지 않는 회원정보입니다.");
         } else {
             // 사용자 이메일로 인증번호 전송
             cAuthService.sendSimpleMessage(email);
@@ -203,49 +215,48 @@ public class AuthService {
     }
 
     public Map<String, String> findUserIdByEmailAuth(Map<String, String> requestMap) throws Exception {
-        Map<String, String> resultMap = new HashMap<>();
-        return emailAuthentication(requestMap, resultMap);
+        return emailAuthentication(requestMap);
     }
 
     public Map<String, String> findUserPwd(Map<String, String> requestMap) throws Exception {
         Map<String, String> resultMap = new HashMap<>();
         String userId = requestMap.get("userId");
         String email = requestMap.get("email");
+        String name = requestMap.get("userName");
 
-        Optional<User> optionalUser = userRepository.findById(userId);
+        Optional<User> optionalUser = userRepository.findByIdAndEmailAndName(userId, email, name);
         if(optionalUser.isPresent()) {
             User user = optionalUser.get();
-            if (email.equals(user.getEmail())) {
-                // 사용자 이메일로 인증번호 전송
-                cAuthService.sendSimpleMessage(email);
-                resultMap.put("result", "success");
-                resultMap.put("msg", "인증번호 전송 성공");
-                return resultMap;
-            }
+            // 사용자 이메일로 인증번호 전송
+            cAuthService.sendSimpleMessage(email);
+            resultMap.put("result", "success");
+            resultMap.put("msg", "인증번호 전송 성공");
+            return resultMap;
         }
         resultMap.put("result", "fail");
-        resultMap.put("msg", "입력한 아이디, 이메일과 일치하는 사용자가 없습니다.");
+        resultMap.put("msg", "입력한 회원정보와 일치하는 사용자가 없습니다.");
         return resultMap;
     }
 
     public Map<String, String> findUserPwdByEmailAuth(Map<String, String> requestMap) {
-        Map<String, String> resultMap = new HashMap<>();
-        return emailAuthentication(requestMap, resultMap);
+        return emailAuthentication(requestMap);
     }
 
     // 이메일 인증을 수행하는 메소드
-    private Map<String, String> emailAuthentication(Map<String, String> requestMap, Map<String, String> resultMap) {
+    private Map<String, String> emailAuthentication(Map<String, String> requestMap) {
+        Map<String, String> resultMap = new HashMap<>();
         String email = requestMap.get("email");
+        String name = requestMap.get("userName");
         String authNum = requestMap.get("authNum").toUpperCase();
         try {
-            cAuthService.vaildateemailMessage(email, authNum);
+            cAuthService.validateEmailMessage(email, authNum);
         } catch(Exception e){
             resultMap.put("result", "fail");
             resultMap.put("msg", "이메일 인증을 실패했습니다.");
             return resultMap;
         }
 
-        User user = userRepository.findByEmail(email).get();
+        User user = userRepository.findByEmailAndName(email, name).get();
         resultMap.put("userId", user.getId());
         resultMap.put("result", "success");
         resultMap.put("msg", "이메일 인증을 성공했습니다.");
@@ -255,9 +266,13 @@ public class AuthService {
     // 비밀번호 찾기에서 비밀변호 변경을 수행하는 메소드
     public Map<String, String> findUserPwdDo(Map<String, String> requestMap) {
         Map<String, String> resultMap = new HashMap<>();
+        String userId = requestMap.get("userId");
+        String name = requestMap.get("userName");
+        String email = requestMap.get("email");
+        String pwd = requestMap.get("pwd");
+
 
         // 정상적인 비밀번호 찾기인지 확인 (이메일 인증을 완료하고 5분 이내인지 확인)
-        String email = requestMap.get("email");
         MailAuth mailAuth = mailAuthRepository.checkMailAuth(email);
 
         if(mailAuth == null || mailAuth.isStatus() == false) {
@@ -267,11 +282,10 @@ public class AuthService {
         }
 
         // 비밀번호 변경 수행.
-        Optional<User> optionalUser = userRepository.findById(requestMap.get("userId"));
+        Optional<User> optionalUser = userRepository.findByIdAndEmailAndName(userId, email, name);
         if(optionalUser.isPresent()) {
+            checkUserPwdFormat(pwd);    // 새로운 비밀번호가 정규표현식에 맞지 않을 경우 예외발생.
             User user = optionalUser.get();
-            String pwd = requestMap.get("pwd");
-
             user.setPwd(passwordEncoder.encode(pwd));
             userRepository.save(user);
             resultMap.put("result", "success");

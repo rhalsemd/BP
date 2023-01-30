@@ -16,6 +16,7 @@ import revenueTrendReducer, {
   revenueTrendSaga,
   revenueTrendMonthSaga,
 } from "./revenueTrend";
+import mypageReducer from "./mypage";
 
 export const rootReducer = combineReducers({
   signUp,
@@ -28,6 +29,7 @@ export const rootReducer = combineReducers({
   histogramReducer,
   getUseageReducer,
   revenueTrendReducer,
+  mypageReducer,
 });
 
 export function* rootSaga() {

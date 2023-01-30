@@ -20,7 +20,7 @@ public class UserRequestDto {
     private String userName;
     private String phoneNum;
     private String sido;
-    private String sigugun;
+    private String sigungu;
     private String dong;
     private String email;
 
@@ -30,7 +30,7 @@ public class UserRequestDto {
                 .name(userName)
                 .phoneNum(phoneNum)
                 .sido(sido)
-                .sigugun(sigugun)
+                .sigungu(sigungu)
                 .dong(dong)
                 .email(email)
                 .pwd(passwordEncoder.encode(pwd))

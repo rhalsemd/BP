@@ -18,7 +18,7 @@ public class UserResponseDto {
     private String userName;
     private String phoneNum;
     private String sido;
-    private String sigugun;
+    private String sigungu;
     private String dong;
     private String email;
 
@@ -28,7 +28,7 @@ public class UserResponseDto {
                 .userName(user.getName())
                 .phoneNum(user.getPhoneNum())
                 .sido(user.getSido())
-                .sigugun(user.getSigugun())
+                .sigungu(user.getSigungu())
                 .dong(user.getDong())
                 .email(user.getEmail())
                 .build();

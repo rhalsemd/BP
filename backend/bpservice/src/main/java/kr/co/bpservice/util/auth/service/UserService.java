@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -38,7 +39,7 @@ public class UserService {
 //    }
 
     @Transactional
-    public UserResponseDto changeUserPassword(String userId, String exPwd, String newPwd) {
+    public UserResponseDto changeUserPassword(String exPwd, String newPwd) {
         User user = userRepository.findById(SecurityUtil.getCurrentUserId()).orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다"));
         if (!passwordEncoder.matches(exPwd, user.getPwd())) {
             throw new RuntimeException("기존 비밀번호가 맞지 않습니다");
@@ -55,7 +56,7 @@ public class UserService {
     public UserResponseDto changeUserInfo(UserRequestDto requestDto) {
         User user = userRepository.findById(SecurityUtil.getCurrentUserId()).orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다"));
         user.setSido(requestDto.getSido());
-        user.setSigugun(requestDto.getSigugun());
+        user.setSigungu(requestDto.getSigungu());
         user.setDong(requestDto.getDong());
         return UserResponseDto.of(userRepository.save(user));
     }
@@ -80,6 +81,8 @@ public class UserService {
         // ActiveState를 탈퇴 상태로 표시
         User user = userRepository.findById(SecurityUtil.getCurrentUserId()).orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다"));
         user.setActiveState(false);
+        // 탈퇴한 시간정보 등록
+        user.setExpDt(LocalDateTime.now());
         userRepository.save(user);
         // 로그아웃 처리
         authService.logout(httpMessage);

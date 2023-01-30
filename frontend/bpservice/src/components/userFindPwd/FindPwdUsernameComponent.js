@@ -1,12 +1,12 @@
-import { useRef, useEffect } from "react";
+import { useEffect, useRef } from "react";
 
-function FindPwdIdComponent({ info, setInfo }) {
+function FindPwdUsernameComponent({ info, setInfo }) {
   const inputRef = useRef(null);
 
-  const idOnChange = (e) => {
+  const usernameOnChange = (e) => {
     const inputValue = e.target.value;
     setInfo((info) => {
-      return { ...info, id: inputValue };
+      return { ...info, userName: inputValue };
     });
   };
 
@@ -20,18 +20,18 @@ function FindPwdIdComponent({ info, setInfo }) {
 
   return (
     <div>
-      <label htmlFor="userId">ID : </label>
+      <label htmlFor="userName">name : </label>
       <input
         type="text"
-        id="userId"
+        id="userName"
         autoComplete="off"
         required
-        placeholder="아이디"
-        onChange={idOnChange}
+        placeholder="이름"
+        onChange={usernameOnChange}
         ref={inputRef}
       />
     </div>
   );
 }
 
-export default FindPwdIdComponent;
+export default FindPwdUsernameComponent;

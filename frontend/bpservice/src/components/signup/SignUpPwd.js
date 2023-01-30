@@ -1,19 +1,31 @@
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
 
 import { userInfo } from "../../modules/signUp";
 
-function SignUpPwd({ pwdTyping }) {
-  const [pwd, setPwd] = useState("");
+function SignUpPwd({ info, setInfo }) {
   // password 정규 표현식
   const pwdRegExp = /^(?=.*[a-z])(?=.*[0-9])(?=.*[$!@$!%*#^?&]).{8,20}$/;
 
   // 비밀번호 입력
   const typePwd = (e) => {
     const pwdInput = e.target.value;
-    setPwd(pwdInput);
+
+    setInfo((info) => {
+      const checkPwd = pwdInput === info.check ? true : false;
+
+      return { ...info, pwd: pwdInput, isTrue: checkPwd };
+    });
+
+    // 비밀번호가 유효한가?
     if (pwdRegExp.test(pwdInput) || pwdInput.length === 0) {
-      pwdTyping(e.target.value);
+      setInfo((info) => {
+        return { ...info, pwdSuccess: true };
+      });
+    } else {
+      setInfo((info) => {
+        return { ...info, pwdSuccess: false };
+      });
     }
   };
 
@@ -32,7 +44,7 @@ function SignUpPwd({ pwdTyping }) {
       </form>
 
       {/* 비밀번호 조건 */}
-      {pwdRegExp.test(pwd) || pwd.length === 0 ? null : (
+      {pwdRegExp.test(info.pwd) || info.pwd.length === 0 ? null : (
         <div>
           <span style={{ color: "red" }}>uncomplete : </span>
           <span>8~20로 비밀번호를 설정해주세요</span>
