@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@CrossOrigin("*")
 @RequestMapping("/api/auth/user/brolly/return")
 @Tag(name = "KBrollyReturnController", description = "키오스크 반납 관련 기능을 제공하기 위한 API")
 public class KBrollyReturnController {

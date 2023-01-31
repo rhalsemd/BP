@@ -15,7 +15,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/auth/user")
 @RequiredArgsConstructor
-@CrossOrigin("*")
 public class ULogoutController {
 
     private final AuthService authService;
