@@ -16,11 +16,11 @@ public class BrollyHolder {
 
     private Integer num;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CASE_ID")
     private BrollyCase brollyCase;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "BROLLY_ID")
     private Brolly brolly;
 }

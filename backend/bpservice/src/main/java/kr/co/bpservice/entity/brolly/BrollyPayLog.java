@@ -21,7 +21,7 @@ public class BrollyPayLog {
 
     private int price;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
     private User user;
 
