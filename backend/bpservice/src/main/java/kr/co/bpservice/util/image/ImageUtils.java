@@ -19,16 +19,7 @@ public class ImageUtils {
     }
 
     public static String getImageUrl(String fileName) {
-        String imageUrl = "";
-        String osInfo = System.getProperty("os.name").toLowerCase();
-
-        if (osInfo.contains("win")) {
-            imageUrl = String.format("%s/%s.png", imageUrlWindows, fileName);
-        } else if (osInfo.contains("linux")) {
-            imageUrl = String.format("%s/%s.png", imageUrlLinux, fileName);
-        }
-
-        return imageUrl;
+        return String.format("%s/%s.png", ImageUtils.getImageUrl(), fileName);
     }
 
     public static String getImageUrl() {
