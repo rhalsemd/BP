@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 @Tag(name = "UBrollyBorrowController", description = "유저 대여 관련 기능을 제공하기 위한 API")
 @RequiredArgsConstructor
 @RestController
-@CrossOrigin("*")
 @RequestMapping("/api/auth/user/brolly/borrow")
 public class UBrollyBorrowController {
     @Autowired

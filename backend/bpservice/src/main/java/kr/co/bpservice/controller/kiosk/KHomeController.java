@@ -20,7 +20,6 @@ import java.util.Map;
 @RequestMapping("/api/kiosk/home")
 @RequiredArgsConstructor
 @RestController
-@CrossOrigin("*")
 public class KHomeController {
     @Autowired
     KHomeService kHomeService;
