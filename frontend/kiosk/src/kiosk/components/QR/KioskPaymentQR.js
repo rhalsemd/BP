@@ -1,6 +1,6 @@
 import {QRCodeSVG} from 'qrcode.react';
 
-const PaymentQR = () => {
+const KioskPaymentQR = () => {
   return (
     <div>
       <QRCodeSVG 
@@ -11,10 +11,10 @@ const PaymentQR = () => {
         level={"H"}
         includeMargin={true}
         bgColor={"white"}
-        fgColor={"black"}
-      />,
+        fgColor={"#404040"}
+      />
     </div>
   )
 }
 
-export default PaymentQR
+export default KioskPaymentQR

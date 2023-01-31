@@ -48,7 +48,7 @@ const buttonDiv = css`
   }
 `;
 
-const KioskReturnCameraTakeAPicture = (data) => {
+const KioskTakeAPicture = (data) => {
   const [iscapture, setIscapture] = useState(false);
 
   let videoRef = useRef(null);
@@ -179,4 +179,4 @@ const KioskReturnCameraTakeAPicture = (data) => {
   );
 };
 
-export default KioskReturnCameraTakeAPicture;
+export default KioskTakeAPicture;

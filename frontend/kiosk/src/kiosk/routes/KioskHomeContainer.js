@@ -1,9 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import { useEffect } from 'react'
-import KioskHomeBtn from '../components/button/KioskHomeBtn'
-import KioskHeader from '../components/HomeHeader'
-import KioskSection from '../components/HomeSection'
+import KioskHeader from '../components/KioskHeader'
+import KioskHomeSection from '../components/KioskHomeSection'
 
 const KioskHomeStyle = css`
   box-sizing: border-box;
@@ -15,20 +13,17 @@ const KioskHomeStyle = css`
 // 위에는 Emotion.js 입니다.
 // 밑에는 JS 입니다.
 
-const KioskHome = () => {
+const KioskHomeContainer = () => {
   return (
     <div css={KioskHomeStyle}>
       <header>
         <KioskHeader />
       </header>
       <section>
-        <KioskSection />
+        <KioskHomeSection />
       </section>
-      <footer>
-        <KioskHomeBtn/>
-      </footer>
     </div>
   )
 }
 
-export default KioskHome;
+export default KioskHomeContainer;
