@@ -1,6 +1,5 @@
 import { Bootpay } from "@bootpay/backend-js";
-import { RestClient } from "@bootpay/server-rest-client";
-import { call, put, fork } from "redux-saga/effects";
+import { call } from "redux-saga/effects";
 import axios from "axios";
 
 Bootpay.setConfiguration({

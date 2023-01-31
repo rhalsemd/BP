@@ -28,6 +28,7 @@ const Rectangle = ({ x, y, width, height, jijum, getRevenueTrend, caseId }) => {
 
   return (
     <animated.rect
+      onClick={() => onclick()}
       x={springProps.x}
       y={springProps.y}
       width={springProps.width}

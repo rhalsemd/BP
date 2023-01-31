@@ -62,6 +62,10 @@ function ModifyPwd() {
     }
   }, [error, dispatch, success, navigation]);
 
+  const back = () => {
+    navigation(-1);
+  };
+
   return (
     <div>
       <header>
@@ -92,6 +96,9 @@ function ModifyPwd() {
 
               {/* 수정 비밀번호 확인 유효성 검사 */}
               <ConfirmCondition info={info} />
+
+              {/* 뒤로가기 버튼 */}
+              <button onClick={back}>뒤로가기</button>
             </div>
           </div>
         </div>

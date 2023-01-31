@@ -2,10 +2,10 @@
 import { css } from "@emotion/react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer";
 import Nav from "../../components/Nav";
-import { deleteUser, getUserLog, logOut } from "../../modules/mypage";
+import { deleteUser, getUserInfo } from "../../modules/mypage";
 
 const myPageArea = css`
   width: 100%;
@@ -26,6 +26,12 @@ const userInfoModal = css`
   height: 10vh;
   border: 1px black solid;
   margin-bottom: 4vh;
+  display: flex;
+  justify-content: space-around;
+  .userInfoItem {
+    display: flex;
+    align-items: center;
+  }
 `;
 
 const contentModal = css`
@@ -41,11 +47,12 @@ const content = css`
 
 function MyPage() {
   const navigation = useNavigate();
-  const { id } = useParams();
   const dispatch = useDispatch();
-  const { log } = useSelector(({ mypageReducer }) => mypageReducer);
+  const { userInfo: userInfo = "" } = useSelector(
+    ({ mypageReducer }) => mypageReducer
+  );
 
-  console.log(log);
+  const { userName, sido, sigungu, dong } = userInfo;
 
   const goToModifyInfo = () => {
     navigation(`/bp/modify/user`);
@@ -59,13 +66,12 @@ function MyPage() {
     dispatch(deleteUser());
   };
 
-  const goToLogOut = () => {
-    dispatch(logOut());
-  };
-
+  // 회원정보 - 아직 구현 X
   useEffect(() => {
-    dispatch(getUserLog());
+    dispatch(getUserInfo());
   }, [dispatch]);
+
+  console.log(userInfo);
 
   return (
     <div>
@@ -80,7 +86,12 @@ function MyPage() {
           </div>
           {/* 유저 정보 */}
           <div css={userInfoModal}>
-            <h1>fsaefes</h1>
+            <h1>{userName}</h1>
+            <div className="userInfoItem">
+              <span>{sido} </span>
+              <span>{sigungu} </span>
+              <span>{dong}</span>
+            </div>
           </div>
           <div css={contentModal}>
             <div css={content}>
@@ -99,11 +110,6 @@ function MyPage() {
               {/* 회원 탈퇴 */}
               <div>
                 <button onClick={goToDeleteUser}>회원 탈퇴</button>
-              </div>
-
-              {/* 로그아웃 */}
-              <div>
-                <button onClick={goToLogOut}>로그아웃</button>
               </div>
             </div>
           </div>

@@ -1,8 +1,8 @@
-import { Suspense, lazy, useEffect, useCallback } from "react";
+import { Suspense, lazy, useEffect } from "react";
 
 import { useState } from "react";
 import { Map } from "react-kakao-maps-sdk";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { mapInfo } from "../modules/mapStore";
 // import BackBtn from "../components/kakaoMap/BackBtn";
 const BackBtn = lazy(() => import("../components/kakaoMap/BackBtn"));
@@ -16,35 +16,51 @@ const EventMarkerContainer = lazy(() =>
 );
 
 function KakaoMap({ getMapInfo }) {
-  const positions = [
-    {
-      title: "카카오",
-      latlng: { lat: 33.450705, lng: 126.570677 },
-      isOpen: false,
-    },
-    {
-      title: "생태연못",
-      latlng: { lat: 33.450936, lng: 126.569477 },
-      isOpen: false,
-    },
-    {
-      title: "텃밭",
-      latlng: { lat: 33.450879, lng: 126.56994 },
-      isOpen: false,
-    },
-    {
-      title: "근린공원",
-      latlng: { lat: 33.451393, lng: 126.570738 },
-      isOpen: false,
-    },
-  ];
+  const { caseInfo } = useSelector(({ mapStore }) => mapStore);
+  // const positions = [
+  //   {
+  //     title: "카카오",
+  //     latlng: { lat: 33.450705, lng: 126.570677 },
+  //     isOpen: false,
+  //   }
+  // ];
+  const positions = [];
+  if (caseInfo) {
+    caseInfo.forEach((item) => {
+      positions.push({
+        title: item.NAME,
+        brollyCount: item.BROLLYCOUNT,
+        brollyTotalCount: item.BROLLYTOTALCOUNT,
+        id: item.id,
+        isOpen: false,
+        latlng: {
+          lat: item.LAT,
+          lng: item.LNG,
+        },
+      });
+    });
+  }
+
   const [mapLocation, setMapLocation] = useState({
-    lat: 33.450705,
-    lng: 126.570677,
+    lat: 36.1070711,
+    lng: 128.4180507,
   });
 
+  const getLocation = () => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      const { latitude, longitude } = {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+      };
+      setMapLocation((mapLocation) => {
+        return { lat: latitude, lng: longitude };
+      });
+    });
+  };
+
   useEffect(() => {
-    getMapInfo();
+    getMapInfo(mapLocation);
+    // getLocation();
   }, []);
 
   return (
@@ -64,17 +80,19 @@ function KakaoMap({ getMapInfo }) {
           width: "100%",
           height: "100vh",
         }}
-        level={1} // 지도의 확대 레벨
+        level={2} // 지도의 확대 레벨
       >
-        {positions.map((position, index) => (
-          <div key={`${position.title}-${position.latlng}`}>
-            <EventMarkerContainer
-              position={position}
-              index={index}
-              positions={positions}
-            />
-          </div>
-        ))}
+        {positions.map((position, index) => {
+          return (
+            <div key={`${position.title}-${position.latlng}`}>
+              <EventMarkerContainer
+                position={position}
+                index={index}
+                positions={positions}
+              />
+            </div>
+          );
+        })}
         <BackBtn />
         <CurrentBtn />
         <MarkerInfo />
@@ -89,8 +107,8 @@ const mapStateToProps = ({ mapStore }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getMapInfo() {
-      dispatch(mapInfo.getMapInfo());
+    getMapInfo(data) {
+      dispatch(mapInfo.getMapInfo(data));
     },
   };
 };
