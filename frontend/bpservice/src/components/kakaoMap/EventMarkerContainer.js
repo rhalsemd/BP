@@ -63,11 +63,11 @@ function EventMarkerContainer({
                     src="//t1.daumcdn.net/thumb/C84x76/?fname=http://t1.daumcdn.net/cfile/2170353A51B82DE005"
                     width="73"
                     height="70"
-                    alt="카카오 스페이스닷원"
+                    alt={position.title}
                   />
                 </div>
                 <div className={styled.desc}>
-                  <div className={styled.ellipsis}>
+                  {/* <div className={styled.ellipsis}>
                     제주특별자치도 제주시 첨단로 242
                   </div>
                   <div className={(styled.jibun, styled.ellipsis)}>
@@ -82,7 +82,9 @@ function EventMarkerContainer({
                     >
                       홈페이지
                     </a>
-                  </div>
+                  </div> */}
+                  <h2>현재 우산 수 : {position.brollyCount}</h2>
+                  <h2>총 우산 수 : {position.brollyTotalCount}</h2>
                 </div>
               </div>
             </div>

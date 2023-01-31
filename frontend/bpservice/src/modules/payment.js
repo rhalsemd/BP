@@ -1,5 +1,5 @@
 import { createAction, handleActions } from "redux-actions";
-import { takeLatest, takeEvery } from "redux-saga/effects";
+import { takeLatest } from "redux-saga/effects";
 import * as paymentApi from "../lib/paymentApi";
 
 const GET_BOOTPAY = "payment/GET_BOOTPAY";
