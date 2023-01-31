@@ -11,6 +11,7 @@ import UseageTable from "../../components/chart/UseageTable";
 import DayPicker from "../../components/UI/DayPicker";
 import MonthPicker from "../../components/UI/MonthPicker";
 import { getBranchRevenue } from "../../modules/histogram";
+import Button from "@mui/material/Button";
 
 const barChartStyle = css`
   height: 400px;
@@ -20,15 +21,26 @@ const barChartStyle = css`
   margin: 0 2.5vw 1vh 2.5vw;
   border-radius: 4px;
   border: 1px solid rgba(224, 224, 224, 1);
+  display: flex;
+  align-items: center;
 `;
 
 const h1Style = css`
   height: 5vh;
   background-color: #fff;
 `;
-const divStyle = css`
+
+const btnStyle = css`
+  width: 30vw;
+  margin: 0 2vw 0 2vw;
+`;
+
+const 캘린더Style = css`
+  position: absolute;
+  background: white;
+  width: 100vw;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
 `;
 
 const TotalIncome = ({ getBranchRevenue }) => {
@@ -39,26 +51,34 @@ const TotalIncome = ({ getBranchRevenue }) => {
   const dayData = dayjs(date).format("YYYY-MM-DD");
   useEffect(() => getBranchRevenue(dayData), []);
   return (
-    <div css={divStyle}>
+    <div>
       <Nav />
-      <button
+      <Button
+        variant="contained"
+        size="small"
+        css={btnStyle}
         onClick={() => {
           setMonthOn((prev) => !prev);
           setWeekOn(false);
         }}
       >
         Month
-      </button>
-      <button
+      </Button>
+      <Button
+        variant="contained"
+        size="small"
+        css={btnStyle}
         onClick={() => {
           setWeekOn((prev) => !prev);
           setMonthOn(false);
         }}
       >
         Year
-      </button>
-      {monthOn && <DayPicker />}
-      {weekOn && <MonthPicker />}
+      </Button>
+      <div css={캘린더Style}>
+        {monthOn && <DayPicker />}
+        {weekOn && <MonthPicker />}
+      </div>
       <h1 css={h1Style}>
         {urlName === "/admin/total_income" ? "TOTAL INCOME" : "TOTAL USEAGE"}
       </h1>

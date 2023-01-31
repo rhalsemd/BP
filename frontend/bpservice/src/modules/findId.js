@@ -4,16 +4,26 @@ import { call, put, takeLatest } from "redux-saga/effects";
 
 const SET_FIND_ID_INFO = "findId/SET_FIND_ID_INFO";
 const SET_CERTIFICATION_NUM = "findId/SET_CERTIFICATION_NUM";
+const SET_FIND_ID_INFO_RESET = "findId/SET_FIND_ID_INFO_RESET";
+
+const INFO_ERROR = "findId/INFO_ERROR";
+const INFO_ERROR_RESET = "findId/INFO_ERROR_RESET";
+
 const CHECK_CERTIFICATION_NUM = "findId/CHECK_CERTIFICATION_NUM";
 const CHECK_SUCCESS = "findId/CHECK_SUCCESS";
 
 const setFindIdInfo = createAction(SET_FIND_ID_INFO, (info) => info);
-// const setCertificationNum = createAction(SET_CERTIFICATION_NUM, (data) => data);
 const checkCertificationNum = createAction(
   CHECK_CERTIFICATION_NUM,
   (info) => info
 );
-const API = `http://localhost:8080`;
+const infoErrorReset = createAction(INFO_ERROR_RESET, () => undefined);
+const setFindIdInfoReset = createAction(
+  SET_FIND_ID_INFO_RESET,
+  () => undefined
+);
+
+const API = `http://192.168.100.79:8080`;
 
 // 인증번호 요청
 function* getFindIdFnc(data) {
@@ -37,7 +47,7 @@ function* getFindIdFnc(data) {
       yield put({ type: SET_CERTIFICATION_NUM, success: true });
     }
   } catch (e) {
-    console.error("아이디 찾기 오류", e);
+    yield put({ type: INFO_ERROR, error: true });
   }
 }
 
@@ -60,12 +70,17 @@ function* checkCertifiNum(data) {
         },
       });
     });
+
+    console.log("인증 성공", post.data.userId);
+
     if (post.status === 200) {
-      yield put({ type: CHECK_SUCCESS, success: true, payload: post.data });
+      yield put({
+        type: CHECK_SUCCESS,
+        success: true,
+        payload: post.data.userId,
+      });
     }
-  } catch (e) {
-    console.error("일치 확인 에러", e);
-  }
+  } catch (e) {}
 }
 
 export function* findIdSaga() {
@@ -80,8 +95,17 @@ const findIdReducer = handleActions(
     [SET_CERTIFICATION_NUM]: (state, action) => {
       return { ...state, isCertifiNum: action.success };
     },
+    [SET_FIND_ID_INFO_RESET]: (state, action) => {
+      return { ...state, isCertifiNum: false };
+    },
     [CHECK_SUCCESS]: (state, action) => {
       return { ...state, success: action.success, id: action.payload };
+    },
+    [INFO_ERROR]: (state, action) => {
+      return { ...state, infoError: action.error };
+    },
+    [INFO_ERROR_RESET]: (state, action) => {
+      return { ...state, infoError: false };
     },
   },
   initialState
@@ -90,6 +114,8 @@ const findIdReducer = handleActions(
 export const findIdInfo = {
   setFindIdInfo,
   checkCertificationNum,
+  infoErrorReset,
+  setFindIdInfoReset,
 };
 
 export default findIdReducer;

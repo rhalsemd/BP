@@ -19,7 +19,6 @@ import java.util.Map;
 @RequestMapping("/api/weather")
 @RequiredArgsConstructor
 @RestController
-@CrossOrigin("*")
 public class WeatherController {
     @Autowired
     WeatherService weatherService;

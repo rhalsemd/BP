@@ -1,34 +1,6 @@
-// /** @jsxImportSource @emotion/react */
-// import { css } from "@emotion/react";
+/** @jsxImportSource @emotion/react */
 
-// // import styled from "./Nav.module.css";
-
-// function Nav() {
-//   const outerBox = css`
-//     width: 100%;
-//     height: 8vh;
-//     border: black solid 1px;
-//   `;
-//   const container = css`
-//     display: flex;
-//     justify-content: space-between;
-//   `;
-//   return (
-//     <div css={outerBox}>
-//       <div css={container}>
-//         <div>
-//           <h3>Nav</h3>
-//         </div>
-//         <div>
-//           <h3>hamberger</h3>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default Nav;
-
+import { css } from "@emotion/react";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -42,11 +14,13 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 
+const divStyle = css`
+  display: flex;
+  justify-content: space-between;
+  height: 8vh;
+`;
 export default function Nav() {
   const [state, setState] = React.useState({
-    top: false,
-    left: false,
-    bottom: false,
     right: false,
   });
 
@@ -57,7 +31,6 @@ export default function Nav() {
     ) {
       return;
     }
-
     setState({ ...state, [anchor]: open });
   };
 
@@ -73,7 +46,7 @@ export default function Nav() {
           <ListItem key={text} disablePadding>
             <ListItemButton>
               <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                <InboxIcon />
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItemButton>
@@ -97,19 +70,26 @@ export default function Nav() {
   );
 
   return (
-    <div>
-      {["left", "right", "top", "bottom"].map((anchor) => (
-        <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
-          <Drawer
-            anchor={anchor}
-            open={state[anchor]}
-            onClose={toggleDrawer(anchor, false)}
-          >
-            {list(anchor)}
-          </Drawer>
-        </React.Fragment>
-      ))}
+    <div css={divStyle}>
+      <h2>BP</h2>
+      <Button onClick={toggleDrawer("right", true)} height="30">
+        <p
+          css={{
+            fontSize: "7vw",
+            color: "black",
+            fontWeight: "bolder",
+          }}
+        >
+          {"\u2261"}
+        </p>
+      </Button>
+      <Drawer
+        anchor={"right"}
+        open={state["right"]}
+        onClose={toggleDrawer("right", false)}
+      >
+        {list("right")}
+      </Drawer>
     </div>
   );
 }

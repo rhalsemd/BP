@@ -1,18 +1,18 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import KioskReturnCameraTakeAPicture from "./WEBCAM/ReturnCameraTakeAPicture";
+import KioskTakeAPicture from "./WEBCAM/KioskTakeAPicture";
 
 const KioskCameraCheckDiv = css`
   width: 1024px;
   height: 600px;
 `;
 
-const KioskReturnCameraView = (data) => {
+const KioskReturnCameraSection = (data) => {
   return (
     <div css={KioskCameraCheckDiv}>
-      <KioskReturnCameraTakeAPicture data={data}/>
+      <KioskTakeAPicture data={data}/>
     </div>
   );
 }
 
-export default KioskReturnCameraView;
+export default KioskReturnCameraSection;

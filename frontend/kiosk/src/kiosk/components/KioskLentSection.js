@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import PaymentQR from './QR/PaymentQR'
+import KioskHomeBtn from './button/KioskHomeBtn'
+import KioskPaymentQR from './QR/KioskPaymentQR'
 
 const KioskLentSectionStyle = css`
   display: flex;
@@ -59,12 +60,12 @@ const KioskLentMethod = css`
 // 위에는 JS 입니다.
 // 밑에는 JSX 입니다.
 
-const LentSection = () => {
+const KioskLentSection = () => {
   return (
     <div css={KioskLentSectionStyle}>
       <div css={KioskLentQR}>
         <div css={QR}>
-          <PaymentQR/>
+          <KioskPaymentQR/>
         </div>
       </div>
       <div css={KioskLentMethod}>
@@ -79,8 +80,9 @@ const LentSection = () => {
           <li>30초 뒤 뚜껑이 자동으로 닫힙니다.</li>
         </ol>
       </div>
+      <KioskHomeBtn/>
     </div>
   )
 }
 
-export default LentSection;
+export default KioskLentSection;

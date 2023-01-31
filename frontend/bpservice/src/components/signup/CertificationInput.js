@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useRef } from "react";
 import { connect } from "react-redux";
 import { userInfo } from "../../modules/signUp";
@@ -21,7 +22,6 @@ function CertificationInput({ info, setInfo, checkCertificationNum, signUp }) {
       setInfo((info) => {
         return { ...info, isCertificationSuccess: true };
       });
-      inputRef.current.disabled = true;
 
       checkCertificationNum({
         authNum: info.certifiNum,
@@ -31,6 +31,12 @@ function CertificationInput({ info, setInfo, checkCertificationNum, signUp }) {
       alert("인증번호를 확인해주세요.");
     }
   };
+
+  useEffect(() => {
+    if (signUp.successCertifycation) {
+      inputRef.current.disabled = true;
+    }
+  }, [signUp.successCertifycation]);
 
   return (
     <>
@@ -44,7 +50,7 @@ function CertificationInput({ info, setInfo, checkCertificationNum, signUp }) {
         onChange={typeCertificationTyping}
         ref={inputRef}
       />
-      {info.isCertification ? (
+      {info.isCertification && !signUp.successCertifycation ? (
         <span>
           <Timer setInfo={setInfo} inputRef={inputRef} info={info} />
           <button onClick={getConfirm}>확인</button>

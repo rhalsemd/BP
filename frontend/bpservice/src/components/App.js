@@ -21,6 +21,7 @@ import ModifyPwd from "../routes/auth/ModifyPwd";
 import SearchPwd from "../routes/auth/SearchPwd";
 import Payment from "../routes/auth/Payment";
 import SearchChangePwd from "../routes/auth/SearchChangePwd";
+import SearchIdResultPage from "../routes/auth/SearchIdResultPage";
 
 export const GlobalStyle = css`
   body {
@@ -39,16 +40,19 @@ function App() {
         <Route path="/bp/terms" element={<UserToU />}></Route>
         <Route path="/bp/complete" element={<CompletePage />}></Route>
         <Route path="/bp/search/id" element={<SearchId />}></Route>
-        <Route path="/bp/search/id/result" element={<SearchId />}></Route>
+        <Route
+          path="/bp/search/id/result"
+          element={<SearchIdResultPage />}
+        ></Route>
         <Route path="/bp/search/pwd" element={<SearchPwd />}></Route>
         <Route
           path="/bp/search/change/pwd"
           element={<SearchChangePwd />}
         ></Route>
         <Route path="/bp/map" element={<KakaoMap />}></Route>
-        <Route path="/bp/mypage/:id" element={<MyPage />}></Route>
-        <Route path="/bp/modify/user/:id" element={<ModifyUserInfo />}></Route>
-        <Route path="/bp/modify/pwd/:id" element={<ModifyPwd />}></Route>
+        <Route path="/bp/mypage" element={<MyPage />}></Route>
+        <Route path="/bp/modify/user" element={<ModifyUserInfo />}></Route>
+        <Route path="/bp/modify/pwd" element={<ModifyPwd />}></Route>
         <Route path="/bp/payment" element={<Payment />} />
 
         <Route path="/admin" element={<LoginAdmin />} />

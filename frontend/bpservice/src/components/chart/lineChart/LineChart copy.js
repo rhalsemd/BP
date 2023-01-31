@@ -1,222 +1,109 @@
-var Axis = React.createClass({
-  propTypes: {
-    h: React.PropTypes.number,
-    axis: React.PropTypes.func,
-    axisType: React.PropTypes.oneOf(["x", "y"]),
-  },
+/** @jsxImportSource @emotion/react */
+import { useEffect, useRef, useMemo } from "react";
+import { css } from "@emotion/react";
+import * as d3 from "d3";
+import { svg } from "d3";
 
-  componentDidUpdate: function () {
-    this.renderAxis();
-  },
-  componentDidMount: function () {
-    this.renderAxis();
-  },
-  renderAxis: function () {
-    var node = ReactDOM.findDOMNode(this);
-    d3.select(node).call(this.props.axis);
-  },
-  render: function () {
-    var translate = "translate(0," + this.props.h + ")";
+const chartConatiner = css`
+  height: 500px;
+  width: 600;
+  background-color: #f9fafb;
+  margin: 0 2.5vw 2vh 2.5vw;
+  border-radius: 4px;
+  border: 1px solid rgba(224, 224, 224, 1);
+  overflow: scroll;
+`;
+const centerCenter = css`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 50px;
+  overflow: scroll;
+`;
 
-    return (
-      <g
-        className="axis"
-        transform={this.props.axisType == "x" ? translate : ""}
-      ></g>
-    );
-  },
-});
+let [mt, mr, mb, ml] = [30, 30, 30, 50];
+const WIDTH = 1000;
+const HEIGHT = 490;
 
-var Grid = React.createClass({
-  propTypes: {
-    h: React.PropTypes.number,
-    grid: React.PropTypes.func,
-    gridType: React.PropTypes.oneOf(["x", "y"]),
-  },
+const GRAPH_WIDTH = WIDTH - ml - mr;
+const GRAPH_HEIGHT = HEIGHT - mt - mb;
 
-  componentDidUpdate: function () {
-    this.renderGrid();
-  },
-  componentDidMount: function () {
-    this.renderGrid();
-  },
-  renderGrid: function () {
-    var node = ReactDOM.findDOMNode(this);
-    d3.select(node).call(this.props.grid);
-  },
-  render: function () {
-    var translate = "translate(0," + this.props.h + ")";
-    return (
-      <g
-        className="y-grid"
-        transform={this.props.gridType == "x" ? translate : ""}
-      ></g>
-    );
-  },
-});
+const dataDemo = [
+  { data: "1월 11일", cost: 13000 },
+  { data: "1월 12일", cost: 42000 },
+  { data: "1월 13일", cost: 59800 },
+  { data: "1월 14일", cost: 12000 },
+  { data: "1월 15일", cost: 98000 },
+  { data: "1월 16일", cost: 130000 },
+  { data: "1월 17일", cost: 76000 },
+  { data: "1월 18일", cost: 19800 },
+  { data: "1월 19일", cost: 108000 },
+];
 
-var Dots = React.createClass({
-  propTypes: {
-    data: React.PropTypes.array,
-    x: React.PropTypes.func,
-    y: React.PropTypes.func,
-  },
-  render: function () {
-    var _self = this;
+export default function LineChart() {
+  const axesRef = useRef(null);
+  const lineChart = useRef();
+  const xScale = useMemo(() => {
+    return d3
+      .scaleLinear()
+      .domain([0, dataDemo.length - 1])
+      .range([0, GRAPH_WIDTH - 400]);
+  }, [dataDemo, WIDTH]);
 
-    //remove last & first point
-    var data = this.props.data.splice(1);
-    data.pop();
+  const yScale = useMemo(() => {
+    return d3.scaleLinear().domain([0, 130000]).range([GRAPH_HEIGHT, 0]);
+  }, [dataDemo, HEIGHT]);
 
-    var circles = data.map(function (d, i) {
-      return (
-        <circle
-          className="dot"
-          r="7"
-          cx={_self.props.x(d.date)}
-          cy={_self.props.y(d.count)}
-          fill="#7dc7f4"
-          stroke="#3f5175"
-          strokeWidth="5px"
-          key={i}
-        />
-      );
-    });
+  useEffect(() => {
+    const svg = d3
+      .select(lineChart.current)
+      .attr("width", GRAPH_WIDTH)
+      .attr("height", HEIGHT)
+      .style("overflow", "scorll");
 
-    return <g>{circles}</g>;
-  },
-});
-
-var LineChart = React.createClass({
-  propTypes: {
-    width: React.PropTypes.number,
-    height: React.PropTypes.number,
-    chartId: React.PropTypes.string,
-  },
-
-  getDefaultProps: function () {
-    return {
-      width: 600,
-      height: 300,
-      chartId: "v1_chart",
-    };
-  },
-  getInitialState: function () {
-    return {
-      width: this.props.width,
-    };
-  },
-  render: function () {
-    var data = [
-      { day: "02-11-2016", count: 180 },
-      { day: "02-12-2016", count: 250 },
-      { day: "02-13-2016", count: 150 },
-      { day: "02-14-2016", count: 496 },
-      { day: "02-15-2016", count: 140 },
-      { day: "02-16-2016", count: 380 },
-      { day: "02-17-2016", count: 100 },
-      { day: "02-18-2016", count: 150 },
-    ];
-
-    var margin = { top: 5, right: 50, bottom: 20, left: 50 },
-      w = this.state.width - (margin.left + margin.right),
-      h = this.props.height - (margin.top + margin.bottom);
-
-    var parseDate = d3.time.format("%m-%d-%Y").parse;
-
-    data.forEach(function (d) {
-      d.date = parseDate(d.day);
-    });
-
-    var x = d3.time
-      .scale()
-      .domain(
-        d3.extent(data, function (d) {
-          return d.date;
-        })
-      )
-      .rangeRound([0, w]);
-
-    var y = d3.scale
-      .linear()
-      .domain([
-        0,
-        d3.max(data, function (d) {
-          return d.count + 100;
-        }),
-      ])
-      .range([h, 0]);
-
-    var yAxis = d3.svg.axis().scale(y).orient("left").ticks(5);
-
-    var xAxis = d3.svg
-      .axis()
-      .scale(x)
-      .orient("bottom")
-      .tickValues(
-        data
-          .map(function (d, i) {
-            if (i > 0) return d.date;
-          })
-          .splice(1)
-      )
-      .ticks(4);
-
-    var yGrid = d3.svg
-      .axis()
-      .scale(y)
-      .orient("left")
-      .ticks(5)
-      .tickSize(-w, 0, 0)
-      .tickFormat("");
-
-    var line = d3.svg
+    const generateScaleLine = d3
       .line()
-      .x(function (d) {
-        return x(d.date);
-      })
-      .y(function (d) {
-        return y(d.count);
-      })
-      .interpolate("cardinal");
+      .x((d, i) => xScale(i) + ml)
+      .y((d) => yScale(d.cost) + mb);
 
-    var transform = "translate(" + margin.left + "," + margin.top + ")";
+    const xAxis = d3
+      .axisBottom(xScale)
+      .ticks(dataDemo.data)
+      .tickFormat((d) => dataDemo[d].data);
 
-    return (
-      <div>
-        <svg
-          id={this.props.chartId}
-          width={this.state.width}
-          height={this.props.height}
-        >
-          <g transform={transform}>
-            <Grid h={h} grid={yGrid} gridType="y" />
-            <Axis h={h} axis={yAxis} axisType="y" />
-            <Axis h={h} axis={xAxis} axisType="x" />
-            <path
-              className="line shadow"
-              d={line(data)}
-              strokeLinecap="round"
-            />
-            <Dots data={data} x={x} y={y} />
-          </g>
-        </svg>
+    const yAxis = d3.axisLeft(yScale).ticks(10);
+
+    svg
+      .append("g")
+      .call(xAxis)
+      .attr("transform", `translate(${ml}, ${GRAPH_HEIGHT + mt})`);
+
+    svg.append("g").call(yAxis).attr("transform", `translate(${ml}, ${mt})`);
+
+    const path = svg
+      .append("path")
+      .datum(dataDemo)
+      .attr("fill", "none")
+      .attr("stroke", "steelblue")
+      .attr("stroke-linejoin", "round")
+      .attr("stroke-linecap", "round")
+      .attr("stroke-width", 1.5)
+      .attr("d", generateScaleLine);
+
+    const pathLength = path.node().getTotalLength();
+    const transitionPath = d3.transition().ease(d3.easeSin).duration(2500);
+
+    path
+      .attr("stroke-dashoffset", pathLength)
+      .attr("stroke-dasharray", pathLength)
+      .transition(transitionPath)
+      .attr("stroke-dashoffset", 0);
+  }, []);
+
+  return (
+    <>
+      <div css={chartConatiner}>
+        <svg ref={lineChart}></svg>
       </div>
-    );
-  },
-});
-
-var Visitors = React.createClass({
-  render: function () {
-    return (
-      <div>
-        <h3>Visitors to your site</h3>
-        <div className="bottom-right-svg">
-          <LineChart />
-        </div>
-      </div>
-    );
-  },
-});
-
-ReactDOM.render(<Visitors />, document.getElementById("top-line-chart"));
+    </>
+  );
+}

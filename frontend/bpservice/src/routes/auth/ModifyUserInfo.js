@@ -41,7 +41,7 @@ function ModifyUserInfo({ setNewUserInfo }) {
     if (window.confirm("저장하시겠습니까?")) {
       // They clicked Yes
       setNewUserInfo(info);
-      navigation(`/bp/mypage/${id}`);
+      navigation(`/bp/mypage`);
     } else {
       // They clicked no
       return false;

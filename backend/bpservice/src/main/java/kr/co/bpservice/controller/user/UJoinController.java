@@ -15,7 +15,6 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/user/join")
-@CrossOrigin("*")
 public class UJoinController {
     private final AuthService authService;
     private final CAuthService cAuthService;

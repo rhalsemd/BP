@@ -8,8 +8,9 @@ import Nav from "../../components/Nav";
 import Footer from "../../components/Footer";
 import IdComponent from "../../components/userLogin/IdComponent";
 import PwdComponent from "../../components/userLogin/PwdComponent";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { loginInfo } from "../../modules/userLogin";
+// import { cencleBootpay } from "../../modules/payment";
 
 const loginArea = css`
   width: 100%;
@@ -34,24 +35,19 @@ const title = css`
   text-align: center;
 `;
 
-function Login({ userLogin, setLoginInfo, getUserInfo }) {
+function Login({ userLogin, setLoginInfo, getUserInfo, errorReset }) {
+function Login({ setLoginInfo }) {
+  const dispatch = useDispatch();
   const [info, setInfo] = useState({});
-
-  const getLogin = () => {
-    if (info.id && info.pwd) {
-      setLoginInfo({ id: info.id, pwd: info.pwd });
-    } else {
-      alert("아이디와 비밀번호를 입력해주세요.");
-    }
-  };
 
   useEffect(() => {
     if (userLogin.error) {
       alert("아이디와 비밀번호가 틀렸습니다.");
+      errorReset();
     } else if (userLogin.success) {
       getUserInfo();
     }
-  }, [userLogin.error, userLogin.success, getUserInfo]);
+  }, [userLogin.error, userLogin.success, getUserInfo, errorReset]);
 
   return (
     <div>
@@ -69,18 +65,17 @@ function Login({ userLogin, setLoginInfo, getUserInfo }) {
               <IdComponent setInfo={setInfo} />
 
               {/* 비밀번호 */}
-              <PwdComponent setInfo={setInfo} />
+              <PwdComponent
+                setInfo={setInfo}
+                info={info}
+                setLoginInfo={setLoginInfo}
+              />
 
               {/* 찾기 */}
               <div>
                 <Link to="/bp/search/pwd">비밀번호 찾기</Link> |{" "}
                 <Link to="/bp/search/id">아이디 찾기</Link> |{" "}
                 <Link to="/bp/signup">회원가입</Link>
-              </div>
-
-              {/* 로그인 버튼 */}
-              <div>
-                <button onClick={getLogin}>로그인</button>
               </div>
             </div>
           </div>
@@ -105,6 +100,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     getUserInfo() {
       dispatch(loginInfo.getUserInfo());
+    },
+    errorReset() {
+      dispatch(loginInfo.errorReset());
     },
   };
 };

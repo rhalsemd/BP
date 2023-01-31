@@ -7,8 +7,8 @@ function Footer() {
   `;
   const container = css`
     width: 100%;
-    height: 20vh;
-    border: 1px black solid;
+    height: 18vh;
+    background-color: #191f28;
   `;
 
   return (

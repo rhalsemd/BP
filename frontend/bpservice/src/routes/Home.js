@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import { useSelector } from "react-redux";
 
 import Nav from "../components/Nav";
 import HomeLogo from "../components/home/HomeLogo";

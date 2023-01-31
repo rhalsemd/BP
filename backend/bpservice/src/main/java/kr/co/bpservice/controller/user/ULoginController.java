@@ -14,7 +14,6 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/user")
-@CrossOrigin("*")
 public class ULoginController {
     private final AuthService authService;
     @PostMapping("/login")  // 로그인

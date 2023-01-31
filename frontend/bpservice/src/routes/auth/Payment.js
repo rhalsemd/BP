@@ -1,13 +1,15 @@
 import { Bootpay } from "@bootpay/client-js";
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import Footer from "../../components/Footer";
 import Nav from "../../components/Nav";
+import { getBootpay } from "../../modules/payment";
 
-const startPay = async () => {
+const startPay = async (dispatch) => {
   try {
     const response = await Bootpay.requestPayment({
       application_id: "63d0816b3049c8001a5dc07b",
-      price: 100,
+      price: 200,
       order_name: "테스트결제",
       order_id: "TEST_ORDER_ID",
       pg: "kcp",
@@ -24,7 +26,7 @@ const startPay = async () => {
           id: "item_id",
           name: "테스트아이템",
           qty: 1,
-          price: 100,
+          price: 200,
         },
       ],
       extra: {
@@ -39,7 +41,7 @@ const startPay = async () => {
         // 가상계좌 입금 완료 처리
         break;
       case "done":
-        console.log(response);
+        dispatch(getBootpay(response.data));
         // 결제 완료 처리
         break;
       case "confirm": //payload.extra.separately_confirmed = true; 일 경우 승인 전 해당 이벤트가 호출됨
@@ -81,6 +83,10 @@ const startPay = async () => {
   }
 };
 export default function Payment() {
-  useEffect(() => startPay());
+  const dispatch = useDispatch();
+  useEffect(() => {
+    startPay(dispatch);
+  });
+
   return <></>;
 }

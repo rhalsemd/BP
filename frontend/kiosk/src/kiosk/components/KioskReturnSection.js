@@ -78,7 +78,7 @@ const KioskReturnMethod = css`
 // 위에는 JS 입니다.
 // 밑에는 JSX 입니다.
 
-const ReturnSection = () => {
+const KioskReturnSection = () => {
   const navigate = useNavigate();
 
   const nextMove = () => {
@@ -111,4 +111,4 @@ const ReturnSection = () => {
   )
 }
 
-export default ReturnSection;
+export default KioskReturnSection;

@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import KioskAddress from './address/Address'
+import KioskAddress from './address/KioskAddress'
 
 
 const KioskHeaderStyle = css`
@@ -23,7 +23,7 @@ const KioskLocation = css`
 // 위에는 Emotion.js 입니다.
 // 밑에는 JS 입니다.
 
-const HomeHeader = () => {
+const KioskHeader = () => {
   return (
     <div css={KioskHeaderStyle}>
       <h3 css={KioskLogo}>
@@ -36,4 +36,4 @@ const HomeHeader = () => {
   )
 }
 
-export default HomeHeader;
+export default KioskHeader;

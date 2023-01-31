@@ -1,7 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import { useEffect } from "react";
 import { useState } from "react";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer";
 import Nav from "../../components/Nav";
 import ChangePwdInput from "../../components/userFindChangePwd/ChangePwdInput";
@@ -35,11 +37,14 @@ const pwdRegExp = /^(?=.*[a-z])(?=.*[0-9])(?=.*[$!@$!%*#^?&]).{8,20}$/;
 
 function SearchChangePwd({ setNewPwd }) {
   const [info, setInfo] = useState({ pwd: "", check: "" });
-  const onClick = () => {
-    if (info.pwd && info.check && info.pwd === info.check) {
-      setNewPwd({ pwd: info.check });
+  const { pwdSuccess } = useSelector(({ findPwdReducer }) => findPwdReducer);
+  const navigation = useNavigate();
+
+  useEffect(() => {
+    if (pwdSuccess) {
+      navigation("/bp/login");
     }
-  };
+  }, [pwdSuccess, navigation]);
 
   return (
     <div>
@@ -61,10 +66,6 @@ function SearchChangePwd({ setNewPwd }) {
 
               {/* 비밀번호 확인 */}
               <CheckPwdInput info={info} setInfo={setInfo} />
-
-              {info.pwd === info.check && info.pwd && info.check ? (
-                <button onClick={onClick}>비밀번호 변경</button>
-              ) : null}
             </div>
           </div>
         </div>

@@ -14,11 +14,11 @@ import java.util.Map;
 @Repository
 public interface ASysManageRepository extends JpaRepository<BrollyRentLog,Integer> {
     @Query(value = "CALL MAKE_KIOSK_MONEY_DAY(:paramDay, :paramSwitch);", nativeQuery = true)
-    List<Map<String, String>> RALLKioskMoneyDay(@Param("paramDay") String paramDay,@Param("paramSwitch") String paramSwitch);
+    List<Map<String, String>> rALLKioskMoneyDay(@Param("paramDay") String paramDay,@Param("paramSwitch") String paramSwitch);
 
     @Query(value = "CALL MAKE_KIOSK_MONEY_MONTH(:paramMonth, :paramSwitch);", nativeQuery = true)
-    List<Map<String, String>> RALLKioskMoneyMonth(@Param("paramMonth") String paramMonth, @Param("paramSwitch") String paramSwitch);
+    List<Map<String, String>> rALLKioskMoneyMonth(@Param("paramMonth") String paramMonth, @Param("paramSwitch") String paramSwitch);
 
     @Query(value = "CALL MAKE_KIOSK_MONEY_YEAR_MONTH(:paramDate, :paramId, :paramSwitch);", nativeQuery = true)
-    List<Map<String, String>> RKioskMoneyYearMonth(@Param("paramDate") String paramDate, @Param("paramId") String paramId, @Param("paramSwitch") String paramSwitch);
+    List<Map<String, String>> rKioskMoneyYearMonth(@Param("paramDate") String paramDate, @Param("paramId") String paramId, @Param("paramSwitch") String paramSwitch);
 }

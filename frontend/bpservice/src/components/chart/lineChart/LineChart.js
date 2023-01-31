@@ -40,14 +40,13 @@ const dataDemo = [
 ];
 
 export default function LineChart() {
-  // const dataDemo = [10, 20, 50, 0, 30, 40];
   const axesRef = useRef(null);
   const lineChart = useRef();
   const xScale = useMemo(() => {
     return d3
       .scaleLinear()
       .domain([0, dataDemo.length - 1])
-      .range([0, GRAPH_WIDTH - 10]);
+      .range([0, GRAPH_WIDTH - 400]);
   }, [dataDemo, WIDTH]);
 
   const yScale = useMemo(() => {
@@ -60,24 +59,11 @@ export default function LineChart() {
       .attr("width", GRAPH_WIDTH)
       .attr("height", HEIGHT)
       .style("overflow", "scorll");
-    // .style("background", "black");
 
     const generateScaleLine = d3
       .line()
       .x((d, i) => xScale(i) + ml)
-      .y((d) => yScale(d.cost) + mb)
-      .curve(d3.curveCardinal);
-
-    console.log(dataDemo.length);
-    // console.log(dataDemo.length - 1);
-
-    svg
-      .selectAll(".line")
-      .data([dataDemo])
-      .join("path")
-      .attr("d", (d) => generateScaleLine(d))
-      .attr("fill", "none")
-      .attr("stroke", "black");
+      .y((d) => yScale(d.cost) + mb);
 
     const xAxis = d3
       .axisBottom(xScale)
@@ -93,34 +79,39 @@ export default function LineChart() {
 
     svg.append("g").call(yAxis).attr("transform", `translate(${ml}, ${mt})`);
 
+    const path = svg
+      .append("path")
+      .datum(dataDemo)
+      .attr("fill", "none")
+      .attr("stroke", "steelblue")
+      .attr("stroke-linejoin", "round")
+      .attr("stroke-linecap", "round")
+      .attr("stroke-width", 1.5)
+      .attr("d", generateScaleLine);
+
+    const pathLength = path.node().getTotalLength();
+    const transitionPath = d3.transition().ease(d3.easeSin).duration(3500);
+
+    path
+      .attr("stroke-dashoffset", pathLength)
+      .attr("stroke-dasharray", pathLength)
+      .transition(transitionPath)
+      .attr("stroke-dashoffset", 0);
+
     svg
       .selectAll("circle") // 1.SVG 태그 안에 있는 circle을 모두 찾는다.
       .data(dataDemo) // 2.찾은 요소에 데이터를 씌운다.
       .enter() // 3.찾은 요소에 개수보다 데이터가 더 많을경우..
       .append("circle") // 4.circle 을 추가한다.
-      .attr("r", 5) //  - 반지름 5픽셀
+      .attr("r", 4) //  - 반지름 5픽셀
       .attr("cx", (d, i) => {
         console.log(xScale(i));
         return xScale(i) + ml;
       }) //  - x 위치값 설정.
       .attr("cy", (d) => yScale(d.cost) + mb) //  - y 위치값 설정.
-      .style("fill", "black");
+      .style("fill", "steelblue")
+      .style("stroke", "4px");
   }, []);
-
-  // useEffect(() => {
-  //   const svgElement = d3.select(axesRef.current);
-  //   svgElement.selectAll("*").remove();
-
-  //   const xAxisGenerator = d3.axisBottom(xScale);
-  //   svgElement
-  //     .append("g")
-  //     .attr("transform", "translate(0," + GRAPH_HEIGHT + ")")
-  //     .call(xAxisGenerator);
-
-  //   const yAxisGenerator = d3.axisLeft(yScale);
-
-  //   svgElement.append("g").call(yAxisGenerator);
-  // }, [xScale, yScale, GRAPH_HEIGHT]);
 
   return (
     <>

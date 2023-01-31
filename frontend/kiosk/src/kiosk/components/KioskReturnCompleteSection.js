@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import KioskHomeMove from './button/KioskCompleteHomeBtn'
+import KioskCompleteHomeBtn from './button/KioskCompleteHomeBtn'
 
 const KioskReturnReceiptStyle = css`
   display: flex;
@@ -132,14 +132,14 @@ const KioskReturnSectionCompleteStyle = css`
 // 위에는 JS 입니다.
 // 밑에는 JSX 입니다.
 
-const ReturnReceipt = () => {
+const KioskReturnCompleteSection = () => {
 
   return (
     <div css={KioskReturnReceiptStyle}>
       <div css={KioskReceiptImg}>
         <div css={KioskReturnSectionCompleteStyle}>
           <p>6번 케이스에 넣어주세요. 감사합니다!</p>
-          <KioskHomeMove />
+          <KioskCompleteHomeBtn />
         </div>
       </div>
       <div css={KioskReturnReceiptView}>
@@ -161,4 +161,4 @@ const ReturnReceipt = () => {
   )
 }
 
-export default ReturnReceipt;
+export default KioskReturnCompleteSection;

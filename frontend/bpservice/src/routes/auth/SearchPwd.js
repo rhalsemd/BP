@@ -33,15 +33,16 @@ const title = css`
   text-align: center;
 `;
 
-function SearchPwd({ findPwdReducer, setFindPwdInfo, setErrorReset }) {
+function SearchPwd({
+  findPwdReducer,
+  setFindPwdInfo,
+  setErrorReset,
+  setFirstSuccessCertificationReset,
+}) {
   const [info, setInfo] = useState({});
 
   const findPwd = () => {
     if (info.id && info.email && info.userName) {
-      setInfo((info) => {
-        return { ...info, isSendEmail: true };
-      });
-
       setFindPwdInfo({
         id: info.id,
         email: info.email,
@@ -52,6 +53,13 @@ function SearchPwd({ findPwdReducer, setFindPwdInfo, setErrorReset }) {
     }
   };
 
+  const modify = () => {
+    setInfo((info) => {
+      return { ...info, isSendEmail: false };
+    });
+    setFirstSuccessCertificationReset();
+  };
+
   // 회원 정보가 잘못되었을 때
   useEffect(() => {
     if (findPwdReducer.firstError) {
@@ -60,8 +68,12 @@ function SearchPwd({ findPwdReducer, setFindPwdInfo, setErrorReset }) {
         return { ...info, isSendEmail: false };
       });
       setErrorReset();
+    } else if (findPwdReducer.firstSuccess) {
+      setInfo((info) => {
+        return { ...info, isSendEmail: true };
+      });
     }
-  }, [findPwdReducer.firstError, setErrorReset]);
+  }, [findPwdReducer.firstError, setErrorReset, findPwdReducer.firstSuccess]);
 
   return (
     <div>
@@ -86,13 +98,23 @@ function SearchPwd({ findPwdReducer, setFindPwdInfo, setErrorReset }) {
 
               {/* 비밀번호 찾기 버튼 */}
               <div>
-                <button onClick={findPwd}>인증번호 받기</button>
+                {info.isSendEmail ? (
+                  <button onClick={modify}>수정</button>
+                ) : (
+                  <button onClick={findPwd}>인증번호 받기</button>
+                )}
               </div>
 
               {/* 인증번호 입력 */}
               {info.isSendEmail ? (
                 <>
-                  <InputCertification info={info} setInfo={setInfo} />
+                  <InputCertification
+                    info={info}
+                    setInfo={setInfo}
+                    setFirstSuccessCertificationReset={
+                      setFirstSuccessCertificationReset
+                    }
+                  />
                 </>
               ) : null}
             </div>
@@ -118,6 +140,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     setErrorReset() {
       dispatch(findPwdInfo.setErrorReset());
+    },
+    setFirstSuccessCertificationReset() {
+      dispatch(findPwdInfo.setFirstSuccessCertificationReset());
     },
   };
 };

@@ -1,9 +1,13 @@
 import { createAction, handleActions } from "redux-actions";
-import { call, put, takeLatest } from "redux-saga/effects";
+import { call, put, takeEvery } from "redux-saga/effects";
+import { RestClient } from "@bootpay/server-rest-client";
 import axios from "axios";
 
 const GET_CERTIFYCATION = "signUp/GET_CERTIFYCATION";
 const SET_CERTIFYCATION = "signUp/SET_CERTIFYCATION";
+const SUCCESS_CERTIFYCATION = "signUp/SUCCESS_CERTIFYCATION";
+const ERROR_CERTIFYCATION = "signUp/ERROR_CERTIFYCATION";
+const ERROR_CERTIFYCATION_RESET = "signUp/ERROR_CERTIFYCATION_RESET";
 
 const SIGN_UP_REQUIREMENT = "signUp/SIGN_UP_REQUIREMENT";
 const SIGN_UP_SUCCESS = "signUp/SIGN_UP_SUCCESS";
@@ -22,7 +26,7 @@ const SET_DONG_DATA = "signUp/SET_DONG_DATA";
 const CHECK_CERTIFICATION_NUM = "signUp/CHECK_CERTIFICATION_NUM";
 
 const getCertification = createAction(GET_CERTIFYCATION, (data) => data);
-const sighUpRequirement = createAction(SIGN_UP_REQUIREMENT, () => undefined);
+const sighUpRequirement = createAction(SIGN_UP_REQUIREMENT, (data) => data);
 const getSidoData = createAction(GET_SIDO_DATA, () => undefined);
 const getGugun = createAction(GET_GUGUN_DATA, (data) => data);
 const getDong = createAction(GET_DONG_DATA, (data) => data);
@@ -31,8 +35,12 @@ const checkCertificationNum = createAction(
   (num) => num
 );
 const signUpFailureReset = createAction(SIGN_UP_FAILURE_RESET, () => undefined);
+const errorCertifycationReset = createAction(
+  ERROR_CERTIFYCATION_RESET,
+  () => undefined
+);
 
-const API = `http://localhost:8080`;
+const API = `http://192.168.100.79:8080`;
 
 // 인증번호 요청 saga
 function* getCertifi(data) {
@@ -50,14 +58,14 @@ function* getCertifi(data) {
     });
     yield put({ type: SET_CERTIFYCATION, success: true });
   } catch (e) {
-    console.log(e);
+    yield put({ type: ERROR_CERTIFYCATION, error: true });
   }
 }
 
 // 인증번호 확인 Saga
 function* checkCertifiNumFnc(data) {
   const CERTIFICATION_NUM = data.payload;
-
+  console.log(CERTIFICATION_NUM.authNum, CERTIFICATION_NUM.phone);
   try {
     const post = yield call(() => {
       return axios({
@@ -72,16 +80,15 @@ function* checkCertifiNumFnc(data) {
         },
       });
     });
-    console.log("인증 성공", post);
-  } catch (e) {
-    console.error("인증번호 확인 에러", e);
-  }
+    if (post.status === 200) {
+      yield put({ type: SUCCESS_CERTIFYCATION, success: true });
+    }
+  } catch (e) {}
 }
 
 // 회원가입 요청 Saga
 function* getSignUp(data) {
   const userInfoData = data.payload;
-
   try {
     const post = yield call(() => {
       axios({
@@ -93,7 +100,7 @@ function* getSignUp(data) {
           userName: userInfoData.userName,
           phoneNum: userInfoData.phone,
           sido: userInfoData.sido,
-          sigugun: userInfoData.gungu,
+          sigungu: userInfoData.gugun,
           dong: userInfoData.dong,
           email: userInfoData.email,
         },
@@ -102,9 +109,8 @@ function* getSignUp(data) {
         },
       });
     });
-    if (post.status === 200) {
-      yield put({ type: SIGN_UP_SUCCESS, success: true });
-    }
+
+    yield put({ type: SIGN_UP_SUCCESS, success: true });
   } catch (e) {
     yield put({ type: SIGN_UP_FAILURE, error: true });
   }
@@ -112,12 +118,11 @@ function* getSignUp(data) {
 
 // 시도 요청하는 함수
 function* getSidoFnc() {
-  const API = `http://192.168.100.80:8080/api/address/first-depth`;
   try {
     const get = yield call(() => {
       return axios({
         method: "get",
-        url: API,
+        url: `${API}/api/address/first-depth`,
         headers: {
           "Content-Type": "application/json",
         },
@@ -126,19 +131,16 @@ function* getSidoFnc() {
     if (get.status === 200) {
       yield put({ type: SET_SIDO_DATA, payload: get.data });
     }
-  } catch (e) {
-    console.log("시도가 안되나?", e);
-  }
+  } catch (e) {}
 }
 
 // 구군 요청하는 함수
 function* getGugunFnc(data) {
-  const API = `http://192.168.100.80:8080/api/address/second-depth`;
   try {
     const get = yield call(() => {
       return axios({
         method: "get",
-        url: API,
+        url: `${API}/api/address/second-depth`,
         params: {
           sido: data.payload,
         },
@@ -150,20 +152,17 @@ function* getGugunFnc(data) {
     if (get.status === 200) {
       yield put({ type: SET_GUGUN_DATA, payload: get.data });
     }
-  } catch (e) {
-    console.error("구군이 안되나?", e);
-  }
+  } catch (e) {}
 }
 
 // 동 요청하는 함수
 function* getDongFnc(data) {
-  const API = `http://192.168.100.80:8080/api/address/third-depth`;
   console.log(data);
   try {
     const get = yield call(() => {
       return axios({
         method: "get",
-        url: API,
+        url: `${API}/api/address/third-depth`,
         params: {
           sido: data.payload.sido,
           sigungu: data.payload.gugun,
@@ -176,9 +175,7 @@ function* getDongFnc(data) {
     if (get.status === 200) {
       yield put({ type: SET_DONG_DATA, payload: get.data });
     }
-  } catch (e) {
-    console.error("동이 안되나?", e);
-  }
+  } catch (e) {}
 }
 
 export function* certifiSaga() {
@@ -196,6 +193,15 @@ const signUpReducer = handleActions(
   {
     [SET_CERTIFYCATION]: (state, action) => {
       return { ...state, isCertifyNum: action.success };
+    },
+    [ERROR_CERTIFYCATION]: (state, action) => {
+      return { ...state, isCertifyNumError: action.error };
+    },
+    [ERROR_CERTIFYCATION_RESET]: (state, action) => {
+      return { ...state, isCertifyNumError: false };
+    },
+    [SUCCESS_CERTIFYCATION]: (state, action) => {
+      return { ...state, successCertifycation: action.success };
     },
     [SET_SIDO_DATA]: (state, action) => {
       return { ...state, sido: action.payload };
@@ -227,6 +233,7 @@ export const userInfo = {
   getDong,
   checkCertificationNum,
   signUpFailureReset,
+  errorCertifycationReset,
 };
 
 export default signUpReducer;
