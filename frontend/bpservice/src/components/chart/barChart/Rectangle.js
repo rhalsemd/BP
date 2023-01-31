@@ -6,11 +6,11 @@ const onMouseOver = () => {
   console.log(1);
 };
 
-const Rectangle = ({ x, y, width, height, jijum, getRevenueTrend }) => {
+const Rectangle = ({ x, y, width, height, jijum, getRevenueTrend, caseId }) => {
   const onclick = (bucket) => {
     console.log("1: 클릭");
     getRevenueTrend({ month: "01", year: "2023" });
-    alert(`나중에 링크 연결할거임 값 : ${bucket}`);
+    alert(`나중에 링크 연결할거임 값 : ${caseId}`);
   };
   // const { x, y, width, height } = props;
 
@@ -28,16 +28,14 @@ const Rectangle = ({ x, y, width, height, jijum, getRevenueTrend }) => {
 
   return (
     <animated.rect
-      onMouseLeave={() => onMouseOver()}
-      onClick={() => onclick(jijum)}
       x={springProps.x}
       y={springProps.y}
       width={springProps.width}
       height={springProps.height}
       opacity={0.7}
-      stroke="#9d174d"
-      fill="#9d174d"
-      fillOpacity={0.3}
+      stroke="black"
+      fill="steelblue"
+      fillOpacity={1}
       strokeWidth={1}
       rx={1}
     />

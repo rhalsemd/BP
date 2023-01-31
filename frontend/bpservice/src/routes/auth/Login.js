@@ -8,8 +8,9 @@ import Nav from "../../components/Nav";
 import Footer from "../../components/Footer";
 import IdComponent from "../../components/userLogin/IdComponent";
 import PwdComponent from "../../components/userLogin/PwdComponent";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { loginInfo } from "../../modules/userLogin";
+// import { cencleBootpay } from "../../modules/payment";
 
 const loginArea = css`
   width: 100%;
@@ -35,6 +36,8 @@ const title = css`
 `;
 
 function Login({ userLogin, setLoginInfo, getUserInfo, errorReset }) {
+function Login({ setLoginInfo }) {
+  const dispatch = useDispatch();
   const [info, setInfo] = useState({});
 
   useEffect(() => {
