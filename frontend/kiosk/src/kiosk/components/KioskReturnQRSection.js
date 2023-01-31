@@ -27,7 +27,7 @@ const KioskReturnQRCheckSection = css`
   }
 `;
 
-const ReturnQRView = () => {
+const KioskReturnQRSection = () => {
   const [data, setData] = useState("");
   const navigate = useNavigate();
 
@@ -62,4 +62,4 @@ const ReturnQRView = () => {
   );
 };
 
-export default ReturnQRView;
+export default KioskReturnQRSection;

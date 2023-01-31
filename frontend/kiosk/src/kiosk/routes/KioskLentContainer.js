@@ -3,9 +3,8 @@ import { css } from '@emotion/react'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import KioskHomeBtn from '../components/button/KioskHomeBtn'
-import KioskHeader from '../components/HomeHeader'
-import KioskLentSection from '../components/LentSection'
+import KioskHeader from '../components/KioskHeader'
+import KioskLentSection from '../components/KioskLentSection'
 
 const KioskLentStyle = css`
   box-sizing: border-box;
@@ -17,7 +16,7 @@ const KioskLentStyle = css`
 // 위에는 Emotion.js 입니다.
 // 밑에는 JS 입니다.
 
-const KioskLent = () => {
+const KioskLentContainer = () => {
   // 결제완료 확인해서 
   const [isconfirm, setIsconfirm] = useState(null);
   const navigate = useNavigate();
@@ -42,8 +41,8 @@ const KioskLent = () => {
     return () => {
       clearTimeout(myTimer)
     }
-  },[])
-  
+  }, [])
+
   useEffect(() => {
     getPayConfirm();
   }, [isconfirm])
@@ -61,11 +60,8 @@ const KioskLent = () => {
         <KioskLentSection />
         <button onClick={move}>이동</button>
       </section>
-      <footer>
-        <KioskHomeBtn />
-      </footer>
     </div>
   )
 }
 
-export default KioskLent;
+export default KioskLentContainer;
