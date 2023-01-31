@@ -2,14 +2,13 @@ package kr.co.bpservice.service.kiosk;
 
 import kr.co.bootpay.Bootpay;
 import kr.co.bootpay.model.request.Cancel;
-import kr.co.bpservice.entity.brolly.BrollyRentLog;
 import kr.co.bpservice.repository.kiosk.KBrollyReturnRepository;
 import kr.co.bpservice.repository.user.UBrollyPayRepository;
+import kr.co.bpservice.util.image.ImageUtils;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.ModelMap;
 
 import java.io.FileOutputStream;
 import java.time.LocalDateTime;
@@ -30,6 +29,7 @@ public class KBrollyReturnService {
 
     @Value("${BootPay.privateKey}")
     public String privateKey;
+
     //결제 환불 및 DB 변경
     public Map<String,Object> returnPayData(String brollyid, int caseId){
         String brollyRentLogId = kBrollyReturnRepository.getRentlogId(brollyid);
@@ -86,31 +86,33 @@ public class KBrollyReturnService {
     public boolean returnUpdateImg(Map<String, Object> param)throws Exception{
         String qrdata = param.get("brolly_id").toString();
         String brollyRentLogId = kBrollyReturnRepository.getRentlogId(qrdata);
-        //이미지 넣을 rentlog id 가져옴
-
-        ModelMap map = new ModelMap();
 
         String binaryData = param.get("img_url").toString();
         FileOutputStream stream = null;
-        try{
-            if(binaryData == null || binaryData.trim().equals("")) {
+        try {
+            if (binaryData == null || binaryData.trim().equals("")) {
                 throw new Exception();
             }
+
             binaryData = binaryData.replaceAll("data:image/png;base64,", "");
             byte[] file = Base64.decodeBase64(binaryData);
-            String fileName=  UUID.randomUUID().toString();
-            String imgURL = "C:/Users/SSAFY/Downloads/"+fileName+".png";
+
+            String fileName = UUID.randomUUID().toString();
+            String imgURL = ImageUtils.getImageUrl(fileName);
+
+            // 파일스트림 저장
             stream = new FileOutputStream(imgURL);
             stream.write(file);
             stream.close();
-            System.out.println("캡처 저장");
-            kBrollyReturnRepository.updateRentlogImg(imgURL,Integer.parseInt(brollyRentLogId));
 
-        }catch(Exception e){
+            // 파일이름을 데이터베이스에 저장
+            kBrollyReturnRepository.updateRentlogImg(fileName, Integer.parseInt(brollyRentLogId));
+
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.println("에러 발생");
-        }finally{
-            if(stream != null) {
+        } finally {
+            if (stream != null) {
                 stream.close();
             }
         }
