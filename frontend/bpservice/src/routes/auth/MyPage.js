@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import Footer from "../../components/Footer";
-import Nav from "../../components/Nav";
+import Nav from "../../components/NavAdmin";
 import { deleteUser, getUserLog, logOut } from "../../modules/mypage";
 
 const myPageArea = css`

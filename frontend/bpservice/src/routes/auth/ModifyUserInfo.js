@@ -6,7 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import Footer from "../../components/Footer";
 import ModifyUserAddress from "../../components/modifyUserInfo/ModifyUserAddress";
-import Nav from "../../components/Nav";
+import Nav from "../../components/NavAdmin";
 import { modifyUserInfo } from "../../modules/modifyUserInfo";
 
 const modifyUserArea = css`

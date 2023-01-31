@@ -10,7 +10,7 @@ import LoginAdmin from "../routes/admin/LoginAdmin";
 import TotalChart from "../routes/admin/TotalChart";
 import RevenueTrend from "../routes/admin/RevenueTrend";
 // import Useage from "../routes/admin/Usesage";
-import History from "../routes/admin/History";
+import UserLog from "../routes/admin/UserLog";
 import UserToU from "../routes/auth/UserToU";
 import CompletePage from "../routes/auth/CompletePage";
 import SearchId from "../routes/auth/SearchId";
@@ -22,6 +22,7 @@ import SearchPwd from "../routes/auth/SearchPwd";
 import Payment from "../routes/auth/Payment";
 import SearchChangePwd from "../routes/auth/SearchChangePwd";
 import SearchIdResultPage from "../routes/auth/SearchIdResultPage";
+import Users from "../routes/admin/Users";
 
 export const GlobalStyle = css`
   body {
@@ -56,11 +57,11 @@ function App() {
         <Route path="/bp/payment" element={<Payment />} />
 
         <Route path="/admin" element={<LoginAdmin />} />
-        <Route path="/admin/total_income" element={<TotalChart />} />
-        <Route path="/admin/total_useage" element={<TotalChart />} />
-        <Route path="/admin/revenue_trend/:id" element={<RevenueTrend />} />
-        {/* <Route path="/admin/useage" element={<Useage />} /> */}
-        <Route path="/admin/useage/:id" element={<History />} />
+        <Route path="/admin/total-income" element={<TotalChart />} />
+        <Route path="/admin/total-useage" element={<TotalChart />} />
+        <Route path="/admin/revenue-trend/:id" element={<RevenueTrend />} />
+        <Route path="/admin/users" element={<Users />} />
+        <Route path="/admin/users/:id" element={<UserLog />} />
       </Routes>
     </Router>
     // </div>

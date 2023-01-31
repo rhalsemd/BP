@@ -3,7 +3,7 @@ import { css } from "@emotion/react";
 import { useSelector } from "react-redux";
 
 import Footer from "../../components/Footer";
-import Nav from "../../components/Nav";
+import Nav from "../../components/NavAdmin";
 
 const resultArea = css`
   width: 100%;

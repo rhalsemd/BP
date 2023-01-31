@@ -40,7 +40,7 @@ export const getRevenueTrendMonthFailure = createAction(
   (revenueTrend) => revenueTrend
 );
 
-const initalData = {};
+const initalData = [];
 
 const revenueTrendReducer = handleActions(
   {

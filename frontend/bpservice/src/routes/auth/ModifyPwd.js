@@ -12,7 +12,7 @@ import ModifyPwdConfirm from "../../components/modifyPwd/ModifyPwdConfirm";
 import ModifyPwdCurrent from "../../components/modifyPwd/ModifyPwdCurrent";
 import ModifyPwdNext from "../../components/modifyPwd/ModifyPwdNext";
 import NextPwdCondition from "../../components/modifyPwd/NextPwdCondition";
-import Nav from "../../components/Nav";
+import Nav from "../../components/NavAdmin";
 import { newPwdErrorReset } from "../../modules/modifyPwd";
 
 const modifyUserArea = css`

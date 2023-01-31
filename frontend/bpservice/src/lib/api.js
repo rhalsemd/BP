@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// const url = "http://192.168.100.176:8080";
-const url = "http://192.168.100.80:8080";
+const url = "http://192.168.137.138:8080";
+// const url = "http://192.168.100.80:8080";
 
 export const getBranchRevenue = (day) => {
   console.log("getBranchRevenue axios", day);
@@ -78,6 +78,28 @@ export const getRevenueTrendMonth = (year) => {
   return axios({
     method: "get",
     url: `${url}/admin/KioskMoneyYear/${year}`,
+    headers: {
+      "Content-Type ": "application/json",
+    },
+  });
+};
+
+export const getUsers = () => {
+  console.log("getUsers axios");
+  return axios({
+    method: "get",
+    url: `${url}/api/auth/admin/log/get-user-data`,
+    headers: {
+      "Content-Type ": "application/json",
+    },
+  });
+};
+
+export const getUserLog = (userId) => {
+  console.log("getUserLog API 엑시오스", userId);
+  return axios({
+    method: "get",
+    url: `${url}/api/auth/admin/log/get-lent-log-data/${userId}`,
     headers: {
       "Content-Type ": "application/json",
     },

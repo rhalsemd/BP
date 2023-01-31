@@ -1,5 +1,5 @@
 import { createAction, handleActions } from "redux-actions";
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
 import { RestClient } from "@bootpay/server-rest-client";
 import axios from "axios";
 

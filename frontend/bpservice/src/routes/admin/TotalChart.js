@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import HistogramDatasetTransition from "../../components/chart/barChart/HistogramDatasetTransition";
-import Nav from "../../components/Nav";
+import Nav from "../../components/NavAdmin";
 import Footer from "../../components/Footer";
 import UseageTable from "../../components/chart/UseageTable";
 import DayPicker from "../../components/UI/DayPicker";

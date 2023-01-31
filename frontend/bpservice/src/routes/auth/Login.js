@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import { useState, useEffect } from "react";
 
-import Nav from "../../components/Nav";
+import Nav from "../../components/NavAdmin";
 import Footer from "../../components/Footer";
 import IdComponent from "../../components/userLogin/IdComponent";
 import PwdComponent from "../../components/userLogin/PwdComponent";
@@ -36,7 +36,6 @@ const title = css`
 `;
 
 function Login({ userLogin, setLoginInfo, getUserInfo, errorReset }) {
-function Login({ setLoginInfo }) {
   const dispatch = useDispatch();
   const [info, setInfo] = useState({});
 

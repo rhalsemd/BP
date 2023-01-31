@@ -2,7 +2,7 @@ import { Bootpay } from "@bootpay/client-js";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Footer from "../../components/Footer";
-import Nav from "../../components/Nav";
+import Nav from "../../components/NavAdmin";
 import { getBootpay } from "../../modules/payment";
 
 const startPay = async (dispatch) => {

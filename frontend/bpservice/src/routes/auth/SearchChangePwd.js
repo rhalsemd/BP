@@ -5,7 +5,7 @@ import { useState } from "react";
 import { connect, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer";
-import Nav from "../../components/Nav";
+import Nav from "../../components/NavAdmin";
 import ChangePwdInput from "../../components/userFindChangePwd/ChangePwdInput";
 import CheckPwdInput from "../../components/userFindChangePwd/CheckPwdInput";
 import { findPwdInfo } from "../../modules/findPwd";

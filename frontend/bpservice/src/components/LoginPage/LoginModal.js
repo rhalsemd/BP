@@ -4,15 +4,15 @@ import { useState } from "react";
 
 const loginModalStyle = css`
   height: 40vh;
-  width: 95vw;
-  margin: 15vh 2.5vw 19vh;
+  width: 90vw;
+  margin: 15vh 5vw 19vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   border-radius: 10px;
   align-items: center;
-  background-color: rgba(249, 250, 251, 0.9);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24);
+  background-color: #f7f8f9;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.24);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   .card-1:hover {
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.55), 0 10px 10px rgba(0, 0, 0, 0.52);
@@ -21,8 +21,9 @@ const loginModalStyle = css`
     color: transparent;
   }
   input:placeholder-shown + label {
-    color: #aaa;
-    font-size: 14pt;
+    color: "black";
+    font-size: 14.5pt;
+    font-weight: 300;
     top: 15px;
   }
   input:focus + label,
@@ -46,30 +47,30 @@ const loginModalStyle = css`
 `;
 
 const BtnStyle = css`
-  background-color: #0f5aa6;
+  background-color: #00b8ff;
 `;
 
 const inputBox = css`
   position: relative;
-  margin: 10px 0;
+  margin: 12px 0;
 `;
 
 const inputChild = css`
   background: transparent;
   border: none;
   border-bottom: solid 1px #ccc;
-  padding: 20px 0px 5px 0px;
+  padding: 23px 0px 5px 0px;
   font-size: 14pt;
   width: 100%;
 `;
 
 const 회원가입버튼 = css`
-  background-color: #191f28;
+  background-color: #00b8ff;
   border: none;
   color: white;
   border-radius: 5px;
   width: 100%;
-  height: 35px;
+  height: 45px;
   font-size: 14pt;
   margin-top: 15px;
 `;
@@ -80,7 +81,7 @@ export default function LoginModal() {
   const 어드민로그인 = () => {};
   return (
     <div css={loginModalStyle}>
-      <h1>ADMIN</h1>
+      <h1 css={{ color: "#646e7b" }}>ADMIN</h1>
       <form action="" method="POST">
         <div css={inputBox}>
           <input
@@ -105,7 +106,7 @@ export default function LoginModal() {
           <label>비밀번호</label>
         </div>
         <button onClick={() => 어드민로그인()} css={회원가입버튼}>
-          로그인
+          <span css={{ fontWeight: "bolder" }}>로그인</span>
         </button>
       </form>
     </div>

@@ -40,7 +40,7 @@ export default function UserTable(data) {
   return (
     <>
       <div css={chartStyle}>
-        <div style={{ height: 500, width: "100%" }}>
+        <div style={{ height: "500", width: "100%" }}>
           <DataGrid
             rows={임시rows}
             columns={col}

@@ -3,7 +3,7 @@ import { css } from "@emotion/react";
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import Footer from "../../components/Footer";
-import Nav from "../../components/Nav";
+import Nav from "../../components/NavAdmin";
 import FindPwdEmailComponent from "../../components/userFindPwd/FindPwdEmailComponent";
 import FindPwdIdComponent from "../../components/userFindPwd/FindPwdIdComponent";
 import FindPwdUsernameComponent from "../../components/userFindPwd/FindPwdUsernameComponent";

@@ -6,7 +6,7 @@ import { useState } from "react";
 import { connect, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer";
-import Nav from "../../components/Nav";
+import Nav from "../../components/NavAdmin";
 import CertificationNumInput from "../../components/userFindId/CertificationNumInput";
 import FindEmailComponent from "../../components/userFindId/FindEmailComponent";
 import FindNameComponent from "../../components/userFindId/FindNameComponent";

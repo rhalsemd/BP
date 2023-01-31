@@ -13,6 +13,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
+import MenuIcon from "@mui/icons-material/Menu";
 
 const divStyle = css`
   display: flex;
@@ -73,15 +74,7 @@ export default function Nav() {
     <div css={divStyle}>
       <h2>BP</h2>
       <Button onClick={toggleDrawer("right", true)} height="30">
-        <p
-          css={{
-            fontSize: "7vw",
-            color: "black",
-            fontWeight: "bolder",
-          }}
-        >
-          {"\u2261"}
-        </p>
+        <MenuIcon sx={{ fontSize: "35px", color: "black" }} />
       </Button>
       <Drawer
         anchor={"right"}

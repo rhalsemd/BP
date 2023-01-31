@@ -2,7 +2,7 @@
 import { css } from "@emotion/react";
 import { useSelector } from "react-redux";
 
-import Nav from "../components/Nav";
+import Nav from "../components/NavAdmin";
 import HomeLogo from "../components/home/HomeLogo";
 import Footer from "../components/Footer";
 import HomeIntro from "../components/home/HomeIntro";

@@ -3,7 +3,7 @@ import { css } from "@emotion/react";
 
 import { useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer";
-import Nav from "../../components/Nav";
+import Nav from "../../components/NavAdmin";
 
 const comPleteArea = css`
   width: 100%;

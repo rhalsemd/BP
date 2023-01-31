@@ -2,7 +2,7 @@
 import { css } from "@emotion/react";
 import DropDown from "../../components/UI/DropDown";
 import LineChart from "../../components/chart/lineChart/LineChart";
-import Nav from "../../components/Nav";
+import Nav from "../../components/NavAdmin";
 import Footer from "../../components/Footer";
 import LineUseageTable from "../../components/chart/lineChart/LineUseageTable";
 
