@@ -1,33 +1,41 @@
 package kr.co.bpservice.controller.admin;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import kr.co.bpservice.entity.user.UserExceptPass;
 import kr.co.bpservice.service.admin.ALogService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
 
-@RestController
+@Tag(name = "Admin Log", description = "관리자 로그 API")
 @RequestMapping("/api/auth/admin/log")
+@RequiredArgsConstructor
+@RestController
 public class ALogController {
     @Autowired
     private ALogService aLogService;
 
     @GetMapping("/get-user-data")
-    public List<UserExceptPass> getUserData(){
-        List<UserExceptPass> returnDay = aLogService.getUserData();
-        return returnDay;
+    public List<UserExceptPass> getUserData() {
+        return aLogService.getUserData();
     }
 
-    @GetMapping("/get-lent-log-data/{userId}")
-    public List<Map<String,?>> getLentLogData(@PathVariable("userId") String userId){
-        List<Map<String,?>> returnDay = aLogService.getRentLogData(userId);
-        return returnDay;
+    @GetMapping("/get-rent-log-data/{userId}")
+    @Operation(description = "사용자 ID에 해당하는 모든 대여/반납 로그 조회")
+    @Parameter(name = "userId", description = "사용자 ID")
+    public List<Map<String, ?>> getRentLogData(@PathVariable("userId") String userId) {
+        return aLogService.getRentLogData(userId);
     }
 
     @GetMapping("/get-img-url/{id}")
-    public String getImgUrl(@PathVariable("id") int id){
+    @Operation(description = "대여 로그 ID에 해당하는 우산 이미지 URL")
+    @Parameter(name = "id", description = "RENT_LOG ID")
+    public String getImgUrl(@PathVariable("id") int id) {
         return aLogService.getImgUrl(id);
     }
 

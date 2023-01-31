@@ -1,10 +1,13 @@
 package kr.co.bpservice.controller.kiosk;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Tag(name = "Kiosk Brolly Borrow", description = "키오스크에서 우산 대여 기능을 제공하기 위한 API")
 @RequestMapping("/api/auth/brolly/borrow")
+@RestController
 public class KBrollyBorrowController {
     // 특정 키오스크에서 우산 대여 가능 여부를 알려주는 메소드
 

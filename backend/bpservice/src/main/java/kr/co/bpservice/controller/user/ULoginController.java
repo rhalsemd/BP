@@ -1,5 +1,9 @@
 package kr.co.bpservice.controller.user;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import kr.co.bpservice.util.auth.dto.TokenDto;
 import kr.co.bpservice.util.auth.dto.UserRequestDto;
@@ -11,17 +15,27 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
+@Tag(name = "User Login", description = "사용자 로그인 API")
+@RequestMapping("/api/user")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/user")
 public class ULoginController {
     private final AuthService authService;
-    @PostMapping("/login")  // 로그인
+    @PostMapping("/login")
+    @Operation(description = "사용자 로그인")
+    @Parameters({
+            @Parameter(name = "UserRequestDto", description = "사용자 ID, 비밀번호, 이름, 휴대전화 번호, 시/도, 시/군/구, 읍/면/동, 이메일")
+            ,@Parameter(name = "HttpServletRequest", description = "HTTP 서블릿 요청 인터페이스")
+    })
     public ResponseEntity<TokenDto> login(@RequestBody UserRequestDto requestDto, HttpServletRequest request) {
         return ResponseEntity.ok(authService.login(requestDto, request));
     }
 
-    @PostMapping("/find/id")    // 아아디 찾기: 최초 요청
+    @PostMapping("/find/id")
+    @Operation(description = "사용자 아이디 찾기 : 최초 요청")
+    @Parameters({
+            @Parameter(name = "UserRequestDto", description = "사용자 ID, 비밀번호, 이름, 휴대전화 번호, 시/도, 시/군/구, 읍/면/동, 이메일")
+    })
     public ResponseEntity<?> findUserId(@RequestBody UserRequestDto requestDto) throws Exception {
         Map<String, String> resultMap = authService.findUserId(requestDto);
         if(resultMap.get("result").equals("success"))
@@ -30,7 +44,8 @@ public class ULoginController {
             return new ResponseEntity<Map<String, String>>(resultMap, HttpStatus.BAD_REQUEST);
     }
 
-    @PostMapping("/find/id/email-auth") // 아이디 찾기: 이메일 인증
+    @PostMapping("/find/id/email-auth")
+    @Operation(description = "사용자 아이디 찾기 : 이메일 인증")
     public ResponseEntity<?> findUserIdByEmailAuth(@RequestBody Map<String, String> requestMap) throws Exception {
         Map<String, String> resultMap = authService.findUserIdByEmailAuth(requestMap);
         if(resultMap.get("result").equals("success"))
@@ -39,7 +54,8 @@ public class ULoginController {
             return new ResponseEntity<Map<String, String>>(resultMap, HttpStatus.BAD_REQUEST);
     }
 
-    @PostMapping("/find/pwd")   // 비밀번호 찾기: 최초 요청
+    @PostMapping("/find/pwd")
+    @Operation(description = "사용자 비밀번호 찾기 : 최초 요청")
     public ResponseEntity<?> findUserPwd(@RequestBody Map<String, String> requestMap) throws Exception { // 사용자 아이디, 이메일을 입력으로 받음.
         Map<String, String> resultMap = authService.findUserPwd(requestMap);
         if(resultMap.get("result").equals("success"))
@@ -48,7 +64,8 @@ public class ULoginController {
             return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
     }
 
-    @PostMapping("/find/pwd/email-auth")    // 비밀번호 찾기: 이메일 인증
+    @PostMapping("/find/pwd/email-auth")
+    @Operation(description = "사용자 비밀번호 찾기 : 이메일 인증")
     public ResponseEntity<?> findUserPwdByEmailAuth(@RequestBody Map<String, String> requestMap) {
         Map<String, String> resultMap = authService.findUserPwdByEmailAuth(requestMap);
         if(resultMap.get("result").equals("success"))
@@ -57,7 +74,8 @@ public class ULoginController {
             return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
     }
 
-    @PatchMapping("/find/pwd")  // 비밀번호 찾기: 비밀번호 변경 (메소드: Patch)
+    @PatchMapping("/find/pwd")
+    @Operation(description = "사용자 비밀번호 찾기 : 비밀번호 변경")   // PATCH
     public ResponseEntity<?> findUserPwdDo(@RequestBody Map<String, String> requestMap) {
         Map<String, String> resultMap = authService.findUserPwdDo(requestMap);
         if(resultMap.get("result").equals("success"))

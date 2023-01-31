@@ -6,13 +6,11 @@ import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kr.co.bpservice.service.common.WeatherService;
 import lombok.RequiredArgsConstructor;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 
 @Tag(name = "Weather", description = "날씨 정보 API")
@@ -21,7 +19,7 @@ import java.util.Map;
 @RestController
 public class WeatherController {
     @Autowired
-    WeatherService weatherService;
+    private WeatherService weatherService;
 
     @GetMapping("/current-weather")
     @Operation(description = "위도, 경도와 일치하는 지역에 대한 현재 날씨정보 조회")

@@ -45,6 +45,7 @@ public class KHomeController {
         List<BrollyCase> brollyCaseList = kHomeService.getBrollyCaseList();
         return new ResponseEntity<>(brollyCaseList, HttpStatus.OK);
     }
+
     @GetMapping("/base-coordinate-kiosk-list")
     @Operation(description = "현재 좌표 기준 보여줄 지점 좌표 및 우산 수량 조회")
     @Parameters({
@@ -52,7 +53,7 @@ public class KHomeController {
             @Parameter(name = "lng", description = "본인 현재 위치 경도")
     })
     public ResponseEntity<List<Map<String,?>>> getBaseCoordinateBrollyCaseList(@RequestParam double lat, @RequestParam double lng) {
-        List<Map<String,?>> brollyCaseList = kHomeService.getBaseCoordinateBrollyCaseList(lat,lng);
+        List<Map<String,?>> brollyCaseList = kHomeService.getBaseCoordinateBrollyCaseList(lat, lng);
         return new ResponseEntity<>(brollyCaseList, HttpStatus.OK);
     }
 }

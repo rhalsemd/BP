@@ -11,10 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-@Tag(name = "UBrollyBorrowController", description = "유저 대여 관련 기능을 제공하기 위한 API")
+@Tag(name = "User Brolly Borrow", description = "사용자에게 우산 대여 기능을 제공하기 위한 API")
+@RequestMapping("/api/auth/user/brolly/borrow")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/auth/user/brolly/borrow")
 public class UBrollyBorrowController {
     @Autowired
     private UBrollyBorrowService uBrollyBorrowService;

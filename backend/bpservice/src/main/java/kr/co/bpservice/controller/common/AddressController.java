@@ -6,7 +6,6 @@ import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kr.co.bpservice.service.common.AddressService;
 import lombok.RequiredArgsConstructor;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +17,7 @@ import java.util.List;
 @RestController
 public class AddressController {
     @Autowired
-    AddressService addressService;
+    private AddressService addressService;
 
     @GetMapping("/reverse-geo")
     @Operation(description = "위도, 경도와 일치하는 지역에 대한 지번주소")
