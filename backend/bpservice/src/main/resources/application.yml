@@ -58,6 +58,11 @@ mail:
       port: 465
     port: 465
 
+image:
+  url:
+    windows: C:/Users/SSAFY/Downloads/images
+    linux: /home/ubuntu/images
+
 AdminMail:
   id: ssafy8th.gumi@gmail.com
   password: mgskcmzufwphqyua
