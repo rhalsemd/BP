@@ -2,6 +2,7 @@
 import { css } from '@emotion/react'
 import KioskHeader from '../components/KioskHeader'
 import KioskHomeSection from '../components/KioskHomeSection'
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const KioskHomeStyle = css`
   box-sizing: border-box;
