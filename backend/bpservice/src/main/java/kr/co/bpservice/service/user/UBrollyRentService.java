@@ -73,7 +73,7 @@ public class UBrollyRentService {
         Map<String, Object> responseMap = new HashMap<>();
         BrollyPayLog brollyPayLog = brollyPayLogRepository.findByReceiptId(receiptId);
         BrollyCase brollyCase = brollyCaseRepository.findById(caseId).get();
-        Brolly brolly = brollyHolderRepository.findFirstBrollyByCaseId(brollyCase);
+        Brolly brolly = brollyHolderRepository.findFirstBrollyByCase(brollyCase);
         User user = userRepository.findById(userId).get();
 
         BrollyRentLog brollyRentLog = new BrollyRentLog();
