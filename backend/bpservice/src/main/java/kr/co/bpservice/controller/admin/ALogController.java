@@ -1,5 +1,7 @@
 package kr.co.bpservice.controller.admin;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import kr.co.bpservice.entity.user.UserExceptPass;
 import kr.co.bpservice.service.admin.ALogService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +30,10 @@ public class ALogController {
     }
 
     @GetMapping("/get-img-url/{id}")
-    public String getImgUrl(@PathVariable("id") int id){
-        return aLogService.getImgUrl(id);
+    @Operation(description = "대여 로그 ID에 해당하는 우산 이미지 URL")
+    @Parameter(name = "id", description = "RENT_LOG ID")
+    public String getImageUrl(@PathVariable("id") int id) {
+        return aLogService.getImageUrl(id);
     }
 
 }
