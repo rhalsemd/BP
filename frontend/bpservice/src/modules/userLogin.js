@@ -1,9 +1,12 @@
 import axios from "axios";
 import { createAction, handleActions } from "redux-actions";
-import { call, takeEvery, put } from "redux-saga/effects";
+import { call, takeEvery, put, takeLatest } from "redux-saga/effects";
 
 const SET_LOGIN_INFO = "userLogin/SET_LOGIN_INFO";
 const GET_USER_TOKEN = "userLogin/GET_USER_TOKEN";
+
+const LOGOUT = "mypage/LOGOUT";
+
 const GET_USER_ERROR = "userLogin/GET_USER_ERROR";
 const ERROR_RESET = "userLogin/ERROR_RESET";
 
@@ -14,7 +17,9 @@ const setLoginInfo = createAction(SET_LOGIN_INFO, (data) => data);
 const getUserInfo = createAction(GET_USER_INFO, () => undefined);
 const errorReset = createAction(ERROR_RESET, () => undefined);
 
-const API = `http://192.168.100.79:8080`;
+export const logOut = createAction(LOGOUT, () => undefined);
+
+const API = `http://bp.ssaverytime.kr:8080`;
 
 // 로그인 요청
 function* setLoginFnc(data) {
@@ -36,11 +41,17 @@ function* setLoginFnc(data) {
     });
 
     if (post.status === 200) {
-      localStorage.setItem("login-token", post.data.accessToken);
+      const obj = {
+        value: post.data.accessToken,
+        expire: Date.now() + 1800000,
+      };
+
+      // 객체를 JSON 문자열로 변환
+      const objString = JSON.stringify(obj);
+      localStorage.setItem("login-token", objString);
 
       yield put({
         type: GET_USER_TOKEN,
-        payload: `Bearer ${post.data.accessToken}`,
         success: true,
       });
     }
@@ -67,7 +78,29 @@ function* getUserInfoFnc() {
 
 export function* loginSaga() {
   yield takeEvery(SET_LOGIN_INFO, setLoginFnc);
-  yield takeEvery(GET_USER_INFO, getUserInfoFnc);
+  yield takeLatest(LOGOUT, logOutFnc);
+  // yield takeEvery(GET_USER_INFO, getUserInfoFnc);
+}
+
+// 로그아웃
+function* logOutFnc() {
+  const objString = localStorage.getItem("login-token");
+  const obj = JSON.parse(objString);
+
+  try {
+    const get = yield call(() => {
+      return axios({
+        method: "get",
+        url: `${API}/api/auth/user/logout`,
+        headers: {
+          Authorization: `Bearer ${obj.value}`,
+        },
+      });
+    });
+    if (get.status === 200) {
+      localStorage.removeItem("login-token");
+    }
+  } catch (e) {}
 }
 
 const initialState = { token: "" };
@@ -75,7 +108,7 @@ const initialState = { token: "" };
 const userLoginReducer = handleActions(
   {
     [GET_USER_TOKEN]: (state, action) => {
-      return { ...state, token: action.payload, success: action.success };
+      return { ...state, success: action.success };
     },
     [GET_USER_ERROR]: (state, action) => {
       return { ...state, error: action.error };

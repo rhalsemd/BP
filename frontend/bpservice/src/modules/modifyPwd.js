@@ -15,11 +15,13 @@ export const newPwdErrorReset = createAction(
   () => undefined
 );
 
-const API = `http://192.168.100.79:8080`;
+const API = `http://bp.ssaverytime.kr:8080`;
 
 // 비밀번호 수정 요청
 function* modifyPwdFnc(data) {
   const pwdInfo = data.payload;
+  const objString = localStorage.getItem("login-token");
+  const obj = JSON.parse(objString);
 
   try {
     const patch = yield call(() => {
@@ -32,7 +34,7 @@ function* modifyPwdFnc(data) {
         },
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("login-token")}`,
+          Authorization: `Bearer ${obj.value}`,
         },
       });
     });

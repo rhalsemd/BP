@@ -40,14 +40,16 @@ function ModifyPwdConfirm({ info, setInfo, setNewPwd }) {
           onChange={onChange}
         />
 
-        {/* 수정하기 버튼*/}
-        {info.current &&
-        info.isNext &&
-        info.isConfirm &&
-        info.next === info.confirmPwd &&
-        info.next !== info.current ? (
-          <input type="submit" value="수정하기" />
-        ) : null}
+        <div>
+          {/* 수정하기 버튼*/}
+          {info.current &&
+          info.isNext &&
+          info.isConfirm &&
+          info.next === info.confirmPwd &&
+          info.next !== info.current ? (
+            <input type="submit" value="수정하기" />
+          ) : null}
+        </div>
       </form>
     </div>
   );

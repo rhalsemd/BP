@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "../routes/Home";
 import Login from "../routes/auth/Login";
 import SignUp from "../routes/auth/SignUp";
-
 import LoginAdmin from "../routes/admin/LoginAdmin";
 import TotalChart from "../routes/admin/TotalChart";
 import RevenueTrend from "../routes/admin/RevenueTrend";

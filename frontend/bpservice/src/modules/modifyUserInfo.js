@@ -18,14 +18,15 @@ const getSidoData = createAction(GET_SIDO_DATA, () => undefined);
 const getGugun = createAction(GET_GUGUN_DATA, (data) => data);
 const getDong = createAction(GET_DONG_DATA, (data) => data);
 
+const API = `http://bp.ssaverytime.kr:8080`;
+
 // 시도 요청하는 함수
 function* getSidoFnc() {
-  const API = `http://192.168.100.80:8080/api/address/first-depth`;
   try {
     const get = yield call(() => {
       return axios({
         method: "get",
-        url: API,
+        url: `${API}/api/address/first-depth`,
         headers: {
           "Content-Type": "application/json",
         },
@@ -39,12 +40,11 @@ function* getSidoFnc() {
 
 // 구군 요청하는 함수
 function* getGugunFnc(data) {
-  const API = `http://192.168.100.80:8080/api/address/second-depth`;
   try {
     const get = yield call(() => {
       return axios({
         method: "get",
-        url: API,
+        url: `${API}/api/address/second-depth`,
         params: {
           sido: data.payload,
         },
@@ -61,13 +61,11 @@ function* getGugunFnc(data) {
 
 // 동 요청하는 함수
 function* getDongFnc(data) {
-  const API = `http://192.168.100.80:8080/api/address/third-depth`;
-
   try {
     const get = yield call(() => {
       return axios({
         method: "get",
-        url: API,
+        url: `${API}/api/address/third-depth`,
         params: {
           sido: data.payload.sido,
           sigungu: data.payload.gugun,
@@ -85,15 +83,15 @@ function* getDongFnc(data) {
 
 // 수정 요청
 function* modifyUserInfoFnc(data) {
-  const API = `http://192.168.100.79:8080/api/auth/user`;
   const info = data.payload;
-  const { token } = yield select(({ userLogin }) => userLogin);
+  const objString = localStorage.getItem("login-token");
+  const obj = JSON.parse(objString);
 
   try {
     const patch = yield call(() => {
       return axios({
         method: "patch",
-        url: API,
+        url: `${API}/api/auth/user`,
         data: {
           sido: info.sido,
           sigungu: info.sigugun,
@@ -101,7 +99,7 @@ function* modifyUserInfoFnc(data) {
         },
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("login-token")}`,
+          Authorization: `Bearer ${obj.value}`,
         },
       });
     });

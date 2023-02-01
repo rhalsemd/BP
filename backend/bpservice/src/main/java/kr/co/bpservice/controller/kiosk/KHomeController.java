@@ -4,14 +4,16 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import kr.co.bpservice.entity.brolly.Brolly;
 import kr.co.bpservice.entity.brolly.BrollyCase;
 import kr.co.bpservice.service.kiosk.KHomeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
@@ -23,6 +25,9 @@ import java.util.Map;
 public class KHomeController {
     @Autowired
     KHomeService kHomeService;
+
+    // 특정 키오스크에 잔여 우산, 총 홀더의 개수를 반환하는 메소드
+
 
     @GetMapping("/kiosk-geo")
     @Operation(description = "키오스크 지점 고유번호에 해당하는 위도, 경도, 지점명 데이터 조회")
@@ -40,6 +45,7 @@ public class KHomeController {
         List<BrollyCase> brollyCaseList = kHomeService.getBrollyCaseList();
         return new ResponseEntity<>(brollyCaseList, HttpStatus.OK);
     }
+
     @GetMapping("/base-coordinate-kiosk-list")
     @Operation(description = "현재 좌표 기준 보여줄 지점 좌표 및 우산 수량 조회")
     @Parameters({
@@ -47,7 +53,7 @@ public class KHomeController {
             @Parameter(name = "lng", description = "본인 현재 위치 경도")
     })
     public ResponseEntity<List<Map<String,?>>> getBaseCoordinateBrollyCaseList(@RequestParam double lat, @RequestParam double lng) {
-        List<Map<String,?>> brollyCaseList = kHomeService.getBaseCoordinateBrollyCaseList(lat,lng);
+        List<Map<String,?>> brollyCaseList = kHomeService.getBaseCoordinateBrollyCaseList(lat, lng);
         return new ResponseEntity<>(brollyCaseList, HttpStatus.OK);
     }
 }

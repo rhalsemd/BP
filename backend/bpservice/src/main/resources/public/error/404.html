@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BP:: 우산대여서비스</title>
+
+    <!-- Bootstrap 4.6.0 CDN -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+        crossorigin="anonymous">
+
+    <!-- jQuery 3.6.0 CDN -->
+    <script
+        src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+        crossorigin="anonymous"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+
+    <!-- Noto Sans KR Light 300 : https://fonts.google.com/specimen/Noto+Sans+KR?subset=korean -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
+
+    <!-- Sunflower Light 300 : https://fonts.google.com/specimen/Sunflower?subset=korean -->
+    <link href="https://fonts.googleapis.com/css2?family=Sunflower:wght@300&display=swap" rel="stylesheet">
+
+    <!-- Quicksand Regular 400 : https://fonts.google.com/specimen/Quicksand?subset=latin-ext -->
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+
+    <!-- Titillium Web Regular 400 : https://fonts.google.com/specimen/Titillium+Web?subset=latin-ext -->
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web&display=swap" rel="stylesheet">
+
+    <!-- Source Code Pro Regular 400 : https://fonts.google.com/specimen/Source+Code+Pro?subset=latin-ext -->
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+
+    <!-- Josefin Sans Regular 400 : https://fonts.google.com/specimen/Josefin+Sans?subset=latin-ext -->
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap" rel="stylesheet">
+
+    <!-- Righteous Regular 400 : https://fonts.google.com/specimen/Righteous?subset=latin-ext -->
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+
+    <!-- Sulphur Point Regular 400 : https://fonts.google.com/specimen/Sulphur+Point?subset=latin-ext -->
+    <link href="https://fonts.googleapis.com/css2?family=Sulphur+Point&display=swap" rel="stylesheet">
+
+    <style>
+        .desktop {
+            display: block;
+        }
+
+        .mobile {
+            display: none;
+        }
+
+        @font-face {
+            font-family: 'NanumBarunGothic';
+            font-style: normal;
+            font-weight: 400;
+            src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot');
+            src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.ttf') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'NanumBarunGothic';
+            font-style: normal;
+            font-weight: 700;
+            src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot');
+            src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.ttf') format('truetype')
+        }
+
+        @font-face {
+            font-family: 'NanumBarunGothic';
+            font-style: normal;
+            font-weight: 300;
+            src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot');
+            src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.ttf') format('truetype');
+        }
+
+        .font-nanumbarungothic * {
+            font-family: 'NanumBarunGothic', sans-serif;
+        }
+
+        .font-notosanskr-light {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        .font-sunflower-light {
+            font-family: 'Sunflower', sans-serif;
+        }
+
+        .font-quicksand-regular {
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        .font-titilliumweb-regular {
+            font-family: 'Titillium Web', sans-serif;
+        }
+
+        .font-sourcecodepro-regular {
+            font-family: 'Source Code Pro', monospace;
+        }
+
+        .font-josefinsans-regular {
+            font-family: 'Josefin Sans', sans-serif;
+        }
+
+        .font-righteous-regular {
+            font-family: 'Righteous', cursive;
+        }
+
+        .font-sulphurpoint-regular {
+            font-family: 'Sulphur Point', sans-serif;
+        }
+
+        body {
+            word-break: keep-all;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .wrapper {
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 100px;
+            display: -ms-flexbox;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+
+        .content {
+            -ms-flex: 0 1 auto;
+            flex: 0 1 auto;
+            display: -ms-flexbox;
+            display: flex;
+            flex-direction: row;
+        }
+
+        .left-icon {
+            -ms-flex: 0 1 auto;
+            flex: 0 1 auto;
+            margin-right: 30px;
+        }
+
+        .main-content {
+            -ms-flex: 0 1 auto;
+            flex: 0 1 auto;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-direction: column;
+            flex-direction: column;
+        }
+
+        .error-title {
+            font-size: 24px;
+            margin-bottom: 32px;
+        }
+
+        .error-message {
+            font-size: 14px;
+            margin-bottom: 32px;
+        }
+
+        .error-detail {
+            align-self: stretch;
+
+            background: rgba(0, 0, 0, 0.1);
+            margin-bottom: 32px;
+            padding: 14px;
+            font-size: 12px;
+        }
+
+        .error-buttons {
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-direction: row;
+            flex-direction: row;
+        }
+
+        .previous-page-btn {
+            margin-right: 10px;
+        }
+
+        .previous-page-btn {
+            text-align: center;
+            vertical-align: middle;
+            user-select: none;
+            border: 1px solid transparent;
+            border-radius: 2px;
+
+            position: relative;
+        }
+
+        .home-btn {
+            text-align: center;
+            vertical-align: middle;
+            user-select: none;
+            border: 1px solid transparent;
+            border-radius: 2px;
+
+            position: relative;
+
+        }
+
+        @media (max-width: 600px) {
+            .desktop {
+                display: none;
+            }
+
+            .mobile {
+                display: block;
+            }
+
+            .content, .main-content {
+                -ms-flex-direction: column;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .left-icon {
+                margin-right: 0;
+                margin-bottom: 30px;
+            }
+
+            .error-title, .error-message {
+                text-align: center;
+            }
+
+            .error-message {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+
+            .error-detail {
+                margin-left: 10px;
+                margin-right: 10px;
+            }
+
+            .error-buttons {
+                -ms-flex-direction: column;
+                flex-direction: column;
+                align-self: stretch;
+            }
+
+            .previous-page-btn {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+
+            .home-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body class="font-nanumbarungothic">
+    <div class="wrapper">
+        <div class="content">
+            <div class="left-icon">
+                <img style="width: 160px; height: 120px"
+                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKAAAAB4CAYAAAB1ovlvAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA9lJREFUeNrs3TFy20YUgGHQTuHOqlXRJzA1PIChE8QpU5k6gc0T2DqB7NKVlC5dfAPTB+BYOUGUSi1bV85uuJ7ZIBIpj6EFCH7/DIYArBkZb3+9t7sEFlUFAAAAAAAAAAAwVEZd/wem0+kkfMRtrDmKchW2y+VyebmXAgbxnoePM+L1QsR5EPHD3ggY5DsPHzNt3ysugoQngxdwg3wLDhSl7oOEo8LyxbL7R3ZqldL/BR86qUSz1A06yE7/UrIcPyh8zWcN+Y7J1x0p9sepLW5qo+EImEa7+YBj3vUIDP9KGNtgnp0ap7YaXAbM+xwrma93mXC1pX+48wLm/QyZr39c3tJWg+oDAgQEAQECgoAgIEBAEBAgIAgIEBAEBAgIAgIEBAGxjfjAVdj+Ss9agIBF5aur9dN+47C9FhECliaX7lQ4CFgy+8WsV6dDz7sQsDgvs33yEbA4z7P934Tj7vwkBHcqsd8GF4tQXhc3lN9xVn498ScDtipfXCngPA0yPqblRXLqbJ98BGydWeP4ReP4abb/SbgI2DarLceTDf8GAv4wpw3B3m34WSWYgO2S5vSeVOtVpJ4YZBgFdyHhVbVeyhYyIAgIKMHl2DQRXf1/Xb2FiMmAbcq3bSL6z2z/sYgRsG1mjePmRHQ+Kp4IFwHbZttEdF5y65AhD4SMgG2ycSI69AlXjSxYCxkBW6MxEX10y0R0fgvWz6JGwLYlvIqj3zQhfRMXWWmepVu0QMBigjZL80xUCFiat1kWfCkcBOwiC54mEY9E5G74JqRdCd+KggwIAgIEBAEBAoKAAAFBQICAICBAQBAQBAQICAICHdDV/YCT6XT6Ufh7xWSfBIzPztbaHEow9rIEX1VeZ9A34pIj470RcLlcvtHm/SH0yZ91IaASDH1AEBDYKwEtYdY/DoYu4H8WcrSOXq8GILEtJre01SAFjLzS9L3h1Za22n0B09Jmi+zU67T4N7rNfrEN8re9b1qGrnVGhS82pvnPjdMfqvWk9CIt8IMyJbeu1pPPzUXXj0q+DWrU0V/cOQ16yUlaEbYYD0tf4fX19eXh4eHf6S/wkTbvBbHy/Brk+730L37YxdUmCd+H3S/V+usfI+JuiH29d0m+Tl7COOpLJEJprnes8Zr3M86rHXpd6w1vfKr2WsAd7Mh/bZw67kuj7hK+igMBQUCAgCAgQEAQECAgCAgQEAQECIjhMdibEdLd12f3+CvqxnG8E+a+7uied3W71H0z5Ne1nlVlV+Ca3PO1HCvBu8XKtciAXXIStk/V7t9tHeW70FsEAAAAAAAAAAAA8B38I8AA+oL+8NsgB2IAAAAASUVORK5CYII=">
+            </div>
+            <div class="main-content">
+                <div>
+                    <h2 class="font-righteous-regular">Page Not Found</h2>
+                </div>
+                <div class="error-title font-sunflower-light">
+                    페이지를 찾을 수 없습니다.
+                </div>
+                <div class="error-message">
+                    페이지가 존재하지 않거나, 사용할 수 없는 페이지입니다.
+                    <br>
+                    입력하신 주소가 정확한지 다시 한 번 확인해주세요.
+                    <br>
+                </div>
+                <div class="error-buttons">
+                    <div class="desktop">
+                        <a href="javascript:history.back();" class="previous-page-btn btn btn-sm btn-secondary">이전 페이지</a>
+                        <a href="/" class="home-btn btn btn-sm btn-dark">홈 페이지</a>
+                    </div>
+                    <div class="mobile">
+                        <a href="javascript:history.back();" class="previous-page-btn btn btn-secondary">이전 페이지</a>
+                        <a href="/" class="home-btn btn btn-dark">홈 페이지</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

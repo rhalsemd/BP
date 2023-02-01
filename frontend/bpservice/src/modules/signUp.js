@@ -1,6 +1,5 @@
 import { createAction, handleActions } from "redux-actions";
-import { call, put, takeEvery } from "redux-saga/effects";
-import { RestClient } from "@bootpay/server-rest-client";
+import { call, put, takeLatest } from "redux-saga/effects";
 import axios from "axios";
 
 const GET_CERTIFYCATION = "signUp/GET_CERTIFYCATION";
@@ -40,7 +39,7 @@ const errorCertifycationReset = createAction(
   () => undefined
 );
 
-const API = `http://192.168.100.79:8080`;
+const API = `http://bp.ssaverytime.kr:8080`;
 
 // 인증번호 요청 saga
 function* getCertifi(data) {
@@ -157,7 +156,6 @@ function* getGugunFnc(data) {
 
 // 동 요청하는 함수
 function* getDongFnc(data) {
-  console.log(data);
   try {
     const get = yield call(() => {
       return axios({

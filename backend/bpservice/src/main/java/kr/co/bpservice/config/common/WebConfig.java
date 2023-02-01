@@ -20,8 +20,9 @@ public class WebConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         String imageUrl = ImageUtils.getImageUrl();
 
-        registry.addResourceHandler("/images/**")
-                .addResourceLocations(String.format("file:///%s/", imageUrl))
+        registry
+                .addResourceHandler("/images/**")   // 호스팅할 이미지 URL 경로
+                .addResourceLocations(String.format("file:///%s/", imageUrl))   // 이미지가 저장된 파일시스템 디렉토리
                 .setCachePeriod(3600)
                 .resourceChain(true)
                 .addResolver(new PathResourceResolver());

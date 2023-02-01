@@ -36,7 +36,6 @@ const title = css`
 `;
 
 function Login({ userLogin, setLoginInfo, getUserInfo, errorReset }) {
-function Login({ setLoginInfo }) {
   const dispatch = useDispatch();
   const [info, setInfo] = useState({});
 

@@ -30,7 +30,7 @@ const setSecondErrorReset = createAction(
   () => undefined
 );
 
-const API = `http://192.168.100.79:8080`;
+const API = `http://bp.ssaverytime.kr:8080`;
 
 //인증 번호 요청하는 Saga
 function* findPwdFnc(data) {

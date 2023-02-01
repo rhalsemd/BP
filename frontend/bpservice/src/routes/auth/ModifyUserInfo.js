@@ -35,7 +35,6 @@ const title = css`
 function ModifyUserInfo({ setNewUserInfo }) {
   const [info, setInfo] = useState({});
   const navigation = useNavigate();
-  const { id } = useParams();
 
   const goToModify = () => {
     if (window.confirm("저장하시겠습니까?")) {
@@ -46,6 +45,10 @@ function ModifyUserInfo({ setNewUserInfo }) {
       // They clicked no
       return false;
     }
+  };
+
+  const back = () => {
+    navigation(-1);
   };
 
   return (
@@ -67,6 +70,9 @@ function ModifyUserInfo({ setNewUserInfo }) {
               {info.sido && info.sigugun && info.dong ? (
                 <button onClick={goToModify}>수정하기</button>
               ) : null}
+
+              {/* 뒤로가기 */}
+              <button onClick={back}>뒤로가기</button>
             </div>
           </div>
         </div>

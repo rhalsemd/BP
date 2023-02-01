@@ -1,6 +1,11 @@
 package kr.co.bpservice.controller.admin;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import kr.co.bpservice.service.admin.ASysManageService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
@@ -9,48 +14,74 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-@RestController
+@Tag(name = "User System Manage", description = "관리자가 각 지점 및 우산 대여/반납 현황을 관리하기 위한 API")
 @RequestMapping("/api/auth/admin")
+@RequiredArgsConstructor
+@RestController
 public class ASysManageController {
     @Autowired
     private ASysManageService aSysManageService;
-    //전체 지점별 일 수익
+
     @GetMapping("/allKioskMoneyDay/{day}")
-    public List<Map<String, String>> allKioskMoneyDay(@PathVariable("day") String day){
-        List<Map<String, String>> returnDay = aSysManageService.sAllKioskMoneyDay(day);
-        return returnDay;
+    @Operation(description = "전체 지점별 일 수익")
+    @Parameter(name = "day", description = "일")
+    public List<Map<String, String>> allKioskMoneyDay(@PathVariable("day") String day) {
+        return aSysManageService.sAllKioskMoneyDay(day);
     }
-    //전체 지점별 월 수익
+
     @GetMapping("/allKioskMoneyMonth/{month}/{year}")
-    public List<Map<String, String>> AllKioskMoneyMonth(@PathVariable("month") String month, @PathVariable("year") String year){
-        String callMonth=year+"-"+month;
-        List<Map<String, String>> returnMonth = aSysManageService.sAllKioskMoneyMonth(callMonth);
-        return returnMonth;
+    @Operation(description = "전체 지점별 월 수익")
+    @Parameters({@Parameter(name = "month", description = "월")
+            ,@Parameter(name = "year", description = "년")
+    })
+    public List<Map<String, String>> AllKioskMoneyMonth(
+            @PathVariable("month") String month
+            ,@PathVariable("year") String year) {
+        String callMonth = year + "-" + month;
+        return aSysManageService.sAllKioskMoneyMonth(callMonth);
     }
-    //전체 지점별 일 이용내역
+
     @GetMapping("/allKioskCountDay/{day}")
-    public List<Map<String, String>> allKioskCountDay(@PathVariable("day") String day){
-        List<Map<String, String>> returnDay = aSysManageService.sAllKioskCountDay(day);
-        return returnDay;
+    @Operation(description = "전체 지점별 일 이용내역")
+    @Parameter(name = "day", description = "일")
+    public List<Map<String, String>> allKioskCountDay(@PathVariable("day") String day) {
+        return aSysManageService.sAllKioskCountDay(day);
     }
-    //전체 지점별 월 이용내역
+
     @GetMapping("/allKioskCountMonth/{month}/{year}")
-    public List<Map<String, String>> allKioskCountMonth(@PathVariable("month") String month, @PathVariable("year") String year){
-        String callMonth=year+"-"+month;
-        List<Map<String, String>> returnMonth = aSysManageService.sAllKioskCountMonth(callMonth);
-        return returnMonth;
+    @Operation(description = "전체 지점별 월 이용내역")
+    @Parameters({@Parameter(name = "month", description = "월")
+            ,@Parameter(name = "year", description = "년")
+    })
+    public List<Map<String, String>> allKioskCountMonth(
+            @PathVariable("month") String month
+            ,@PathVariable("year") String year) {
+        String callMonth = year + "-" + month;
+        return aSysManageService.sAllKioskCountMonth(callMonth);
     }
-    //해당 지점 일 매출
+
     @GetMapping("/kioskMoneyMonth/{month}/{year}/{id}")
-    public List<Map<String, String>> kioskMoneyMonth(@PathVariable("month") String month, @PathVariable("year") String year,@PathVariable("id") String id){
+    @Operation(description = "특정 지점 일 매출")
+    @Parameters({@Parameter(name = "month", description = "월")
+            ,@Parameter(name = "year", description = "년")
+            ,@Parameter(name = "id", description = "케이스(지점) ID")
+    })
+    public List<Map<String, String>> kioskMoneyMonth(
+            @PathVariable("month") String month
+            ,@PathVariable("year") String year
+            ,@PathVariable("id") String id) {
         String callMonth=year+"-"+month;
-        List<Map<String, String>> returnDay = aSysManageService.sKioskMoneyMonth(callMonth,id);
-        return returnDay;
+        return aSysManageService.sKioskMoneyMonth(callMonth, id);
     }
-    //해당 지점 월 매출
+
     @GetMapping("/kioskMoneyYear/{year}/{id}")
-    public List<Map<String, String>> kioskMoneyYear(@PathVariable("year") String year,@PathVariable("id") String id){
-        List<Map<String, String>> returnMonth = aSysManageService.sKioskMoneyYear(year,id);
-        return returnMonth;
+    @Operation(description = "특정 지점 월 매출")
+    @Parameters({@Parameter(name = "year", description = "년")
+            ,@Parameter(name = "id", description = "케이스(지점) ID")
+    })
+    public List<Map<String, String>> kioskMoneyYear(
+            @PathVariable("year") String year
+            ,@PathVariable("id") String id) {
+        return aSysManageService.sKioskMoneyYear(year, id);
     }
 }
