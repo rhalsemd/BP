@@ -22,14 +22,14 @@ public class ASysManageController {
     @Autowired
     private ASysManageService aSysManageService;
 
-    @GetMapping("/allKioskMoneyDay/{day}")
+    @GetMapping("/all-kiosk-money-day/{day}")
     @Operation(description = "전체 지점별 일 수익")
     @Parameter(name = "day", description = "일")
     public List<Map<String, String>> allKioskMoneyDay(@PathVariable("day") String day) {
         return aSysManageService.sAllKioskMoneyDay(day);
     }
 
-    @GetMapping("/allKioskMoneyMonth/{month}/{year}")
+    @GetMapping("/all-kiosk-money-month/{month}/{year}")
     @Operation(description = "전체 지점별 월 수익")
     @Parameters({@Parameter(name = "month", description = "월")
             ,@Parameter(name = "year", description = "년")
@@ -41,14 +41,14 @@ public class ASysManageController {
         return aSysManageService.sAllKioskMoneyMonth(callMonth);
     }
 
-    @GetMapping("/allKioskCountDay/{day}")
+    @GetMapping("/all-kiosk-count-day/{day}")
     @Operation(description = "전체 지점별 일 이용내역")
     @Parameter(name = "day", description = "일")
     public List<Map<String, String>> allKioskCountDay(@PathVariable("day") String day) {
         return aSysManageService.sAllKioskCountDay(day);
     }
 
-    @GetMapping("/allKioskCountMonth/{month}/{year}")
+    @GetMapping("/all-kiosk-count-month/{month}/{year}")
     @Operation(description = "전체 지점별 월 이용내역")
     @Parameters({@Parameter(name = "month", description = "월")
             ,@Parameter(name = "year", description = "년")
@@ -60,7 +60,7 @@ public class ASysManageController {
         return aSysManageService.sAllKioskCountMonth(callMonth);
     }
 
-    @GetMapping("/kioskMoneyMonth/{month}/{year}/{id}")
+    @GetMapping("/kiosk-money-month/{month}/{year}/{id}")
     @Operation(description = "특정 지점 일 매출")
     @Parameters({@Parameter(name = "month", description = "월")
             ,@Parameter(name = "year", description = "년")
@@ -74,7 +74,7 @@ public class ASysManageController {
         return aSysManageService.sKioskMoneyMonth(callMonth, id);
     }
 
-    @GetMapping("/kioskMoneyYear/{year}/{id}")
+    @GetMapping("/kiosk-money-year/{year}/{id}")
     @Operation(description = "특정 지점 월 매출")
     @Parameters({@Parameter(name = "year", description = "년")
             ,@Parameter(name = "id", description = "케이스(지점) ID")
