@@ -2,7 +2,7 @@
 import { css } from "@emotion/react";
 import { useState } from "react";
 import { connect } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import Footer from "../../components/Footer";
 import ModifyUserAddress from "../../components/modifyUserInfo/ModifyUserAddress";
