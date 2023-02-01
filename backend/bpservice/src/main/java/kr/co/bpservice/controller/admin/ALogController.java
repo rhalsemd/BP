@@ -35,8 +35,8 @@ public class ALogController {
     @GetMapping("/get-img-url/{id}")
     @Operation(description = "대여 로그 ID에 해당하는 우산 이미지 URL")
     @Parameter(name = "id", description = "RENT_LOG ID")
-    public String getImgUrl(@PathVariable("id") int id) {
-        return aLogService.getImgUrl(id);
+    public String getImageUrl(@PathVariable("id") int id) {
+        return aLogService.getImageUrl(id);
     }
 
 }
