@@ -2,9 +2,8 @@
 import { css } from "@emotion/react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 
 const ReturnCameraTakeAPictureDiv = css`
   display: flex;
@@ -78,6 +77,11 @@ const KioskTakeAPicture = (data) => {
   // to take picture of user
   let ctx = "";
 
+  // count는 여기에 있음 (useInterval) 
+  const [isCounting, setCounting] = useState(false);
+  const [number, setNumber] = useState(10);
+  const number_ref = useRef(10);
+  
   const takePicture = () => {
     const width = 1024;
     const height = 600;
@@ -93,6 +97,30 @@ const KioskTakeAPicture = (data) => {
 
     setIscapture(true);
   };
+
+  const setCountingOnClick = () => {
+    setCounting(true);
+  }
+
+  const TimeCounting = () => {
+    const loop = setInterval(() => {
+      number_ref.current -= 1;
+      setNumber(number_ref.current);
+      console.log("number", number);
+      console.log("number_ref.current", number_ref.current);
+      if (number_ref.current === 0) {
+        takePicture();
+        clearInterval(loop);
+      }
+    }, 1000);
+  }
+
+  useEffect(() => {
+    if (isCounting) {
+      TimeCounting();
+    }
+  }, [isCounting])
+
 
   useEffect(() => {
     getVideo();
@@ -113,7 +141,7 @@ const KioskTakeAPicture = (data) => {
         "brolly_id": qrdata,
         "img_url": imgURL,
       }
-    }).then(() => navigate('/kiosk/return/complete', {
+    }).then(() => navigate('/kiosk/return/guide', {
       state: {
         data: qrdata,
       }
@@ -165,7 +193,7 @@ const KioskTakeAPicture = (data) => {
         ></canvas>
       </div>
       <div css={buttonDiv}>
-        <button onClick={takePicture} className="btn btn-danger">
+        <button onClick={setCountingOnClick} className="btn btn-danger">
           Take Picture
         </button>
         <button onClick={clearImage} className="btn btn-primary">
@@ -174,6 +202,7 @@ const KioskTakeAPicture = (data) => {
         {iscapture ? <button onClick={saveImage} className="btn btn-primary">
           이미지 확인
         </button> : null}
+        {/* <button onClick={setCountingOnClick}>{number}</button> */}
       </div>
     </div>
   );
