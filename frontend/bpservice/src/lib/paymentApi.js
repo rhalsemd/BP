@@ -3,27 +3,26 @@ import { RestClient } from "@bootpay/server-rest-client";
 import { call, put, fork } from "redux-saga/effects";
 import axios from "axios";
 
-Bootpay.setConfiguration({
-  application_id: "[ REST API용 Application ID ]",
-  private_key: "[ Private KEy ]",
-});
+// const url = "http://192.168.100.176:8080";
+const url = "http://192.168.100.79:8080";
 
 // bootpay로 받은 데이터 DB로 전송
 export function* getBootpayFnc(data) {
   const DATA = data.payload;
-  const url = "http://192.168.100.176:8080";
+  console.log(data);
+  console.log(DATA);
   try {
     const post = yield call(() => {
       return axios({
-        method: "get",
-        url: `${url}/api/auth/user/brolly/borrow/pay/insert`,
+        method: "post",
+        url: `${url}/api/auth/brolly/rent`,
         data: {
-          recipt_id: DATA.receipt_id,
+          receiptId: DATA.receipt_id,
           price: DATA.price,
-          REG_DT: DATA.purchased_at,
-          loginId: "받아야 함",
-          "키오스크 정보": "받아야 함",
-          "결제 상태": "받아야 함",
+          regDt: DATA.purchased_at,
+          userId: "test111", /// 임시값
+          caseId: "1", ///임시값
+          // "결제 상태": "받아야 함",
         },
         headers: {
           "Content-Type": "application/json",

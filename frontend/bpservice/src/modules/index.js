@@ -20,6 +20,7 @@ import mypageReducer, { mypageSaga } from "./mypage";
 import paymentReducer, { paymentSaga } from "./payment";
 import getUsersReducer, { usersSaga } from "./users";
 import getUserLogReducer, { userLogSaga } from "./userLog";
+import chagneDateReducer from "./changeDate";
 
 export const rootReducer = combineReducers({
   signUp,
@@ -36,6 +37,7 @@ export const rootReducer = combineReducers({
   paymentReducer,
   getUsersReducer,
   getUserLogReducer,
+  chagneDateReducer,
 });
 
 export function* rootSaga() {

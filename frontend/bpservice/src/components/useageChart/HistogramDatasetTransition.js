@@ -3,23 +3,16 @@ import { connect } from "react-redux";
 import { Histogram } from "./Histogram";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
 
 const BUTTONS_HEIGHT = 50;
 
 const HistogramDatasetTransition = ({ width, height, histogram }) => {
   const [data, setData] = useState([]);
-  const 임시data1 = useSelector((state) => state);
-  const 임시data2 = useSelector((state) => state);
-  const url = useLocation().pathname;
+  const 임시data = useSelector((state) => state);
   useEffect(() => {
-    if (url == "/admin/total-income") {
-      setData(임시data1.histogramReducer.data);
-    } else {
-      setData(임시data2?.getUseageReducer?.data);
-    }
-  }, [임시data1, 임시data2, setData]);
-  console.log("data", data?.data);
+    setData(임시data.getUseageReducer?.data);
+  }, [임시data, setData]);
+  console.log("data", data);
   return (
     <div>
       {data?.data?.length > 5 ? (

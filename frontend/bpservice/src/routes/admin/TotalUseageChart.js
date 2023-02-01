@@ -3,15 +3,13 @@ import { css } from "@emotion/react";
 import dayjs from "dayjs";
 import Nav from "../../components/NavAdmin";
 import Footer from "../../components/Footer";
-import HistogramDatasetTransition from "../../components/chart/barChart/HistogramDatasetTransition";
+import HistogramDatasetTransition from "../../components/useageChart/HistogramDatasetTransition";
 import UseageTable from "../../components/chart/UseageTable";
 import DayPicker from "../../components/UI/DayPicker";
 import MonthPicker from "../../components/UI/MonthPicker";
 import Button from "@mui/material/Button";
-import { connect } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getBranchRevenue } from "../../modules/histogram";
 import { useDispatch } from "react-redux";
 import { getUseage } from "../../modules/TotalUseage";
 
@@ -45,19 +43,14 @@ const 캘린더Style = css`
   justify-content: center;
 `;
 
-const TotalIncome = ({ getBranchRevenue }) => {
+const TotalUseage = ({ getBranchRevenue }) => {
   const [monthOn, setMonthOn] = useState(false);
   const [weekOn, setWeekOn] = useState(false);
   const date = dayjs();
-  const url = useLocation().pathname;
   const dayData = dayjs(date).format("YYYY-MM-DD");
   const dispatch = useDispatch();
   useEffect(() => {
-    if (url == "/admin/total-income") {
-      getBranchRevenue(dayData);
-    } else {
-      dispatch(getUseage(dayData));
-    }
+    dispatch(getUseage(dayData));
   }, []);
   return (
     <div>
@@ -88,9 +81,7 @@ const TotalIncome = ({ getBranchRevenue }) => {
         {monthOn && <DayPicker setMonthOn={setMonthOn} />}
         {weekOn && <MonthPicker setWeekOn={setWeekOn} />}
       </div>
-      <h1 css={h1Style}>
-        {url === "/admin/total-income" ? "TOTAL INCOME" : "TOTAL USEAGE"}
-      </h1>
+      <h1 css={h1Style}>"TOTAL USEAGE"</h1>
       <div css={barChartStyle}>
         <HistogramDatasetTransition width={700} height={400} />
       </div>
@@ -100,12 +91,4 @@ const TotalIncome = ({ getBranchRevenue }) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getBranchRevenue(data) {
-      dispatch(getBranchRevenue(data));
-    },
-  };
-};
-
-export default connect(null, mapDispatchToProps)(TotalIncome);
+export default TotalUseage;
