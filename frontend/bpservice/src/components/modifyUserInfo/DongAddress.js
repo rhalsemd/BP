@@ -1,6 +1,31 @@
-import { connect } from "react-redux";
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
 
-function DongAddress({ modifyUserInfoReducer, setInfo, info, dongRef }) {
+import { connect } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { modifyUserInfo } from "../../modules/modifyUserInfo";
+import ModifyUserInfo from "../../style/ModifyUserInfo.css";
+
+const 회원정보수정버튼 = css`
+  background-color: #191f28;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  width: 100%;
+  height: 35px;
+  font-size: 14pt;
+  margin-bottom: 10px;
+`;
+
+function DongAddress({
+  modifyUserInfoReducer,
+  setInfo,
+  info,
+  dongRef,
+  setNewUserInfo,
+}) {
+  const navigation = useNavigate();
+
   const DongOnClick = (e) => {
     const value = e.target.value;
 
@@ -22,22 +47,55 @@ function DongAddress({ modifyUserInfoReducer, setInfo, info, dongRef }) {
     }
   };
 
+  const goToModify = () => {
+    if (window.confirm("저장하시겠습니까?")) {
+      // They clicked Yes
+      setNewUserInfo(info);
+      navigation(`/bp/mypage`);
+    } else {
+      // They clicked no
+      return false;
+    }
+  };
+
+  const back = () => {
+    navigation(-1);
+  };
+
   return (
     <>
-      {modifyUserInfoReducer.gugun.length !== 0 ? (
-        <select defaultValue="dong" onClick={DongOnClick} ref={dongRef}>
-          <option key="defalt-value-3" value="읍/면/동">
-            읍/면/동
-          </option>
-          {modifyUserInfoReducer.dong.map((dong, index) => {
-            return (
-              <option key={index} value={dong}>
-                {dong}
-              </option>
-            );
-          })}
-        </select>
+      <div>
+        {modifyUserInfoReducer.gugun.length !== 0 ? (
+          <select
+            defaultValue="dong"
+            onClick={DongOnClick}
+            ref={dongRef}
+            className="three"
+          >
+            <option key="defalt-value-3" value="읍/면/동">
+              읍/면/동
+            </option>
+            {modifyUserInfoReducer.dong.map((dong, index) => {
+              return (
+                <option key={index} value={dong}>
+                  {dong}
+                </option>
+              );
+            })}
+          </select>
+        ) : null}
+      </div>
+      {/* 수정 버튼 */}
+      {info.sido && info.sigugun && info.dong ? (
+        <button onClick={goToModify} css={회원정보수정버튼}>
+          수정하기
+        </button>
       ) : null}
+
+      {/* 뒤로가기 */}
+      <button onClick={back} css={회원정보수정버튼}>
+        뒤로가기
+      </button>
     </>
   );
 }
@@ -46,4 +104,12 @@ const mapStateToProps = ({ modifyUserInfoReducer }) => {
   return { modifyUserInfoReducer };
 };
 
-export default connect(mapStateToProps)(DongAddress);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setNewUserInfo(info) {
+      dispatch(modifyUserInfo.setNewUserInfo(info));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DongAddress);

@@ -1,4 +1,5 @@
 import { connect } from "react-redux";
+import ModifyUserInfo from "../../style/ModifyUserInfo.css";
 
 function SidoAddress({
   setInfo,
@@ -24,7 +25,13 @@ function SidoAddress({
 
   return (
     <>
-      <select defaultValue="sido" onClick={sidoOnClick}>
+      <select
+        defaultValue="sido"
+        onClick={sidoOnClick}
+        name="select-profession"
+        id="select-profession"
+        className="one"
+      >
         <option key="defalt-value-1" value="시/도">
           시/도
         </option>

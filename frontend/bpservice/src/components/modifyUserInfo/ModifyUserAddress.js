@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import ModifyUserInfo from "../../style/ModifyUserInfo.css";
 
 import { connect } from "react-redux";
 import { modifyUserInfo } from "../../modules/modifyUserInfo";
@@ -16,8 +17,6 @@ function ModifyUserAddress({ info, setInfo, getSidoData, getGugun, getDong }) {
 
   return (
     <div>
-      <span>주소</span>
-
       {/* 시 */}
       <SidoAddress
         setInfo={setInfo}

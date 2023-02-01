@@ -1,4 +1,5 @@
 import { connect } from "react-redux";
+import ModifyUserInfo from "../../style/ModifyUserInfo.css";
 
 function GunguAddress({
   modifyUserInfoReducer,
@@ -22,7 +23,12 @@ function GunguAddress({
   return (
     <>
       {modifyUserInfoReducer.sido.length !== 0 ? (
-        <select defaultValue="gugun" onClick={gugunOnClick} ref={gugunRef}>
+        <select
+          defaultValue="gugun"
+          onClick={gugunOnClick}
+          ref={gugunRef}
+          className="two"
+        >
           <option key="defalt-value-2" value="시/군/구">
             시/군/구
           </option>
