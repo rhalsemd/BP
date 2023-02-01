@@ -15,28 +15,28 @@ public class ASysManageService {
     private ASysManageRepository aSysManageRepository;
 
     public List<Map<String, String>> sAllKioskMoneyDay(String paramDay){
-        List<Map<String, String>> returnday = aSysManageRepository.rALLKioskMoneyDay(paramDay, "money");
+        List<Map<String, String>> returnday = aSysManageRepository.rALLKioskMoneyDay(paramDay);
         return returnday;
     }
     public List<Map<String, String>> sAllKioskMoneyMonth(String paramMONTH){
-        List<Map<String, String>> returnmonth = aSysManageRepository.rALLKioskMoneyMonth(paramMONTH,"money");
+        List<Map<String, String>> returnmonth = aSysManageRepository.rALLKioskMoneyMonth(paramMONTH);
         return returnmonth;
     }
 
     public List<Map<String, String>> sAllKioskCountDay(String paramDay){
-        List<Map<String, String>> returnday = aSysManageRepository.rALLKioskMoneyDay(paramDay, "count");
+        List<Map<String, String>> returnday = aSysManageRepository.rALLKioskCountDay(paramDay);
         return returnday;
     }
     public List<Map<String, String>> sAllKioskCountMonth(String paramMONTH){
-        List<Map<String, String>> returnmonth = aSysManageRepository.rALLKioskMoneyMonth(paramMONTH,"count");
+        List<Map<String, String>> returnmonth = aSysManageRepository.rALLKioskCountMonth(paramMONTH);
         return returnmonth;
     }
     public List<Map<String, String>> sKioskMoneyMonth(String paramMonth, String paramid){
-        List<Map<String, String>> returnmonth = aSysManageRepository.rKioskMoneyYearMonth(paramMonth, paramid,"month");
+        List<Map<String, String>> returnmonth = aSysManageRepository.rKioskMoneyMonth(paramMonth, paramid);
         return returnmonth;
     }
     public List<Map<String, String>> sKioskMoneyYear(String paramYear, String paramid){
-        List<Map<String, String>> returnyear = aSysManageRepository.rKioskMoneyYearMonth(paramYear,paramid,"year");
+        List<Map<String, String>> returnyear = aSysManageRepository.rKioskMoneyYear(paramYear,paramid);
         return returnyear;
     }
 }
