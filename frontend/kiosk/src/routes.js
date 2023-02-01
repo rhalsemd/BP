@@ -6,6 +6,7 @@ import KioskReturnQRContainer from './kiosk/routes/KioskReturnQRContainer'
 import KioskReturnCameraContainer from './kiosk/routes/KioskReturnCameraContainer'
 import KioskReturnGuideContainer from './kiosk/routes/KioskReturnGuideContainer'
 import KioskReturnCompleteContainer from './kiosk/routes/KioskReturnCompleteContainer'
+import KioskFixingContainer from './kiosk/routes/KioskFixingContainer'
 
 const routes = [
   {
@@ -39,6 +40,10 @@ const routes = [
   {
     path: '/kiosk/return/complete',
     element: <KioskReturnCompleteContainer/>
+  },
+  {
+    path: '/kiosk/404',
+    element: <KioskFixingContainer/>
   },
 ]
 
