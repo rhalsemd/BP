@@ -68,6 +68,7 @@ export default function Nav() {
         return;
       case "로그아웃":
         dispatch(logOut());
+        navigation("/");
         return;
       case "마이페이지":
         navigation("/bp/mypage");
