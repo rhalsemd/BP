@@ -50,14 +50,9 @@ const TotalIncome = ({ getBranchRevenue }) => {
   const [weekOn, setWeekOn] = useState(false);
   const date = dayjs();
   const url = useLocation().pathname;
-  const dayData = dayjs(date).format("YYYY-MM-DD");
   const dispatch = useDispatch();
   useEffect(() => {
-    if (url == "/admin/total-income") {
-      getBranchRevenue(dayData);
-    } else {
-      dispatch(getUseage(dayData));
-    }
+    getBranchRevenue(date);
   }, []);
   return (
     <div>

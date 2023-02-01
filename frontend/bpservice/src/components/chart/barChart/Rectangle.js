@@ -1,18 +1,28 @@
 import { useSpring, animated } from "@react-spring/web";
 import { connect } from "react-redux";
 import { getRevenueTrend } from "../../../modules/revenueTrend";
+import { useNavigate } from "react-router-dom";
+import dayjs from "dayjs";
+const Rectangle = ({
+  x,
+  y,
+  width,
+  height,
+  jijum,
+  getRevenueTrend,
+  caseId,
+  date,
+}) => {
+  const navigate = useNavigate();
 
-const onMouseOver = () => {
-  console.log(1);
-};
-
-const Rectangle = ({ x, y, width, height, jijum, getRevenueTrend, caseId }) => {
-  const onclick = (bucket) => {
-    console.log("1: 클릭");
-    getRevenueTrend({ month: "01", year: "2023" });
-    alert(`나중에 링크 연결할거임 값 : ${caseId}`);
+  const onclick = () => {
+    const month = dayjs(date).format("MM");
+    const year = dayjs(date).format("YYYY");
+    getRevenueTrend({ month, year, caseId });
+    navigate(`/admin/revenue-trend/${caseId}`, {
+      state: { name: jijum, caseId },
+    });
   };
-  // const { x, y, width, height } = props;
 
   const springProps = useSpring({
     to: { x, y, width, height },
@@ -28,6 +38,7 @@ const Rectangle = ({ x, y, width, height, jijum, getRevenueTrend, caseId }) => {
 
   return (
     <animated.rect
+      onClick={onclick}
       x={springProps.x}
       y={springProps.y}
       width={springProps.width}

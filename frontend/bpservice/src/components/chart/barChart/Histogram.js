@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useRef } from "react";
 import * as d3 from "d3";
 import Rectangle from "./Rectangle";
+import { useSelector } from "react-redux";
 
 const MARGIN = { top: 30, right: 30, bottom: 40, left: 50 };
 
 export const Histogram = ({ width, height, data }) => {
+  const date = useSelector((state) => state.histogramReducer.selectDate);
   const cost = data.map((d) => d.TOTALMONEY);
   const name = data.map((d) => d.NAME);
   const BUCKET_PADDING = 4;
@@ -31,7 +33,6 @@ export const Histogram = ({ width, height, data }) => {
   const buckets = useMemo(() => {
     return data;
   }, [xScale]);
-
   const yScale = useMemo(() => {
     return d3
       .scaleLinear()
@@ -64,6 +65,7 @@ export const Histogram = ({ width, height, data }) => {
         height={280 - yScale(bucket.TOTALMONEY)}
         jijum={bucket.NAME}
         caseId={bucket.CASE_ID}
+        date={date}
       />
     );
   });

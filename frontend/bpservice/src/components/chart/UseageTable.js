@@ -39,9 +39,6 @@ export default function UserTable(data) {
       return makeRow(d.CASE_ID, d.TOTALMONEY, d.NAME);
     });
   }
-  // const 임시rows = 임시data.map((d) => {
-  //   return makeRow(d.CASE_ID, d.TOTALMONEY, d.NAME);
-  // });
 
   return (
     <>

@@ -5,20 +5,19 @@ import LineChart from "../../components/chart/lineChart/LineChart";
 import Nav from "../../components/NavAdmin";
 import Footer from "../../components/Footer";
 import LineUseageTable from "../../components/chart/lineChart/LineUseageTable";
+import { useLocation } from "react-router-dom";
 
 const center = css`
   justify-content: center;
   overflow: scroll;
 `;
 export default function RevenueTrend() {
-  // const dates = ["day", "month", "year"];
-  // const dateList = dates.map((term, idx) => (
-  //   <LineChart key={idx} term={term} />
-  // ));
+  const { state } = useLocation();
+
   return (
     <>
       <Nav />
-      <h1>REVENUE TREND</h1>
+      <h1>{state.name} 수익 추이</h1>
       <DropDown />
       <div css={center}>
         <LineChart />

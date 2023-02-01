@@ -52,22 +52,20 @@ export const getUseageRevenuMonth = (month, year) => {
   });
 };
 
-export const getRevenueTrend = ({ month, year }) => {
-  console.log("getrevenueDay axios, 여기까지 옴", month, year);
+export const getRevenueTrend = ({ month, year, caseId }) => {
   return axios({
     method: "get",
-    url: `${url}/admin/kiosk-money-month/${month}/${year}/1`,
-    // url: `${url}/admin/KioskMoneyYear/${year}/1`,
+    url: `${url}/api/auth/admin/kiosk-money-month/${month}/${year}/${caseId}`,
     headers: {
       "Content-Type ": "application/json",
     },
   });
 };
 
-export const getRevenueTrendMonth = (year) => {
+export const getRevenueTrendMonth = ({ year, caseId }) => {
   return axios({
     method: "get",
-    url: `${url}/admin/kiosk-money-year/${year}`,
+    url: `${url}/api/auth/admin/kiosk-money-year/${year}/${caseId}`,
     headers: {
       "Content-Type ": "application/json",
     },

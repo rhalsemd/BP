@@ -2,7 +2,8 @@
 import { useEffect, useRef, useMemo } from "react";
 import { css } from "@emotion/react";
 import * as d3 from "d3";
-import { svg } from "d3";
+import { useSelector } from "react-redux";
+import dayjs from "dayjs";
 
 const chartConatiner = css`
   height: 500px;
@@ -27,91 +28,104 @@ const HEIGHT = 490;
 const GRAPH_WIDTH = WIDTH - ml - mr;
 const GRAPH_HEIGHT = HEIGHT - mt - mb;
 
-const dataDemo = [
-  { data: "1월 11일", cost: 13000 },
-  { data: "1월 12일", cost: 42000 },
-  { data: "1월 13일", cost: 59800 },
-  { data: "1월 14일", cost: 12000 },
-  { data: "1월 15일", cost: 98000 },
-  { data: "1월 16일", cost: 130000 },
-  { data: "1월 17일", cost: 76000 },
-  { data: "1월 18일", cost: 19800 },
-  { data: "1월 19일", cost: 108000 },
-];
-
 export default function LineChart() {
-  const axesRef = useRef(null);
-  const lineChart = useRef();
-  const xScale = useMemo(() => {
-    return d3
-      .scaleLinear()
-      .domain([0, dataDemo.length - 1])
-      .range([0, GRAPH_WIDTH - 400]);
-  }, [dataDemo, WIDTH]);
-
-  const yScale = useMemo(() => {
-    return d3.scaleLinear().domain([0, 130000]).range([GRAPH_HEIGHT, 0]);
-  }, [dataDemo, HEIGHT]);
+  const data = useSelector((state) => state.revenueTrendReducer.data);
+  const lineChart = useRef(null);
 
   useEffect(() => {
-    const svg = d3
-      .select(lineChart.current)
-      .attr("width", GRAPH_WIDTH)
-      .attr("height", HEIGHT)
-      .style("overflow", "scorll");
+    if (data) {
+      console.log(data);
+      const dataDemo = data.map((d) => {
+        const arr = {
+          data: `${dayjs(d.FINALDT).format("MM")}월 ${dayjs(d.FINALDT).format(
+            "DD"
+          )}일`,
+          cost: d.TOTALMoney,
+        };
+        return arr;
+      });
+      let maxValue;
+      if (dataDemo.length < 4) {
+        maxValue = dataDemo.length * 90;
+      } else if (dataDemo.length < 10) {
+        maxValue = dataDemo.length * 60;
+      } else if (dataDemo.length < 15) {
+        maxValue = dataDemo.length * 50;
+      } else if (dataDemo.length < 20) {
+        maxValue = dataDemo.length * 40;
+      } else {
+        maxValue = dataDemo.length * 20;
+      }
+      const svgElement = d3.select(lineChart.current);
+      svgElement.selectAll("*").remove();
+      const xScale = d3
+        .scaleLinear()
+        .domain([0, dataDemo.length - 1])
+        .range([0, maxValue]);
+      const yScale = d3
+        .scaleLinear()
+        .domain([0, d3.max(dataDemo, (d) => d.cost) * 1.5])
+        .range([GRAPH_HEIGHT, 0]);
 
-    const generateScaleLine = d3
-      .line()
-      .x((d, i) => xScale(i) + ml)
-      .y((d) => yScale(d.cost) + mb);
+      const svg = d3
+        .select(lineChart.current)
+        .attr("width", GRAPH_WIDTH)
+        .attr("height", HEIGHT)
+        .style("overflow", "scorll");
 
-    const xAxis = d3
-      .axisBottom(xScale)
-      .ticks(dataDemo.data)
-      .tickFormat((d) => dataDemo[d].data);
+      const generateScaleLine = d3
+        .line()
+        .x((d, i) => xScale(i) + ml)
+        .y((d) => yScale(d.cost) + mb);
 
-    const yAxis = d3.axisLeft(yScale).ticks(10);
+      const xAxis = d3
+        .axisBottom(xScale)
+        .ticks(dataDemo.length - 1)
+        .tickFormat((d, i) => dataDemo[i].data);
 
-    svg
-      .append("g")
-      .call(xAxis)
-      .attr("transform", `translate(${ml}, ${GRAPH_HEIGHT + mt})`);
+      const yAxis = d3.axisLeft(yScale).ticks(10);
 
-    svg.append("g").call(yAxis).attr("transform", `translate(${ml}, ${mt})`);
+      svg
+        .append("g")
+        .call(xAxis)
+        .attr("transform", `translate(${ml}, ${GRAPH_HEIGHT + mt})`);
 
-    const path = svg
-      .append("path")
-      .datum(dataDemo)
-      .attr("fill", "none")
-      .attr("stroke", "steelblue")
-      .attr("stroke-linejoin", "round")
-      .attr("stroke-linecap", "round")
-      .attr("stroke-width", 1.5)
-      .attr("d", generateScaleLine);
+      svg.append("g").call(yAxis).attr("transform", `translate(${ml}, ${mt})`);
 
-    const pathLength = path.node().getTotalLength();
-    const transitionPath = d3.transition().ease(d3.easeSin).duration(3500);
+      const path = svg
+        .append("path")
+        .datum(dataDemo)
+        .attr("fill", "none")
+        .attr("stroke", "steelblue")
+        .attr("stroke-linejoin", "round")
+        .attr("stroke-linecap", "round")
+        .attr("stroke-width", 1.5)
+        .attr("d", generateScaleLine);
 
-    path
-      .attr("stroke-dashoffset", pathLength)
-      .attr("stroke-dasharray", pathLength)
-      .transition(transitionPath)
-      .attr("stroke-dashoffset", 0);
+      const pathLength = path.node().getTotalLength();
+      const transitionPath = d3.transition().ease(d3.easeSin).duration(3500);
 
-    svg
-      .selectAll("circle") // 1.SVG 태그 안에 있는 circle을 모두 찾는다.
-      .data(dataDemo) // 2.찾은 요소에 데이터를 씌운다.
-      .enter() // 3.찾은 요소에 개수보다 데이터가 더 많을경우..
-      .append("circle") // 4.circle 을 추가한다.
-      .attr("r", 4) //  - 반지름 5픽셀
-      .attr("cx", (d, i) => {
-        console.log(xScale(i));
-        return xScale(i) + ml;
-      }) //  - x 위치값 설정.
-      .attr("cy", (d) => yScale(d.cost) + mb) //  - y 위치값 설정.
-      .style("fill", "steelblue")
-      .style("stroke", "4px");
-  }, []);
+      path
+        .attr("stroke-dashoffset", pathLength)
+        .attr("stroke-dasharray", pathLength)
+        .transition(transitionPath)
+        .attr("stroke-dashoffset", 0);
+
+      svg
+        .selectAll("circle")
+        .data(dataDemo)
+        .join("circle")
+        .attr("r", 4)
+        .attr("cx", (d, i) => {
+          return xScale(i) + ml;
+        }) //  - x 위치값 설정.
+        .attr("cy", (d) => yScale(d.cost) + mb)
+        .style("fill", "steelblue")
+        .style("stroke", "4px");
+    } else {
+      return;
+    }
+  }, [data]);
 
   return (
     <>

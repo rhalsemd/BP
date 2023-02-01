@@ -15,7 +15,7 @@ const maxDate = dayjs("2034-01-01T00:00:00.000");
 const SubComponentsPickers = ({ getBranchRevenueMonth, setWeekOn }) => {
   const dispatch = useDispatch();
   const url = useLocation().pathname === "/admin/total-income";
-  const date = useSelector((state) => state.chagneDateReducer.month);
+  const date = useSelector((state) => state.chagneDateReducer?.month);
 
   const changeDay = (newDate) => {
     dispatch(changeMonth(newDate));

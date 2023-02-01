@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getUsers } from "../../modules/users";
-// import { useCallback } from "react";
 
 function makeRow(id, name, userId, regDt, tel, addr) {
   const data = {

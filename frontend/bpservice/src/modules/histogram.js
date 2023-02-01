@@ -12,7 +12,8 @@ const GET_BRANCH_REVENUE_MONTH_SUCCESS =
 const GET_BRANCH_REVENUE_MONTH_FAILURE =
   "histogram/GET_BRANCH_REVENUE_MONTH_FAILURE";
 
-// totalChart의 day별로 보여주기
+const SELECT_DATE = "histogram/SELECT_DATE";
+
 export const getBranchRevenue = createAction(
   GET_BRANCH_REVENUE,
   (revenueData) => revenueData
@@ -24,7 +25,11 @@ export const getBranchRevenueMonth = createAction(
   (revenueData) => revenueData
 );
 
-const initalData = {};
+export const selectDate = createAction(SELECT_DATE, (selectDate) => selectDate);
+
+const initalData = {
+  selectDate: null,
+};
 
 const histogramReducer = handleActions(
   {
@@ -41,6 +46,10 @@ const histogramReducer = handleActions(
     }),
     [GET_BRANCH_REVENUE_MONTH_FAILURE]: (state, action) => ({
       ...state,
+    }),
+    [SELECT_DATE]: (state, action) => ({
+      ...state,
+      selectDate: action.payload,
     }),
   },
   initalData
@@ -64,6 +73,10 @@ function* getBranchDataSaga({ payload }) {
       type: GET_BRANCH_REVENUE_SUCCESS,
       payload: dataGet.data,
     });
+    yield put({
+      type: SELECT_DATE,
+      payload,
+    });
   } catch (e) {
     console.log("error", e);
     yield put({
@@ -76,11 +89,15 @@ function* getBranchDataSaga({ payload }) {
 
 function* getBranchDataMonthSaga({ payload }) {
   try {
+    console.log(payload);
     const dataGet = yield call(() => api.getBranchRevenueMonth(payload));
-    console.log("총 매출(month)", dataGet);
     yield put({
       type: GET_BRANCH_REVENUE_SUCCESS,
       payload: dataGet.data,
+    });
+    yield put({
+      type: SELECT_DATE,
+      payload,
     });
   } catch (e) {
     console.log("error", e);
