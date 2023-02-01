@@ -4,6 +4,7 @@ import KioskHomeBtn from './button/KioskHomeBtn'
 import KioskLentBtn from './button/KioskLentBtn'
 import KioskReturnBtn from './button/KioskReturnBtn'
 import KioskWeather from './weather/KioskWeather'
+import KioskRemoveEventListener from './removeEvent/KioskRemoveEventListener'
 
 const KioskSectionStyle = css`
   display: flex;
@@ -16,17 +17,16 @@ const KioskSectionStyle = css`
 `
 
 const KioskButtons = css`
+  position:relative;
+  
   margin-left: 3vw;
   margin-right: 3vw;
-
-  border: 1px solid black;
-  border-radius: 30px;
 
   width: 60vw;
   height: 50vh;
 
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 `
 
@@ -52,10 +52,10 @@ const KioskHomeSection = () => {
     <div css={KioskSectionStyle}>
       <div css={KioskButtons}>
         <KioskLentBtn />
+        <KioskRemoveEventListener/>
         <KioskReturnBtn />
       </div>
         <KioskWeather/>
-        <KioskHomeBtn />
     </div>
   )
 }

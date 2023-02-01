@@ -1,5 +1,20 @@
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react'
 import axios from "axios";
 import { useEffect, useState } from "react";
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+
+const addressDiv = css`
+  height: 80px;
+
+  display : flex;
+  justify-content: center;
+  align-items: flex-start;
+`
+
+const addressFont = css`
+  font-size: 32px;
+`
 
 const KioskAddress = () => {
   const [address, setAddress] = useState('');
@@ -19,7 +34,7 @@ const KioskAddress = () => {
       axios.get(addressURL)
         .then((res) => {
           // console.log(res.data.address_name)
-          setAddress(res.data.address_name)
+          setAddress(res.data.address_name.slice(-8))
         })
     })
     .catch((err) => console.log(err))
@@ -30,8 +45,8 @@ const KioskAddress = () => {
   }, [])
 
   return (
-    <div>
-      {address}
+    <div css={addressDiv}>
+      <LocationOnIcon color="action" fontSize="large"/><span css={addressFont}>{address}</span>
     </div>
   )
 }
