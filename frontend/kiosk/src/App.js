@@ -16,7 +16,6 @@ function App() {
       />
 
       <Router>
-        <div className="container mt-3">
           <Routes>
             {routes.map((route) => {
               return (
@@ -30,7 +29,6 @@ function App() {
               );
             })}
           </Routes>
-        </div>
       </Router>
     </div>
   );

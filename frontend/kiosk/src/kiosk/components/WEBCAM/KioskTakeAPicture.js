@@ -79,9 +79,9 @@ const KioskTakeAPicture = (data) => {
 
   // count는 여기에 있음 (useInterval) 
   const [isCounting, setCounting] = useState(false);
-  const [number, setNumber] = useState(10);
-  const number_ref = useRef(10);
-  
+  const [number, setNumber] = useState(5);
+  const number_ref = useRef(5);
+
   const takePicture = () => {
     const width = 1024;
     const height = 600;
@@ -135,11 +135,12 @@ const KioskTakeAPicture = (data) => {
 
     axios({
       method: 'POST',
-      url: 'http://192.168.100.176:8080/api/auth/user/brolly/return/update/img',
+      url: 'http://192.168.100.79:8080/api/brolly/return',
       // url: 'http://bp.ssaverytime.kr:8080/api/auth/user/brolly/return/update/img',
       data: {
-        "brolly_id": qrdata,
-        "img_url": imgURL,
+        "brollyId": qrdata,
+        "caseId": 1,
+        "imgUrl": imgURL
       }
     }).then(() => navigate('/kiosk/return/guide', {
       state: {

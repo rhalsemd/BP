@@ -2,8 +2,13 @@
 import { css } from "@emotion/react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+const KioskFixingContainerStyle = css`
+  background-color: #EEF1FF;
+  height: 100%;
+`
+
 const page_404 = css`
-  padding: 40px 0;
+  padding: 100px 0;
   background: #ffffff;
   font-family: 'Chakra Petch', sans-serif;
   img {
@@ -31,23 +36,14 @@ const contant_box_404 = css`
   margin-top: -50px;
 ` 
 
-// 			 .link_404{
-//   color: #fff!important;
-//   padding: 10px 20px;
-//   background: #39ac31;
-//   margin: 20px 0;
-//   display: inline - block;
-// }
-
-
 const KioskFixingContainer = () => {
   return (
-    <div>
+    <div css={KioskFixingContainerStyle}>
       <section css={page_404}>
         <div className="container">
           <div className="row">
-            <div className="col-sm-12 ">
-              <div className="col-sm-10 col-sm-offset-1 text-center">
+            <div className="col-sm-12">
+              <div className="col-sm-12 col-sm-offset-1 text-center">
                 <div css={four_zero_four_bg}>
                   <h1>수리중</h1>
                 </div>
