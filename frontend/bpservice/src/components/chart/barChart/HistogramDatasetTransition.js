@@ -1,21 +1,33 @@
 import { useState } from "react";
 import { connect } from "react-redux";
-import { Histogram } from "./Histogram";
+import { HistogramUseage } from "./HistogramUseage";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 
 const BUTTONS_HEIGHT = 50;
 
 const HistogramDatasetTransition = ({ width, height }) => {
+  const url = useLocation().pathname === "/admin/total-income";
   const [data, setData] = useState();
-  const 임시data1 = useSelector((state) => state);
+  const 임시data1 = useSelector((state) => state?.histogramReducer?.data);
+  const 임시data2 = useSelector((state) => state?.getUseageReducer?.data);
+
   useEffect(() => {
-    setData(임시data1.histogramReducer.data);
-  }, [임시data1, setData]);
+    if (url) {
+      setData(임시data1);
+    } else {
+      setData(임시data2);
+    }
+  }, [임시data1, setData, 임시data2]);
   return (
     <div>
       {data ? (
-        <Histogram width={width} height={height - BUTTONS_HEIGHT} data={data} />
+        <HistogramUseage
+          width={width}
+          height={height - BUTTONS_HEIGHT}
+          data={data}
+        />
       ) : (
         "loading"
       )}

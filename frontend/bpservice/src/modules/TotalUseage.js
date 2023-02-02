@@ -12,15 +12,6 @@ const GET_USEAGE_MONTH_FAILURE = "histogram/GET_USEAGE_MONTH_FAILURE";
 
 export const getUseage = createAction(GET_USEAGE, (useageData) => useageData);
 
-export const getUseageSuccess = createAction(
-  GET_USEAGE_SUCCESS,
-  (useageData) => useageData
-);
-export const getUseageFailure = createAction(
-  GET_USEAGE_FAILURE,
-  (useageData) => useageData
-);
-
 const initalData = {};
 
 const getUseageReducer = handleActions(
@@ -58,7 +49,7 @@ function* axiosUseageSaga({ payload }) {
     const dataGet = yield call(() => api.getUseageRevenu(payload));
     yield put({
       type: GET_USEAGE_SUCCESS,
-      payload: dataGet,
+      payload: dataGet.data,
     });
   } catch (e) {
     console.log("useageSaga Error", e);

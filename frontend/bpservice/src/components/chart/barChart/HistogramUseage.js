@@ -7,7 +7,7 @@ const MARGIN = { top: 30, right: 30, bottom: 40, left: 50 };
 
 export const HistogramUseage = ({ width, height, data }) => {
   const date = useSelector((state) => state.histogramReducer.selectDate);
-  const cost = data.map((d) => d.TOTALMONEY);
+  const cost = data.map((d) => d.TOTALCOUNT);
   const name = data.map((d) => d.NAME);
   const BUCKET_PADDING = 4;
   const axesRef = useRef(null);
@@ -62,8 +62,8 @@ export const HistogramUseage = ({ width, height, data }) => {
         key={i}
         x={xScaleToProp(i) + BUCKET_PADDING / 2 + 25}
         width={xScale.bandwidth() - 50}
-        y={boundsHeight - 280 + yScale(bucket.TOTALMONEY)}
-        height={280 - yScale(bucket.TOTALMONEY)}
+        y={boundsHeight - 280 + yScale(bucket.TOTALCOUNT)}
+        height={280 - yScale(bucket.TOTALCOUNT)}
         jijum={bucket.NAME}
         caseId={bucket.CASE_ID}
         date={date}

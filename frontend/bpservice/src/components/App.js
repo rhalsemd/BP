@@ -9,7 +9,7 @@ import SignUp from "../routes/auth/SignUp";
 import LoginAdmin from "../routes/admin/LoginAdmin";
 import TotalChart from "../routes/admin/TotalChart";
 import RevenueTrend from "../routes/admin/RevenueTrend";
-// import Useage from "../routes/admin/Usesage";
+import TotalUseageChart from "../routes/admin/TotalUseageChart";
 import UserLog from "../routes/admin/UserLog";
 import UserToU from "../routes/auth/UserToU";
 import CompletePage from "../routes/auth/CompletePage";
@@ -23,6 +23,8 @@ import Payment from "../routes/auth/Payment";
 import SearchChangePwd from "../routes/auth/SearchChangePwd";
 import SearchIdResultPage from "../routes/auth/SearchIdResultPage";
 import Users from "../routes/admin/Users";
+
+import Test from "../../src/Test";
 
 export const GlobalStyle = css`
   body {
@@ -58,10 +60,12 @@ function App() {
 
         <Route path="/admin" element={<LoginAdmin />} />
         <Route path="/admin/total-income" element={<TotalChart />} />
-        <Route path="/admin/total-useage" element={<TotalChart />} />
+        <Route path="/admin/total-useage" element={<TotalUseageChart />} />
         <Route path="/admin/revenue-trend/:id" element={<RevenueTrend />} />
         <Route path="/admin/users" element={<Users />} />
         <Route path="/admin/users/:id" element={<UserLog />} />
+
+        <Route path="/test" element={<Test />} />
       </Routes>
     </Router>
     // </div>

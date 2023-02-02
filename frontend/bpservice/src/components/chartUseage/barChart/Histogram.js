@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 
 const MARGIN = { top: 30, right: 30, bottom: 40, left: 50 };
 
-export const HistogramUseage = ({ width, height, data }) => {
+export const Histogram = ({ width, height, data }) => {
   const date = useSelector((state) => state.histogramReducer.selectDate);
   const cost = data.map((d) => d.TOTALMONEY);
   const name = data.map((d) => d.NAME);
@@ -33,7 +33,6 @@ export const HistogramUseage = ({ width, height, data }) => {
   const buckets = useMemo(() => {
     return data;
   }, [xScale]);
-
   const yScale = useMemo(() => {
     return d3
       .scaleLinear()

@@ -1,16 +1,17 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
 import dayjs from "dayjs";
 import Nav from "../../components/NavAdmin";
 import Footer from "../../components/Footer";
-import HistogramDatasetTransition from "../../components/useageChart/HistogramDatasetTransition";
+import HistogramDatasetTransition from "../../components/chart/barChart/HistogramDatasetTransition";
 import UseageTable from "../../components/chart/UseageTable";
 import DayPicker from "../../components/UI/DayPicker";
 import MonthPicker from "../../components/UI/MonthPicker";
 import Button from "@mui/material/Button";
-import { useLocation } from "react-router-dom";
+import { css } from "@emotion/react";
+import { connect } from "react-redux";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { getBranchRevenue } from "../../modules/histogram";
+import { useSelector, useDispatch } from "react-redux";
 import { getUseage } from "../../modules/TotalUseage";
 
 const barChartStyle = css`
@@ -43,14 +44,26 @@ const 캘린더Style = css`
   justify-content: center;
 `;
 
-const TotalUseage = ({ getBranchRevenue }) => {
+const TotalIncome = ({ getBranchRevenue }) => {
+  const titleDateDemo = useSelector((state) => state.chagneDateReducer);
   const [monthOn, setMonthOn] = useState(false);
   const [weekOn, setWeekOn] = useState(false);
-  const date = dayjs();
-  const dayData = dayjs(date).format("YYYY-MM-DD");
+  const [selectDate, setSelectDate] = useState(
+    `${dayjs().format("MM월 DD일")}`
+  );
+
   const dispatch = useDispatch();
+
   useEffect(() => {
-    dispatch(getUseage(dayData));
+    if (titleDateDemo?.day) {
+      setSelectDate(dayjs(titleDateDemo.day).format("MM월 DD일"));
+    } else {
+      setSelectDate(dayjs(titleDateDemo.month).format("MM월"));
+    }
+  }, [titleDateDemo]);
+
+  useEffect(() => {
+    dispatch(getUseage(dayjs()));
   }, []);
   return (
     <div>
@@ -64,7 +77,7 @@ const TotalUseage = ({ getBranchRevenue }) => {
           setWeekOn(false);
         }}
       >
-        Month
+        Day
       </Button>
       <Button
         variant="contained"
@@ -75,13 +88,13 @@ const TotalUseage = ({ getBranchRevenue }) => {
           setMonthOn(false);
         }}
       >
-        Year
+        Month
       </Button>
       <div css={캘린더Style}>
         {monthOn && <DayPicker setMonthOn={setMonthOn} />}
         {weekOn && <MonthPicker setWeekOn={setWeekOn} />}
       </div>
-      <h1 css={h1Style}>"TOTAL USEAGE"</h1>
+      <h1 css={h1Style}>{selectDate} 사용 현황 현황</h1>
       <div css={barChartStyle}>
         <HistogramDatasetTransition width={700} height={400} />
       </div>
@@ -91,4 +104,12 @@ const TotalUseage = ({ getBranchRevenue }) => {
   );
 };
 
-export default TotalUseage;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getBranchRevenue(data) {
+      dispatch(getBranchRevenue(data));
+    },
+  };
+};
+
+export default connect(null, mapDispatchToProps)(TotalIncome);

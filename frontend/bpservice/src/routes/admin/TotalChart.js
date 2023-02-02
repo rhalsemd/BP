@@ -12,8 +12,7 @@ import { connect } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getBranchRevenue } from "../../modules/histogram";
-import { useDispatch } from "react-redux";
-import { getUseage } from "../../modules/TotalUseage";
+import { useSelector } from "react-redux";
 
 const barChartStyle = css`
   height: 400px;
@@ -46,13 +45,23 @@ const 캘린더Style = css`
 `;
 
 const TotalIncome = ({ getBranchRevenue }) => {
+  const titleDateDemo = useSelector((state) => state.chagneDateReducer);
   const [monthOn, setMonthOn] = useState(false);
   const [weekOn, setWeekOn] = useState(false);
-  const date = dayjs();
-  const url = useLocation().pathname;
-  const dispatch = useDispatch();
+  const [selectDate, setSelectDate] = useState(
+    `${dayjs().format("MM월 DD일")}`
+  );
+
   useEffect(() => {
-    getBranchRevenue(date);
+    if (titleDateDemo?.day) {
+      setSelectDate(dayjs(titleDateDemo.day).format("MM월 DD일"));
+    } else {
+      setSelectDate(dayjs(titleDateDemo.month).format("MM월"));
+    }
+  }, [titleDateDemo]);
+
+  useEffect(() => {
+    getBranchRevenue(dayjs());
   }, []);
   return (
     <div>
@@ -66,7 +75,7 @@ const TotalIncome = ({ getBranchRevenue }) => {
           setWeekOn(false);
         }}
       >
-        Month
+        Day
       </Button>
       <Button
         variant="contained"
@@ -77,15 +86,13 @@ const TotalIncome = ({ getBranchRevenue }) => {
           setMonthOn(false);
         }}
       >
-        Year
+        Month
       </Button>
       <div css={캘린더Style}>
         {monthOn && <DayPicker setMonthOn={setMonthOn} />}
         {weekOn && <MonthPicker setWeekOn={setWeekOn} />}
       </div>
-      <h1 css={h1Style}>
-        {url === "/admin/total-income" ? "TOTAL INCOME" : "TOTAL USEAGE"}
-      </h1>
+      <h1 css={h1Style}>{selectDate} 매출 현황</h1>
       <div css={barChartStyle}>
         <HistogramDatasetTransition width={700} height={400} />
       </div>
