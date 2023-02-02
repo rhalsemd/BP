@@ -1,6 +1,22 @@
-import React from "react";
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
 
 import { connect } from "react-redux";
+import Alert from "@mui/material/Alert";
+
+const inputBox = css`
+  position: relative;
+  margin: 5px 0;
+`;
+
+const inputChild = css`
+  background: transparent;
+  border: none;
+  border-bottom: solid 1px #ccc;
+  padding: 20px 0px 5px 0px;
+  font-size: 14pt;
+  width: 100%;
+`;
 
 function SignUpName({ info, setInfo }) {
   // userName 정규 표현식
@@ -27,22 +43,53 @@ function SignUpName({ info, setInfo }) {
   };
 
   return (
-    <div>
+    <div css={inputBox}>
       <div>
-        <label htmlFor="userName">Name : </label>
         <input
           type="text"
           id="userName"
           placeholder="이름"
+          autoComplete="off"
           required
+          css={inputChild}
           onChange={typeName}
           value={info.userName}
         />
+        <label htmlFor="userName">이름</label>
       </div>
-      {!info.userName.match(nameRegExp) || info.userName.length === 0 ? null : (
-        <div>
-          <span style={{ color: "red" }}>한글만 입력해주세요.</span>
-        </div>
+
+      {!info.userName.match(nameRegExp) || info.userName.length === 0 ? (
+        info.userName.length === 0 ? null : (
+          <Alert
+            sx={{
+              hieght: "10%",
+              fontSize: "12px",
+              paddingTop: "0",
+              paddingBottom: "0",
+              display: "flex",
+              justifyContent: "center",
+            }}
+            variant="outlined"
+            severity="success"
+          >
+            일치합니다.
+          </Alert>
+        )
+      ) : (
+        <Alert
+          sx={{
+            hieght: "10%",
+            fontSize: "12px",
+            paddingTop: "0",
+            paddingBottom: "0",
+            display: "flex",
+            justifyContent: "center",
+          }}
+          variant="outlined"
+          severity="error"
+        >
+          한글만 입력해주세요.
+        </Alert>
       )}
     </div>
   );

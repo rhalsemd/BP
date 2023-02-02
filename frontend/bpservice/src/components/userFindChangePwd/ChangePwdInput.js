@@ -23,9 +23,13 @@ function ChangePwdInput({ setInfo, pwdRegExp, info }) {
     });
   };
 
+  const onSubmit = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div css={inputBox}>
-      <form>
+      <form onSubmit={onSubmit}>
         <input
           type="password"
           id="currentPwd"

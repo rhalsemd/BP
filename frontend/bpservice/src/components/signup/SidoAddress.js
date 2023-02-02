@@ -1,13 +1,6 @@
-import { connect } from "react-redux";
 import styled from "../../style/ModifyUserInfo.module.css";
 
-function SidoAddress({
-  setInfo,
-  getGugun,
-  gugunRef,
-  dongRef,
-  modifyUserInfoReducer,
-}) {
+function SidoAddress({ setInfo, getGugun, gugunRef, dongRef, signUp }) {
   const sidoOnClick = (e) => {
     const value = e.target.value;
 
@@ -25,17 +18,11 @@ function SidoAddress({
 
   return (
     <>
-      <select
-        defaultValue="sido"
-        onClick={sidoOnClick}
-        name="select-profession"
-        id="select-profession"
-        className={styled.one}
-      >
+      <select defaultValue="sido" onClick={sidoOnClick} className={styled.one}>
         <option key="defalt-value-1" value="시/도">
           시/도
         </option>
-        {modifyUserInfoReducer.sido.map((city, index) => {
+        {signUp.sido.map((city, index) => {
           return (
             <option key={index} value={city}>
               {city}
@@ -47,8 +34,4 @@ function SidoAddress({
   );
 }
 
-const mapStateToProps = ({ modifyUserInfoReducer }) => {
-  return { modifyUserInfoReducer };
-};
-
-export default connect(mapStateToProps)(SidoAddress);
+export default SidoAddress;

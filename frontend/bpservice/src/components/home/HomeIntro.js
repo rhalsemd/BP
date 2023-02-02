@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import { useSelector } from "react-redux";
 
 const outerBox = css`
   text-align: center;
@@ -11,6 +12,10 @@ const container = css`
 `;
 
 function HomeIntro() {
+  const { whetherData } = useSelector(({ home }) => home);
+
+  console.log(whetherData);
+
   return (
     <div css={outerBox}>
       <div css={container}>

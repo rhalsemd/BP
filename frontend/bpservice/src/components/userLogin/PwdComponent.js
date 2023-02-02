@@ -3,6 +3,7 @@ import { css } from "@emotion/react";
 
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const inputBox = css`
   position: relative;
@@ -27,6 +28,7 @@ const 회원가입버튼 = css`
   height: 35px;
   font-size: 14pt;
   margin-top: 15px;
+  margin-bottom: 15px;
 `;
 
 function PwdComponent({ setInfo, info, setLoginInfo }) {
@@ -62,17 +64,18 @@ function PwdComponent({ setInfo, info, setLoginInfo }) {
   }, [obj, navigation]);
 
   return (
-    <form onSubmit={getLogin} css={inputBox}>
-      <input
-        css={inputChild}
-        type="password"
-        id="password"
-        autoComplete="off"
-        placeholder="비밀번호"
-        onChange={pwdTyping}
-      />
-      <label htmlFor="password">비밀번호</label>
-
+    <div css={inputBox}>
+      <form onSubmit={getLogin}>
+        <input
+          css={inputChild}
+          type="password"
+          id="password"
+          autoComplete="off"
+          placeholder="비밀번호"
+          onChange={pwdTyping}
+        />
+        <label htmlFor="password">비밀번호</label>
+      </form>
       {/* 로그인 버튼 */}
       <div>
         <input
@@ -82,7 +85,14 @@ function PwdComponent({ setInfo, info, setLoginInfo }) {
           css={회원가입버튼}
         />
       </div>
-    </form>
+
+      {/* 찾기 */}
+      <div>
+        <Link to="/bp/search/pwd">비밀번호 찾기</Link> |{" "}
+        <Link to="/bp/search/id">아이디 찾기</Link> |{" "}
+        <Link to="/bp/signup">회원가입</Link>
+      </div>
+    </div>
   );
 }
 

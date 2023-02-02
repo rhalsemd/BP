@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { Link } from "react-router-dom";
 
 import { useState, useEffect } from "react";
 
@@ -13,7 +12,7 @@ import { loginInfo } from "../../modules/userLogin";
 // import { cencleBootpay } from "../../modules/payment";
 
 const loginModalStyle = css`
-  height: 40vh;
+  height: 50%;
   width: 95vw;
   margin: 15vh 2.5vw 19vh;
   display: flex;
@@ -86,14 +85,8 @@ function Login({ userLogin, setLoginInfo, getUserInfo, errorReset }) {
           info={info}
           setLoginInfo={setLoginInfo}
         />
-
-        {/* 찾기 */}
-        <div>
-          <Link to="/bp/search/pwd">비밀번호 찾기</Link> |{" "}
-          <Link to="/bp/search/id">아이디 찾기</Link> |{" "}
-          <Link to="/bp/signup">회원가입</Link>
-        </div>
       </div>
+
       <footer>
         <Footer />
       </footer>

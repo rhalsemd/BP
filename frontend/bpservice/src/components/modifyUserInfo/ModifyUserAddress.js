@@ -1,5 +1,4 @@
 import { useEffect, useRef } from "react";
-import ModifyUserInfo from "../../style/ModifyUserInfo.css";
 
 import { connect } from "react-redux";
 import { modifyUserInfo } from "../../modules/modifyUserInfo";

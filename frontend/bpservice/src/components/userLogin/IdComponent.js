@@ -25,15 +25,17 @@ function IdComponent({ setInfo }) {
 
   return (
     <div css={inputBox}>
-      <input
-        type="text"
-        id="userId"
-        css={inputChild}
-        autoComplete="off"
-        placeholder="아이디"
-        onChange={idTyping}
-      />
-      <label htmlFor="userId">아이디</label>
+      <div>
+        <input
+          type="text"
+          id="userId"
+          css={inputChild}
+          autoComplete="off"
+          placeholder="아이디"
+          onChange={idTyping}
+        />
+        <label htmlFor="userId">아이디</label>
+      </div>
     </div>
   );
 }

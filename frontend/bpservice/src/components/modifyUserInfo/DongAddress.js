@@ -4,7 +4,7 @@ import { css } from "@emotion/react";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { modifyUserInfo } from "../../modules/modifyUserInfo";
-import ModifyUserInfo from "../../style/ModifyUserInfo.css";
+import styled from "../../style/ModifyUserInfo.module.css";
 
 const 회원정보수정버튼 = css`
   background-color: #191f28;
@@ -70,7 +70,7 @@ function DongAddress({
             defaultValue="dong"
             onClick={DongOnClick}
             ref={dongRef}
-            className="three"
+            className={styled.three}
           >
             <option key="defalt-value-3" value="읍/면/동">
               읍/면/동
