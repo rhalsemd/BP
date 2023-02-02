@@ -1,19 +1,20 @@
 import React from "react";
-import { DataGrid } from "@mui/x-data-grid";
-import Btn from "../UI/Btn";
+import { DataGrid, gridClasses } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getUsers } from "../../modules/users";
+import { grey } from "@mui/material/colors";
+// import { useDemoData } from "@mui/x-data-grid-generator";
 
-function makeRow(id, name, userId, regDt, tel, addr) {
+function makeRow(id, name, userId, regDt, tel, addr1, addr2) {
   const data = {
     id: id,
     col1: name,
     col2: userId,
     col3: regDt,
     col4: tel,
-    col5: addr,
+    col5: addr1 + " " + addr2,
   };
   return data;
 }
@@ -28,32 +29,66 @@ const col = [
 
 export default function UserTable() {
   const dispatch = useDispatch();
-
-  const users = useSelector((state) => state);
   const navigation = useNavigate();
+  const [rows, setRows] = useState();
+
   useEffect(() => {
     dispatch(getUsers());
   }, []);
 
+  const users = useSelector((state) => state.getUsersReducer.users);
+
   const handleCellClick = (id) => {
     navigation(`/admin/users/${id}`, { state: { id } });
   };
-  const rows = makeRow(
-    1,
-    "이주형",
-    "toitoii080",
-    "2023-01-25T13:39:42",
-    "01077777777",
-    "서울특별시 강남구 역삼동"
-  );
+
+  const getRowSpacing = React.useCallback((params) => {
+    return {
+      top: params.isFirstVisible ? 0 : 5,
+      bottom: params.isLastVisible ? 0 : 5,
+    };
+  }, []);
+
+  useEffect(() => {
+    if (users) {
+      setRows(() =>
+        users.map((d, idx) => {
+          return makeRow(
+            idx,
+            d.name,
+            d.id,
+            d.regDt,
+            d.phoneNum,
+            d.sido,
+            d.sigungu
+          );
+        })
+      );
+    } else {
+      console.log("유저 목록 받아오는중");
+      return;
+    }
+  }, [users, setRows]);
+
   return (
     <div style={{ height: "72vh", width: "100%" }}>
-      <DataGrid
-        rowHeight={30}
-        rows={[rows]}
-        columns={col}
-        onCellClick={() => handleCellClick(rows.id)}
-      />
+      {rows ? (
+        <DataGrid
+          rowHeight={40}
+          rows={rows}
+          getRowSpacing={getRowSpacing}
+          columns={col}
+          onCellClick={() => handleCellClick(rows.id)}
+          sx={{
+            [`& .${gridClasses.row}`]: {
+              bgcolor: (theme) =>
+                theme.palette.mode === "light" ? grey[200] : grey[900],
+            },
+          }}
+        />
+      ) : (
+        "lodaing"
+      )}
     </div>
   );
 }

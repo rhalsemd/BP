@@ -4,12 +4,11 @@ import dayjs from "dayjs";
 import Nav from "../../components/NavAdmin";
 import Footer from "../../components/Footer";
 import HistogramDatasetTransition from "../../components/chart/barChart/HistogramDatasetTransition";
-import UseageTable from "../../components/chart/UseageTable";
+import HistogramTable from "../../components/chart/HistogramTable";
 import DayPicker from "../../components/UI/DayPicker";
 import MonthPicker from "../../components/UI/MonthPicker";
 import Button from "@mui/material/Button";
 import { connect } from "react-redux";
-import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getBranchRevenue } from "../../modules/histogram";
 import { useSelector } from "react-redux";
@@ -42,6 +41,7 @@ const 캘린더Style = css`
   width: 100vw;
   display: flex;
   justify-content: center;
+  box-shadow: 5px 5px 4px 10px #f333;
 `;
 
 const TotalIncome = ({ getBranchRevenue }) => {
@@ -88,15 +88,21 @@ const TotalIncome = ({ getBranchRevenue }) => {
       >
         Month
       </Button>
-      <div css={캘린더Style}>
-        {monthOn && <DayPicker setMonthOn={setMonthOn} />}
-        {weekOn && <MonthPicker setWeekOn={setWeekOn} />}
-      </div>
+      {monthOn && (
+        <div css={캘린더Style}>
+          <DayPicker setMonthOn={setMonthOn} />
+        </div>
+      )}
+      {weekOn && (
+        <div css={캘린더Style}>
+          <MonthPicker setWeekOn={setWeekOn} />
+        </div>
+      )}
       <h1 css={h1Style}>{selectDate} 매출 현황</h1>
       <div css={barChartStyle}>
         <HistogramDatasetTransition width={700} height={400} />
       </div>
-      <UseageTable />
+      <HistogramTable />
       <Footer />
     </div>
   );

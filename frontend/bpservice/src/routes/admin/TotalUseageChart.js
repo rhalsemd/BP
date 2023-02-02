@@ -42,6 +42,7 @@ const 캘린더Style = css`
   width: 100vw;
   display: flex;
   justify-content: center;
+  box-shadow: 5px 5px 4px 10px #f333;
 `;
 
 const TotalIncome = ({ getBranchRevenue }) => {
@@ -90,10 +91,16 @@ const TotalIncome = ({ getBranchRevenue }) => {
       >
         Month
       </Button>
-      <div css={캘린더Style}>
-        {monthOn && <DayPicker setMonthOn={setMonthOn} />}
-        {weekOn && <MonthPicker setWeekOn={setWeekOn} />}
-      </div>
+      {monthOn && (
+        <div css={캘린더Style}>
+          <DayPicker setMonthOn={setMonthOn} />
+        </div>
+      )}
+      {weekOn && (
+        <div css={캘린더Style}>
+          <MonthPicker setWeekOn={setWeekOn} />
+        </div>
+      )}
       <h1 css={h1Style}>{selectDate} 사용 현황 현황</h1>
       <div css={barChartStyle}>
         <HistogramDatasetTransition width={700} height={400} />

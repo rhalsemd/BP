@@ -36,7 +36,6 @@ export default function LineChart() {
     const svgElement = d3.select(lineChart.current);
     svgElement.selectAll("*").remove();
     if (data) {
-      console.log(data);
       const dataDemo = data.map((d) => {
         const arr = {
           data: `${dayjs(d.FINALDT).format("MM")}월 ${dayjs(d.FINALDT).format(
@@ -46,11 +45,10 @@ export default function LineChart() {
         };
         return arr;
       });
+      const name = dataDemo.map((d) => d.data);
       let maxValue;
-      if (dataDemo.length < 4) {
-        maxValue = dataDemo.length * 90;
-      } else if (dataDemo.length < 10) {
-        maxValue = dataDemo.length * 60;
+      if (dataDemo.length < 10) {
+        maxValue = 300;
       } else if (dataDemo.length < 15) {
         maxValue = dataDemo.length * 50;
       } else if (dataDemo.length < 20) {
@@ -60,9 +58,15 @@ export default function LineChart() {
       }
 
       const xScale = d3
-        .scaleLinear()
-        .domain([0, dataDemo.length - 1])
+        .scaleBand()
+        .domain(dataDemo.map((d, i) => i))
         .range([0, maxValue]);
+
+      // const xScaleLine = d3
+      //   .scaleBand()
+      //   .domain([0, dataDemo.length - 1])
+      //   .range([0, maxValue]);
+
       const yScale = d3
         .scaleLinear()
         .domain([0, d3.max(dataDemo, (d) => d.cost) * 1.5])
@@ -76,7 +80,7 @@ export default function LineChart() {
 
       const generateScaleLine = d3
         .line()
-        .x((d, i) => xScale(i) + ml)
+        .x((d, i) => xScale(i) + ml + maxValue / (dataDemo.length * 2))
         .y((d) => yScale(d.cost) + mb);
 
       const xAxis = d3
@@ -90,7 +94,12 @@ export default function LineChart() {
         .append("g")
         .call(xAxis)
         .attr("transform", `translate(${ml}, ${GRAPH_HEIGHT + mt})`);
-
+      svg
+        .selectAll("text")
+        .attr("y", 15)
+        .attr("dy", ".35em")
+        .attr("font-weight", "bold")
+        .attr("font-style", "oblique");
       svg.append("g").call(yAxis).attr("transform", `translate(${ml}, ${mt})`);
 
       const path = svg
@@ -118,8 +127,8 @@ export default function LineChart() {
         .join("circle")
         .attr("r", 4)
         .attr("cx", (d, i) => {
-          return xScale(i) + ml;
-        }) //  - x 위치값 설정.
+          return xScale(i) + ml + maxValue / (dataDemo.length * 2);
+        }) //  x 위치값 설정
         .attr("cy", (d) => yScale(d.cost) + mb)
         .style("fill", "steelblue")
         .style("stroke", "4px");

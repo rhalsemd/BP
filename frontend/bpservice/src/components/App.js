@@ -24,7 +24,7 @@ import SearchChangePwd from "../routes/auth/SearchChangePwd";
 import SearchIdResultPage from "../routes/auth/SearchIdResultPage";
 import Users from "../routes/admin/Users";
 
-import Test from "../../src/Test";
+// import Test from "../../src/Test";
 
 export const GlobalStyle = css`
   body {
@@ -65,7 +65,7 @@ function App() {
         <Route path="/admin/users" element={<Users />} />
         <Route path="/admin/users/:id" element={<UserLog />} />
 
-        <Route path="/test" element={<Test />} />
+        {/* <Route path="/test" element={<Test />} /> */}
       </Routes>
     </Router>
     // </div>

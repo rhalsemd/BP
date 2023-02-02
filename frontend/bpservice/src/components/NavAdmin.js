@@ -11,9 +11,12 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
+import BarChartIcon from "@mui/icons-material/BarChart";
+import UmbrellaIcon from "@mui/icons-material/Umbrella";
+import AccountCircleTwoToneIcon from "@mui/icons-material/AccountCircleTwoTone";
+import LogoutTwoToneIcon from "@mui/icons-material/LogoutTwoTone";
+import { useNavigate } from "react-router-dom";
 
 const divStyle = css`
   display: flex;
@@ -21,6 +24,22 @@ const divStyle = css`
   height: 8vh;
 `;
 export default function Nav() {
+  const navigate = useNavigate();
+  const onClick = (index) => {
+    switch (index) {
+      case 0:
+        navigate("/admin/total-income");
+        break;
+      case 1:
+        navigate("/admin/total-useage");
+        break;
+      case 2:
+        navigate("/admin/users");
+        break;
+      default:
+        break;
+    }
+  };
   const [state, setState] = React.useState({
     right: false,
   });
@@ -37,17 +56,22 @@ export default function Nav() {
 
   const list = (anchor) => (
     <Box
-      sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem key={text} disablePadding>
+        {["매출 현황", "사용 현황", "사용자 목록"].map((text, index) => (
+          <ListItem key={text} disablePadding onClick={() => onClick(index)}>
             <ListItemButton>
               <ListItemIcon>
-                <InboxIcon />
+                {index == 0 ? (
+                  <BarChartIcon />
+                ) : index == 1 ? (
+                  <UmbrellaIcon />
+                ) : (
+                  <AccountCircleTwoToneIcon />
+                )}
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItemButton>
@@ -56,16 +80,12 @@ export default function Nav() {
       </List>
       <Divider />
       <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>{<LogoutTwoToneIcon />}</ListItemIcon>
+            <ListItemText primary={"로그아웃"} />
+          </ListItemButton>
+        </ListItem>
       </List>
     </Box>
   );

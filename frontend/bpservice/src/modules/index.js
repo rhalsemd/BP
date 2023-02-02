@@ -11,7 +11,10 @@ import histogramReducer, {
   histogramSaga,
   histogramMonthSaga,
 } from "./histogram";
-import getUseageReducer, { getUseageSaga } from "./TotalUseage";
+import getUseageReducer, {
+  getUseageSaga,
+  getUseageMonthSaga,
+} from "./TotalUseage";
 import revenueTrendReducer, {
   revenueTrendSaga,
   revenueTrendMonthSaga,
@@ -55,6 +58,7 @@ export function* rootSaga() {
     revenueTrendMonthSaga(),
     mypageSaga(),
     getUseageSaga(),
+    getUseageMonthSaga(),
     paymentSaga(),
     usersSaga(),
     userLogSaga(),

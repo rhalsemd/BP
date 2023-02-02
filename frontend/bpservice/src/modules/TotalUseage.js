@@ -1,5 +1,5 @@
 import { createAction, handleActions } from "redux-actions";
-import { call, put, takeLatest, select } from "redux-saga/effects";
+import { call, put, takeLatest } from "redux-saga/effects";
 import * as api from "../lib/api";
 
 const GET_USEAGE = "histogram/GET_USEAGE";
@@ -10,9 +10,18 @@ const GET_USEAGE_MONTH = "histogram/GET_USEAGE_MONTH";
 const GET_USEAGE_MONTH_SUCCESS = "histogram/GET_USEAGE_MONTH_SUCCESS";
 const GET_USEAGE_MONTH_FAILURE = "histogram/GET_USEAGE_MONTH_FAILURE";
 
-export const getUseage = createAction(GET_USEAGE, (useageData) => useageData);
+const SELECT_DATE = "histogram/SELECT_DATE";
 
-const initalData = {};
+export const getUseage = createAction(GET_USEAGE, (useageData) => useageData);
+export const getUseageMonth = createAction(
+  GET_USEAGE_MONTH,
+  (useageData) => useageData
+);
+
+export const selectDate = createAction(SELECT_DATE, (selectDate) => selectDate);
+const initalData = {
+  selectDate: null,
+};
 
 const getUseageReducer = handleActions(
   {
@@ -29,6 +38,10 @@ const getUseageReducer = handleActions(
     }),
     [GET_USEAGE_MONTH_FAILURE]: (state, action) => ({
       data: undefined,
+    }),
+    [SELECT_DATE]: (state, action) => ({
+      ...state,
+      selectDate: action.payload,
     }),
   },
   initalData
@@ -51,6 +64,10 @@ function* axiosUseageSaga({ payload }) {
       type: GET_USEAGE_SUCCESS,
       payload: dataGet.data,
     });
+    yield put({
+      type: SELECT_DATE,
+      payload,
+    });
   } catch (e) {
     console.log("useageSaga Error", e);
     yield put({
@@ -61,13 +78,17 @@ function* axiosUseageSaga({ payload }) {
   }
 }
 
-function* axiosUseageMonthSaga() {
-  const { data } = yield select((state) => state.histogramReducer);
+function* axiosUseageMonthSaga({ payload }) {
+  console.log("saga");
   try {
-    const dataGet = yield call(() => api.getUseageRevenuMonth);
+    const dataGet = yield call(() => api.getUseageRevenuMonth(payload));
     yield put({
       type: GET_USEAGE_MONTH_SUCCESS,
       payload: dataGet.data,
+    });
+    yield put({
+      type: SELECT_DATE,
+      payload,
     });
   } catch (e) {
     console.log("useageSaga Error", e);

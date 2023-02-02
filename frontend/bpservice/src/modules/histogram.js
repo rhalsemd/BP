@@ -1,5 +1,5 @@
 import { createAction, handleActions } from "redux-actions";
-import { call, put, select, takeLatest } from "redux-saga/effects";
+import { call, put, takeLatest } from "redux-saga/effects";
 import * as api from "../lib/api";
 
 const GET_BRANCH_REVENUE = "histogram/GET_BRANCH_REVENUE";

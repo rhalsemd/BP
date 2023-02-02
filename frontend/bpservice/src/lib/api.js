@@ -41,11 +41,12 @@ export const getUseageRevenu = (day) => {
   });
 };
 
-export const getUseageRevenuMonth = (month, year) => {
-  console.log("getUseageRevenue axios");
+export const getUseageRevenuMonth = (date) => {
+  const year = dayjs(date).format("YYYY");
+  const month = dayjs(date).format("MM");
   return axios({
     method: "get",
-    url: `${url}/admin/all-kiosk-count-month/${month}/${year}`,
+    url: `${url}/api/auth/admin/all-kiosk-count-month/${month}/${year}`,
     headers: {
       "Content-Type ": "application/json",
     },

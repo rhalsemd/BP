@@ -52,8 +52,22 @@ export default function UserTable() {
   return (
     <>
       <div css={chartStyle}>
-        <div style={{ height: 500, width: "100%" }}>
-          {rows ? <DataGrid rows={rows} columns={col} /> : "lodaing"}
+        <div style={{ height: "60vh", width: "100%" }}>
+          {rows ? (
+            <DataGrid
+              rowHeight={40}
+              rows={rows}
+              columns={col}
+              sx={{
+                fontSize: 13,
+                "& .MuiDataGrid-cell:hover": {
+                  color: "primary.main",
+                },
+              }}
+            />
+          ) : (
+            "lodaing"
+          )}
         </div>
       </div>
     </>

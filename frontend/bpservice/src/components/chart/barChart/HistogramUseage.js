@@ -13,8 +13,7 @@ export const HistogramUseage = ({ width, height, data }) => {
   const axesRef = useRef(null);
   const boundsWidth = width - MARGIN.right - MARGIN.left;
   const boundsHeight = height - MARGIN.top - MARGIN.bottom;
-
-  const domain = [0, d3.max(cost) + 50];
+  const maxValue = d3.max(cost);
 
   const xScale = useMemo(() => {
     return d3
@@ -35,27 +34,31 @@ export const HistogramUseage = ({ width, height, data }) => {
   }, [xScale]);
 
   const yScale = useMemo(() => {
-    return d3
-      .scaleLinear()
-      .range([boundsHeight, 0])
-      .domain([0, d3.max(cost)]);
+    return d3.scaleLinear().range([boundsHeight, 0]).domain([0, maxValue]);
   }, [data, height]);
 
   useEffect(() => {
     const svgElement = d3.select(axesRef.current);
     svgElement.selectAll("*").remove();
-
     const xAxisGenerator = d3.axisBottom(xScale);
+
     svgElement
       .append("g")
       .attr("transform", "translate(0," + boundsHeight + ")")
       .call(xAxisGenerator);
-
-    const yAxisGenerator = d3.axisLeft(yScale);
+    svgElement
+      .selectAll("text")
+      .attr("y", 15)
+      .attr("dy", ".35em")
+      .attr("font-weight", "bold")
+      .attr("font-style", "oblique");
+    // .attr("transform", "rotate(-15)")
+    // .attr("transform", "rotate(-15)");
+    // .attr("text-anchor", "center");
+    const yAxisGenerator = d3.axisLeft(yScale).ticks(maxValue);
 
     svgElement.append("g").call(yAxisGenerator);
   }, [xScale, yScale, boundsHeight]);
-
   const allRects = buckets.map((bucket, i) => {
     return (
       <Rectangle
@@ -63,14 +66,13 @@ export const HistogramUseage = ({ width, height, data }) => {
         x={xScaleToProp(i) + BUCKET_PADDING / 2 + 25}
         width={xScale.bandwidth() - 50}
         y={boundsHeight - 280 + yScale(bucket.TOTALCOUNT)}
-        height={280 - yScale(bucket.TOTALCOUNT)}
+        height={maxValue !== 0 ? 280 - yScale(bucket.TOTALCOUNT) : maxValue}
         jijum={bucket.NAME}
         caseId={bucket.CASE_ID}
         date={date}
       />
     );
   });
-
   return (
     <svg width={width} height={height}>
       <g

@@ -24,7 +24,7 @@ const SubComponentsPickers = ({ setMonthOn, getBranchRevenue, getUseage }) => {
     if (url) {
       getBranchRevenue(newDate);
     } else {
-      // getUseage(newDate);
+      getUseage(newDate);
     }
     setMonthOn(false);
   };
@@ -36,6 +36,7 @@ const SubComponentsPickers = ({ setMonthOn, getBranchRevenue, getUseage }) => {
           minDate={minDate}
           maxDate={maxDate}
           onChange={(newDate) => changeMonth(newDate)}
+          view={"day"}
         />
       </Grid>
     </LocalizationProvider>
