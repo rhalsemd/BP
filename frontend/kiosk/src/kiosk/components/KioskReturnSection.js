@@ -1,22 +1,18 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
+import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+
 const KioskReturnSectionStyle = css`
   display: flex;
   justify-content: center;
   align-items: center;
-
-
   height: 80vh;
 `
 
 const KioskCameraImg = css`
-  margin-left: 3vw;
-
-  width: 40vw;
+  width: 50vw;
   height: 50vh;
-  
-  border: 1px solid black;
 
   display: flex;
   flex-direction: column;
@@ -30,11 +26,7 @@ const KioskCameraImg = css`
 `
 
 const CameraImg = css`
-  background-color: black;
-  
   margin-bottom: 1vw;
-  cursor: pointer;
-
   width: 250px;
   height: 150px;
 `
@@ -42,17 +34,11 @@ const CameraImg = css`
 const CameraImgClickStyle = css`
   width: 200px;
   height: 80px;
-
-  background-color: black;
-  color: white;
-
 `
 
 const KioskReturnMethod = css`
   width: 50vw;
   height: 50vh;
-
-  border: 1px solid black;
 
   display: flex;
   flex-direction: column;
@@ -66,6 +52,7 @@ const KioskReturnMethod = css`
 
   ol {
     margin-left: 2.5vw;
+
     li {
       font-size: 20px;
     }
@@ -80,9 +67,10 @@ const KioskReturnMethod = css`
 
 const KioskReturnSection = () => {
   const navigate = useNavigate();
+  const { id } = useSelector((store) => store)
 
   const nextMove = () => {
-    navigate('/kiosk/return/QR')
+    navigate(`/kiosk/${id}/return/QR`)
   };
 
   return (
@@ -91,14 +79,9 @@ const KioskReturnSection = () => {
         <div css={CameraImg} onClick={nextMove}>
           
         </div>
-        <div css={CameraImgClickStyle}>
-          이미지를 클릭하세요!
-        </div>
       </div>
       <div css={KioskReturnMethod}>
         <h1>😁 반납 방법</h1>
-        <br />
-        <br />
         <ol>
           <li>우산의 바코드를 카메라에 찍어주세요.</li>
           <li>우산 사진을 화면에 보이게 찍어주세요.</li>

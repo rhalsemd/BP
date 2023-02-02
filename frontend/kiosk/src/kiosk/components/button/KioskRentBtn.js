@@ -1,16 +1,17 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
+import { useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
-import LentBtn from "../../assets/LentBtn.svg"
+import RentBtn from "../../assets/RentBtn.svg"
 
-const KioskLentBtnDiv = css`
+const KioskRentBtnDiv = css`
   position: absolute;
   left: 0;
 `
-const LentBtnStyle = css`
+const RentBtnStyle = css`
   z-index: 0;
 `
-const LentBtnTextBox = css`
+const RentBtnTextBox = css`
   position: absolute;
   bottom : 10px;
   left: 0;
@@ -36,18 +37,18 @@ const LentBtnTextBox = css`
 `
 
 // 컴포넌트 시작
-const KioskLentBtn = () => {
+const KioskRentBtn = () => {
+  const { id } = useSelector((store) => store)
 
   const navigate = useNavigate();
-
-  const KioskLentMove = () => {
-    navigate('/kiosk/lent')
+  const KioskRentMove = () => {
+    navigate(`/kiosk/${id}/rent`)
   }
 
   return (
-    <div css={KioskLentBtnDiv} onClick={KioskLentMove}>
-      <img css={LentBtnStyle} src={LentBtn} alt="LentBtn" />
-      <div css={LentBtnTextBox}>
+    <div css={KioskRentBtnDiv} onClick={KioskRentMove}>
+      <img css={RentBtnStyle} src={RentBtn} alt="RentBtn" />
+      <div css={RentBtnTextBox}>
         <p className='title'>대여</p>
         <p className='content'>(대여가능 : 1개)</p>
       </div>
@@ -55,4 +56,4 @@ const KioskLentBtn = () => {
   );
 }
 
-export default KioskLentBtn
+export default KioskRentBtn

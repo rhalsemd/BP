@@ -3,6 +3,7 @@ import { css } from '@emotion/react'
 import axios from "axios";
 import { useEffect, useState } from "react";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import { useSelector } from 'react-redux';
 
 const addressDiv = css`
   height: 80px;
@@ -17,15 +18,18 @@ const addressFont = css`
 `
 
 const KioskAddress = () => {
+  const { id } = useSelector((store) => store)
   const [address, setAddress] = useState('');
-
+  
+  // 이거 수정해야함
   const getAddress = () => {
     // 키오스크 geo 에서 지점에 해당하는 위도 경도값 받아오기
     // let geoURL = `http://192.168.100.80:8080/api/kiosk/home/kiosk-geo?id=1`
-    let geoURL = `http://bp.ssaverytime.kr:8080/api/kiosk/home/kiosk-geo?id=1`
+    let geoURL = `http://bp.ssaverytime.kr:8080/api/kiosk/home/kiosk-geo?id=${id}`
     let addressURL = ``;
     axios.get(geoURL)
     .then((res) => {
+      // console.log(res.data)
       return res.data;
     })
     .then((data) => {
@@ -34,7 +38,7 @@ const KioskAddress = () => {
       axios.get(addressURL)
         .then((res) => {
           // console.log(res.data.address_name)
-          setAddress(res.data.address_name.slice(-8))
+          setAddress(res.data.address_name)
         })
     })
     .catch((err) => console.log(err))

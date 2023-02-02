@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
+import { jsx, css } from "@emotion/react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const KioskFixingContainerStyle = css`
@@ -31,10 +31,24 @@ const four_zero_four_bg = css`
     font-size: 80px;
   }
 `
-			 
+
 const contant_box_404 = css`
   margin-top: -50px;
-` 
+`
+
+// const text = css`
+//   visibility: hidden !important;
+// `
+
+// const hovercheck = css`
+//   h1 {
+//     color: rebeccapurple !important;
+//   }
+
+//   &:hover .text {
+//     visibility: visible !important;
+//   }
+// `
 
 const KioskFixingContainer = () => {
   return (

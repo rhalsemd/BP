@@ -1,6 +1,6 @@
 import KioskHomeContainer from './kiosk/routes/KioskHomeContainer'
-import KioskLentContainer from './kiosk/routes/KioskLentContainer'
-import KioskLentCompleteContainer from './kiosk/routes/KioskLentCompleteContainer'
+import KioskRentContainer from './kiosk/routes/KioskRentContainer'
+import KioskRentCompleteContainer from './kiosk/routes/KioskRentCompleteContainer'
 import KioskReturnContainer from './kiosk/routes/KioskReturnContainer'
 import KioskReturnQRContainer from './kiosk/routes/KioskReturnQRContainer'
 import KioskReturnCameraContainer from './kiosk/routes/KioskReturnCameraContainer'
@@ -10,40 +10,40 @@ import KioskFixingContainer from './kiosk/routes/KioskFixingContainer'
 
 const routes = [
   {
-    path: '/kiosk',
-    element: <KioskHomeContainer/>
+    path: '/kiosk/:id',
+    element: <KioskHomeContainer />
   },
   {
-    path: '/kiosk/lent',
-    element: <KioskLentContainer/>
+    path: '/kiosk/:id/rent',
+    element: <KioskRentContainer />
   },
   {
-    path: '/kiosk/lent/complete',
-    element: <KioskLentCompleteContainer/>
+    path: '/kiosk/:id/rent/complete',
+    element: <KioskRentCompleteContainer />
   },
   {
-    path: '/kiosk/return',
-    element: <KioskReturnContainer/>
+    path: '/kiosk/:id/return',
+    element: <KioskReturnContainer />
   },
   {
-    path: '/kiosk/return/QR',
-    element: <KioskReturnQRContainer/>
+    path: '/kiosk/:id/return/QR',
+    element: <KioskReturnQRContainer />
   },
   {
-    path: '/kiosk/return/camera',
-    element: <KioskReturnCameraContainer/>
+    path: '/kiosk/:id/return/camera',
+    element: <KioskReturnCameraContainer />
   },
   {
-    path: '/kiosk/return/guide',
-    element: <KioskReturnGuideContainer/>
+    path: '/kiosk/:id/return/guide',
+    element: <KioskReturnGuideContainer />
   },
   {
-    path: '/kiosk/return/complete',
-    element: <KioskReturnCompleteContainer/>
+    path: '/kiosk/:id/return/complete',
+    element: <KioskReturnCompleteContainer />
   },
   {
-    path: '/kiosk/404',
-    element: <KioskFixingContainer/>
+    path: '/kiosk/:id/404',
+    element: <KioskFixingContainer />
   },
 ]
 

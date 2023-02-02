@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
 import KioskHomeBtn from './button/KioskHomeBtn'
-import KioskLentBtn from './button/KioskLentBtn'
+import KioskRentBtn from './button/KioskRentBtn'
 import KioskReturnBtn from './button/KioskReturnBtn'
 import KioskWeather from './weather/KioskWeather'
 import KioskRemoveEventListener from './removeEvent/KioskRemoveEventListener'
@@ -46,16 +46,14 @@ const KioskButtons = css`
 // 밑에는 JSX 입니다.
 
 const KioskHomeSection = () => {
-  
-
   return (
     <div css={KioskSectionStyle}>
       <div css={KioskButtons}>
-        <KioskLentBtn />
-        <KioskRemoveEventListener/>
-        <KioskReturnBtn />
+        <KioskRentBtn/>
+        <KioskRemoveEventListener />
+        <KioskReturnBtn/>
       </div>
-        <KioskWeather/>
+      <KioskWeather/>
     </div>
   )
 }

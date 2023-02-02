@@ -3,11 +3,9 @@ import { css } from '@emotion/react'
 import KioskPaymentQR from './QR/KioskPaymentQR'
 import BPlogoImage from '../assets/BPlogoImage.png'
 
-const KioskLentSectionStyle = css`
-
-  position: absolute;
-  top: 90px;
-  left: 90px;
+const KioskRentSectionStyle = css`
+  width: 100vw;
+  position: relative;
 
   display: flex;
   justify-content: center;
@@ -15,11 +13,14 @@ const KioskLentSectionStyle = css`
 
   height: 80vh;
 `
-const KioskLentQR = css`
+const KioskRentQR = css`
+  position:absolute;
+  left: 60px;
+
   margin-left: 3vw;
 
-  width: 29vw;
-  height: 50vh;
+  width: 35vw;
+  height: 60vh;
 
   display: flex;
   justify-content: center;
@@ -30,19 +31,22 @@ const QR = css`
   width: 400px;
   height: 400px;
   
-  svg > path:first-child {
+  svg > path:first-of-type {
     fill: #EEF1FF;
   }
 `
 
-const KioskLentMethod = css`
-  width: 60vw;
-  height: 50vh;
+const KioskRentMethod = css`
+  width: 55vw;
+  height: 60vh;
 
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+
+  position: absolute;
+  right: 10px;
 
   ul {
     display: flex;
@@ -50,8 +54,6 @@ const KioskLentMethod = css`
     justify-content: start;
     align-items: flex-start;
     width: 500px;
-
-    padding-top: 8px;
     margin: 0;
 
     li {
@@ -60,7 +62,7 @@ const KioskLentMethod = css`
   } 
 `
 
-const KioskLentMethodTitle = css`
+const KioskRentMethodTitle = css`
   position: relative;
   left: 10px;
   top: 0px;
@@ -80,7 +82,7 @@ const BPlogoImageSize = css`
   top: 5px;
   left: 0px;
   width: 80px;
-` 
+`
 
 // 위에는 Emotion.js 입니다.
 // 밑에는 JS 입니다.
@@ -88,18 +90,18 @@ const BPlogoImageSize = css`
 // 위에는 JS 입니다.
 // 밑에는 JSX 입니다.
 
-const KioskLentSection = () => {
+const KioskRentSection = () => {
 
   return (
-    <div css={KioskLentSectionStyle}>
-      <div css={KioskLentQR}>
+    <div css={KioskRentSectionStyle}>
+      <div css={KioskRentQR}>
         <div css={QR}>
-          <KioskPaymentQR/>
+          <KioskPaymentQR />
         </div>
       </div>
-      <div css={KioskLentMethod}>
-        <div css={KioskLentMethodTitle}>
-          <img css={BPlogoImageSize} src={BPlogoImage} alt="BPlogoImage"/><span>대여 방법</span>
+      <div css={KioskRentMethod}>
+        <div css={KioskRentMethodTitle}>
+          <img css={BPlogoImageSize} src={BPlogoImage} alt="BPlogoImage" /><span>대여 방법</span>
         </div>
         <ul>
           <li>QR 코드를 카메라로 찍어주세요.</li>
@@ -113,4 +115,4 @@ const KioskLentSection = () => {
   )
 }
 
-export default KioskLentSection;
+export default KioskRentSection;
