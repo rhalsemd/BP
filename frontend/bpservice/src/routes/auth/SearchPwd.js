@@ -11,7 +11,7 @@ import FindPwdUsernameComponent from "../../components/userFindPwd/FindPwdUserna
 import { findPwdInfo } from "../../modules/findPwd";
 
 const loginModalStyle = css`
-  height: 40%;
+  height: 40vh;
   width: 95vw;
   margin: 15vh 2.5vw 19vh;
   display: flex;

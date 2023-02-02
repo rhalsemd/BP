@@ -12,7 +12,7 @@ import { loginInfo } from "../../modules/userLogin";
 // import { cencleBootpay } from "../../modules/payment";
 
 const loginModalStyle = css`
-  height: 50%;
+  height: 40vh;
   width: 95vw;
   margin: 15vh 2.5vw 19vh;
   display: flex;

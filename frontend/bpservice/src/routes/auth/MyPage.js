@@ -48,9 +48,7 @@ const content = css`
 function MyPage() {
   const navigation = useNavigate();
   const dispatch = useDispatch();
-  const { userInfo: userInfo = "" } = useSelector(
-    ({ mypageReducer }) => mypageReducer
-  );
+  const { userInfo = "" } = useSelector(({ mypageReducer }) => mypageReducer);
 
   const { userName, sido, sigungu, dong } = userInfo;
 

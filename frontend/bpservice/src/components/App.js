@@ -21,6 +21,7 @@ import SearchPwd from "../routes/auth/SearchPwd";
 import Payment from "../routes/auth/Payment";
 import SearchChangePwd from "../routes/auth/SearchChangePwd";
 import SearchIdResultPage from "../routes/auth/SearchIdResultPage";
+import NotFound404 from "../routes/NotFound404";
 
 export const GlobalStyle = css`
   body {
@@ -53,6 +54,7 @@ function App() {
         <Route path="/bp/modify/user" element={<ModifyUserInfo />}></Route>
         <Route path="/bp/modify/pwd" element={<ModifyPwd />}></Route>
         <Route path="/bp/payment" element={<Payment />} />
+        <Route path="/404-not-found" element={<NotFound404 />} />
 
         <Route path="/admin" element={<LoginAdmin />} />
         <Route path="/admin/total_income" element={<TotalChart />} />

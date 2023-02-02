@@ -96,7 +96,7 @@ function SignUpPwd({ info, setInfo }) {
           variant="outlined"
           severity="error"
         >
-          형식을 확인해주세요.
+          형식을 맞춰주세요.
         </Alert>
       )}
     </div>

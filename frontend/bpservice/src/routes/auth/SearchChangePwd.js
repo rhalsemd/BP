@@ -67,8 +67,6 @@ function SearchChangePwd({ setNewPwd }) {
     }
   }, [pwdSuccess, navigation]);
 
-  console.log(pwdSuccess);
-
   return (
     <div>
       <header>

@@ -10,12 +10,11 @@ import Footer from "../../components/Footer";
 import ModifyPwdConfirm from "../../components/modifyPwd/ModifyPwdConfirm";
 import ModifyPwdCurrent from "../../components/modifyPwd/ModifyPwdCurrent";
 import ModifyPwdNext from "../../components/modifyPwd/ModifyPwdNext";
-import NextPwdCondition from "../../components/modifyPwd/NextPwdCondition";
 import Nav from "../../components/Nav";
 import { newPwdErrorReset } from "../../modules/modifyPwd";
 
 const loginModalStyle = css`
-  height: 50%;
+  height: 40vh;
   width: 95vw;
   margin: 15vh 2.5vw 19vh;
   display: flex;
@@ -63,6 +62,7 @@ function ModifyPwd() {
     next: "",
     isNext: false,
     isConfirm: false,
+    confirmPwd: "",
   });
   const { error, success } = useSelector(({ modifyPwd }) => modifyPwd);
   const dispatch = useDispatch();
@@ -95,9 +95,6 @@ function ModifyPwd() {
 
         {/* 수정 비밀번호 */}
         <ModifyPwdNext setInfo={setInfo} pwdRegExp={pwdRegExp} info={info} />
-
-        {/* 수정 비밀번호 유효성 검사 */}
-        <NextPwdCondition pwdRegExp={pwdRegExp} info={info} />
 
         {/* 수정 비밀번호 확인 */}
         <ModifyPwdConfirm info={info} setInfo={setInfo} />

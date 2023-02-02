@@ -47,15 +47,23 @@ function KakaoMap({ getMapInfo }) {
   });
 
   const getLocation = () => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      const { latitude, longitude } = {
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-      };
-      setMapLocation((mapLocation) => {
-        return { lat: latitude, lng: longitude };
-      });
-    });
+    const option = {
+      enableHighAccuracy: true,
+    };
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        };
+        setMapLocation((mapLocation) => {
+          return { lat: latitude, lng: longitude };
+        });
+      },
+      null,
+      option
+    );
   };
 
   useEffect(() => {

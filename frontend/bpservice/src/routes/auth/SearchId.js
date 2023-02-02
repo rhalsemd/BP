@@ -12,7 +12,7 @@ import FindNameComponent from "../../components/userFindId/FindNameComponent";
 import { findIdInfo } from "../../modules/findId";
 
 const loginModalStyle = css`
-  height: 60%;
+  height: 40vh;
   width: 95vw;
   margin: 15vh 2.5vw 19vh;
   display: flex;

@@ -23,7 +23,7 @@ function* getWhetherDataFnc(data) {
         },
       });
     });
-    console.log(get);
+
     if (get.status === 200) {
       yield put({ type: SET_WHETHER_DATA, payload: get.data });
     }

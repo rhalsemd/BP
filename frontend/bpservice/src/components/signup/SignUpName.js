@@ -72,7 +72,7 @@ function SignUpName({ info, setInfo }) {
             variant="outlined"
             severity="success"
           >
-            일치합니다.
+            확인했습니다.
           </Alert>
         )
       ) : (

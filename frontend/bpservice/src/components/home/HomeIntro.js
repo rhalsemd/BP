@@ -14,8 +14,6 @@ const container = css`
 function HomeIntro() {
   const { whetherData } = useSelector(({ home }) => home);
 
-  console.log(whetherData);
-
   return (
     <div css={outerBox}>
       <div css={container}>

@@ -1,6 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
+import Alert from "@mui/material/Alert";
+
 const inputBox = css`
   position: relative;
   margin: 10px 0;
@@ -42,11 +44,38 @@ function ChangePwdInput({ setInfo, pwdRegExp, info }) {
         <label htmlFor="currentPwd">변경 비밀번호</label>
 
         {/* 비밀번호 조건 */}
-        {pwdRegExp.test(info.pwd) || info.pwd.length === 0 ? null : (
-          <div>
-            <span style={{ color: "red" }}>uncomplete : </span>
-            <span>8~20로 비밀번호를 설정해주세요</span>
-          </div>
+        {pwdRegExp.test(info.pwd) || info.pwd.length === 0 ? (
+          info.pwd.length === 0 ? null : (
+            <Alert
+              sx={{
+                hieght: "10%",
+                fontSize: "12px",
+                paddingTop: "0",
+                paddingBottom: "0",
+                display: "flex",
+                justifyContent: "center",
+              }}
+              variant="outlined"
+              severity="success"
+            >
+              유효한 비밀번호입니다.
+            </Alert>
+          )
+        ) : (
+          <Alert
+            sx={{
+              hieght: "10%",
+              fontSize: "12px",
+              paddingTop: "0",
+              paddingBottom: "0",
+              display: "flex",
+              justifyContent: "center",
+            }}
+            variant="outlined"
+            severity="error"
+          >
+            형식을 맞춰주세요.
+          </Alert>
         )}
       </form>
     </div>

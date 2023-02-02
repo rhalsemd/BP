@@ -1,6 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
+import NextPwdCondition from "./NextPwdCondition";
+
 const inputBox = css`
   position: relative;
   margin: 10px 0;
@@ -59,6 +61,9 @@ function ModifyPwdNext({ setInfo, pwdRegExp, info }) {
         />
         <label htmlFor="nextPwd">변경 비밀번호</label>
       </form>
+
+      {/* 수정 비밀번호 유효성 검사 */}
+      <NextPwdCondition pwdRegExp={pwdRegExp} info={info} />
     </div>
   );
 }

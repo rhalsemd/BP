@@ -4,6 +4,7 @@ import { css } from "@emotion/react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import Button from "@mui/material/Button";
 
 const inputBox = css`
   position: relative;
@@ -64,35 +65,35 @@ function PwdComponent({ setInfo, info, setLoginInfo }) {
   }, [obj, navigation]);
 
   return (
-    <div css={inputBox}>
-      <form onSubmit={getLogin}>
-        <input
-          css={inputChild}
-          type="password"
-          id="password"
-          autoComplete="off"
-          placeholder="비밀번호"
-          onChange={pwdTyping}
-        />
-        <label htmlFor="password">비밀번호</label>
+    <>
+      <form onSubmit={getLogin} css={inputBox}>
+        <div>
+          <input
+            css={inputChild}
+            type="password"
+            id="password"
+            autoComplete="off"
+            placeholder="비밀번호"
+            onChange={pwdTyping}
+          />
+          <label htmlFor="password">비밀번호</label>
+        </div>
+
+        {/* 로그인 버튼 */}
+        <div>
+          <button onClick={getLogin} css={회원가입버튼}>
+            로그인
+          </button>
+        </div>
       </form>
-      {/* 로그인 버튼 */}
-      <div>
-        <input
-          type="submit"
-          onClick={getLogin}
-          value="로그인"
-          css={회원가입버튼}
-        />
-      </div>
 
       {/* 찾기 */}
-      <div>
-        <Link to="/bp/search/pwd">비밀번호 찾기</Link> |{" "}
-        <Link to="/bp/search/id">아이디 찾기</Link> |{" "}
-        <Link to="/bp/signup">회원가입</Link>
+      <div css={inputBox}>
+        <Button href="/bp/search/id">아이디 찾기</Button>|{" "}
+        <Button href="/bp/search/pwd">비밀번호 찾기</Button>|{" "}
+        <Button href="/bp/signup">회원가입</Button>
       </div>
-    </div>
+    </>
   );
 }
 

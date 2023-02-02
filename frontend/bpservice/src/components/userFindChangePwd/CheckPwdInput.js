@@ -4,6 +4,8 @@ import { css } from "@emotion/react";
 import { connect } from "react-redux";
 import { findPwdInfo } from "../../modules/findPwd";
 
+import Alert from "@mui/material/Alert";
+
 const inputBox = css`
   position: relative;
   margin: 10px 0;
@@ -60,14 +62,40 @@ function CheckPwdInput({ info, setInfo, setNewPwd }) {
           <label htmlFor="checkPwd">변경 비밀번호 확인</label>
 
           {info.pwd !== info.check && info.check ? (
-            <div>
-              <span style={{ color: "red" }}>비밀번호를 확인해주세요.</span>
-            </div>
-          ) : null}
+            <Alert
+              sx={{
+                hieght: "10%",
+                fontSize: "12px",
+                paddingTop: "0",
+                paddingBottom: "0",
+                display: "flex",
+                justifyContent: "center",
+              }}
+              variant="outlined"
+              severity="error"
+            >
+              비밀번호를 확인해주세요.
+            </Alert>
+          ) : info.check.length === 0 ? null : (
+            <Alert
+              sx={{
+                hieght: "10%",
+                fontSize: "12px",
+                paddingTop: "0",
+                paddingBottom: "0",
+                display: "flex",
+                justifyContent: "center",
+              }}
+              variant="outlined"
+              severity="success"
+            >
+              비밀번호가 일치합니다.
+            </Alert>
+          )}
         </div>
 
         {info.pwd === info.check && info.pwd && info.check ? (
-          <input type="submit" css={비밀번호변경} />
+          <input type="submit" css={비밀번호변경} value="변경하기" />
         ) : null}
       </form>
     </div>

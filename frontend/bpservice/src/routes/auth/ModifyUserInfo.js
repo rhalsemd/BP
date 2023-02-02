@@ -7,7 +7,7 @@ import ModifyUserAddress from "../../components/modifyUserInfo/ModifyUserAddress
 import Nav from "../../components/Nav";
 
 const loginModalStyle = css`
-  height: 40%;
+  height: 40vh;
   width: 95%;
   margin: 15vh 2.5vw 19vh;
   display: flex;
