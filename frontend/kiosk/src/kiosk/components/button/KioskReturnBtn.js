@@ -1,35 +1,56 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
 import { useNavigate } from "react-router-dom";
+import ReturnBtn from '../../assets/ReturnBtn.svg'
 
-const KioskReturnButton = css`
-  background-color: black;
+const ReturnBtnStyle = css`
+  z-index: 0;
+`
 
-  display: flex;
+const KioskReturnBtnDiv = css`
+  position: absolute;
+  right: 0;
+`
+
+const ReturnBtnTextBox = css`
+  position: absolute;
+  top : 40px;
+  right: 0;
+
+  width: 80%;
+  height: 100%;
+
+  display:flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  
+  .title {
+    font-size: 72px;
+    margin: 0;
+  }
 
-  width: 30vw;
-  height: 50vh;
-
-  border: 1px solid black;
-  border-radius: 30px;
-  clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%);
+  .content {
+    font-size: 24px;
+    position: absolute;
+    top: 70px;
+  }
 `
 
-const KioskReturnBtn = () => {
 
+const KioskReturnBtn = () => {
   const navigate = useNavigate();
-  
   const KioskReturnMove = () => {
     navigate('/kiosk/return')
   }
 
   return (
-    <div css={KioskReturnButton} onClick={KioskReturnMove}>
-      <p>반납 공간(4/8)</p>
-      <p>반납</p>
+    <div css={KioskReturnBtnDiv} onClick={KioskReturnMove}>
+      <img css={ReturnBtnStyle} src={ReturnBtn} alt="ReturnBtn"/>
+      <div css={ReturnBtnTextBox}>
+        <p className='title'>반납</p>
+        <p className='content'>(반납가능 : 1개)</p>
+      </div>
     </div>
   );
 }

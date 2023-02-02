@@ -8,9 +8,9 @@ import KioskLentSection from '../components/KioskLentSection'
 
 const KioskLentStyle = css`
   box-sizing: border-box;
-  border : 1px solid black;
   width : 100vw;
   height : 100vh;
+  background-color: #EEF1FF;
 `
 
 // 위에는 Emotion.js 입니다.
@@ -47,10 +47,6 @@ const KioskLentContainer = () => {
     getPayConfirm();
   }, [isconfirm])
 
-  const move = () => {
-    navigate('/kiosk/lent/complete')
-  }
-
   return (
     <div css={KioskLentStyle}>
       <header>
@@ -58,7 +54,6 @@ const KioskLentContainer = () => {
       </header>
       <section>
         <KioskLentSection />
-        <button onClick={move}>이동</button>
       </section>
     </div>
   )

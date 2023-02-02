@@ -1,12 +1,24 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
 import { useNavigate } from "react-router-dom";
+import HomeIcon from '@mui/icons-material/Home';
 
 const KioskHomeBtnStyle = css`
-  position:absolute;
-  bottom: 5px;
-  right: 15px;
-  height: 5vh;
+  position: absolute;
+  top: 10px;
+  left: 30px;
+`
+
+const KioskHomeBtnIcon = css`
+  font-size: 32px;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+`
+
+const homeFont = css`
+  font-size: 32px;
 `
 
 const KioskHomeBtn = () => {
@@ -18,7 +30,9 @@ const KioskHomeBtn = () => {
 
   return (
     <div css={KioskHomeBtnStyle}>
-      <button onClick={KioskHomeMove}>홈으로</button>
+      <div css={KioskHomeBtnIcon} onClick={KioskHomeMove}>
+        <HomeIcon fontSize="large"/><span css={homeFont}>홈으로</span>  
+      </div>
     </div>
   );
 }

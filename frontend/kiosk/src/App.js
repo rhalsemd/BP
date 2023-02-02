@@ -4,6 +4,7 @@ import routes from './routes'
 import { Global, css } from '@emotion/react'
 
 function App() {
+
   return (
     <div className="App">
       <Global
@@ -15,7 +16,6 @@ function App() {
       />
 
       <Router>
-        <div className="container mt-3">
           <Routes>
             {routes.map((route) => {
               return (
@@ -29,7 +29,6 @@ function App() {
               );
             })}
           </Routes>
-        </div>
       </Router>
     </div>
   );
