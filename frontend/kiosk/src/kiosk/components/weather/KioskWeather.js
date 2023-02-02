@@ -3,11 +3,11 @@ import { css } from '@emotion/react'
 import { useEffect, useState } from "react";
 import axios from 'axios'
 
-const KioskHomeWeather = css`
+const KioskHomeWeatherStyle = css`
   margin-right: 3vw;
 
-  border: 1px solid black;
-  border-radius: 30px;
+  background-color: #B1B2FF;
+  border-radius: 65px;
 
   width: 25vw;
   height: 50vh;
@@ -19,12 +19,43 @@ const KioskHomeWeather = css`
 `
 
 const KioskHomeWeatherImg = css`
+  position: absolute;
+  top: 190px;
   padding: 0;
+`
+
+const KioskHomeWeatherTextBox = css`
+  position: absolute;
+  bottom: 160px;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+
+
+  .celsius {
+    font-size: 24px;
+    margin: 0;
+    
+    span{
+      font-size: 16px;
+      font-weight: bold;
+      display: inline-block;
+
+      position: absolute;
+    }
+  }
+
+  .windspeed {
+    font-size: 20px;
+    margin: 0;
+  }
 `
 
 const KioskWeather = () => {
   const [celsius, setCelsius] = useState(0);
-  const [fahrenheit, setFahrenheit] = useState(0);
   const [windspeed, setWindspeed] = useState(0);
   const [imgsrc, setImgsrc] = useState("");
 
@@ -44,7 +75,6 @@ const KioskWeather = () => {
         axios.get(weatherURL).then((res) => {
           setImgsrc(res.data.icon);
           setCelsius(res.data.temp);
-          setFahrenheit(Math.ceil(res.data.temp * 1.8 + 32));
           setWindspeed(res.data.wind_speed);
         });
       })
@@ -56,15 +86,14 @@ const KioskWeather = () => {
   }, []);
 
   return (
-    <div css={KioskHomeWeather}>
+    <div css={KioskHomeWeatherStyle}>
       <div css={KioskHomeWeatherImg}>
         <img src={imgsrc} alt="weatherImage" />
       </div>
-      <p>
-        현재온도 : {celsius}ºC({fahrenheit}ºF)
-        <br />
-        풍속 : {windspeed}(m/s)
-      </p>
+      <div css={KioskHomeWeatherTextBox}>
+        <p className='celsius'>현재 기온 {Math.round(celsius).toFixed(1)}<span>⁰</span></p>
+        <p className='windspeed'>풍속 : {windspeed}(m/s)</p>
+      </div>
     </div>
   );
 };
