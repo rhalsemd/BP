@@ -4,7 +4,6 @@ import jakarta.transaction.Transactional;
 import kr.co.bpservice.entity.brolly.*;
 import kr.co.bpservice.entity.user.User;
 import kr.co.bpservice.repository.brolly.*;
-import kr.co.bpservice.repository.user.UBrollyBorrowRepository;
 import kr.co.bpservice.util.auth.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,8 +19,6 @@ public class UBrollyRentService {
 
     private final UserRepository userRepository;
 
-    private final BrollyRepository brollyRepository;
-
     private final BrollyHolderRepository brollyHolderRepository;
 
     private final BrollyCaseRepository brollyCaseRepository;
@@ -29,8 +26,6 @@ public class UBrollyRentService {
     private final BrollyPayLogRepository brollyPayLogRepository;
 
     private final BrollyRentLogRepository brollyRentLogRepository;
-
-    private final UBrollyBorrowRepository uBrollyBorrowRepository;
 
     @Transactional
     public Map<String, Object> savePayLog(String userId, String receiptId, int price, LocalDateTime regDt) {

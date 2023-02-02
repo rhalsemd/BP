@@ -2,22 +2,14 @@ package kr.co.bpservice.service.kiosk;
 
 import kr.co.bootpay.Bootpay;
 import kr.co.bootpay.model.request.Cancel;
-import kr.co.bpservice.entity.brolly.Brolly;
-import kr.co.bpservice.entity.brolly.BrollyCase;
-import kr.co.bpservice.entity.brolly.BrollyHolder;
-import kr.co.bpservice.entity.brolly.BrollyRentLog;
-import kr.co.bpservice.repository.brolly.BrollyCaseRepository;
-import kr.co.bpservice.repository.brolly.BrollyHolderRepository;
-import kr.co.bpservice.repository.brolly.BrollyRentLogRepository;
-import kr.co.bpservice.repository.brolly.BrollyRepository;
-import kr.co.bpservice.repository.kiosk.KBrollyReturnRepository;
-import kr.co.bpservice.repository.user.UBrollyPayRepository;
+import kr.co.bpservice.entity.brolly.*;
+import kr.co.bpservice.repository.brolly.*;
 import kr.co.bpservice.util.image.ImageUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.codec.binary.Base64;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -35,12 +27,7 @@ public class KBrollyReturnService {
     private final BrollyRepository brollyRepository;
     private final BrollyHolderRepository brollyHolderRepository;
     private final BrollyCaseRepository brollyCaseRepository;
-
-    @Autowired
-    private UBrollyPayRepository uBrollyPayRepository;
-
-    @Autowired
-    private KBrollyReturnRepository kBrollyReturnRepository;
+    private final BrollyPayLogRepository brollyPayLogRepository;
 
     @Value("${BootPay.applicationID}")
     public String applicationID;
@@ -49,16 +36,23 @@ public class KBrollyReturnService {
     public String privateKey;
 
     //결제 환불 및 DB 변경
-    public Map<String,Object> returnPayData(String brollyid, int caseId){
-        String brollyRentLogId = kBrollyReturnRepository.getRentlogId(brollyid);
-        //qr데이터를 이용한 rentlogid 반환
-        Map<String,?> returnData = uBrollyPayRepository.returnPayData(Integer.parseInt(brollyRentLogId));
-        //결제 취소 데이터 가져오기
-        String receiptId = returnData.get("RECEIPT_ID").toString();
-        String userid = returnData.get("USER_ID").toString();
-        double price = Double.parseDouble(returnData.get("PRICE").toString());
+    @Transactional
+    public Map<String,Object> refundMoney(String brollyName, int caseId){
+        //QR 데이터를 이용한 RentLog 반환
+        Optional<BrollyRentLog> optionalBrollyRentLog = brollyRentLogRepository.findBrollyRentLogForRefund(brollyName);
+        if(optionalBrollyRentLog.isEmpty()){
+            return failReturn("우산 대여로그를 찾을 수 없습니다.");
+        }
+        BrollyRentLog brollyRentLog = optionalBrollyRentLog.get();
+
+        //결제 취소할 데이터 가져오기
+        Map<String,?> cancelDataMap = brollyPayLogRepository.findPayLogForRefund(brollyRentLog.getBrolly());
+        System.out.println(cancelDataMap.keySet());
+        String receiptId = cancelDataMap.get("receiptId").toString();
+        String userId = cancelDataMap.get("userId").toString();
+        double price = Double.parseDouble(cancelDataMap.get("price").toString());
         if(price <= 0.0){ //이 부분 환불할 필요없다는걸 알려줘야함
-            return null;
+            return failReturn("환불할 금액이 없습니다.");
         }
         try {
             Bootpay bootpay = new Bootpay(applicationID, privateKey);
@@ -68,8 +62,8 @@ public class KBrollyReturnService {
             }
             Cancel cancel = new Cancel();
             cancel.receiptId = receiptId;
-            cancel.cancelUsername = "관리자";
-            cancel.cancelMessage = "테스트 결제";
+            cancel.cancelUsername = userId;
+            cancel.cancelMessage = "우산 반납";
             cancel.cancelPrice = price;
 
             HashMap<String, Object>  res = bootpay.receiptCancel(cancel);
@@ -80,27 +74,33 @@ public class KBrollyReturnService {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            return failReturn("환불 진행 중 오류가 발생했습니다.");
         }
         LocalDateTime uptDt = LocalDateTime.now();
-        updatePayLog(brollyRentLogId,receiptId,10000.0-price, uptDt);
-        //아래에 있는 db 업데이트 메소드
+        int rentMoney = (int)(10000.0 - price);
 
-        int holderNum= kBrollyReturnRepository.getHolderID(caseId);
-        //holder번호 반환
-        Map<String, Object> returndata = new HashMap<>();
-        returndata.put("price",10000.0-price);
-        returndata.put("uptDt",uptDt);
-        returndata.put("holderNum", holderNum);
+        // DB에 있는 로그 업데이트
+        BrollyPayLog brollyPayLog = brollyRentLog.getPay();
+        brollyPayLog.setPrice(rentMoney);
+        brollyPayLog.setUptDt(uptDt);
+        brollyPayLog.setStatus("환불완료");
+        brollyPayLogRepository.save(brollyPayLog);
 
-        //결제 취소 정보 및 열여야 되는 홀더 숫자 데이터
-        return returndata;
+        brollyRentLog.setRentMoney(rentMoney);
+        brollyRentLog.setUptDt(uptDt);
+        brollyRentLogRepository.save(brollyRentLog);
+
+        Map<String, Object> responseMap = new HashMap<>();
+        responseMap.put("success", true);
+        responseMap.put("message", "환불이 완료되었습니다.");
+        responseMap.put("price", rentMoney);
+        responseMap.put("uptDt",uptDt);
+
+        //결제 취소 정보 반환
+        return responseMap;
     }
-    //결제 환불 후 데이터 업데이트 기능
-    public void updatePayLog(String brollyRentLogId,String receiptId,double rentMoney, LocalDateTime uptDt){
-        kBrollyReturnRepository.updatePayData(receiptId, (int)rentMoney, uptDt);
-        kBrollyReturnRepository.updateRentlogData(brollyRentLogId,(int)rentMoney,uptDt);
-    }
 
+    @Transactional
     public Map<String, Object> returnBrolly(Integer caseId, String brollyName, String imgUrl) throws IOException {
         Map<String, Object> responseMap = new HashMap<>();
 
@@ -124,7 +124,13 @@ public class KBrollyReturnService {
 
         // 이미지를 저장할 Rent Log를 불러오는 로직
         Brolly brolly = optionalBrolly.get();
-        BrollyRentLog brollyRentLog = brollyRentLogRepository.findTop1ByBrollyOrderByRegDtDesc(brolly);
+        Optional<BrollyRentLog> optionalBrollyRentLog = brollyRentLogRepository.findTop1ByBrollyOrderByRegDtDesc(brolly);
+        if(optionalBrollyRentLog.isEmpty()){
+            responseMap.put("success", false);
+            responseMap.put("message", "우산 대여로그를 찾을 수 없습니다.");
+            return responseMap;
+        }
+        BrollyRentLog brollyRentLog = optionalBrollyRentLog.get();
 
         /// 이미지 저장 로직
         if(!imgSave(imgUrl, brollyRentLog)) {
@@ -172,6 +178,13 @@ public class KBrollyReturnService {
             }
         }
         return true;
+    }
+
+    private static Map<String, Object> failReturn(String message) {
+        Map<String, Object> responseMap = new HashMap<>();
+        responseMap.put("success", false);
+        responseMap.put("message", message);
+        return responseMap;
     }
     
 }
