@@ -5,9 +5,9 @@ import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import KioskHeader from '../components/KioskHeader'
-import KioskReturnSection from '../components/KioskReturnSection'
+import KioskRentSection from '../components/KioskRentSection'
 
-const KioskReturnStyle = css`
+const KioskRentStyle = css`
   box-sizing: border-box;
   width : 100vw;
   height : 100vh;
@@ -17,23 +17,30 @@ const KioskReturnStyle = css`
 // 위에는 Emotion.js 입니다.
 // 밑에는 JS 입니다.
 
-const KioskReturnContainer = () => {
-  // 환불관련 useHook
+const KioskRentContainer = () => {
+  const { id } = useSelector((store) => store)
+  // 지불관련 useHook
   const [isconfirm, setIsconfirm] = useState(false);
-  const { id } = useSelector((store) => store);
   const navigate = useNavigate();
 
-  // 환불되었는지 확인
-  const getRefundsConfirm = () => {
+  // 지불되었는지 확인
+  const getPayConfirm = () => {
     setTimeout(() => {
-      const RefundsConfirmURL = `http://localhost:3001/posts`;
-      axios.get(RefundsConfirmURL)
+      const PayConfirmURL = `http://localhost:3001/posts`;
+      axios.get(PayConfirmURL)
         .then((res) => {
-          setIsconfirm(res.data[0].isRefunds)
+          console.log(res.data[0].isPay)
+          setIsconfirm(res.data[0].isPay)
+          return true
+        })
+        .then((bool) => {
+          // 대여완료 화면으로
+          navigate(`/kiosk/${id}/rent/complete`)
         })
         .catch((err) => console.log(err))
-    }, 5000)
-  }
+      }, 5000)
+    }
+    
 
   // 홈화면으로
   const miliUnit = 1000
@@ -48,19 +55,19 @@ const KioskReturnContainer = () => {
   }, [])
 
   useEffect(() => {
-    getRefundsConfirm();
+    getPayConfirm();
   }, [isconfirm])
 
   return (
-    <div css={KioskReturnStyle}>
+    <div css={KioskRentStyle}>
       <header>
-        <KioskHeader />
+        <KioskHeader/>
       </header>
       <section>
-        <KioskReturnSection />
+        <KioskRentSection />
       </section>
     </div>
   )
 }
 
-export default KioskReturnContainer;
+export default KioskRentContainer;

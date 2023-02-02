@@ -23,18 +23,18 @@ const KioskReturnGuideContainer = () => {
     getPayment();
   }, []);
 
-  const miliUnit = 1000
-  const seconds = 60 * miliUnit
-
-  // 홈화면으로
-  useEffect(() => {
-    let myTimer = setTimeout(() => {
-      navigate('/kiosk')
-    }, seconds)
-    return () => {
-      clearTimeout(myTimer)
-    }
-  }, [])
+  
+  // // 홈화면으로
+  // const miliUnit = 1000
+  // const seconds = 60 * miliUnit
+  // useEffect(() => {
+  //   let myTimer = setTimeout(() => {
+  //     navigate('/kiosk')
+  //   }, seconds)
+  //   return () => {
+  //     clearTimeout(myTimer)
+  //   }
+  // }, [])
 
   return (
     <div>

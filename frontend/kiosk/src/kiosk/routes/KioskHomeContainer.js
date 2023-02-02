@@ -2,7 +2,6 @@
 import { css } from '@emotion/react'
 import KioskHeader from '../components/KioskHeader'
 import KioskHomeSection from '../components/KioskHomeSection'
-import "bootstrap/dist/css/bootstrap.min.css";
 
 const KioskHomeContainerStyle = css`
   box-sizing: border-box;
@@ -20,14 +19,18 @@ const KioskHomeContainer = () => {
 
   return (
     <div css={KioskHomeContainerStyle}>
-      <header>
-        <KioskHeader />
-      </header>
-      <section>
-        <KioskHomeSection />
-      </section>
+      <div>
+        <header>
+          <KioskHeader />
+        </header>
+        <section>
+          <KioskHomeSection />
+        </section>
+      </div>
     </div>
   )
 }
+
+
 
 export default KioskHomeContainer;

@@ -2,6 +2,7 @@
 import { css } from '@emotion/react'
 import { useEffect, useState } from "react";
 import axios from 'axios'
+import { useSelector } from 'react-redux';
 
 const KioskHomeWeatherStyle = css`
   margin-right: 3vw;
@@ -33,8 +34,6 @@ const KioskHomeWeatherTextBox = css`
   justify-content: center;
   align-items: center;
 
-
-
   .celsius {
     font-size: 24px;
     margin: 0;
@@ -43,7 +42,6 @@ const KioskHomeWeatherTextBox = css`
       font-size: 16px;
       font-weight: bold;
       display: inline-block;
-
       position: absolute;
     }
   }
@@ -58,11 +56,12 @@ const KioskWeather = () => {
   const [celsius, setCelsius] = useState(0);
   const [windspeed, setWindspeed] = useState(0);
   const [imgsrc, setImgsrc] = useState("");
+  const { id } = useSelector((store) => store);
 
   const getWeather = () => {
     // 키오스크 geo 에서 지점에 해당하는 위도 경도값 받아오기
     // let geoURL = `http://192.168.100.80:8080/api/kiosk/home/kiosk-geo?id=1`;
-    let geoURL = `http://bp.ssaverytime.kr:8080/api/kiosk/home/kiosk-geo?id=1`;
+    let geoURL = `http://bp.ssaverytime.kr:8080/api/kiosk/home/kiosk-geo?id=${id}`;
     let weatherURL = ``;
     axios
       .get(geoURL)
