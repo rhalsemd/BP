@@ -29,7 +29,6 @@ const KioskAddress = () => {
     let addressURL = ``;
     axios.get(geoURL)
     .then((res) => {
-      // console.log(res.data)
       return res.data;
     })
     .then((data) => {
@@ -37,7 +36,6 @@ const KioskAddress = () => {
       addressURL = `http://bp.ssaverytime.kr:8080/api/address/reverse-geo?lat=${data.lat}&lng=${data.lng}`;
       axios.get(addressURL)
         .then((res) => {
-          // console.log(res.data.address_name)
           setAddress(res.data.address_name)
         })
     })

@@ -83,7 +83,7 @@ const TakeAPictureBtn = css`
 const KioskTakeAPicture = (data) => {
   const [iscapture, setIscapture] = useState(false);
   const { id } = useSelector((store) => store);
-  
+
   let videoRef = useRef(null);
   let photoRef = useRef(null);
 
@@ -146,6 +146,7 @@ const KioskTakeAPicture = (data) => {
         number_ref.current -= 1;
         count -= 1;
       }
+      // 카운트 애니메이션 구현
       console.log("count", count);
       console.log("number_ref.current", number_ref.current);
       if (number_ref.current === 0) {
@@ -174,38 +175,45 @@ const KioskTakeAPicture = (data) => {
     const canvas = document.getElementById("$canvas");
     const imgURL = canvas.toDataURL("image/png");
 
-    // axios({
-    //   method: 'POST',
-    //   url: 'http://192.168.100.79:8080/api/brolly/return',
-    //   // url: 'http://bp.ssaverytime.kr:8080/api/auth/user/brolly/return/update/img',
-    //   data: {
-    //     "brollyId": qrdata,
-    //     "caseId": 1,
-    //     "imgUrl": imgURL
-    //   }
-    // }).then(() => navigate(`/kiosk/${id[0]}/return/guide`, {
-    //   state: {
-    //     data: qrdata,
-    //   }
-    // }))
-
-    // 테스트용(아직안함)
-    let isBrolly = false;
     axios({
-      method: 'GET',
-      url: 'http://localhost:3001/posts',
+      method: 'POST',
+      url: 'http://192.168.100.79:8080/api/brolly/return',
+      // url: 'http://bp.ssaverytime.kr:8080/api/auth/user/brolly/return/update/img',
+      data: {
+        'brollyId' : qrdata,
+        'caseId' : id[0],
+        'imgUrl' : imgURL
+      }
     })
     .then((res) => {
-        if (res.data[0].isBrolly) {
-          navigate(`/kiosk/${id[0]}/return/guide`, {
-            state: {
-              data: qrdata,
-            }
-          })
+      console.log(res.data)
+      navigate(`/kiosk/${id[0]}/return/guide`, {
+        state: {
+          data: qrdata,
         }
       }
+      )
+    }
     )
-    .catch((err) => console.log(err))
+    .catch((err) => console.log(err));
+
+    // 테스트용(아직안함)
+    // let isBrolly = false;
+    // axios({
+    //   method: 'GET',
+    //   url: 'http://localhost:3001/posts',
+    // })
+    //   .then((res) => {
+    //     if (res.data[0].isBrolly) {
+    //       navigate(`/kiosk/${id[0]}/return/guide`, {
+    //         state: {
+    //           data: qrdata,
+    //         }
+    //       })
+    //     }
+    //   }
+    //   )
+    //   .catch((err) => console.log(err))
 
   };
 
@@ -222,7 +230,7 @@ const KioskTakeAPicture = (data) => {
   };
 
   return (
-    <div css={ReturnCameraTakeAPictureDiv}>
+    <div>
       <video ref={videoRef} css={videoSize}></video>
       <div css={canvasDiv}>
         <canvas

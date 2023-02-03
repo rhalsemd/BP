@@ -26,10 +26,15 @@ const KioskRentContainer = () => {
   // 지불되었는지 확인
   const getPayConfirm = () => {
     setTimeout(() => {
-      const PayConfirmURL = `http://localhost:3001/posts`;
-      axios.get(PayConfirmURL)
+      const PayConfirmURL = `http://192.168.100.79/posts`;
+      axios({
+        method: 'POST',
+        url: PayConfirmURL,
+        data: {
+          'caseId': id[0]
+        }
+      })
         .then((res) => {
-          console.log(res.data[0].isPay)
           setIsconfirm(res.data[0].isPay)
           return true
         })
@@ -38,9 +43,9 @@ const KioskRentContainer = () => {
           navigate(`/kiosk/${id[0]}/rent/complete`)
         })
         .catch((err) => console.log(err))
-      }, 5000)
-    }
-    
+    }, 5000)
+  }
+
 
   // 홈화면으로
   const miliUnit = 1000
@@ -61,7 +66,7 @@ const KioskRentContainer = () => {
   return (
     <div css={KioskRentStyle}>
       <header>
-        <KioskHeader/>
+        <KioskHeader />
       </header>
       <section>
         <KioskRentSection />
