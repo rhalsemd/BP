@@ -3,20 +3,23 @@ import { Suspense, lazy, useEffect } from "react";
 import { useState } from "react";
 import { Map } from "react-kakao-maps-sdk";
 import { connect, useSelector } from "react-redux";
-import { mapInfo } from "../modules/mapStore";
+import LoadingPage from "../../components/LoadingPage";
+import { mapInfo } from "../../modules/mapStore";
 // import BackBtn from "../components/kakaoMap/BackBtn";
-const BackBtn = lazy(() => import("../components/kakaoMap/BackBtn"));
+const BackBtn = lazy(() => import("../../components/kakaoMap/BackBtn"));
 // import CurrentBtn from "../components/kakaoMap/CurrentBtn";
-const CurrentBtn = lazy(() => import("../components/kakaoMap/CurrentBtn"));
+const CurrentBtn = lazy(() => import("../../components/kakaoMap/CurrentBtn"));
 // import MarkerInfo from "../components/kakaoMap/MarkerInfo";
-const MarkerInfo = lazy(() => import("../components/kakaoMap/MarkerInfo"));
+const MarkerInfo = lazy(() => import("../../components/kakaoMap/MarkerInfo"));
 // import EventMarkerContainer from "../components/kakaoMap/EventMarkerContainer";
 const EventMarkerContainer = lazy(() =>
-  import("../components/kakaoMap/EventMarkerContainer")
+  import("../../components/kakaoMap/EventMarkerContainer")
 );
 
 function KakaoMap({ getMapInfo }) {
   const { caseInfo } = useSelector(({ mapStore }) => mapStore);
+  const [isClickMarker, setIsClickMarker] = useState(false);
+
   // const positions = [
   //   {
   //     title: "카카오",
@@ -44,18 +47,28 @@ function KakaoMap({ getMapInfo }) {
   const [mapLocation, setMapLocation] = useState({
     lat: 36.1070711,
     lng: 128.4180507,
+    // lat: 36.1057011010728,
+    // lng: 128.30546244287,
   });
 
   const getLocation = () => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      const { latitude, longitude } = {
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-      };
-      setMapLocation((mapLocation) => {
-        return { lat: latitude, lng: longitude };
-      });
-    });
+    const option = {
+      enableHighAccuracy: true,
+    };
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        };
+        setMapLocation((mapLocation) => {
+          return { lat: latitude, lng: longitude };
+        });
+      },
+      null,
+      option
+    );
   };
 
   useEffect(() => {
@@ -64,13 +77,7 @@ function KakaoMap({ getMapInfo }) {
   }, []);
 
   return (
-    <Suspense
-      fallback={
-        <div>
-          <h1>Loding</h1>
-        </div>
-      }
-    >
+    <Suspense fallback={<LoadingPage />}>
       <Map // 지도를 표시할 Container
         id={`map`}
         // 지도의 중심좌표
@@ -89,13 +96,15 @@ function KakaoMap({ getMapInfo }) {
                 position={position}
                 index={index}
                 positions={positions}
+                setIsClickMarker={setIsClickMarker}
               />
             </div>
           );
         })}
+
         <BackBtn />
-        <CurrentBtn />
-        <MarkerInfo />
+        <CurrentBtn isClickMarker={isClickMarker} />
+        <MarkerInfo isClickMarker={isClickMarker} />
       </Map>
     </Suspense>
   );

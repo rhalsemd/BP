@@ -45,7 +45,7 @@ export default function Nav() {
     // localStorage 값 읽기 (문자열)
     const objString = localStorage.getItem("login-token");
     // null 체크
-    if (objString) {
+    if (objString !== null && objString !== undefined) {
       // 문자열을 객체로 변환
       const obj = JSON.parse(objString);
       // 현재 시간과 localStorage의 expire 시간 비교
@@ -68,6 +68,7 @@ export default function Nav() {
         return;
       case "로그아웃":
         dispatch(logOut());
+        navigation("/");
         return;
       case "마이페이지":
         navigation("/bp/mypage");
@@ -126,7 +127,9 @@ export default function Nav() {
 
   return (
     <div css={divStyle}>
-      <h2 onClick={goToHome}>BP</h2>
+      <h2 onClick={goToHome} style={{ cursor: "pointer" }}>
+        BP
+      </h2>
       <Button onClick={toggleDrawer("right", true)} height="30">
         <p
           css={{

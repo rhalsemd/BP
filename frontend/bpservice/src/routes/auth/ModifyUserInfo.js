@@ -1,55 +1,58 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import { Suspense } from "react";
 import { useState } from "react";
-import { connect } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
 
 import Footer from "../../components/Footer";
+import LoadingPage from "../../components/LoadingPage";
 import ModifyUserAddress from "../../components/modifyUserInfo/ModifyUserAddress";
 import Nav from "../../components/Nav";
-import { modifyUserInfo } from "../../modules/modifyUserInfo";
 
-const modifyUserArea = css`
-  width: 100%;
-  height: 72vh;
-  border: 1px black solid;
-`;
-
-const modifyUserModalPosition = css`
-  height: 72vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const modifyUserModal = css`
-  width: 35vh;
+const loginModalStyle = css`
   height: 40vh;
-  border: 1px black solid;
+  width: 95%;
+  margin: 15vh 2.5vw 19vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 10px;
+  align-items: center;
+  background-color: rgba(249, 250, 251, 0.9);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  .card-1:hover {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.55), 0 10px 10px rgba(0, 0, 0, 0.52);
+  }
+  input::placeholder {
+    color: transparent;
+  }
+  input:placeholder-shown + label {
+    color: #aaa;
+    font-size: 14pt;
+    top: 15px;
+  }
+  input:focus + label,
+  label {
+    color: #8aa1a1;
+    font-size: 10pt;
+    pointer-events: none;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    transition: all 0.2s ease;
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+  }
+  input:focus,
+  input:not(:placeholder-shown) {
+    border-bottom: solid 1px #8aa1a1;
+    outline: none;
+  }
 `;
 
-const title = css`
-  text-align: center;
-`;
-
-function ModifyUserInfo({ setNewUserInfo }) {
+function ModifyUserInfo() {
   const [info, setInfo] = useState({});
-  const navigation = useNavigate();
-
-  const goToModify = () => {
-    if (window.confirm("저장하시겠습니까?")) {
-      // They clicked Yes
-      setNewUserInfo(info);
-      navigation(`/bp/mypage`);
-    } else {
-      // They clicked no
-      return false;
-    }
-  };
-
-  const back = () => {
-    navigation(-1);
-  };
 
   return (
     <div>
@@ -57,40 +60,19 @@ function ModifyUserInfo({ setNewUserInfo }) {
         <Nav />
       </header>
 
-      <div css={modifyUserArea}>
-        <div css={modifyUserModalPosition}>
-          <div css={modifyUserModal}>
-            <div css={title}>
-              <h1>회원정보 수정</h1>
+      <Suspense fallback={<LoadingPage />}>
+        <div css={loginModalStyle}>
+          <h1>회원정보 수정</h1>
 
-              {/* 주소 */}
-              <ModifyUserAddress setInfo={setInfo} info={info} />
-
-              {/* 수정 버튼 */}
-              {info.sido && info.sigugun && info.dong ? (
-                <button onClick={goToModify}>수정하기</button>
-              ) : null}
-
-              {/* 뒤로가기 */}
-              <button onClick={back}>뒤로가기</button>
-            </div>
-          </div>
+          {/* 주소 */}
+          <ModifyUserAddress setInfo={setInfo} info={info} />
         </div>
-
-        <footer>
-          <Footer />
-        </footer>
-      </div>
+      </Suspense>
+      <footer>
+        <Footer />
+      </footer>
     </div>
   );
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setNewUserInfo(info) {
-      dispatch(modifyUserInfo.setNewUserInfo(info));
-    },
-  };
-};
-
-export default connect(null, mapDispatchToProps)(ModifyUserInfo);
+export default ModifyUserInfo;

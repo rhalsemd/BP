@@ -1,3 +1,20 @@
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
+
+const inputBox = css`
+  position: relative;
+  margin: 10px 0;
+`;
+
+const inputChild = css`
+  background: transparent;
+  border: none;
+  border-bottom: solid 1px #ccc;
+  padding: 20px 0px 5px 0px;
+  font-size: 14pt;
+  width: 100%;
+`;
+
 function IdComponent({ setInfo }) {
   const idTyping = (e) => {
     const inputValue = e.target.value;
@@ -7,15 +24,18 @@ function IdComponent({ setInfo }) {
   };
 
   return (
-    <div>
-      <label htmlFor="userId">ID : </label>
-      <input
-        type="text"
-        id="userId"
-        autoComplete="off"
-        placeholder="아이디"
-        onChange={idTyping}
-      />
+    <div css={inputBox}>
+      <div>
+        <input
+          type="text"
+          id="userId"
+          css={inputChild}
+          autoComplete="off"
+          placeholder="아이디"
+          onChange={idTyping}
+        />
+        <label htmlFor="userId">아이디</label>
+      </div>
     </div>
   );
 }

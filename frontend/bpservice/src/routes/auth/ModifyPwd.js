@@ -1,41 +1,61 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { useEffect } from "react";
+import { Suspense } from "react";
 
 import { useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import Footer from "../../components/Footer";
-import ConfirmCondition from "../../components/modifyPwd/ConfirmCondition";
+import LoadingPage from "../../components/LoadingPage";
 import ModifyPwdConfirm from "../../components/modifyPwd/ModifyPwdConfirm";
 import ModifyPwdCurrent from "../../components/modifyPwd/ModifyPwdCurrent";
 import ModifyPwdNext from "../../components/modifyPwd/ModifyPwdNext";
-import NextPwdCondition from "../../components/modifyPwd/NextPwdCondition";
 import Nav from "../../components/Nav";
 import { newPwdErrorReset } from "../../modules/modifyPwd";
 
-const modifyUserArea = css`
-  width: 100%;
-  height: 72vh;
-  border: 1px black solid;
-`;
-
-const modifyUserModalPosition = css`
-  height: 72vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const modifyUserModal = css`
-  width: 35vh;
+const loginModalStyle = css`
   height: 40vh;
-  border: 1px black solid;
-`;
-
-const title = css`
-  text-align: center;
+  width: 95vw;
+  margin: 15vh 2.5vw 19vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 10px;
+  align-items: center;
+  background-color: rgba(249, 250, 251, 0.9);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  .card-1:hover {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.55), 0 10px 10px rgba(0, 0, 0, 0.52);
+  }
+  input::placeholder {
+    color: transparent;
+  }
+  input:placeholder-shown + label {
+    color: #aaa;
+    font-size: 14pt;
+    top: 15px;
+  }
+  input:focus + label,
+  label {
+    color: #8aa1a1;
+    font-size: 10pt;
+    pointer-events: none;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    transition: all 0.2s ease;
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+  }
+  input:focus,
+  input:not(:placeholder-shown) {
+    border-bottom: solid 1px #8aa1a1;
+    outline: none;
+  }
 `;
 
 function ModifyPwd() {
@@ -44,6 +64,7 @@ function ModifyPwd() {
     next: "",
     isNext: false,
     isConfirm: false,
+    confirmPwd: "",
   });
   const { error, success } = useSelector(({ modifyPwd }) => modifyPwd);
   const dispatch = useDispatch();
@@ -62,51 +83,30 @@ function ModifyPwd() {
     }
   }, [error, dispatch, success, navigation]);
 
-  const back = () => {
-    navigation(-1);
-  };
-
   return (
     <div>
       <header>
         <Nav />
       </header>
 
-      <div css={modifyUserArea}>
-        <div css={modifyUserModalPosition}>
-          <div css={modifyUserModal}>
-            <div css={title}>
-              <h1>비밀번호 변경</h1>
+      <Suspense fallback={<LoadingPage />}>
+        <div css={loginModalStyle}>
+          <h1>비밀번호 변경</h1>
 
-              {/* 현재 비밀번호 */}
-              <ModifyPwdCurrent setInfo={setInfo} info={info} />
+          {/* 현재 비밀번호 */}
+          <ModifyPwdCurrent setInfo={setInfo} info={info} />
 
-              {/* 수정 비밀번호 */}
-              <ModifyPwdNext
-                setInfo={setInfo}
-                pwdRegExp={pwdRegExp}
-                info={info}
-              />
+          {/* 수정 비밀번호 */}
+          <ModifyPwdNext setInfo={setInfo} pwdRegExp={pwdRegExp} info={info} />
 
-              {/* 수정 비밀번호 유효성 검사 */}
-              <NextPwdCondition pwdRegExp={pwdRegExp} info={info} />
-
-              {/* 수정 비밀번호 확인 */}
-              <ModifyPwdConfirm info={info} setInfo={setInfo} />
-
-              {/* 수정 비밀번호 확인 유효성 검사 */}
-              <ConfirmCondition info={info} />
-
-              {/* 뒤로가기 버튼 */}
-              <button onClick={back}>뒤로가기</button>
-            </div>
-          </div>
+          {/* 수정 비밀번호 확인 */}
+          <ModifyPwdConfirm info={info} setInfo={setInfo} />
         </div>
+      </Suspense>
 
-        <footer>
-          <Footer />
-        </footer>
-      </div>
+      <footer>
+        <Footer />
+      </footer>
     </div>
   );
 }

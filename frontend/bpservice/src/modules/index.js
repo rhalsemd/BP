@@ -18,6 +18,7 @@ import revenueTrendReducer, {
 } from "./revenueTrend";
 import mypageReducer, { mypageSaga } from "./mypage";
 import paymentReducer, { paymentSaga } from "./payment";
+import home, { homeSaga } from "./home";
 
 export const rootReducer = combineReducers({
   signUp,
@@ -32,6 +33,7 @@ export const rootReducer = combineReducers({
   revenueTrendReducer,
   mypageReducer,
   paymentReducer,
+  home,
 });
 
 export function* rootSaga() {
@@ -50,6 +52,7 @@ export function* rootSaga() {
     mypageSaga(),
     getUseageSaga(),
     paymentSaga(),
+    homeSaga(),
   ]);
 }
 

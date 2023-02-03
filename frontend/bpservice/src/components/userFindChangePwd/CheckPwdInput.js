@@ -1,5 +1,35 @@
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
+
 import { connect } from "react-redux";
 import { findPwdInfo } from "../../modules/findPwd";
+
+import Alert from "@mui/material/Alert";
+
+const inputBox = css`
+  position: relative;
+  margin: 10px 0;
+`;
+
+const inputChild = css`
+  background: transparent;
+  border: none;
+  border-bottom: solid 1px #ccc;
+  padding: 20px 0px 5px 0px;
+  font-size: 14pt;
+  width: 100%;
+`;
+
+const 비밀번호변경 = css`
+  background-color: #191f28;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  width: 100%;
+  height: 35px;
+  font-size: 14pt;
+  margin-top: 15px;
+`;
 
 function CheckPwdInput({ info, setInfo, setNewPwd }) {
   const onChange = (e) => {
@@ -17,25 +47,55 @@ function CheckPwdInput({ info, setInfo, setNewPwd }) {
   };
 
   return (
-    <div>
+    <div css={inputBox}>
       <form onSubmit={onSubmit}>
-        <label htmlFor="checkPwd">비밀번호 확인 : </label>
-        <input
-          type="password"
-          id="checkPwd"
-          autoComplete="off"
-          required
-          placeholder="비밀번호 확인"
-          onChange={onChange}
-        />
-        {info.pwd !== info.check && info.check ? (
-          <div>
-            <span style={{ color: "red" }}>비밀번호를 확인해주세요.</span>
-          </div>
-        ) : null}
+        <div>
+          <input
+            type="password"
+            id="checkPwd"
+            autoComplete="off"
+            css={inputChild}
+            required
+            placeholder="비밀번호 확인"
+            onChange={onChange}
+          />
+          <label htmlFor="checkPwd">변경 비밀번호 확인</label>
+
+          {info.pwd !== info.check && info.check ? (
+            <Alert
+              sx={{
+                hieght: "10%",
+                fontSize: "12px",
+                paddingTop: "0",
+                paddingBottom: "0",
+                display: "flex",
+                justifyContent: "center",
+              }}
+              variant="outlined"
+              severity="error"
+            >
+              비밀번호를 확인해주세요.
+            </Alert>
+          ) : info.check.length === 0 ? null : (
+            <Alert
+              sx={{
+                hieght: "10%",
+                fontSize: "12px",
+                paddingTop: "0",
+                paddingBottom: "0",
+                display: "flex",
+                justifyContent: "center",
+              }}
+              variant="outlined"
+              severity="success"
+            >
+              비밀번호가 일치합니다.
+            </Alert>
+          )}
+        </div>
 
         {info.pwd === info.check && info.pwd && info.check ? (
-          <input type="submit" />
+          <input type="submit" css={비밀번호변경} value="변경하기" />
         ) : null}
       </form>
     </div>
