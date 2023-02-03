@@ -1,6 +1,7 @@
 package kr.co.bpservice.entity.user;
 
 import jakarta.persistence.*;
+import kr.co.bpservice.entity.common.Person;
 import kr.co.bpservice.util.auth.entity.Authority;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,14 +15,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-public class User {
-
-    @Id
-    @Column(length = 50)
-    private String id;
-
-    @Column(length = 200)
-    private String pwd;
+public class User extends Person {
 
     @Column(length = 50)
     private String name;
@@ -47,20 +41,17 @@ public class User {
 
     private boolean activeState;
 
-    @Transient
-    @Enumerated(EnumType.STRING)
-    private Authority authority;
-
     @Builder
     public User(String id, String pwd, String name, String phoneNum, String sido, String sigungu, String dong, String email, Authority authority) {
-        this.id = id;
-        this.pwd = pwd;
+        super.setId(id);
+        super.setPwd(pwd);
+        super.setAuthority(authority);
         this.name = name;
         this.phoneNum = phoneNum;
         this.sido = sido;
         this.sigungu = sigungu;
         this.dong = dong;
         this.email = email;
-        this.authority = authority;
+
     }
 }
