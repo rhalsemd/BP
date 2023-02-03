@@ -4,12 +4,15 @@ import KioskAddress from './address/KioskAddress'
 import KioskHomeBtn from './button/KioskHomeBtn'
 import KioskLogoimg from '../assets/KioskLogo.png'
 import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 
 const KioskHeaderStyle = css`
+  background-color: #EEF1FF;
   display: flex;
   justify-content: space-between;
   align-items: start;
-  height: 20vh;
+  width: 100vw;
+  height: 15vh;
 `
 
 const KioskLogo = css`
@@ -30,17 +33,19 @@ const KioskLocation = css`
 // 밑에는 JS 입니다.
 
 const KioskHeader = () => {
+  const { id } = useSelector((store) => store);
+  // 홈인지 아닌지 확인하기
   const [isHome, setIsHome] = useState(false);
-
+  
+  // 홈일때는 true, 아닐때는 false
   const setIsHomeBtn = () => {
-    if (window.location.pathname === "/kiosk") {
+    if (window.location.pathname === `/kiosk/${id[0]}`) {
       setIsHome(true)
     }
     else {
       setIsHome(false)
     }
   }
-
   useEffect(() => {
     setIsHomeBtn();
   }, [isHome])
@@ -48,10 +53,10 @@ const KioskHeader = () => {
   return (
     <div css={KioskHeaderStyle}>
       <div css={KioskLogo}>
-        {isHome ? <img src={KioskLogoimg} alt='키오스크로고'/> : <KioskHomeBtn/>}
+        {isHome ? <img src={KioskLogoimg} alt='키오스크로고' /> : <KioskHomeBtn />}
       </div>
       <div css={KioskLocation}>
-        <KioskAddress/>
+        <KioskAddress />
       </div>
     </div>
   )

@@ -1,9 +1,15 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import { Suspense } from "react";
 import { useSelector } from "react-redux";
 
 import Footer from "../../components/Footer";
+<<<<<<< HEAD
+import LoadingPage from "../../components/LoadingPage";
 import Nav from "../../components/Nav";
+=======
+import Nav from "../../components/NavAdmin";
+>>>>>>> feature/FE/admin-CSS
 
 const resultArea = css`
   width: 100%;
@@ -37,16 +43,18 @@ function SearchIdResultPage() {
         <Nav />
       </header>
 
-      <div css={resultArea}>
-        <div css={resultModalPosition}>
-          <div css={resultModal}>
-            <div css={title}>
-              <h1>아이디 찾기</h1>
-              <h2>{id}</h2>
+      <Suspense fallback={<LoadingPage />}>
+        <div css={resultArea}>
+          <div css={resultModalPosition}>
+            <div css={resultModal}>
+              <div css={title}>
+                <h1>아이디 찾기</h1>
+                <h2>{id}</h2>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </Suspense>
 
       <footer>
         <Footer />

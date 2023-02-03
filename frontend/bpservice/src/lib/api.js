@@ -1,24 +1,28 @@
 import axios from "axios";
+import dayjs from "dayjs";
 
+// const url = "http://192.168.137.138:8080";
+const url = "http://bp.ssaverytime.kr:8080";
 // const url = "http://192.168.100.176:8080";
-const url = "http://192.168.100.80:8080";
 
 export const getBranchRevenue = (day) => {
-  console.log("getBranchRevenue axios", day);
+  const dayData = dayjs(day).format("YYYY-MM-DD");
   return axios({
     method: "get",
-    url: `${url}/admin/AllKioskMoneyDay/${day}`,
+    url: `${url}/api/auth/admin/all-kiosk-money-day/${dayData}`,
     headers: {
       "Content-Type ": "application/json",
     },
   });
 };
 
-export const getBranchRevenueMonth = (month, year) => {
+export const getBranchRevenueMonth = (date) => {
+  const year = dayjs(date).format("YYYY");
+  const month = dayjs(date).format("MM");
   console.log("getBranchRevenueMonth axios");
   return axios({
     method: "get",
-    url: `${url}/admin/AllKioskMoneyMonth/${month}/${year}`,
+    url: `${url}/api/auth/admin/all-kiosk-money-month/${month}/${year}`,
     headers: {
       "Content-Type ": "application/json",
     },
@@ -26,58 +30,65 @@ export const getBranchRevenueMonth = (month, year) => {
 };
 
 export const getUseageRevenu = (day) => {
-  console.log("getUseageRevenu axios", day);
-
+  const dayData = dayjs(day).format("YYYY-MM-DD");
   return axios({
     method: "get",
-    url: `${url}/admin/AllKioskCountDay/${day}`,
+    url: `${url}/api/auth/admin/all-kiosk-count-day/${dayData}`,
+    // url: `${url}/api/auth/admin/allKioskCountDay/${dayData}`,
     headers: {
       "Content-Type ": "application/json",
     },
   });
 };
 
-export const getUseageRevenuMonth = (month, year) => {
-  console.log("getUseageRevenue axios");
+export const getUseageRevenuMonth = (date) => {
+  const year = dayjs(date).format("YYYY");
+  const month = dayjs(date).format("MM");
   return axios({
     method: "get",
-    url: `${url}/admin/AllKioskCountMonth/${month}/${year}`,
+    url: `${url}/api/auth/admin/all-kiosk-count-month/${month}/${year}`,
     headers: {
       "Content-Type ": "application/json",
     },
   });
 };
 
-///////////////////////////////////////
-/////////이거안쓸듯/////////////////////
-export const getTotalKiosk = (day) => {
+export const getRevenueTrend = ({ month, year, caseId }) => {
   return axios({
     method: "get",
-    url: `${url}/admin/KioskMoneyDay/${day}`,
-    headers: {
-      "Content-Type ": "application/json",
-    },
-  });
-};
-//////////////////////////////////////
-//////////////////////////////////////
-
-export const getRevenueTrend = ({ month, year }) => {
-  console.log("getrevenueDay axios, 여기까지 옴", month, year);
-  return axios({
-    method: "get",
-    url: `${url}/admin/KioskMoneyMonth/${month}/${year}/1`,
-    // url: `${url}/admin/KioskMoneyYear/${year}/1`,
+    url: `${url}/api/auth/admin/kiosk-money-month/${month}/${year}/${caseId}`,
     headers: {
       "Content-Type ": "application/json",
     },
   });
 };
 
-export const getRevenueTrendMonth = (year) => {
+export const getRevenueTrendMonth = ({ year, caseId }) => {
   return axios({
     method: "get",
-    url: `${url}/admin/KioskMoneyYear/${year}`,
+    url: `${url}/api/auth/admin/kiosk-money-year/${year}/${caseId}`,
+    headers: {
+      "Content-Type ": "application/json",
+    },
+  });
+};
+
+export const getUsers = () => {
+  console.log("getUsers axios");
+  return axios({
+    method: "get",
+    url: `${url}/api/auth/admin/log/get-user-data`,
+    headers: {
+      "Content-Type ": "application/json",
+    },
+  });
+};
+
+export const getUserLog = (userId) => {
+  console.log("getUserLog API 엑시오스", userId);
+  return axios({
+    method: "get",
+    url: `${url}/api/auth/admin/log/get-rent-log-data/${userId}`,
     headers: {
       "Content-Type ": "application/json",
     },

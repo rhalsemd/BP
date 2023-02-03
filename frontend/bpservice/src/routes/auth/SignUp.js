@@ -3,7 +3,7 @@ import { css } from "@emotion/react";
 
 import { connect } from "react-redux";
 
-import Nav from "../../components/Nav";
+import Nav from "../../components/NavAdmin";
 import Footer from "../../components/Footer";
 
 import SignUpId from "../../components/signup/SignUpId";
@@ -16,31 +16,64 @@ import SignUpEmail from "../../components/signup/SignUpEmail";
 import { userInfo } from "../../modules/signUp";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Suspense } from "react";
+import LoadingPage from "../../components/LoadingPage";
 
-const loginArea = css`
-  width: 100%;
-  height: 72vh;
-  border: 1px black solid;
-`;
-
-const loginModalPosition = css`
-  height: 72vh;
+const loginModalStyle = css`
+  position: relative;
+  height: 50vh;
+  width: 95vw;
+  margin: 10vh 2.5vw 14vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  border-radius: 10px;
   align-items: center;
+  overflow-y: auto;
+  background-color: rgba(249, 250, 251, 0.9);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  .card-1:hover {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.55), 0 10px 10px rgba(0, 0, 0, 0.52);
+  }
+  input::placeholder {
+    color: transparent;
+  }
+  input:placeholder-shown + label {
+    color: #aaa;
+    font-size: 14pt;
+    top: 15px;
+  }
+  input:focus + label,
+  label {
+    color: #8aa1a1;
+    font-size: 10pt;
+    pointer-events: none;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    transition: all 0.2s ease;
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+  }
+  input:focus,
+  input:not(:placeholder-shown) {
+    border-bottom: solid 1px #8aa1a1;
+    outline: none;
+  }
+
+  .loginModalInnerStyle {
+    position: absolute;
+    top: 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
-const loginModal = css`
-  width: 35vh;
-  height: 70vh;
-  border: 1px black solid;
-`;
-
-const title = css`
-  text-align: center;
-`;
-
-function SignUp({ signUp, sighUpRequirement, signUpFailureReset }) {
+function SignUp({ signUp, signUpFailureReset }) {
   const navigation = useNavigate();
 
   useEffect(() => {
@@ -84,63 +117,37 @@ function SignUp({ signUp, sighUpRequirement, signUpFailureReset }) {
     emailSuccess: false,
   });
 
-  const setSignUp = (e) => {
-    sighUpRequirement(info);
-  };
-
   return (
     <div>
       <header>
         <Nav />
       </header>
 
-      <div css={loginArea}>
-        <div css={loginModalPosition}>
-          <div css={loginModal}>
-            <div css={title}>
-              <h1>sign up</h1>
-
-              {/* 아이디 */}
-              <SignUpId info={info} setInfo={setInfo} />
-
-              {/* 비밀번호 */}
-              <SignUpPwd info={info} setInfo={setInfo} />
-
-              {/* 비밀번호 확인 */}
-              <SignUpRePwd info={info} setInfo={setInfo} />
-
-              {/* 이름 */}
-              <SignUpName info={info} setInfo={setInfo} />
-
-              {/* 전화번호 / 인증 번호*/}
-              <SignUpPhone info={info} setInfo={setInfo} />
-
-              {/* 주소 */}
-              <SignUpAddress info={info} setInfo={setInfo} />
-
-              {/* 이메일 */}
-              <SignUpEmail info={info} setInfo={setInfo} />
-
-              {/* 회원가입 버튼 */}
-              {info.idSuccess &&
-              info.pwdSuccess &&
-              info.isTrue &&
-              info.phoneSuccess &&
-              info.isCertification &&
-              info.isCertificationSuccess &&
-              info.addressSuccess &&
-              info.userNameSuccess &&
-              info.emailSuccess ? (
-                <button onClick={setSignUp}>회원가입</button>
-              ) : null}
-            </div>
+      <Suspense fallback={<LoadingPage />}>
+        <div css={loginModalStyle}>
+          <div className="loginModalInnerStyle">
+            <h1>sign up</h1>
+            {/* 아이디 */}
+            <SignUpId info={info} setInfo={setInfo} />
+            {/* 비밀번호 */}
+            <SignUpPwd info={info} setInfo={setInfo} />
+            {/* 비밀번호 확인 */}
+            <SignUpRePwd info={info} setInfo={setInfo} />
+            {/* 이름 */}
+            <SignUpName info={info} setInfo={setInfo} />
+            {/* 전화번호 / 인증 번호*/}
+            <SignUpPhone info={info} setInfo={setInfo} />
+            {/* 주소 */}
+            <SignUpAddress info={info} setInfo={setInfo} />
+            {/* 이메일 */}
+            <SignUpEmail info={info} setInfo={setInfo} />
           </div>
         </div>
+      </Suspense>
 
-        <footer>
-          <Footer />
-        </footer>
-      </div>
+      <footer>
+        <Footer />
+      </footer>
     </div>
   );
 }
@@ -151,9 +158,9 @@ const mapStateToProps = ({ signUp }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    sighUpRequirement(data) {
-      dispatch(userInfo.sighUpRequirement(data));
-    },
+    // sighUpRequirement(data) {
+    //   dispatch(userInfo.sighUpRequirement(data));
+    // },
     signUpFailureReset() {
       dispatch(userInfo.signUpFailureReset());
     },

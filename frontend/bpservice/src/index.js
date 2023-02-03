@@ -7,6 +7,23 @@ import { rootReducer, rootSaga } from "./modules/index";
 import createSagaMiddleware from "@redux-saga/core";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { createLogger } from "redux-logger";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+
+const theme = createTheme({
+  // palette: {
+  //   type: "dark",
+  // },
+  // typography: {
+  //   fontSize: 12,
+  // },
+  // overrides: {
+  //   MuiTypography: {
+  //     colorInherit: {
+  //       color: "#fff",
+  //     },
+  //   },
+  // },
+});
 
 const logger = createLogger();
 const sagaMiddleware = createSagaMiddleware();
@@ -19,7 +36,9 @@ sagaMiddleware.run(rootSaga);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <Provider store={store}>
-    <App />
-  </Provider>
+  <ThemeProvider theme={theme}>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </ThemeProvider>
 );

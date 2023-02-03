@@ -8,13 +8,13 @@ function Footer() {
   const container = css`
     width: 100%;
     height: 18vh;
-    background-color: #191f28;
+    background-color: #28323c;
   `;
 
   return (
     <div css={outerBox}>
       <div css={container}>
-        <h3>Footer</h3>
+        <h3 css={{ color: "white" }}>Footer</h3>
       </div>
     </div>
   );

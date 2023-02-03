@@ -1,10 +1,37 @@
-import React from "react";
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
 
 import { connect, useSelector } from "react-redux";
 import { userInfo } from "../../modules/signUp";
 import { useRef } from "react";
 import CertificationInput from "./CertificationInput";
 import { useEffect } from "react";
+import Alert from "@mui/material/Alert";
+
+const inputBox = css`
+  position: relative;
+  margin: 5px 0;
+`;
+
+const inputChild = css`
+  background: transparent;
+  border: none;
+  border-bottom: solid 1px #ccc;
+  padding: 20px 0px 5px 0px;
+  font-size: 14pt;
+  width: 100%;
+`;
+
+const 회원가입버튼 = css`
+  background-color: #191f28;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  width: 100%;
+  height: 35px;
+  font-size: 14pt;
+  margin-top: 15px;
+`;
 
 function SignUpPhone({
   info,
@@ -62,6 +89,7 @@ function SignUpPhone({
       });
     } else if (isCertifyNumError) {
       alert("중복된 전화번호입니다.");
+      inputRef.current.disabled = false;
     }
   }, [isCertifyNum, setInfo, isCertifyNumError]);
 
@@ -74,30 +102,65 @@ function SignUpPhone({
   };
 
   return (
-    <div>
-      <label htmlFor="phone">phone : </label>
-      <input
-        type="number"
-        id="phone"
-        required
-        pattern="[0-9]+"
-        placeholder="-를 빼고 입력해주세요."
-        onChange={typePhone}
-        ref={inputRef}
-      />
-
-      {/* 인증 받기 버튼*/}
-      <button onClick={getCertificationNumber}>인증 받기</button>
-
-      {/* 수정 버튼 */}
-      <button onClick={modifyPhone}>수정</button>
+    <div css={inputBox}>
+      <div>
+        <input
+          type="number"
+          css={inputChild}
+          id="phone"
+          required
+          pattern="[0-9]+"
+          placeholder="-를 빼고 입력해주세요."
+          onChange={typePhone}
+          ref={inputRef}
+        />
+        <label htmlFor="phone">핸드폰 번호</label>
+      </div>
 
       {/* 유효성 검사 */}
-      {phoneRegExp.test(info.phone) || info.phone.length === 0 ? null : (
-        <div>
-          <span style={{ color: "red" }}>uncomplete : </span>
-          <span>{"ex) 01012345678"}</span>
-        </div>
+      {phoneRegExp.test(info.phone) || info.phone.length === 0 ? (
+        info.phone.length === 0 ? null : (
+          <Alert
+            sx={{
+              hieght: "10%",
+              fontSize: "12px",
+              paddingTop: "0",
+              paddingBottom: "0",
+              display: "flex",
+              justifyContent: "center",
+            }}
+            variant="outlined"
+            severity="success"
+          >
+            유효한 전화번호입니다.
+          </Alert>
+        )
+      ) : (
+        <Alert
+          sx={{
+            hieght: "10%",
+            fontSize: "12px",
+            paddingTop: "0",
+            paddingBottom: "0",
+            display: "flex",
+            justifyContent: "center",
+          }}
+          variant="outlined"
+          severity="error"
+        >
+          {`ex) 01012345678`}
+        </Alert>
+      )}
+
+      {/* 인증 받기 버튼 / 수정 버튼 */}
+      {!info.isCertification ? (
+        <button onClick={getCertificationNumber} css={회원가입버튼}>
+          인증 받기
+        </button>
+      ) : (
+        <button onClick={modifyPhone} css={회원가입버튼}>
+          수정
+        </button>
       )}
 
       {info.isCertification ? (

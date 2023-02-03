@@ -1,64 +1,66 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import { Suspense } from "react";
+
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import Footer from "../../components/Footer";
+<<<<<<< HEAD
+import LoadingPage from "../../components/LoadingPage";
 import Nav from "../../components/Nav";
+=======
+import Nav from "../../components/NavAdmin";
+>>>>>>> feature/FE/admin-CSS
 import FindPwdEmailComponent from "../../components/userFindPwd/FindPwdEmailComponent";
 import FindPwdIdComponent from "../../components/userFindPwd/FindPwdIdComponent";
 import FindPwdUsernameComponent from "../../components/userFindPwd/FindPwdUsernameComponent";
-import InputCertification from "../../components/userFindPwd/InputCertification";
 import { findPwdInfo } from "../../modules/findPwd";
 
-const searchIdArea = css`
-  width: 100%;
-  height: 72vh;
-  border: 1px black solid;
-`;
-
-const searchModalPosition = css`
-  height: 72vh;
+const loginModalStyle = css`
+  height: 40vh;
+  width: 95vw;
+  margin: 15vh 2.5vw 19vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  border-radius: 10px;
   align-items: center;
+  background-color: rgba(249, 250, 251, 0.9);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  .card-1:hover {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.55), 0 10px 10px rgba(0, 0, 0, 0.52);
+  }
+  input::placeholder {
+    color: transparent;
+  }
+  input:placeholder-shown + label {
+    color: #aaa;
+    font-size: 14pt;
+    top: 15px;
+  }
+  input:focus + label,
+  label {
+    color: #8aa1a1;
+    font-size: 10pt;
+    pointer-events: none;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    transition: all 0.2s ease;
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+  }
+  input:focus,
+  input:not(:placeholder-shown) {
+    border-bottom: solid 1px #8aa1a1;
+    outline: none;
+  }
 `;
 
-const searchModal = css`
-  width: 35vh;
-  height: 45vh;
-  border: 1px black solid;
-`;
-
-const title = css`
-  text-align: center;
-`;
-
-function SearchPwd({
-  findPwdReducer,
-  setFindPwdInfo,
-  setErrorReset,
-  setFirstSuccessCertificationReset,
-}) {
+function SearchPwd({ findPwdReducer, setErrorReset }) {
   const [info, setInfo] = useState({});
-
-  const findPwd = () => {
-    if (info.id && info.email && info.userName) {
-      setFindPwdInfo({
-        id: info.id,
-        email: info.email,
-        userName: info.userName,
-      });
-    } else {
-      alert("내용을 입력해주세요.");
-    }
-  };
-
-  const modify = () => {
-    setInfo((info) => {
-      return { ...info, isSendEmail: false };
-    });
-    setFirstSuccessCertificationReset();
-  };
 
   // 회원 정보가 잘못되었을 때
   useEffect(() => {
@@ -81,50 +83,24 @@ function SearchPwd({
         <Nav />
       </header>
 
-      <div css={searchIdArea}>
-        <div css={searchModalPosition}>
-          <div css={searchModal}>
-            <div css={title}>
-              <h1>비밀번호 찾기</h1>
+      <Suspense fallback={<LoadingPage />}>
+        <div css={loginModalStyle}>
+          <h1>비밀번호 찾기</h1>
 
-              {/* 아이디 */}
-              <FindPwdIdComponent info={info} setInfo={setInfo} />
+          {/* 아이디 */}
+          <FindPwdIdComponent info={info} setInfo={setInfo} />
 
-              {/* 유저 이름 */}
-              <FindPwdUsernameComponent info={info} setInfo={setInfo} />
+          {/* 유저 이름 */}
+          <FindPwdUsernameComponent info={info} setInfo={setInfo} />
 
-              {/* 이메일 */}
-              <FindPwdEmailComponent info={info} setInfo={setInfo} />
-
-              {/* 비밀번호 찾기 버튼 */}
-              <div>
-                {info.isSendEmail ? (
-                  <button onClick={modify}>수정</button>
-                ) : (
-                  <button onClick={findPwd}>인증번호 받기</button>
-                )}
-              </div>
-
-              {/* 인증번호 입력 */}
-              {info.isSendEmail ? (
-                <>
-                  <InputCertification
-                    info={info}
-                    setInfo={setInfo}
-                    setFirstSuccessCertificationReset={
-                      setFirstSuccessCertificationReset
-                    }
-                  />
-                </>
-              ) : null}
-            </div>
-          </div>
+          {/* 이메일 */}
+          <FindPwdEmailComponent info={info} setInfo={setInfo} />
         </div>
+      </Suspense>
 
-        <footer>
-          <Footer />
-        </footer>
-      </div>
+      <footer>
+        <Footer />
+      </footer>
     </div>
   );
 }
@@ -135,14 +111,8 @@ const mapStateToProps = ({ findPwdReducer }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setFindPwdInfo(info) {
-      dispatch(findPwdInfo.setFindPwdInfo(info));
-    },
     setErrorReset() {
       dispatch(findPwdInfo.setErrorReset());
-    },
-    setFirstSuccessCertificationReset() {
-      dispatch(findPwdInfo.setFirstSuccessCertificationReset());
     },
   };
 };

@@ -8,12 +8,12 @@ import SignUp from "../routes/auth/SignUp";
 import LoginAdmin from "../routes/admin/LoginAdmin";
 import TotalChart from "../routes/admin/TotalChart";
 import RevenueTrend from "../routes/admin/RevenueTrend";
-// import Useage from "../routes/admin/Usesage";
-import History from "../routes/admin/History";
+import TotalUseageChart from "../routes/admin/TotalUseageChart";
+import UserLog from "../routes/admin/UserLog";
 import UserToU from "../routes/auth/UserToU";
 import CompletePage from "../routes/auth/CompletePage";
 import SearchId from "../routes/auth/SearchId";
-import KakaoMap from "../routes/KakaoMap";
+import KakaoMap from "../routes/map/KakaoMap";
 import MyPage from "../routes/auth/MyPage";
 import ModifyUserInfo from "../routes/auth/ModifyUserInfo";
 import ModifyPwd from "../routes/auth/ModifyPwd";
@@ -21,6 +21,11 @@ import SearchPwd from "../routes/auth/SearchPwd";
 import Payment from "../routes/auth/Payment";
 import SearchChangePwd from "../routes/auth/SearchChangePwd";
 import SearchIdResultPage from "../routes/auth/SearchIdResultPage";
+import NotFound404 from "../routes/NotFound404";
+import LoadView from "../routes/map/LoadView";
+import Users from "../routes/admin/Users";
+
+// import Test from "../../src/Test";
 
 export const GlobalStyle = css`
   body {
@@ -53,13 +58,17 @@ function App() {
         <Route path="/bp/modify/user" element={<ModifyUserInfo />}></Route>
         <Route path="/bp/modify/pwd" element={<ModifyPwd />}></Route>
         <Route path="/bp/payment" element={<Payment />} />
+        <Route path="/404-not-found" element={<NotFound404 />} />
+        <Route path="/bp/loadview" element={<LoadView />} />
 
         <Route path="/admin" element={<LoginAdmin />} />
-        <Route path="/admin/total_income" element={<TotalChart />} />
-        <Route path="/admin/total_useage" element={<TotalChart />} />
-        <Route path="/admin/revenue_trend/:id" element={<RevenueTrend />} />
-        {/* <Route path="/admin/useage" element={<Useage />} /> */}
-        <Route path="/admin/useage/:id" element={<History />} />
+        <Route path="/admin/total-income" element={<TotalChart />} />
+        <Route path="/admin/total-useage" element={<TotalUseageChart />} />
+        <Route path="/admin/revenue-trend/:id" element={<RevenueTrend />} />
+        <Route path="/admin/users" element={<Users />} />
+        <Route path="/admin/users/:id" element={<UserLog />} />
+
+        {/* <Route path="/test" element={<Test />} /> */}
       </Routes>
     </Router>
     // </div>

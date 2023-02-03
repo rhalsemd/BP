@@ -1,5 +1,5 @@
 import { createAction, handleActions } from "redux-actions";
-import { call, put, takeLatest, select } from "redux-saga/effects";
+import { call, put, takeLatest } from "redux-saga/effects";
 import * as api from "../lib/api";
 
 const GET_USEAGE = "histogram/GET_USEAGE";
@@ -10,44 +10,38 @@ const GET_USEAGE_MONTH = "histogram/GET_USEAGE_MONTH";
 const GET_USEAGE_MONTH_SUCCESS = "histogram/GET_USEAGE_MONTH_SUCCESS";
 const GET_USEAGE_MONTH_FAILURE = "histogram/GET_USEAGE_MONTH_FAILURE";
 
+const SELECT_DATE = "histogram/SELECT_DATE";
+
 export const getUseage = createAction(GET_USEAGE, (useageData) => useageData);
-
-export const getUseageSuccess = createAction(
-  GET_USEAGE_SUCCESS,
-  (useageData) => useageData
-);
-export const getUseageFailure = createAction(
-  GET_USEAGE_FAILURE,
+export const getUseageMonth = createAction(
+  GET_USEAGE_MONTH,
   (useageData) => useageData
 );
 
-const initalData = [];
+export const selectDate = createAction(SELECT_DATE, (selectDate) => selectDate);
+const initalData = {
+  selectDate: null,
+};
 
 const getUseageReducer = handleActions(
   {
-    [GET_USEAGE]: (state, action) => ({
-      ...state,
-      data: action.payload,
-    }),
     [GET_USEAGE_SUCCESS]: (state, action) => ({
       ...state,
       data: action.payload,
     }),
     [GET_USEAGE_FAILURE]: (state, action) => ({
-      ...state,
       data: undefined,
-    }),
-    [GET_USEAGE_MONTH]: (state, action) => ({
-      ...state,
-      data: action.payload,
     }),
     [GET_USEAGE_MONTH_SUCCESS]: (state, action) => ({
       ...state,
       data: action.payload,
     }),
     [GET_USEAGE_MONTH_FAILURE]: (state, action) => ({
-      ...state,
       data: undefined,
+    }),
+    [SELECT_DATE]: (state, action) => ({
+      ...state,
+      selectDate: action.payload,
     }),
   },
   initalData
@@ -63,13 +57,16 @@ export function* getUseageMonthSaga() {
   yield takeLatest(GET_USEAGE_MONTH, axiosUseageMonthSaga);
 }
 
-function* axiosUseageSaga() {
-  const { data } = yield select((state) => state.histogramReducer);
+function* axiosUseageSaga({ payload }) {
   try {
-    const dataGet = yield call(() => api.getUseageRevenu);
+    const dataGet = yield call(() => api.getUseageRevenu(payload));
     yield put({
       type: GET_USEAGE_SUCCESS,
       payload: dataGet.data,
+    });
+    yield put({
+      type: SELECT_DATE,
+      payload,
     });
   } catch (e) {
     console.log("useageSaga Error", e);
@@ -81,13 +78,17 @@ function* axiosUseageSaga() {
   }
 }
 
-function* axiosUseageMonthSaga() {
-  const { data } = yield select((state) => state.histogramReducer);
+function* axiosUseageMonthSaga({ payload }) {
+  console.log("saga");
   try {
-    const dataGet = yield call(() => api.getUseageRevenuMonth);
+    const dataGet = yield call(() => api.getUseageRevenuMonth(payload));
     yield put({
       type: GET_USEAGE_MONTH_SUCCESS,
       payload: dataGet.data,
+    });
+    yield put({
+      type: SELECT_DATE,
+      payload,
     });
   } catch (e) {
     console.log("useageSaga Error", e);

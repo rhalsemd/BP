@@ -1,7 +1,24 @@
-import React from "react";
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
+
 import { connect } from "react-redux";
 
 import { userInfo } from "../../modules/signUp";
+import Alert from "@mui/material/Alert";
+
+const inputBox = css`
+  position: relative;
+  margin: 5px 0;
+`;
+
+const inputChild = css`
+  background: transparent;
+  border: none;
+  border-bottom: solid 1px #ccc;
+  padding: 20px 0px 5px 0px;
+  font-size: 14pt;
+  width: 100%;
+`;
 
 function SignUpPwd({ info, setInfo }) {
   // password 정규 표현식
@@ -29,26 +46,58 @@ function SignUpPwd({ info, setInfo }) {
     }
   };
 
+  const onSubmit = (e) => {
+    e.preventDefault();
+  };
+
   return (
-    <div>
-      <form>
-        <label htmlFor="password1">PASSWORD1 : </label>
+    <div css={inputBox}>
+      <form onSubmit={onSubmit}>
         <input
           type="password"
           id="password1"
+          css={inputChild}
           placeholder="비밀번호"
           autoComplete="off"
           required
           onChange={typePwd}
         />
+        <label htmlFor="password1">비밀번호 입력</label>
       </form>
 
       {/* 비밀번호 조건 */}
-      {pwdRegExp.test(info.pwd) || info.pwd.length === 0 ? null : (
-        <div>
-          <span style={{ color: "red" }}>uncomplete : </span>
-          <span>8~20로 비밀번호를 설정해주세요</span>
-        </div>
+      {pwdRegExp.test(info.pwd) || info.pwd.length === 0 ? (
+        info.pwd.length === 0 ? null : (
+          <Alert
+            sx={{
+              hieght: "10%",
+              fontSize: "12px",
+              paddingTop: "0",
+              paddingBottom: "0",
+              display: "flex",
+              justifyContent: "center",
+            }}
+            variant="outlined"
+            severity="success"
+          >
+            유효한 비밀번호입니다.
+          </Alert>
+        )
+      ) : (
+        <Alert
+          sx={{
+            hieght: "10%",
+            fontSize: "12px",
+            paddingTop: "0",
+            paddingBottom: "0",
+            display: "flex",
+            justifyContent: "center",
+          }}
+          variant="outlined"
+          severity="error"
+        >
+          형식을 맞춰주세요.
+        </Alert>
       )}
     </div>
   );

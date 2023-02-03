@@ -1,6 +1,28 @@
-import React from "react";
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
+
 import { connect } from "react-redux";
 import { userInfo } from "../../modules/signUp";
+
+import Alert from "@mui/material/Alert";
+
+const inputBox = css`
+  position: relative;
+  margin: 5px 0;
+`;
+
+const inputChild = css`
+  background: transparent;
+  border: none;
+  border-bottom: solid 1px #ccc;
+  padding: 20px 0px 5px 0px;
+  font-size: 14pt;
+  width: 100%;
+`;
+
+const infoBox = css`
+  display: flex;
+`;
 
 function SignUpId({ info, setInfo }) {
   // id 정규 표현식
@@ -28,28 +50,63 @@ function SignUpId({ info, setInfo }) {
   };
 
   return (
-    <div>
+    <div css={inputBox}>
       <div>
-        <label htmlFor="userId">ID : </label>
         <input
           type="text"
           id="userId"
+          css={inputChild}
           placeholder="아이디"
           autoComplete="off"
           value={info.id}
           required
           onChange={typeId}
         />
+
+        <label htmlFor="userId">
+          <div css={infoBox}>
+            <div>아이디</div>
+          </div>
+        </label>
       </div>
 
       {/* 아이디 조건 */}
       {(idRegExp.test(info.id) &&
         info.id.length >= 8 &&
         info.id.length <= 20) ||
-      info.id.length === 0 ? null : (
+      info.id.length === 0 ? (
+        info.id.length === 0 ? null : (
+          <Alert
+            sx={{
+              hieght: "10%",
+              fontSize: "12px",
+              paddingTop: "0",
+              paddingBottom: "0",
+              display: "flex",
+              justifyContent: "center",
+            }}
+            variant="outlined"
+            severity="success"
+          >
+            유효한 아이디입니다.
+          </Alert>
+        )
+      ) : (
         <div>
-          <span style={{ color: "red" }}>uncomplete : </span>
-          <span>영문자로 시작하는 영문자 또는 숫자 8~20자 </span>
+          <Alert
+            sx={{
+              hieght: "10%",
+              fontSize: "12px",
+              paddingTop: "0",
+              paddingBottom: "0",
+              display: "flex",
+              justifyContent: "center",
+            }}
+            variant="outlined"
+            severity="error"
+          >
+            형식을 맞춰주세요.
+          </Alert>
         </div>
       )}
     </div>

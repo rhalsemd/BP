@@ -10,6 +10,7 @@ function EventMarkerContainer({
   index,
   positions,
   currentMarkerInfo,
+  setIsClickMarker,
 }) {
   const [isOpen, setIsOpen] = useState(Array(positions.length).fill(false));
   const map = useMap();
@@ -32,6 +33,7 @@ function EventMarkerContainer({
           },
         }}
         onClick={(marker) => {
+          setIsClickMarker(true);
           map.panTo(marker.getPosition());
           setIsOpen((isOpen) => {
             isOpen[index] = true;
@@ -83,8 +85,8 @@ function EventMarkerContainer({
                       홈페이지
                     </a>
                   </div> */}
-                  <h2>현재 우산 수 : {position.brollyCount}</h2>
-                  <h2>총 우산 수 : {position.brollyTotalCount}</h2>
+                  <h2>남은 우산 수 : {position.brollyCount}</h2>
+                  <h2>전체 우산 수 : {position.brollyTotalCount}</h2>
                 </div>
               </div>
             </div>

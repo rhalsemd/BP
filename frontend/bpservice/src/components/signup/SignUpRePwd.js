@@ -1,7 +1,23 @@
-import React from "react";
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
 
 import { connect } from "react-redux";
 import { userInfo } from "../../modules/signUp";
+import Alert from "@mui/material/Alert";
+
+const inputBox = css`
+  position: relative;
+  margin: 5px 0;
+`;
+
+const inputChild = css`
+  background: transparent;
+  border: none;
+  border-bottom: solid 1px #ccc;
+  padding: 20px 0px 5px 0px;
+  font-size: 14pt;
+  width: 100%;
+`;
 
 function SignUpRePwd({ info, setInfo }) {
   // 비밀번호 확인
@@ -19,24 +35,56 @@ function SignUpRePwd({ info, setInfo }) {
     }
   };
 
+  const onSubmit = (e) => {
+    e.preventDefault();
+  };
+
   return (
-    <div>
-      <form>
-        <label htmlFor="password2">PASSWORD2 : </label>
+    <div css={inputBox}>
+      <form onSubmit={onSubmit}>
         <input
           type="password"
           id="password2"
+          css={inputChild}
           required
           autoComplete="off"
           placeholder="비밀번호 확인"
           onChange={typeRePwd}
         />
+        <label htmlFor="password2">비밀번호 확인</label>
       </form>
+
       {(!info.isTrue || info.pwd !== info.check) && info.check ? (
-        <div>
-          <span style={{ color: "red" }}>비밀번호를 확인해주세요.</span>
-        </div>
-      ) : null}
+        <Alert
+          sx={{
+            hieght: "10%",
+            fontSize: "12px",
+            paddingTop: "0",
+            paddingBottom: "0",
+            display: "flex",
+            justifyContent: "center",
+          }}
+          variant="outlined"
+          severity="error"
+        >
+          형식을 맞춰주세요.
+        </Alert>
+      ) : info.check.length === 0 ? null : (
+        <Alert
+          sx={{
+            hieght: "10%",
+            fontSize: "12px",
+            paddingTop: "0",
+            paddingBottom: "0",
+            display: "flex",
+            justifyContent: "center",
+          }}
+          variant="outlined"
+          severity="success"
+        >
+          일치합니다.
+        </Alert>
+      )}
     </div>
   );
 }

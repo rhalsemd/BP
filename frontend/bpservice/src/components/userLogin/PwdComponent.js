@@ -1,5 +1,36 @@
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
+
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import Button from "@mui/material/Button";
+
+const inputBox = css`
+  position: relative;
+  margin: 10px 0;
+`;
+
+const inputChild = css`
+  background: transparent;
+  border: none;
+  border-bottom: solid 1px #ccc;
+  padding: 20px 0px 5px 0px;
+  font-size: 14pt;
+  width: 100%;
+`;
+
+const 회원가입버튼 = css`
+  background-color: #191f28;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  width: 100%;
+  height: 35px;
+  font-size: 14pt;
+  margin-top: 15px;
+  margin-bottom: 15px;
+`;
 
 function PwdComponent({ setInfo, info, setLoginInfo }) {
   const navigation = useNavigate();
@@ -34,21 +65,35 @@ function PwdComponent({ setInfo, info, setLoginInfo }) {
   }, [obj, navigation]);
 
   return (
-    <form onSubmit={getLogin}>
-      <label htmlFor="password">PASSWORD : </label>
-      <input
-        type="password"
-        id="password"
-        autoComplete="off"
-        placeholder="비밀번호"
-        onChange={pwdTyping}
-      />
+    <>
+      <form onSubmit={getLogin} css={inputBox}>
+        <div>
+          <input
+            css={inputChild}
+            type="password"
+            id="password"
+            autoComplete="off"
+            placeholder="비밀번호"
+            onChange={pwdTyping}
+          />
+          <label htmlFor="password">비밀번호</label>
+        </div>
 
-      {/* 로그인 버튼 */}
-      <div>
-        <input type="submit" onClick={getLogin} value="로그인" />
+        {/* 로그인 버튼 */}
+        <div>
+          <button onClick={getLogin} css={회원가입버튼}>
+            로그인
+          </button>
+        </div>
+      </form>
+
+      {/* 찾기 */}
+      <div css={inputBox}>
+        <Button href="/bp/search/id">아이디 찾기</Button>|{" "}
+        <Button href="/bp/search/pwd">비밀번호 찾기</Button>|{" "}
+        <Button href="/bp/signup">회원가입</Button>
       </div>
-    </form>
+    </>
   );
 }
 

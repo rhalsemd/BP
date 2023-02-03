@@ -17,46 +17,20 @@ export const getRevenueTrend = createAction(
   (revenueTrend) => revenueTrend
 );
 
-export const getRevenueTrendSuccese = createAction(
-  GET_REVENUE_TREND_SUCCESE,
-  (revenueTrend) => revenueTrend
-);
-
-export const getRevenueTrendFailure = createAction(
-  GET_REVENUE_TREND_FAILURE,
-  (revenueTrend) => revenueTrend
-);
-
 export const getRevenueTrendMonth = createAction(
   GET_REVENUE_TREND_MONTH,
   (revenueTrend) => revenueTrend
 );
-export const getRevenueTrendMonthSuccese = createAction(
-  GET_REVENUE_TREND_MONTH_SUCCESE,
-  (revenueTrend) => revenueTrend
-);
-export const getRevenueTrendMonthFailure = createAction(
-  GET_REVENUE_TREND_MONTH_FAILURE,
-  (revenueTrend) => revenueTrend
-);
 
-const initalData = {};
+const initalData = [];
 
 const revenueTrendReducer = handleActions(
   {
-    [GET_REVENUE_TREND]: (state, action) => ({
-      ...state,
-      data: action.payload,
-    }),
     [GET_REVENUE_TREND_SUCCESE]: (state, action) => ({
       ...state,
       data: action.payload,
     }),
     [GET_REVENUE_TREND_FAILURE]: (state, action) => ({
-      ...state,
-      data: action.payload,
-    }),
-    [GET_REVENUE_TREND_MONTH]: (state, action) => ({
       ...state,
       data: action.payload,
     }),
@@ -75,21 +49,17 @@ const revenueTrendReducer = handleActions(
 export default revenueTrendReducer;
 
 export function* revenueTrendSaga() {
-  console.log("revenueTrend사가");
   yield takeLatest(GET_REVENUE_TREND, axiosTotalKioskSaga);
 }
 
 export function* revenueTrendMonthSaga() {
-  console.log("revenueTrendMonth사가");
   yield takeLatest(GET_REVENUE_TREND_MONTH, axiosTotalKioskMonthSaga);
 }
 
-function* axiosTotalKioskSaga() {
-  const { data } = yield select((state) => state.revenueTrendReducer);
-  console.log("saga인자로 받음", data);
+function* axiosTotalKioskSaga(data) {
   try {
-    const getData = yield call(() => api.getRevenueTrend(data));
-    console.log("키오스크 라인그래프 수익추이(day)", getData);
+    console.log(data.payload);
+    const getData = yield call(() => api.getRevenueTrend(data.payload));
     yield put({
       type: GET_REVENUE_TREND_SUCCESE,
       payload: getData.data,
@@ -104,11 +74,9 @@ function* axiosTotalKioskSaga() {
   }
 }
 
-function* axiosTotalKioskMonthSaga() {
-  const { data } = yield select((state) => state.getRevenueTrend);
-  console.log("리베뉴 트렌드 달별로 가져오는 사가", data);
+function* axiosTotalKioskMonthSaga(data) {
   try {
-    const getData = yield call(() => api.getRevenueTrendMonth);
+    const getData = yield call(() => api.getRevenueTrendMonth(data.payload));
     console.log("키오스크 라인그래프 수익추이(momnth)", getData);
     yield put({
       type: GET_REVENUE_TREND_MONTH_SUCCESE,

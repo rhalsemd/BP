@@ -1,8 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { useSelector } from "react-redux";
 
-import Nav from "../components/Nav";
+import Nav from "../components/NavAdmin";
 import HomeLogo from "../components/home/HomeLogo";
 import Footer from "../components/Footer";
 import HomeIntro from "../components/home/HomeIntro";
@@ -15,8 +14,31 @@ import HomeSection6 from "../components/home/HomeSection6";
 import HomeSection7 from "../components/home/HomeSection7";
 import HomeSection8 from "../components/home/HomeSection8";
 import HomeSection9 from "../components/home/HomeSection9";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getWhetherData } from "../modules/home";
 
 function Home() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const option = {
+      enableHighAccuracy: true,
+    };
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        };
+
+        dispatch(getWhetherData({ latitude, longitude }));
+      },
+      null,
+      option
+    );
+  }, []);
+
   return (
     <div>
       <header>

@@ -19,7 +19,7 @@ public class BrollyRentLog {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PAY_ID")
-    private BrollyPayLog payId;
+    private BrollyPayLog pay;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "BROLLY_ID")

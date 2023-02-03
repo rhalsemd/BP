@@ -1,4 +1,21 @@
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
+
 import { useRef, useEffect } from "react";
+
+const inputBox = css`
+  position: relative;
+  margin: 10px 0;
+`;
+
+const inputChild = css`
+  background: transparent;
+  border: none;
+  border-bottom: solid 1px #ccc;
+  padding: 20px 0px 5px 0px;
+  font-size: 14pt;
+  width: 100%;
+`;
 
 function FindPwdIdComponent({ info, setInfo }) {
   const inputRef = useRef(null);
@@ -19,17 +36,18 @@ function FindPwdIdComponent({ info, setInfo }) {
   }, [info.isSendEmail]);
 
   return (
-    <div>
-      <label htmlFor="userId">ID : </label>
+    <div css={inputBox}>
       <input
         type="text"
         id="userId"
         autoComplete="off"
+        css={inputChild}
         required
         placeholder="아이디"
         onChange={idOnChange}
         ref={inputRef}
       />
+      <label htmlFor="userId">아이디</label>
     </div>
   );
 }
