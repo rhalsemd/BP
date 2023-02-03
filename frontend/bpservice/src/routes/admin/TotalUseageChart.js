@@ -1,17 +1,18 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
 import dayjs from "dayjs";
 import Nav from "../../components/NavAdmin";
 import Footer from "../../components/Footer";
 import HistogramDatasetTransition from "../../components/chart/barChart/HistogramDatasetTransition";
-import HistogramTable from "../../components/chart/HistogramTable";
+import UseageTable from "../../components/chart/UseageTable";
 import DayPicker from "../../components/UI/DayPicker";
 import MonthPicker from "../../components/UI/MonthPicker";
 import Button from "@mui/material/Button";
+import { css } from "@emotion/react";
 import { connect } from "react-redux";
 import { useEffect, useState } from "react";
 import { getBranchRevenue } from "../../modules/histogram";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { getUseage } from "../../modules/TotalUseage";
 
 const barChartStyle = css`
   height: 400px;
@@ -52,6 +53,8 @@ const TotalIncome = ({ getBranchRevenue }) => {
     `${dayjs().format("MM월 DD일")}`
   );
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     if (titleDateDemo?.day) {
       setSelectDate(dayjs(titleDateDemo.day).format("MM월 DD일"));
@@ -61,7 +64,7 @@ const TotalIncome = ({ getBranchRevenue }) => {
   }, [titleDateDemo]);
 
   useEffect(() => {
-    getBranchRevenue(dayjs());
+    dispatch(getUseage(dayjs()));
   }, []);
   return (
     <div>
@@ -98,11 +101,11 @@ const TotalIncome = ({ getBranchRevenue }) => {
           <MonthPicker setWeekOn={setWeekOn} />
         </div>
       )}
-      <h1 css={h1Style}>{selectDate} 매출 현황</h1>
+      <h1 css={h1Style}>{selectDate} 사용 현황 현황</h1>
       <div css={barChartStyle}>
         <HistogramDatasetTransition width={700} height={400} />
       </div>
-      <HistogramTable />
+      <UseageTable />
       <Footer />
     </div>
   );

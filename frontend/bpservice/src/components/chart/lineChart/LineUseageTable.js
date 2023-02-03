@@ -1,19 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React from "react";
 import { DataGrid } from "@mui/x-data-grid";
-
-const dataDemo = [
-  { id: "1", data: "1월 11일", cost: 13000 },
-  { id: "2", data: "1월 12일", cost: 42000 },
-  { id: "3", data: "1월 13일", cost: 59800 },
-  { id: "4", data: "1월 14일", cost: 12000 },
-  { id: "5", data: "1월 15일", cost: 98000 },
-  { id: "6", data: "1월 16일", cost: 130000 },
-  { id: "7", data: "1월 17일", cost: 76000 },
-  { id: "8", data: "1월 18일", cost: 19800 },
-  { id: "9", data: "1월 19일", cost: 108000 },
-];
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import dayjs from "dayjs";
 
 const chartStyle = css`
   height: 60vh;
@@ -23,12 +13,19 @@ const chartStyle = css`
   overflow: scroll;
 `;
 
-function makeRow(id, time, cost) {
+function makeRow(idx, time, cost, selectedDate) {
+  let date = null;
+  const dateL = time.length;
+  if (dateL > 8) {
+    date = `${dayjs(time).format("MM")}월 ${dayjs(time).format("DD")}일`;
+  } else {
+    date = `${dayjs(time).format("MM")}월`;
+  }
   const data = {
-    col1: time,
-    col2: cost,
+    id: idx,
+    data: date,
+    cost,
   };
-  // console.log(data);
   return data;
 }
 
@@ -37,26 +34,40 @@ const col = [
   { field: "cost", headerName: "이용 금액", width: 250 },
 ];
 
-const handleCellClick = (params) => {
-  alert("click");
-  console.log(params);
-};
-
-export default function UserTable(data) {
-  // const rows = makeRow(1, "123", "123123");
-  const rows = dataDemo.map((data, idx) => {
-    return makeRow(data.data, data.cost);
-  });
-  console.log(rows);
+export default function UserTable() {
+  const [rows, setRows] = useState(null);
+  const data = useSelector((state) => state.revenueTrendReducer.data);
+  const selectedDate = useSelector((state) => state.chagneDateReducer);
+  useEffect(() => {
+    if (data) {
+      setRows(
+        data.map((d, idx) => {
+          return makeRow(idx, d.FINALDT, d.TOTALMoney, selectedDate);
+        })
+      );
+    } else {
+      return;
+    }
+  }, [data, selectedDate]);
   return (
     <>
       <div css={chartStyle}>
-        <div style={{ height: 500, width: "100%" }}>
-          <DataGrid
-            rows={dataDemo}
-            columns={col}
-            onCellClick={handleCellClick}
-          />
+        <div style={{ height: "60vh", width: "100%" }}>
+          {rows ? (
+            <DataGrid
+              rowHeight={40}
+              rows={rows}
+              columns={col}
+              sx={{
+                fontSize: 13,
+                "& .MuiDataGrid-cell:hover": {
+                  color: "primary.main",
+                },
+              }}
+            />
+          ) : (
+            "lodaing"
+          )}
         </div>
       </div>
     </>

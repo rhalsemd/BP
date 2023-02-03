@@ -5,8 +5,12 @@ import { Suspense } from "react";
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import Footer from "../../components/Footer";
+<<<<<<< HEAD
 import LoadingPage from "../../components/LoadingPage";
 import Nav from "../../components/Nav";
+=======
+import Nav from "../../components/NavAdmin";
+>>>>>>> feature/FE/admin-CSS
 import FindPwdEmailComponent from "../../components/userFindPwd/FindPwdEmailComponent";
 import FindPwdIdComponent from "../../components/userFindPwd/FindPwdIdComponent";
 import FindPwdUsernameComponent from "../../components/userFindPwd/FindPwdUsernameComponent";

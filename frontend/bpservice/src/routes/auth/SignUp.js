@@ -3,7 +3,7 @@ import { css } from "@emotion/react";
 
 import { connect } from "react-redux";
 
-import Nav from "../../components/Nav";
+import Nav from "../../components/NavAdmin";
 import Footer from "../../components/Footer";
 
 import SignUpId from "../../components/signup/SignUpId";

@@ -11,7 +11,10 @@ import histogramReducer, {
   histogramSaga,
   histogramMonthSaga,
 } from "./histogram";
-import getUseageReducer, { getUseageSaga } from "./TotalUseage";
+import getUseageReducer, {
+  getUseageSaga,
+  getUseageMonthSaga,
+} from "./TotalUseage";
 import revenueTrendReducer, {
   revenueTrendSaga,
   revenueTrendMonthSaga,
@@ -19,6 +22,9 @@ import revenueTrendReducer, {
 import mypageReducer, { mypageSaga } from "./mypage";
 import paymentReducer, { paymentSaga } from "./payment";
 import home, { homeSaga } from "./home";
+import getUsersReducer, { usersSaga } from "./users";
+import getUserLogReducer, { userLogSaga } from "./userLog";
+import chagneDateReducer from "./changeDate";
 
 export const rootReducer = combineReducers({
   signUp,
@@ -34,6 +40,9 @@ export const rootReducer = combineReducers({
   mypageReducer,
   paymentReducer,
   home,
+  getUsersReducer,
+  getUserLogReducer,
+  chagneDateReducer,
 });
 
 export function* rootSaga() {
@@ -51,8 +60,11 @@ export function* rootSaga() {
     revenueTrendMonthSaga(),
     mypageSaga(),
     getUseageSaga(),
+    getUseageMonthSaga(),
     paymentSaga(),
     homeSaga(),
+    usersSaga(),
+    userLogSaga(),
   ]);
 }
 

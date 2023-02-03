@@ -18,7 +18,7 @@ const chartStyle = css`
 function makeRow(id, cost, addr) {
   const data = {
     id: id,
-    cost: `${cost} 회`,
+    cost: `${cost} 원`,
     location: addr,
   };
   return data;
@@ -35,7 +35,7 @@ const col = [
 // };
 
 export default function UserTable(data) {
-  const date = useSelector((state) => state.getUseageReducer.selectDate);
+  const date = useSelector((state) => state.histogramReducer.selectDate);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -49,11 +49,11 @@ export default function UserTable(data) {
       state: { name: jijum, caseId },
     });
   };
-  const 임시data2 = useSelector((state) => state.getUseageReducer);
+  const 임시data2 = useSelector((state) => state.histogramReducer);
   let 임시rows = null;
   if (임시data2.data) {
     임시rows = 임시data2.data.map((d) => {
-      return makeRow(d.CASE_ID, d.TOTALCOUNT, d.NAME);
+      return makeRow(d.CASE_ID, d.TOTALMONEY, d.NAME);
     });
   }
 
@@ -63,7 +63,6 @@ export default function UserTable(data) {
         <div style={{ height: "60vh", width: "95vw" }}>
           {임시rows ? (
             <DataGrid
-              rowHeight={40}
               rows={임시rows}
               columns={col}
               onCellClick={handleCellClick}

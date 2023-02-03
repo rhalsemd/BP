@@ -1,5 +1,6 @@
 import { createAction, handleActions } from "redux-actions";
-import { call, put, takeLatest } from "redux-saga/effects";
+import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
+import { RestClient } from "@bootpay/server-rest-client";
 import axios from "axios";
 
 const GET_CERTIFYCATION = "signUp/GET_CERTIFYCATION";

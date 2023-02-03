@@ -4,8 +4,12 @@ import { Suspense } from "react";
 import { useSelector } from "react-redux";
 
 import Footer from "../../components/Footer";
+<<<<<<< HEAD
 import LoadingPage from "../../components/LoadingPage";
 import Nav from "../../components/Nav";
+=======
+import Nav from "../../components/NavAdmin";
+>>>>>>> feature/FE/admin-CSS
 
 const resultArea = css`
   width: 100%;

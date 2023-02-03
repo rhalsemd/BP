@@ -1,5 +1,5 @@
 import { createAction, handleActions } from "redux-actions";
-import { call, put, select, takeLatest } from "redux-saga/effects";
+import { call, put, takeLatest } from "redux-saga/effects";
 import * as api from "../lib/api";
 
 const GET_BRANCH_REVENUE = "histogram/GET_BRANCH_REVENUE";
@@ -12,7 +12,8 @@ const GET_BRANCH_REVENUE_MONTH_SUCCESS =
 const GET_BRANCH_REVENUE_MONTH_FAILURE =
   "histogram/GET_BRANCH_REVENUE_MONTH_FAILURE";
 
-// totalChart의 day별로 보여주기
+const SELECT_DATE = "histogram/SELECT_DATE";
+
 export const getBranchRevenue = createAction(
   GET_BRANCH_REVENUE,
   (revenueData) => revenueData
@@ -24,16 +25,14 @@ export const getBranchRevenueMonth = createAction(
   (revenueData) => revenueData
 );
 
-const initalData = {};
+export const selectDate = createAction(SELECT_DATE, (selectDate) => selectDate);
+
+const initalData = {
+  selectDate: null,
+};
 
 const histogramReducer = handleActions(
   {
-    [GET_BRANCH_REVENUE]: (state, action) => {
-      return {
-        ...state,
-        data: action.payload,
-      };
-    },
     [GET_BRANCH_REVENUE_SUCCESS]: (state, action) => ({
       ...state,
       data: action.payload,
@@ -41,18 +40,16 @@ const histogramReducer = handleActions(
     [GET_BRANCH_REVENUE_FAILURE]: (state, action) => ({
       ...state,
     }),
-    [GET_BRANCH_REVENUE_MONTH]: (state, action) => {
-      return {
-        ...state,
-        data: action.payload,
-      };
-    },
     [GET_BRANCH_REVENUE_MONTH_SUCCESS]: (state, action) => ({
       ...state,
       data: action.payload,
     }),
     [GET_BRANCH_REVENUE_MONTH_FAILURE]: (state, action) => ({
       ...state,
+    }),
+    [SELECT_DATE]: (state, action) => ({
+      ...state,
+      selectDate: action.payload,
     }),
   },
   initalData
@@ -68,15 +65,17 @@ export function* histogramMonthSaga() {
   yield takeLatest(GET_BRANCH_REVENUE_MONTH, getBranchDataMonthSaga);
 }
 
-function* getBranchDataSaga() {
-  const { data } = yield select((state) => state.histogramReducer);
+function* getBranchDataSaga({ payload }) {
   try {
-    // const dataGet = yield call(api.getBranchRevenue(data));
-    const dataGet = yield call(() => api.getBranchRevenue(data));
+    const dataGet = yield call(() => api.getBranchRevenue(payload));
     console.log("총 매출(day)", dataGet);
     yield put({
       type: GET_BRANCH_REVENUE_SUCCESS,
       payload: dataGet.data,
+    });
+    yield put({
+      type: SELECT_DATE,
+      payload,
     });
   } catch (e) {
     console.log("error", e);
@@ -88,15 +87,17 @@ function* getBranchDataSaga() {
   }
 }
 
-function* getBranchDataMonthSaga() {
-  const { data } = yield select((state) => state.histogramReducer);
+function* getBranchDataMonthSaga({ payload }) {
   try {
-    // const dataGet = yield call(api.getBranchRevenue(data));
-    const dataGet = yield call(() => api.getBranchRevenueMonth(data));
-    console.log("총 매출(month)", dataGet);
+    console.log(payload);
+    const dataGet = yield call(() => api.getBranchRevenueMonth(payload));
     yield put({
-      type: GET_BRANCH_REVENUE_MONTH_SUCCESS,
+      type: GET_BRANCH_REVENUE_SUCCESS,
       payload: dataGet.data,
+    });
+    yield put({
+      type: SELECT_DATE,
+      payload,
     });
   } catch (e) {
     console.log("error", e);

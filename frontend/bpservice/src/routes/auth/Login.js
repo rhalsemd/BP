@@ -3,7 +3,7 @@ import { css } from "@emotion/react";
 
 import { useState, useEffect } from "react";
 
-import Nav from "../../components/Nav";
+import Nav from "../../components/NavAdmin";
 import Footer from "../../components/Footer";
 import IdComponent from "../../components/userLogin/IdComponent";
 import PwdComponent from "../../components/userLogin/PwdComponent";
