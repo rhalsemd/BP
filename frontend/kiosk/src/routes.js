@@ -2,7 +2,6 @@ import KioskHomeContainer from './kiosk/routes/KioskHomeContainer'
 import KioskRentContainer from './kiosk/routes/KioskRentContainer'
 import KioskRentCompleteContainer from './kiosk/routes/KioskRentCompleteContainer'
 import KioskReturnContainer from './kiosk/routes/KioskReturnContainer'
-import KioskReturnQRContainer from './kiosk/routes/KioskReturnQRContainer'
 import KioskReturnCameraContainer from './kiosk/routes/KioskReturnCameraContainer'
 import KioskReturnGuideContainer from './kiosk/routes/KioskReturnGuideContainer'
 import KioskReturnCompleteContainer from './kiosk/routes/KioskReturnCompleteContainer'
@@ -24,10 +23,6 @@ const routes = [
   {
     path: '/kiosk/:id/return',
     element: <KioskReturnContainer />
-  },
-  {
-    path: '/kiosk/:id/return/QR',
-    element: <KioskReturnQRContainer />
   },
   {
     path: '/kiosk/:id/return/camera',

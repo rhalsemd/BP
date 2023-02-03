@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
 import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import KioskHeader from '../components/KioskHeader'
 import KioskReturnCompleteSection from '../components/KioskReturnCompleteSection'
@@ -16,20 +17,20 @@ const KioskReturnReceiptStyle = css`
 
 const KiosktReturnCompleteContainer = () => {
   
-
+  const { id } = useSelector((store) => store);
   const navigate = useNavigate();
   
-  // // 홈화면으로
-  // const miliUnit = 1000
-  // const seconds = 60 * miliUnit
-  // useEffect(() => {
-  //   let myTimer = setTimeout(() => {
-  //     navigate('/kiosk')
-  //   }, seconds)
-  //   return () => {
-  //     clearTimeout(myTimer)
-  //   }
-  // }, [])
+  // 홈화면으로
+  const miliUnit = 1000
+  const seconds = 6000 * miliUnit
+  useEffect(() => {
+    let myTimer = setTimeout(() => {
+      navigate(`/kiosk/${id[0] || id}`)
+    }, seconds)
+    return () => {
+      clearTimeout(myTimer)
+    }
+  }, [])
 
   return (
     <div css={KioskReturnReceiptStyle}>
