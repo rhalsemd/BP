@@ -41,12 +41,12 @@ const KioskReturnCameraContainer = () => {
   // 데이터 수령
   const location = useLocation();
   const navigate = useNavigate();
-
   
   // 홈화면으로
   const miliUnit = 1000
   const seconds = 6000 * miliUnit
   useEffect(() => {
+    console.log(location.state)
     let myTimer = setTimeout(() => {
       navigate(`/kiosk/${id[0]}`)
     }, seconds)

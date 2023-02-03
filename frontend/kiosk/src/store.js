@@ -14,9 +14,8 @@ const reducer = (state = { id: 1 }, action) => {
     case GET_KIOSK_ID:
       return { ...state, id: action.id };
     default:
-  return state;
+      return state;
   }
-
 }
 
 const store = createStore(reducer)
