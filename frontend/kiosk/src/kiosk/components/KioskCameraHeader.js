@@ -8,11 +8,13 @@ import { useSelector } from 'react-redux'
 
 const KioskHeaderStyle = css`
   background-color: #EEF1FF;
+  opacity: 0.6;
+
   display: flex;
   justify-content: space-between;
   align-items: start;
   width: 100vw;
-  height: 15vh;
+  height: 10vh;
 `
 
 const KioskLogo = css`

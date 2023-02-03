@@ -35,7 +35,7 @@ const KioskRentContainer = () => {
         })
         .then((bool) => {
           // 대여완료 화면으로
-          navigate(`/kiosk/${id}/rent/complete`)
+          navigate(`/kiosk/${id[0]}/rent/complete`)
         })
         .catch((err) => console.log(err))
       }, 5000)
@@ -47,7 +47,7 @@ const KioskRentContainer = () => {
   const seconds = 60 * miliUnit
   useEffect(() => {
     let myTimer = setTimeout(() => {
-      navigate(`/kiosk/${id}`)
+      navigate(`/kiosk/${id[0]}`)
     }, seconds)
     return () => {
       clearTimeout(myTimer)

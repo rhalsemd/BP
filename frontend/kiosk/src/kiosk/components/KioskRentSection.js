@@ -11,11 +11,12 @@ const KioskRentSectionStyle = css`
   justify-content: center;
   align-items: center;
 
-  height: 80vh;
+  height: 90vh;
 `
 const KioskRentQR = css`
   position:absolute;
   left: 60px;
+  bottom: 14vh;
 
   margin-left: 3vw;
 
@@ -47,6 +48,7 @@ const KioskRentMethod = css`
 
   position: absolute;
   right: 10px;
+  bottom: 14vh;
 
   ul {
     display: flex;

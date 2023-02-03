@@ -18,9 +18,9 @@ const KioskReturnStyle = css`
 // 밑에는 JS 입니다.
 
 const KioskReturnContainer = () => {
+  const { id } = useSelector((store) => store);
   // 환불관련 useHook
   const [isconfirm, setIsconfirm] = useState(false);
-  const { id } = useSelector((store) => store);
   const navigate = useNavigate();
 
   // 환불되었는지 확인
@@ -35,21 +35,22 @@ const KioskReturnContainer = () => {
     }, 5000)
   }
 
+  useEffect(() => {
+    getRefundsConfirm();
+  }, [isconfirm])
+
   // 홈화면으로
   const miliUnit = 1000
   const seconds = 60 * miliUnit
   useEffect(() => {
     let myTimer = setTimeout(() => {
-      navigate(`/kiosk/${id}`)
+      navigate(`/kiosk/${id[0]}`)
     }, seconds)
     return () => {
       clearTimeout(myTimer)
     }
   }, [])
 
-  useEffect(() => {
-    getRefundsConfirm();
-  }, [isconfirm])
 
   return (
     <div css={KioskReturnStyle}>

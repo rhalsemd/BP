@@ -42,7 +42,7 @@ const KioskRentBtn = () => {
 
   const navigate = useNavigate();
   const KioskRentMove = () => {
-    navigate(`/kiosk/${id}/rent`)
+    navigate(`/kiosk/${id[0]}/rent`)
   }
 
   return (

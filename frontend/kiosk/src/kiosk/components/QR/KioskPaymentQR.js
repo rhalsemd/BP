@@ -1,9 +1,11 @@
 // import axios from 'axios';
 import { QRCodeSVG } from 'qrcode.react';
+import { useSelector } from 'react-redux';
 // import { useState } from 'react';
 // import { useNavigate } from 'react-router-dom';
 
 const KioskPaymentQR = () => {
+  const { id } = useSelector((store) => store)
   // // 결제완료 관련 Hook
   // const [isPayment, setIsPayment] = useState(false);
   // const navigate = useNavigate();
@@ -17,15 +19,15 @@ const KioskPaymentQR = () => {
 
   // // 지불완료 표시확인 후, 이동
   // if (isPayment) {
-  //   navigate('/kiosk/rent/complete');
+  //   navigate(`/kiosk/${id}/rent/complete`);
   // }
 
   return (
     <div>
       <QRCodeSVG
-        value={"https://www.naver.com/"}
+        value={"https://www.google.com/search?q=555"}
         size={400}
-        imageSettings={{ src: 'https://www.naver.com/', width: 10, height: 10 }}
+        imageSettings={{ src: `https://www.google.com?q=555`, width: 10, height: 10 }}
         id="qr-gen"
         level={"H"}
         includeMargin={true}
