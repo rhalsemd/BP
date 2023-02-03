@@ -48,52 +48,31 @@ public class CAuthService {
     public String serviceId;// 프로젝트에 할당된 SMS 서비스 ID // service ID : https://console.ncloud.com/sens/project > Simple & ... > Project > 서비스 ID
     @Value("${naver-cloud-sms.senderPhone}")
     public String senderPhone;
-    public String ePwd;
     @Value("${AdminMail.id}")
     public String adminId;
 
-    private MimeMessage createMessage(String to)throws Exception{
-        System.out.println(serviceKey);
-        MailAuth mailAuth = mailAuthRepository.getMailAuth(to);
-        ePwd = mailAuth.getAuthNum();
-
-        System.out.println("보내는 대상 : "+ to);
-        System.out.println("인증 번호 : "+ePwd);
+    private MimeMessage createMessage(String to, String title, String msg)throws Exception{
         MimeMessage message = emailSender.createMimeMessage();
 
         message.addRecipients(RecipientType.TO, to);//보내는 대상
-        message.setSubject("Babble회원가입 이메일 인증");//제목
+        message.setSubject(title);//제목
 
-        String msgg="";
-        msgg+= "<div style='margin:100px;'>";
-        msgg+= "<h1> 안녕하세요 Babble입니다. </h1>";
-        msgg+= "<br>";
-        msgg+= "<p>아래 코드를 회원가입 창으로 돌아가 입력해주세요<p>";
-        msgg+= "<br>";
-        msgg+= "<p>감사합니다!<p>";
-        msgg+= "<br>";
-        msgg+= "<div align='center' style='border:1px solid black; font-family:verdana';>";
-        msgg+= "<h3 style='color:blue;'>회원가입 인증 코드입니다.</h3>";
-        msgg+= "<div style='font-size:130%'>";
-        msgg+= "CODE : <strong>";
-        msgg+= ePwd+"</strong><div><br/> ";
-        msgg+= "</div>";
-        message.setText(msgg, "utf-8", "html");//내용
+
+        message.setText(msg, "utf-8", "html");//내용
         message.setFrom(new InternetAddress(adminId,"Babble"));//보내는 사람
 
         return message;
     }
 
-    public String sendSimpleMessage(String to)throws Exception {
+    public void sendSimpleMessage(String to, String title,String msg)throws Exception {
         // TODO Auto-generated method stub
-        MimeMessage message = createMessage(to);
+        MimeMessage message = createMessage(to,title,msg);
         try{//예외처리
             emailSender.send(message);
         }catch(MailException es){
             es.printStackTrace();
             throw new IllegalArgumentException();
         }
-        return ePwd;
     }
     //이메일 인증 검증
     public void validateEmailMessage(String email, String authNum)throws Exception {
@@ -101,6 +80,8 @@ public class CAuthService {
         int id = mailAuth.getId();
         mailAuthRepository.updateStatus(id);
     }
+
+    // 회원가입용 SMS 전송요청
     public Map<String, String> requestSmsMessage(String receivePhone){
         Map<String, String> resultMap = new HashMap<>();
         List<User> optionalUser = userRepository.findByPhoneNum(receivePhone);
@@ -113,6 +94,15 @@ public class CAuthService {
         SmsAuth smsAuth = smsAuthRepository.getSmsAuth(receivePhone);
         String authNum = smsAuth.getAuthNum();
 
+        sendSmsMessage(receivePhone, authNum);
+
+        resultMap.put("result", "success");
+        resultMap.put("msg", "인증번호가 전송되었습니다.");
+        return resultMap;
+    }
+
+    // SMS 메시지 보내기
+    public void sendSmsMessage(String receivePhone, String msg) {
         String hostNameUrl = "https://sens.apigw.ntruss.com";     		// 호스트 URL
         String requestUrl= "/sms/v2/services/";                   		// 요청 URL
         String requestUrlType = "/messages";                      		// 요청 URL
@@ -129,7 +119,7 @@ public class CAuthService {
 
         //toJson.put("subject","");							// Optional, messages.subject	개별 메시지 제목, LMS, MMS에서만 사용 가능
         //toJson.put("content","sms test in spring 111");	// Optional, messages.content	개별 메시지 내용, SMS: 최대 80byte, LMS, MMS: 최대 2000byte
-        toJson.put("to",receivePhone);						// Mandatory(필수), messages.to	수신번호, -를 제외한 숫자만 입력 가능
+        toJson.put("to", receivePhone);						// Mandatory(필수), messages.to	수신번호, -를 제외한 숫자만 입력 가능
         toArr.put(toJson);
 
         bodyJson.put("type","SMS");							// Madantory, 메시지 Type (SMS | LMS | MMS), (소문자 가능)
@@ -137,13 +127,11 @@ public class CAuthService {
         //bodyJson.put("countryCode","82");					// Optional, 국가 전화번호, (default: 82)
         bodyJson.put("from",senderPhone);					// Mandatory, 발신번호, 사전 등록된 발신번호만 사용 가능
         //bodyJson.put("subject","");						// Optional, 기본 메시지 제목, LMS, MMS에서만 사용 가능
-        bodyJson.put("content",authNum);	// Mandatory(필수), 기본 메시지 내용, SMS: 최대 80byte, LMS, MMS: 최대 2000byte
+        bodyJson.put("content", msg);	// Mandatory(필수), 기본 메시지 내용, SMS: 최대 80byte, LMS, MMS: 최대 2000byte
         bodyJson.put("messages", toArr);					// Mandatory(필수), 아래 항목들 참조 (messages.XXX), 최대 1,000개
 
         //String body = bodyJson.toJSONString();
         String body = bodyJson.toString();
-
-        System.out.println(body);
 
         try {
             URL url = new URL(apiUrl);
@@ -179,16 +167,9 @@ public class CAuthService {
                 response.append(inputLine);
             }
             br.close();
-
-            System.out.println(response.toString());
-
         } catch (Exception e) {
             e.printStackTrace();;
         }
-
-        resultMap.put("result", "success");
-        resultMap.put("msg", "인증번호가 전송되었습니다.");
-        return resultMap;
     }
 
     private String makeSignature(String url, String timestamp, String method) throws NoSuchAlgorithmException, InvalidKeyException {
