@@ -1,8 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import { Suspense } from "react";
 import { useState } from "react";
 
 import Footer from "../../components/Footer";
+import LoadingPage from "../../components/LoadingPage";
 import ModifyUserAddress from "../../components/modifyUserInfo/ModifyUserAddress";
 import Nav from "../../components/Nav";
 
@@ -58,12 +60,14 @@ function ModifyUserInfo() {
         <Nav />
       </header>
 
-      <div css={loginModalStyle}>
-        <h1>회원정보 수정</h1>
+      <Suspense fallback={<LoadingPage />}>
+        <div css={loginModalStyle}>
+          <h1>회원정보 수정</h1>
 
-        {/* 주소 */}
-        <ModifyUserAddress setInfo={setInfo} info={info} />
-      </div>
+          {/* 주소 */}
+          <ModifyUserAddress setInfo={setInfo} info={info} />
+        </div>
+      </Suspense>
       <footer>
         <Footer />
       </footer>

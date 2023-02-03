@@ -1,12 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { useEffect } from "react";
+import { Suspense } from "react";
 
 import { useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import Footer from "../../components/Footer";
+import LoadingPage from "../../components/LoadingPage";
 import ModifyPwdConfirm from "../../components/modifyPwd/ModifyPwdConfirm";
 import ModifyPwdCurrent from "../../components/modifyPwd/ModifyPwdCurrent";
 import ModifyPwdNext from "../../components/modifyPwd/ModifyPwdNext";
@@ -87,18 +89,20 @@ function ModifyPwd() {
         <Nav />
       </header>
 
-      <div css={loginModalStyle}>
-        <h1>비밀번호 변경</h1>
+      <Suspense fallback={<LoadingPage />}>
+        <div css={loginModalStyle}>
+          <h1>비밀번호 변경</h1>
 
-        {/* 현재 비밀번호 */}
-        <ModifyPwdCurrent setInfo={setInfo} info={info} />
+          {/* 현재 비밀번호 */}
+          <ModifyPwdCurrent setInfo={setInfo} info={info} />
 
-        {/* 수정 비밀번호 */}
-        <ModifyPwdNext setInfo={setInfo} pwdRegExp={pwdRegExp} info={info} />
+          {/* 수정 비밀번호 */}
+          <ModifyPwdNext setInfo={setInfo} pwdRegExp={pwdRegExp} info={info} />
 
-        {/* 수정 비밀번호 확인 */}
-        <ModifyPwdConfirm info={info} setInfo={setInfo} />
-      </div>
+          {/* 수정 비밀번호 확인 */}
+          <ModifyPwdConfirm info={info} setInfo={setInfo} />
+        </div>
+      </Suspense>
 
       <footer>
         <Footer />

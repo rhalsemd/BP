@@ -1,11 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import { Suspense } from "react";
 import { useEffect } from "react";
 
 import { useState } from "react";
 import { connect, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer";
+import LoadingPage from "../../components/LoadingPage";
 import Nav from "../../components/Nav";
 import FindEmailComponent from "../../components/userFindId/FindEmailComponent";
 import FindNameComponent from "../../components/userFindId/FindNameComponent";
@@ -83,15 +85,18 @@ function SeachId({ infoErrorReset }) {
         <Nav />
       </header>
 
-      <div css={loginModalStyle}>
-        <h1>아이디 찾기</h1>
+      <Suspense fallback={<LoadingPage />}>
+        <div css={loginModalStyle}>
+          <h1>아이디 찾기</h1>
 
-        {/* 이메일 */}
-        <FindEmailComponent setInfo={setInfo} info={info} />
+          {/* 이메일 */}
+          <FindEmailComponent setInfo={setInfo} info={info} />
 
-        {/* 이름 */}
-        <FindNameComponent setInfo={setInfo} info={info} />
-      </div>
+          {/* 이름 */}
+          <FindNameComponent setInfo={setInfo} info={info} />
+        </div>
+      </Suspense>
+
       <footer>
         <Footer />
       </footer>

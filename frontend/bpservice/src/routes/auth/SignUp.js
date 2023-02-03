@@ -16,6 +16,8 @@ import SignUpEmail from "../../components/signup/SignUpEmail";
 import { userInfo } from "../../modules/signUp";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Suspense } from "react";
+import LoadingPage from "../../components/LoadingPage";
 
 const loginModalStyle = css`
   position: relative;
@@ -121,25 +123,27 @@ function SignUp({ signUp, signUpFailureReset }) {
         <Nav />
       </header>
 
-      <div css={loginModalStyle}>
-        <div className="loginModalInnerStyle">
-          <h1>sign up</h1>
-          {/* 아이디 */}
-          <SignUpId info={info} setInfo={setInfo} />
-          {/* 비밀번호 */}
-          <SignUpPwd info={info} setInfo={setInfo} />
-          {/* 비밀번호 확인 */}
-          <SignUpRePwd info={info} setInfo={setInfo} />
-          {/* 이름 */}
-          <SignUpName info={info} setInfo={setInfo} />
-          {/* 전화번호 / 인증 번호*/}
-          <SignUpPhone info={info} setInfo={setInfo} />
-          {/* 주소 */}
-          <SignUpAddress info={info} setInfo={setInfo} />
-          {/* 이메일 */}
-          <SignUpEmail info={info} setInfo={setInfo} />
+      <Suspense fallback={<LoadingPage />}>
+        <div css={loginModalStyle}>
+          <div className="loginModalInnerStyle">
+            <h1>sign up</h1>
+            {/* 아이디 */}
+            <SignUpId info={info} setInfo={setInfo} />
+            {/* 비밀번호 */}
+            <SignUpPwd info={info} setInfo={setInfo} />
+            {/* 비밀번호 확인 */}
+            <SignUpRePwd info={info} setInfo={setInfo} />
+            {/* 이름 */}
+            <SignUpName info={info} setInfo={setInfo} />
+            {/* 전화번호 / 인증 번호*/}
+            <SignUpPhone info={info} setInfo={setInfo} />
+            {/* 주소 */}
+            <SignUpAddress info={info} setInfo={setInfo} />
+            {/* 이메일 */}
+            <SignUpEmail info={info} setInfo={setInfo} />
+          </div>
         </div>
-      </div>
+      </Suspense>
 
       <footer>
         <Footer />

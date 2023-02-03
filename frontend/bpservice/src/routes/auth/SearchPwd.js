@@ -1,9 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import { Suspense } from "react";
 
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import Footer from "../../components/Footer";
+import LoadingPage from "../../components/LoadingPage";
 import Nav from "../../components/Nav";
 import FindPwdEmailComponent from "../../components/userFindPwd/FindPwdEmailComponent";
 import FindPwdIdComponent from "../../components/userFindPwd/FindPwdIdComponent";
@@ -77,18 +79,21 @@ function SearchPwd({ findPwdReducer, setErrorReset }) {
         <Nav />
       </header>
 
-      <div css={loginModalStyle}>
-        <h1>비밀번호 찾기</h1>
+      <Suspense fallback={<LoadingPage />}>
+        <div css={loginModalStyle}>
+          <h1>비밀번호 찾기</h1>
 
-        {/* 아이디 */}
-        <FindPwdIdComponent info={info} setInfo={setInfo} />
+          {/* 아이디 */}
+          <FindPwdIdComponent info={info} setInfo={setInfo} />
 
-        {/* 유저 이름 */}
-        <FindPwdUsernameComponent info={info} setInfo={setInfo} />
+          {/* 유저 이름 */}
+          <FindPwdUsernameComponent info={info} setInfo={setInfo} />
 
-        {/* 이메일 */}
-        <FindPwdEmailComponent info={info} setInfo={setInfo} />
-      </div>
+          {/* 이메일 */}
+          <FindPwdEmailComponent info={info} setInfo={setInfo} />
+        </div>
+      </Suspense>
+
       <footer>
         <Footer />
       </footer>

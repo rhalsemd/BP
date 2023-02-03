@@ -22,6 +22,7 @@ import Payment from "../routes/auth/Payment";
 import SearchChangePwd from "../routes/auth/SearchChangePwd";
 import SearchIdResultPage from "../routes/auth/SearchIdResultPage";
 import NotFound404 from "../routes/NotFound404";
+import LoadingPage from "./LoadingPage";
 
 export const GlobalStyle = css`
   body {

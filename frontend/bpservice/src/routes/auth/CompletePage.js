@@ -1,8 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import { Suspense } from "react";
 
 import { useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer";
+import LoadingPage from "../../components/LoadingPage";
 import Nav from "../../components/Nav";
 
 const comPleteArea = css`
@@ -39,16 +41,18 @@ function CompletePage() {
         <Nav />
       </header>
 
-      <div css={comPleteArea}>
-        <div css={comPleteModalPosition}>
-          <div css={comPleteModal}>
-            <div css={title}>
-              <h2>완료 메시지</h2>
-              <button onClick={goToHome}>홈으로</button>
+      <Suspense fallback={<LoadingPage />}>
+        <div css={comPleteArea}>
+          <div css={comPleteModalPosition}>
+            <div css={comPleteModal}>
+              <div css={title}>
+                <h2>완료 메시지</h2>
+                <button onClick={goToHome}>홈으로</button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </Suspense>
 
       <footer>
         <Footer />

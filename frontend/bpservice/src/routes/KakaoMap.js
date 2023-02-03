@@ -3,6 +3,7 @@ import { Suspense, lazy, useEffect } from "react";
 import { useState } from "react";
 import { Map } from "react-kakao-maps-sdk";
 import { connect, useSelector } from "react-redux";
+import LoadingPage from "../components/LoadingPage";
 import { mapInfo } from "../modules/mapStore";
 // import BackBtn from "../components/kakaoMap/BackBtn";
 const BackBtn = lazy(() => import("../components/kakaoMap/BackBtn"));
@@ -72,13 +73,7 @@ function KakaoMap({ getMapInfo }) {
   }, []);
 
   return (
-    <Suspense
-      fallback={
-        <div>
-          <h1>Loding</h1>
-        </div>
-      }
-    >
+    <Suspense fallback={<LoadingPage />}>
       <Map // 지도를 표시할 Container
         id={`map`}
         // 지도의 중심좌표

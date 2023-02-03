@@ -9,6 +9,8 @@ import IdComponent from "../../components/userLogin/IdComponent";
 import PwdComponent from "../../components/userLogin/PwdComponent";
 import { connect, useDispatch } from "react-redux";
 import { loginInfo } from "../../modules/userLogin";
+import { Suspense } from "react";
+import LoadingPage from "../../components/LoadingPage";
 // import { cencleBootpay } from "../../modules/payment";
 
 const loginModalStyle = css`
@@ -73,19 +75,21 @@ function Login({ userLogin, setLoginInfo, getUserInfo, errorReset }) {
         <Nav />
       </header>
 
-      <div css={loginModalStyle}>
-        <h1>Login</h1>
+      <Suspense fallback={<LoadingPage />}>
+        <div css={loginModalStyle}>
+          <h1>Login</h1>
 
-        {/* 아이디 */}
-        <IdComponent setInfo={setInfo} />
+          {/* 아이디 */}
+          <IdComponent setInfo={setInfo} />
 
-        {/* 비밀번호 */}
-        <PwdComponent
-          setInfo={setInfo}
-          info={info}
-          setLoginInfo={setLoginInfo}
-        />
-      </div>
+          {/* 비밀번호 */}
+          <PwdComponent
+            setInfo={setInfo}
+            info={info}
+            setLoginInfo={setLoginInfo}
+          />
+        </div>
+      </Suspense>
 
       <footer>
         <Footer />

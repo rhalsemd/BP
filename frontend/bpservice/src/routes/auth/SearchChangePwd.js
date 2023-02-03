@@ -1,11 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import { Suspense } from "react";
 
 import { useEffect } from "react";
 import { useState } from "react";
 import { connect, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer";
+import LoadingPage from "../../components/LoadingPage";
 import Nav from "../../components/Nav";
 import ChangePwdInput from "../../components/userFindChangePwd/ChangePwdInput";
 import CheckPwdInput from "../../components/userFindChangePwd/CheckPwdInput";
@@ -73,14 +75,16 @@ function SearchChangePwd({ setNewPwd }) {
         <Nav />
       </header>
 
-      <div css={loginModalStyle}>
-        <h1>비밀번호 변경</h1>
-        {/* 변경할 비밀번호 */}
-        <ChangePwdInput setInfo={setInfo} pwdRegExp={pwdRegExp} info={info} />
+      <Suspense fallback={<LoadingPage />}>
+        <div css={loginModalStyle}>
+          <h1>비밀번호 변경</h1>
+          {/* 변경할 비밀번호 */}
+          <ChangePwdInput setInfo={setInfo} pwdRegExp={pwdRegExp} info={info} />
 
-        {/* 비밀번호 확인 */}
-        <CheckPwdInput info={info} setInfo={setInfo} />
-      </div>
+          {/* 비밀번호 확인 */}
+          <CheckPwdInput info={info} setInfo={setInfo} />
+        </div>
+      </Suspense>
 
       <footer>
         <Footer />
