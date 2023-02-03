@@ -67,6 +67,11 @@ public class WebSecurityConfig {
 
                 .and()
                 .apply(new JwtSecurityConfig(tokenProvider, redisTemplate));
+        //JwtAuthentication exception handling
+        http.exceptionHandling().authenticationEntryPoint(new JwtAuthenticationEntryPoint());
+
+        //access Denial handler
+        http.exceptionHandling().accessDeniedHandler(new JwtAccessDeniedHandler());
         return http.build();
     }
     @Bean
