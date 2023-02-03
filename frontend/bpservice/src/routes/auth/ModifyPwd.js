@@ -12,12 +12,7 @@ import LoadingPage from "../../components/LoadingPage";
 import ModifyPwdConfirm from "../../components/modifyPwd/ModifyPwdConfirm";
 import ModifyPwdCurrent from "../../components/modifyPwd/ModifyPwdCurrent";
 import ModifyPwdNext from "../../components/modifyPwd/ModifyPwdNext";
-<<<<<<< HEAD
 import Nav from "../../components/Nav";
-=======
-import NextPwdCondition from "../../components/modifyPwd/NextPwdCondition";
-import Nav from "../../components/NavAdmin";
->>>>>>> feature/FE/admin-CSS
 import { newPwdErrorReset } from "../../modules/modifyPwd";
 
 const loginModalStyle = css`

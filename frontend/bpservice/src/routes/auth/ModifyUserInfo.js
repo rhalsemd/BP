@@ -6,12 +6,7 @@ import { useState } from "react";
 import Footer from "../../components/Footer";
 import LoadingPage from "../../components/LoadingPage";
 import ModifyUserAddress from "../../components/modifyUserInfo/ModifyUserAddress";
-<<<<<<< HEAD
 import Nav from "../../components/Nav";
-=======
-import Nav from "../../components/NavAdmin";
-import { modifyUserInfo } from "../../modules/modifyUserInfo";
->>>>>>> feature/FE/admin-CSS
 
 const loginModalStyle = css`
   height: 40vh;

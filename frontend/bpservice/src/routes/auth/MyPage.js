@@ -5,7 +5,6 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer";
-<<<<<<< HEAD
 import LoadingPage from "../../components/LoadingPage";
 import Nav from "../../components/Nav";
 import { deleteUser, getUserInfo } from "../../modules/mypage";
@@ -19,10 +18,6 @@ import Divider from "@mui/material/Divider";
 import PersonIcon from "@mui/icons-material/Person";
 import { ListItemIcon } from "@mui/material";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-=======
-import Nav from "../../components/NavAdmin";
-import { deleteUser, getUserLog, logOut } from "../../modules/mypage";
->>>>>>> feature/FE/admin-CSS
 
 const myPageArea = css`
   width: 100%;
