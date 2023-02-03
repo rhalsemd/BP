@@ -16,6 +16,8 @@ import ListItemText from "@mui/material/ListItemText";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import PersonIcon from "@mui/icons-material/Person";
+import { ListItemIcon } from "@mui/material";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 const myPageArea = css`
   width: 100%;
@@ -33,43 +35,9 @@ const firstModalStyle = css`
   width: 95vw;
   margin-left: 2.5vw;
   margin-bottom: 2.5vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   border-radius: 10px;
-  align-items: center;
   background-color: rgba(249, 250, 251, 0.9);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24);
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  .card-1:hover {
-    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.55), 0 10px 10px rgba(0, 0, 0, 0.52);
-  }
-  input::placeholder {
-    color: transparent;
-  }
-  input:placeholder-shown + label {
-    color: #aaa;
-    font-size: 14pt;
-    top: 15px;
-  }
-  input:focus + label,
-  label {
-    color: #8aa1a1;
-    font-size: 10pt;
-    pointer-events: none;
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    transition: all 0.2s ease;
-    -webkit-transition: all 0.2s ease;
-    -moz-transition: all 0.2s ease;
-    -o-transition: all 0.2s ease;
-  }
-  input:focus,
-  input:not(:placeholder-shown) {
-    border-bottom: solid 1px #8aa1a1;
-    outline: none;
-  }
 `;
 
 const secondModalStyle = css`
@@ -87,32 +55,6 @@ const secondModalStyle = css`
   .card-1:hover {
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.55), 0 10px 10px rgba(0, 0, 0, 0.52);
   }
-  input::placeholder {
-    color: transparent;
-  }
-  input:placeholder-shown + label {
-    color: #aaa;
-    font-size: 14pt;
-    top: 15px;
-  }
-  input:focus + label,
-  label {
-    color: #8aa1a1;
-    font-size: 10pt;
-    pointer-events: none;
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    transition: all 0.2s ease;
-    -webkit-transition: all 0.2s ease;
-    -moz-transition: all 0.2s ease;
-    -o-transition: all 0.2s ease;
-  }
-  input:focus,
-  input:not(:placeholder-shown) {
-    border-bottom: solid 1px #8aa1a1;
-    outline: none;
-  }
 `;
 
 const thirdModalStyle = css`
@@ -129,32 +71,12 @@ const thirdModalStyle = css`
   .card-1:hover {
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.55), 0 10px 10px rgba(0, 0, 0, 0.52);
   }
-  input::placeholder {
-    color: transparent;
-  }
-  input:placeholder-shown + label {
-    color: #aaa;
-    font-size: 14pt;
-    top: 15px;
-  }
-  input:focus + label,
-  label {
-    color: #8aa1a1;
-    font-size: 10pt;
-    pointer-events: none;
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    transition: all 0.2s ease;
-    -webkit-transition: all 0.2s ease;
-    -moz-transition: all 0.2s ease;
-    -o-transition: all 0.2s ease;
-  }
-  input:focus,
-  input:not(:placeholder-shown) {
-    border-bottom: solid 1px #8aa1a1;
-    outline: none;
-  }
+`;
+
+const userInfoModal = css`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 `;
 
 const sectionModalPosition = css`
@@ -163,11 +85,6 @@ const sectionModalPosition = css`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-`;
-
-const userInfoModal = css`
-  display: flex;
-  justify-content: space-around;
 `;
 
 const contentModal = css`
@@ -179,6 +96,15 @@ const contentModal = css`
 
 const content = css`
   text-align: center;
+`;
+
+const userIcon = css`
+  margin-left: 3%;
+  margin-right: 2%;
+`;
+
+const userInfoItem = css`
+  margin-right: 3%;
 `;
 
 function MyPage() {
@@ -222,13 +148,17 @@ function MyPage() {
           {/* 유저 정보 */}
           <div css={firstModalStyle}>
             <div css={userInfoModal}>
-              <div>
-                <PersonIcon></PersonIcon>
+              <div css={userIcon}>
+                <PersonIcon fontSize="large"></PersonIcon>
               </div>
+
               <div>
                 <h3>{userName}</h3>
               </div>
-              <div className="userInfoItem">
+
+              <span>|</span>
+
+              <div css={userInfoItem}>
                 <span>{sido} </span>
                 <span>{sigungu} </span>
                 <span>{dong}</span>
@@ -240,6 +170,8 @@ function MyPage() {
           <div css={secondModalStyle}>
             <div css={content}>
               <h1>마이 페이지</h1>
+              <h1>여기에 이용 정보가 들어간다.</h1>
+              <h1>여기에 이용 정보가 들어간다.</h1>
             </div>
           </div>
 
@@ -259,6 +191,10 @@ function MyPage() {
                     <ListItemButton onClick={goToModifyInfo}>
                       <ListItemText primary="회원 정보 수정" />
                     </ListItemButton>
+
+                    <ListItemIcon sx={{ m: -3 }}>
+                      <KeyboardArrowRightIcon />
+                    </ListItemIcon>
                   </ListItem>
 
                   <Divider />
@@ -268,6 +204,10 @@ function MyPage() {
                     <ListItemButton onClick={goToModifyPwd}>
                       <ListItemText primary="비밀번호 변경" />
                     </ListItemButton>
+
+                    <ListItemIcon sx={{ m: -3 }}>
+                      <KeyboardArrowRightIcon />
+                    </ListItemIcon>
                   </ListItem>
 
                   <Divider />
@@ -277,6 +217,10 @@ function MyPage() {
                     <ListItemButton onClick={goToDeleteUser}>
                       <ListItemText primary="회원 탈퇴" />
                     </ListItemButton>
+
+                    <ListItemIcon sx={{ m: -3 }}>
+                      <KeyboardArrowRightIcon />
+                    </ListItemIcon>
                   </ListItem>
                 </List>
               </nav>
