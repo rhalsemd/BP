@@ -206,7 +206,24 @@ public class AuthService {
             resultMap.put("msg", "존재하지 않는 회원정보입니다.");
         } else {
             // 사용자 이메일로 인증번호 전송
-            cAuthService.sendSimpleMessage(email);
+            MailAuth mailAuth = mailAuthRepository.getMailAuth(email);
+            String authNum = mailAuth.getAuthNum();
+            String msg="";
+            String action = "아이디 찾기";
+            msg+= "<div style='margin:100px;'>";
+            msg+= "<h1> 안녕하세요 BP입니다. </h1>";
+            msg+= "<br>";
+            msg+= "<p>아래 코드를 " + action + " 창으로 돌아가 입력해주세요<p>";
+            msg+= "<br>";
+            msg+= "<p>감사합니다!<p>";
+            msg+= "<br>";
+            msg+= "<div align='center' style='border:1px solid black; font-family:verdana';>";
+            msg+= "<h3 style='color:blue;'>" + action + " 인증 코드입니다.</h3>";
+            msg+= "<div style='font-size:130%'>";
+            msg+= "CODE : <strong>";
+            msg+= authNum+"</strong><div><br/> ";
+            msg+= "</div>";
+            cAuthService.sendSimpleMessage(email, "BP " + action + "입니다.", msg);
             resultMap.put("result", "success");
             resultMap.put("msg", "인증번호 전송 성공");
         }
@@ -228,7 +245,24 @@ public class AuthService {
         if(optionalUser.isPresent()) {
             User user = optionalUser.get();
             // 사용자 이메일로 인증번호 전송
-            cAuthService.sendSimpleMessage(email);
+            MailAuth mailAuth = mailAuthRepository.getMailAuth(email);
+            String authNum = mailAuth.getAuthNum();
+            String msg="";
+            String action = "비밀번호 찾기";
+            msg+= "<div style='margin:100px;'>";
+            msg+= "<h1> 안녕하세요 BP입니다. </h1>";
+            msg+= "<br>";
+            msg+= "<p>아래 코드를 " + action + " 창으로 돌아가 입력해주세요<p>";
+            msg+= "<br>";
+            msg+= "<p>감사합니다!<p>";
+            msg+= "<br>";
+            msg+= "<div align='center' style='border:1px solid black; font-family:verdana';>";
+            msg+= "<h3 style='color:blue;'>" + action + " 인증 코드입니다.</h3>";
+            msg+= "<div style='font-size:130%'>";
+            msg+= "CODE : <strong>";
+            msg+= authNum+"</strong><div><br/> ";
+            msg+= "</div>";
+            cAuthService.sendSimpleMessage(email, "BP " + action + "입니다.", msg);
             resultMap.put("result", "success");
             resultMap.put("msg", "인증번호 전송 성공");
             return resultMap;
