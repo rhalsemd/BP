@@ -13,7 +13,7 @@ import History from "../routes/admin/History";
 import UserToU from "../routes/auth/UserToU";
 import CompletePage from "../routes/auth/CompletePage";
 import SearchId from "../routes/auth/SearchId";
-import KakaoMap from "../routes/KakaoMap";
+import KakaoMap from "../routes/map/KakaoMap";
 import MyPage from "../routes/auth/MyPage";
 import ModifyUserInfo from "../routes/auth/ModifyUserInfo";
 import ModifyPwd from "../routes/auth/ModifyPwd";
@@ -22,7 +22,7 @@ import Payment from "../routes/auth/Payment";
 import SearchChangePwd from "../routes/auth/SearchChangePwd";
 import SearchIdResultPage from "../routes/auth/SearchIdResultPage";
 import NotFound404 from "../routes/NotFound404";
-import LoadingPage from "./LoadingPage";
+import LoadView from "../routes/map/LoadView";
 
 export const GlobalStyle = css`
   body {
@@ -56,6 +56,7 @@ function App() {
         <Route path="/bp/modify/pwd" element={<ModifyPwd />}></Route>
         <Route path="/bp/payment" element={<Payment />} />
         <Route path="/404-not-found" element={<NotFound404 />} />
+        <Route path="/bp/loadview" element={<LoadView />} />
 
         <Route path="/admin" element={<LoginAdmin />} />
         <Route path="/admin/total_income" element={<TotalChart />} />

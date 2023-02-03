@@ -2,10 +2,11 @@ import { useState } from "react";
 import { useMap } from "react-kakao-maps-sdk";
 
 import styled from "../../style/MapBtn.module.css";
+import MyLocationIcon from "@mui/icons-material/MyLocation";
 
 const { kakao } = window;
 
-function CurrentBtn() {
+function CurrentBtn({ isClickMarker }) {
   const map = useMap();
   const [markerArr, setMarkerArr] = useState([]);
 
@@ -47,9 +48,11 @@ function CurrentBtn() {
 
   return (
     <>
-      <button className={styled.currentBtn} onClick={currentBtn}>
-        +
-      </button>
+      <MyLocationIcon
+        className={isClickMarker ? styled.currentBtn : styled.currentAfterBtn}
+        onClick={currentBtn}
+        sx={{ fontSize: 38 }}
+      ></MyLocationIcon>
     </>
   );
 }
