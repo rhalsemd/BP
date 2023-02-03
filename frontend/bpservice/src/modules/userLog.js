@@ -6,18 +6,17 @@ const GET_USERS_LOG = "users/GET_USERS_LOG";
 const GET_USERS_LOG_SUCCESS = "users/GET_USERS_LOG_SUCCESS";
 const GET_USERS_LOG_FAILURE = "users/GET_USERS_LOG_FAILURE";
 
-export const getUserLog = createAction(GET_USERS_LOG, (id) => id);
+export const getUserLog = createAction(GET_USERS_LOG, (users) => users);
 
 function* getUserLogSaga(data) {
   try {
-    console.log("getUserLogoSaga에서 호출됨", data.payload);
     const users = yield call(api.getUserLog, data.payload);
-    console.log(users?.data);
     yield put({
-      tpye: GET_USERS_LOG_SUCCESS,
-      id: users.data,
+      type: GET_USERS_LOG_SUCCESS,
+      payload: users.data,
     });
   } catch (e) {
+    console.log("getUserLogSaga 실패", e);
     yield put({
       type: GET_USERS_LOG_FAILURE,
       payload: e,
@@ -38,7 +37,7 @@ const getUserLogReducer = handleActions(
   {
     [GET_USERS_LOG_SUCCESS]: (state, action) => ({
       ...state,
-      users: action,
+      users: action.payload,
     }),
     [GET_USERS_LOG_FAILURE]: (state, action) => ({
       ...state,

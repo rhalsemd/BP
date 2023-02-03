@@ -88,7 +88,7 @@ export const getUserLog = (userId) => {
   console.log("getUserLog API 엑시오스", userId);
   return axios({
     method: "get",
-    url: `${url}/api/auth/admin/log/get-lent-log-data/${userId}`,
+    url: `${url}/api/auth/admin/log/get-rent-log-data/${userId}`,
     headers: {
       "Content-Type ": "application/json",
     },
