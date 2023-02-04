@@ -26,7 +26,10 @@ import { useEffect } from "react";
 const divStyle = css`
   display: flex;
   justify-content: space-between;
+  position: sticky;
+  width: 100%;
   height: 8vh;
+  font-size: 1rem;
 `;
 export default function Nav() {
   const [state, setState] = React.useState({
@@ -148,7 +151,7 @@ export default function Nav() {
       <Button onClick={toggleDrawer("right", true)} height="30">
         <p
           css={{
-            fontSize: "7vw",
+            fontSize: "1.5rem",
             color: "black",
             fontWeight: "bolder",
           }}
