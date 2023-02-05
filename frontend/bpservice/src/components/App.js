@@ -28,6 +28,11 @@ import Users from "../routes/admin/Users";
 // import Test from "../../src/Test";
 
 export const GlobalStyle = css`
+  @font-face {
+    font-family: "dohyun";
+    src: url("../../../public/fonts/BMDOHYEON_ttf.ttf");
+  }
+  font-family: dohyun;
   body {
     margin: 0px;
   }

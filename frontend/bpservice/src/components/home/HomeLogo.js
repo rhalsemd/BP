@@ -45,7 +45,7 @@ function HomeLogo() {
       stroke: black;
       stroke-dasharray: ${rwLength};
       stroke-dashoffset: ${rwLength};
-      animation: path 2s forwards;
+      animation: path 2s linear forwards;
       fill: none;
       stroke-width: 10px;
       z-index: 100;
@@ -56,7 +56,7 @@ function HomeLogo() {
         }
         100% {
           fill: #202a45;
-          stroke: yellow;
+          stroke: black;
         }
       }
     `);
@@ -75,7 +75,7 @@ function HomeLogo() {
         }
         100% {
           fill: #202a45;
-          stroke: yellow;
+          stroke: black;
         }
       }
     `);
@@ -96,7 +96,7 @@ function HomeLogo() {
         }
         100% {
           fill: #202a45;
-          stroke: yellow;
+          stroke: black;
         }
       }
     `);
@@ -108,6 +108,7 @@ function HomeLogo() {
       animation: path3 1s linear forwards;
       animation-delay: 1s;
       stroke-width: 10px;
+      fill: none;
 
       @keyframes path3 {
         50% {
@@ -116,7 +117,7 @@ function HomeLogo() {
         }
         100% {
           fill: black;
-          stroke: yellow;
+          stroke: black;
         }
       }
     `);
