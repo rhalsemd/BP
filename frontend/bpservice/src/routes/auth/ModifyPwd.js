@@ -16,9 +16,9 @@ import Nav from "../../components/Nav";
 import { newPwdErrorReset } from "../../modules/modifyPwd";
 
 const loginModalStyle = css`
-  height: 40vh;
+  height: 63vh;
   width: 95vw;
-  margin: 15vh 2.5vw 19vh;
+  margin: 1vh 2.5vw 5vh;
   display: flex;
   flex-direction: column;
   justify-content: center;

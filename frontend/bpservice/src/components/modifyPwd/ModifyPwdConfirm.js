@@ -21,7 +21,7 @@ const inputChild = css`
 `;
 
 const 변경하기버튼 = css`
-  background-color: #191f28;
+  background-color: #00b8ff;
   border: none;
   color: white;
   border-radius: 5px;

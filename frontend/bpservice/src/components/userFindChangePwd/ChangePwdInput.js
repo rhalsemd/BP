@@ -6,6 +6,7 @@ import Alert from "@mui/material/Alert";
 const inputBox = css`
   position: relative;
   margin: 10px 0;
+  width: 70vw;
 `;
 
 const inputChild = css`

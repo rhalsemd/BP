@@ -7,7 +7,7 @@ import { modifyUserInfo } from "../../modules/modifyUserInfo";
 import styled from "../../style/ModifyUserInfo.module.css";
 
 const 회원정보수정버튼 = css`
-  background-color: #191f28;
+  background-color: #00b8ff;
   border: none;
   color: white;
   border-radius: 5px;

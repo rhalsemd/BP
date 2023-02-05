@@ -9,30 +9,30 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 
 const columns = [
-  { id: "umbrella", label: "우산 번호", minWidth: 170 },
-  { id: "umbrellaMoney", label: "금액", minWidth: 30 },
-  {
-    id: "umbrellaDate",
-    label: "날짜",
-    minWidth: 170,
-    align: "right",
-    format: (value) => value.toLocaleString("en-US"),
-  },
+  { id: "countsDate", label: "날짜", minWidth: 170 },
+  { id: "countsMoney", label: "금액", minWidth: 30 },
 ];
 
-function createData(umbrella, umbrellaMoney, umbrellaDate) {
-  return { umbrella, umbrellaMoney, umbrellaDate };
+function createData(countsDate, countsMoney) {
+  return { countsDate, countsMoney };
 }
 
 const rows = [
-  createData("18458362", "1000", "2023-02-02"),
-  createData("23782636", "3000", "2023-01-25"),
-  createData("54048372", "4000", "2023-01-14"),
-  createData("18274827", "8000", "2023-01-10"),
-  createData("29429282", "2000", "2023-01-05"),
+  createData("2023-02-03", "9000"),
+  createData("2023-02-03", "-10000"),
+  createData("2023-02-02", "9000"),
+  createData("2023-02-02", "-10000"),
+  createData("2023-01-25", "7000"),
+  createData("2023-01-25", "-10000"),
+  createData("2023-01-14", "6000"),
+  createData("2023-01-14", "-10000"),
+  createData("2023-01-10", "2000"),
+  createData("2023-01-10", "-10000"),
+  createData("2023-01-05", "8000"),
+  createData("2023-01-05", "-10000"),
 ];
 
-export default function UmbrellaDataTable() {
+export default function CountsDataTable() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -71,7 +71,7 @@ export default function UmbrellaDataTable() {
                     hover
                     role="checkbox"
                     tabIndex={-1}
-                    key={`${row.umbrella} - ${row.umbrellaMoney} - ${row.umbrellaDate}`}
+                    key={`${row.countsDate}- ${row.countsMoney}`}
                   >
                     {columns.map((column) => {
                       const value = row[column.id];

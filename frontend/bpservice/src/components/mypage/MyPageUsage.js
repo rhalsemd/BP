@@ -2,14 +2,10 @@
 import { css } from "@emotion/react";
 
 import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
 import Box from "@mui/material/Box";
-import { ListItemIcon } from "@mui/material";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import Divider from "@mui/material/Divider";
 import UmbrellaModal from "./UmbrellaModal";
+import CountsModal from "./CountsModal";
 
 const secondModalStyle = css`
   width: 95vw;
@@ -44,15 +40,7 @@ function MyPageUsage() {
               <Divider />
 
               {/* 보증금 정보 */}
-              <ListItem disablePadding>
-                <ListItemButton>
-                  <ListItemText primary="보증금" />
-                </ListItemButton>
-
-                <ListItemIcon sx={{ m: -3 }}>
-                  <KeyboardArrowRightIcon />
-                </ListItemIcon>
-              </ListItem>
+              <CountsModal />
             </List>
           </nav>
         </Box>

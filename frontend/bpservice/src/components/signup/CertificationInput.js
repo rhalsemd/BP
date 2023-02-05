@@ -9,7 +9,8 @@ import Timer from "./Timer";
 
 const inputBox = css`
   position: relative;
-  margin: 10px 0;
+  margin: 5px 0;
+  width: 70vw;
 `;
 
 const inputChild = css`
@@ -32,7 +33,7 @@ const CertificationNumInputlabel = css`
 `;
 
 const 확인버튼 = css`
-  background-color: #191f28;
+  background-color: #00b8ff;
   border: none;
   color: white;
   border-radius: 5px;

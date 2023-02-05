@@ -7,13 +7,13 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import { ListItemIcon } from "@mui/material";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import UmbrellaDataTable from "./UmbrellaDataTable";
+import CountsDataTable from "./CountsDataTable";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-function UmbrellaModal() {
+function CountsModal() {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -28,7 +28,7 @@ function UmbrellaModal() {
     <div>
       <ListItem disablePadding onClick={handleClickOpen}>
         <ListItemButton>
-          <ListItemText primary="내 우산 기록" />
+          <ListItemText primary="보증금" />
         </ListItemButton>
 
         <ListItemIcon sx={{ m: -3 }}>
@@ -43,11 +43,11 @@ function UmbrellaModal() {
         aria-describedby="alert-dialog-slide-description"
       >
         <DialogContent>
-          <UmbrellaDataTable />
+          <CountsDataTable />
         </DialogContent>
       </Dialog>
     </div>
   );
 }
 
-export default UmbrellaModal;
+export default CountsModal;

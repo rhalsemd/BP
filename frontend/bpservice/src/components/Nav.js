@@ -38,6 +38,7 @@ export default function Nav() {
 
   const navigation = useNavigate();
   const dispatch = useDispatch();
+  const iconRef = React.useRef(null);
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -67,12 +68,12 @@ export default function Nav() {
   });
 
   const navItemClick = (e) => {
-    switch (e.target.textContent) {
+    switch (e.target.getAttribute("value") || e.target.textContent) {
       case "로그인":
         navigation("/bp/login");
         return;
       case "회원가입":
-        navigation("/bp/signUp");
+        navigation("/bp/terms");
         return;
       case "로그아웃":
         dispatch(logOut());
@@ -103,22 +104,27 @@ export default function Nav() {
             ["로그아웃", "마이페이지", "지도"]
           : ["로그인", "회원가입"]
         ).map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
+          <ListItem
+            key={text}
+            value={text}
+            disablePadding
+            onClick={navItemClick}
+          >
+            <ListItemButton value={text}>
+              <ListItemIcon value={text}>
                 {text === "로그아웃" ? (
-                  <LogoutIcon />
+                  <LogoutIcon value={text} />
                 ) : text === "마이페이지" ? (
-                  <PermIdentityIcon />
+                  <PermIdentityIcon value={text} />
                 ) : text === "지도" ? (
-                  <FmdGoodIcon />
+                  <FmdGoodIcon value={text} />
                 ) : text === "로그인" ? (
-                  <LoginIcon />
+                  <LoginIcon value={text} />
                 ) : text === "회원가입" ? (
-                  <AssignmentIcon />
+                  <AssignmentIcon value={text} />
                 ) : null}
               </ListItemIcon>
-              <ListItemText primary={text} onClick={navItemClick} />
+              <ListItemText primary={text} />
             </ListItemButton>
           </ListItem>
         ))}
