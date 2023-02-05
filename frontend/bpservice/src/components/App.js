@@ -22,8 +22,9 @@ import Payment from "../routes/auth/Payment";
 import SearchChangePwd from "../routes/auth/SearchChangePwd";
 import SearchIdResultPage from "../routes/auth/SearchIdResultPage";
 import NotFound404 from "../routes/NotFound404";
-import LoadView from "../routes/map/LoadView";
+import RoadView from "../routes/map/RoadView";
 import Users from "../routes/admin/Users";
+import BeforePayment from "../routes/auth/BeforePayment";
 
 // import Test from "../../src/Test";
 
@@ -54,12 +55,13 @@ function App() {
           element={<SearchChangePwd />}
         ></Route>
         <Route path="/bp/map" element={<KakaoMap />}></Route>
+        <Route path="/bp/map/RoadView" element={<RoadView />} />
         <Route path="/bp/mypage" element={<MyPage />}></Route>
         <Route path="/bp/modify/user" element={<ModifyUserInfo />}></Route>
         <Route path="/bp/modify/pwd" element={<ModifyPwd />}></Route>
+        <Route path="/bp/before/payment" element={<BeforePayment />} />
         <Route path="/bp/payment" element={<Payment />} />
         <Route path="/404-not-found" element={<NotFound404 />} />
-        <Route path="/bp/loadview" element={<LoadView />} />
 
         <Route path="/admin" element={<LoginAdmin />} />
         <Route path="/admin/total-income" element={<TotalChart />} />

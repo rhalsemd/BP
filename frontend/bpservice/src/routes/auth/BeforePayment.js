@@ -1,0 +1,90 @@
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
+import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
+
+import styled from "../../style/Receipt.module.css";
+
+const fadeUp = css`
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translate3d(0, 100%, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translateZ(0);
+    }
+  }
+
+  #obj {
+    position: relative;
+    animation: fadeInUp 1s;
+  }
+`;
+
+function BeforePayment() {
+  const navigation = useNavigate();
+  const onClick = () => {
+    navigation("/bp/payment");
+  };
+
+  return (
+    <div>
+      <div className={styled.container}>
+        <div className={styled.tab}></div>
+
+        <div className={styled.receipt}>
+          <div className={styled.paper}>
+            {/* <div className={styled.title}>Receipt</div> */}
+            <div className={styled.date}>날짜: 2023/02/04</div>
+            <table>
+              <tbody>
+                <tr>
+                  <td
+                    style={{
+                      fontSize: "1rem",
+                      fontWeight: "bolder",
+                      color: "green",
+                    }}
+                  >
+                    우산 번호
+                  </td>
+                  <td
+                    className={styled.right}
+                    style={{
+                      fontSize: "0.8rem",
+                      color: "green",
+                    }}
+                  >
+                    금액
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>312321312</td>
+                  <td className={styled.right}>10000원</td>
+                </tr>
+
+                <tr>
+                  <td colspan="2" className={styled.center}>
+                    <input type="button" value="결제하기" onClick={onClick} />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div className={(styled.sign, styled.center)}>
+              <div className={styled.barcode}></div>
+              <br />
+              312321312
+              <br />
+              <div className={styled.thankyou}>이용해주셔서 감사합니다.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default BeforePayment;

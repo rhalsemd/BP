@@ -13,8 +13,8 @@ function MarkerInfo({ mapStore, isClickMarker }) {
     ? mapStore.currentInfo.brollyTotalCount
     : "";
 
-  const loadView = () => {
-    navigation("/bp/loadview", { state: mapStore.currentInfo.latlng });
+  const RoadView = () => {
+    navigation("/bp/map/RoadView", { state: mapStore.currentInfo.latlng });
   };
 
   return (
@@ -31,7 +31,7 @@ function MarkerInfo({ mapStore, isClickMarker }) {
               <h2>우산</h2>
               <h4>{`${brollyCount} / ${brollyTotalCount}`} </h4>
             </div>
-            <button className={styled.loadView} onClick={loadView}>
+            <button className={styled.RoadView} onClick={RoadView}>
               로드뷰
             </button>
           </div>

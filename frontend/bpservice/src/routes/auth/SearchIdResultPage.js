@@ -8,7 +8,7 @@ import Footer from "../../components/Footer";
 import LoadingPage from "../../components/LoadingPage";
 import Nav from "../../components/Nav";
 
-const loginModalStyle = css`
+const resultModalStyle = css`
   height: 40vh;
   width: 90vw;
   margin: 15vh 5vw 19vh;
@@ -51,7 +51,7 @@ function SearchIdResultPage() {
       </header>
 
       <Suspense fallback={<LoadingPage />}>
-        <div css={loginModalStyle}>
+        <div css={resultModalStyle}>
           <h1>사용자 아이디</h1>
           <h2>{id}</h2>
 

@@ -32,7 +32,7 @@ const 회원가입버튼 = css`
   color: white;
   border-radius: 5px;
   width: 100%;
-  height: 5vh;
+  height: 35px;
   font-size: 14pt;
   margin-top: 5%;
   margin-bottom: 5%;
@@ -97,7 +97,7 @@ function PwdComponent({ setInfo, info, setLoginInfo }) {
       <div css={linkBtn}>
         <Button href="/bp/search/id">아이디 찾기</Button>|{" "}
         <Button href="/bp/search/pwd">비밀번호 찾기</Button>|{" "}
-        <Button href="/bp/signup">회원가입</Button>
+        <Button href="/bp/terms">회원가입</Button>
       </div>
     </>
   );

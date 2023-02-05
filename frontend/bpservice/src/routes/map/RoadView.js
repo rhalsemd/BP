@@ -1,9 +1,8 @@
-import { useState } from "react";
 import { Roadview } from "react-kakao-maps-sdk";
 import { useLocation } from "react-router-dom";
 import RoadViewBackBtn from "../../components/kakaoMap/RoadViewBackBtn";
 
-function LoadView() {
+function RoadView() {
   const location = useLocation();
   const { lat, lng } = location.state;
 
@@ -27,4 +26,4 @@ function LoadView() {
   );
 }
 
-export default LoadView;
+export default RoadView;
