@@ -43,7 +43,8 @@ const title = css`
   }
 
   .firstBox {
-    border: 1px solid black;
+    border: 4px solid lightgray;
+    border-radius: 10px;
     width: 90%;
     height: 20vh;
     overflow: auto;
@@ -143,41 +144,51 @@ function UserToU() {
         <div css={title} className="modalInnerStyle">
           <h1 style={{ textAlign: "center" }}>이용약관</h1>
 
-          <div>
+          <div style={{ marginLeft: "4%" }}>
             <input type="checkbox" ref={checkBox1Ref} onClick={checkBox1} />
             <span>BP 이용약관 동의 (필수)</span>
           </div>
           <div className="firstBoxParent">
             <div className="firstBox">
               <h3>여러분을 환영합니다.</h3>
-              <p>
+              <p
+                style={{
+                  textAlign: "left",
+                  marginLeft: "4%",
+                  marginRight: "4%",
+                }}
+              >
                 ㅁ라ㅣㄴ엄림너ㅓㄹ너마ㅏㄻ나ㅣ어럼ㄴ아ㅣ러ㅏㅣ너미러ㅏㄴ리더
                 리ㅏㅁㄴ덞디너러ㅣㅣㄹ 리담너ㅣ러니마
               </p>
             </div>
           </div>
-          <div>
+
+          <div style={{ marginLeft: "4%" }}>
             <input type="checkbox" ref={checkBox2Ref} onClick={checkBox2} />
             <span>개인정보 수집 및 이용안내 (필수)</span>
           </div>
           <div className="firstBoxParent">
             <div className="firstBox">
               <h3>여러분을 환영합니다.</h3>
-              <p>
-                ffffffffffffffffffffffffffffffffffffffffffffffff
-                ffffffffffffffffffffffffffffffffffffffffffffffffff
-                fffffffffffffffffffffffffffffffffffffffffffffffffff
-                ffffffffffffffffffffffffffffffffffffffffffffffffffffd
-                dddddddddddddddddddddddddd ddddddddddddddddddddddddddddddddf
+              <p
+                style={{
+                  textAlign: "left",
+                  marginLeft: "4%",
+                  marginRight: "4%",
+                }}
+              >
+                ㄹㄷㅁㄴㄹㄷㅁㄴ룀ㄷㄴ럳ㅁ나ㅣ러ㅏㅣㅁ다ㅣ라딤ㄴㅁ라ㅣㅁ라ㅣ라ㅣ더ㅏㅣㄴㄷ
               </p>
             </div>
           </div>
-          <div>
+
+          <div style={{ marginLeft: "4%" }}>
             <input type="checkbox" ref={checkBox3Ref} onClick={checkBox3} />
             <span>개인정보 수집 및 이용안내 (필수)</span>
           </div>
 
-          <div>
+          <div style={{ marginLeft: "4%", marginRight: "4%" }}>
             <input type="checkbox" onClick={onClick} ref={allCheckBox} />
             <span>
               BP 이용약관, 개인정보 수집 및 이용, 위치 기반 서비스 이용약관에
