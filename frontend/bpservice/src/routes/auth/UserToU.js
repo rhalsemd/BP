@@ -83,7 +83,7 @@ function UserToU() {
   };
 
   const goToHome = () => {
-    navigation("/");
+    navigation("/bp");
   };
 
   const checkBox1 = () => {
@@ -195,6 +195,7 @@ function UserToU() {
               모두 동의합니다.
             </span>
           </div>
+
           <div>
             <button onClick={goToSignUp} css={이용약관버튼}>
               확인
@@ -202,7 +203,11 @@ function UserToU() {
             <button
               onClick={goToHome}
               css={이용약관버튼}
-              style={{ marginBottom: "2vh" }}
+              style={{
+                marginBottom: "2vh",
+                backgroundColor: "lightgray",
+                color: "black",
+              }}
             >
               {" "}
               취소

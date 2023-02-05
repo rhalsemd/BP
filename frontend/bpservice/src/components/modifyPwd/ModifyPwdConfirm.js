@@ -9,6 +9,7 @@ import ConfirmCondition from "./ConfirmCondition";
 const inputBox = css`
   position: relative;
   margin: 10px 0;
+  width: 70vw;
 `;
 
 const inputChild = css`
@@ -92,7 +93,14 @@ function ModifyPwdConfirm({ info, setInfo, setNewPwd }) {
         </div>
       </form>
       {/* 뒤로가기 버튼 */}
-      <button onClick={back} css={변경하기버튼}>
+      <button
+        onClick={back}
+        css={변경하기버튼}
+        style={{
+          backgroundColor: "lightgray",
+          color: "black",
+        }}
+      >
         뒤로가기
       </button>
     </div>

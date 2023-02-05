@@ -36,7 +36,7 @@ function CompletePage() {
   const navigation = useNavigate();
 
   const goToHome = () => {
-    navigation("/");
+    navigation("/bp");
   };
 
   const goToLogin = () => {

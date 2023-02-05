@@ -1,27 +1,6 @@
-/** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
-import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 import styled from "../../style/Receipt.module.css";
-
-const fadeUp = css`
-  @keyframes fadeInUp {
-    0% {
-      opacity: 0;
-      transform: translate3d(0, 100%, 0);
-    }
-    to {
-      opacity: 1;
-      transform: translateZ(0);
-    }
-  }
-
-  #obj {
-    position: relative;
-    animation: fadeInUp 1s;
-  }
-`;
 
 function BeforePayment() {
   const navigation = useNavigate();

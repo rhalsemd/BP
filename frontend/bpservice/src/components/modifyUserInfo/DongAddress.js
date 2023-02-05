@@ -93,7 +93,11 @@ function DongAddress({
       ) : null}
 
       {/* 뒤로가기 */}
-      <button onClick={back} css={회원정보수정버튼}>
+      <button
+        onClick={back}
+        css={회원정보수정버튼}
+        style={{ backgroundColor: "lightgray", color: "black" }}
+      >
         뒤로가기
       </button>
     </>

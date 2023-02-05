@@ -25,6 +25,8 @@ import NotFound404 from "../routes/NotFound404";
 import RoadView from "../routes/map/RoadView";
 import Users from "../routes/admin/Users";
 import BeforePayment from "../routes/auth/BeforePayment";
+import WebIntro from "./WebIntro";
+import LoadingPage from "./LoadingPage";
 
 // import Test from "../../src/Test";
 
@@ -39,7 +41,8 @@ function App() {
     <Router>
       <Global styles={GlobalStyle} />
       <Routes>
-        <Route path="/" exact element={<Home />}></Route>
+        <Route path="/" element={<WebIntro />} />
+        <Route path="/bp" exact element={<Home />}></Route>
         <Route path="/bp/login" element={<Login />}></Route>
         <Route path="/bp/signup" element={<SignUp />}></Route>
         <Route path="/bp/terms" element={<UserToU />}></Route>

@@ -18,7 +18,7 @@ import { newPwdErrorReset } from "../../modules/modifyPwd";
 const loginModalStyle = css`
   height: 63vh;
   width: 95vw;
-  margin: 1vh 2.5vw 5vh;
+  margin: 3.5vh 2.5vw 7.5vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -79,7 +79,7 @@ function ModifyPwd() {
       alert("현재 비밀번호가 잘못되었습니다.");
       dispatch(newPwdErrorReset());
     } else if (success) {
-      navigation("/");
+      navigation("/bp");
     }
   }, [error, dispatch, success, navigation]);
 

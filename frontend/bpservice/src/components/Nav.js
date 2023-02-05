@@ -77,7 +77,7 @@ export default function Nav() {
         return;
       case "로그아웃":
         dispatch(logOut());
-        navigation("/");
+        navigation("/bp");
         return;
       case "마이페이지":
         navigation("/bp/mypage");
@@ -146,7 +146,7 @@ export default function Nav() {
   );
 
   const goToHome = () => {
-    navigation("/");
+    navigation("/bp");
   };
 
   return (

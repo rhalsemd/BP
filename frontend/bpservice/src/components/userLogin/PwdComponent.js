@@ -66,7 +66,7 @@ function PwdComponent({ setInfo, info, setLoginInfo }) {
 
   useEffect(() => {
     if (obj) {
-      navigation("/");
+      navigation("/bp");
     }
   }, [obj, navigation]);
 
