@@ -363,3 +363,6 @@ sketch
 # .pnp.*
 
 # End of https://www.toptal.com/developers/gitignore/api/python,yarn,java,node,react
+
+# Ignore npm package lock file
+package-lock.json
