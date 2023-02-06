@@ -2,13 +2,14 @@ package kr.co.bpservice.util.auth.dto;
 
 import kr.co.bpservice.entity.admin.Admin;
 import kr.co.bpservice.util.auth.entity.Authority;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Getter
-@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class AdminRequestDto {
 
     private String adminId;
