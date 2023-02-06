@@ -8,6 +8,12 @@ const outerBox = css`
   text-align: center;
   margin-bottom: 5%;
 
+  @media (min-width: 1100px) {
+    .logo {
+      width: 350px;
+    }
+  }
+
   @media (max-width: 1100px) {
     .logo {
       width: 300px;

@@ -27,6 +27,7 @@ import Users from "../routes/admin/Users";
 import BeforePayment from "../routes/auth/BeforePayment";
 import WebIntro from "./WebIntro";
 import LoadingPage from "./LoadingPage";
+import Chatbot from "../routes/Chatbot";
 
 // import Test from "../../src/Test";
 
@@ -70,6 +71,7 @@ function App() {
         <Route path="/bp/before/payment" element={<BeforePayment />} />
         <Route path="/bp/payment" element={<Payment />} />
         <Route path="/404-not-found" element={<NotFound404 />} />
+        <Route path="/bp/chatbot" element={<Chatbot />} />
 
         <Route path="/admin" element={<LoginAdmin />} />
         <Route path="/admin/total-income" element={<TotalChart />} />
