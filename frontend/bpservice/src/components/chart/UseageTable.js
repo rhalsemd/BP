@@ -1,8 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { 임시data } from "./barChart/data";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { getRevenueTrend } from "../../modules/revenueTrend";
+import { useDispatch } from "react-redux";
+import dayjs from "dayjs";
+
 const chartStyle = css`
   height: 60vh;
   width: 95vw;
@@ -14,38 +18,65 @@ const chartStyle = css`
 function makeRow(id, cost, addr) {
   const data = {
     id: id,
-    cost: `${cost} 원`,
+    cost: `${cost} 회`,
     location: addr,
   };
-  // console.log(data);
   return data;
 }
 
 const col = [
-  { field: "cost", headerName: "금액", width: 100 },
-  { field: "location", headerName: "주소", width: 300 },
+  { field: "cost", headerName: "횟수", width: 100, headerAlign: "center" },
+  { field: "location", headerName: "주소", width: 300, headerAlign: "center" },
 ];
 
-const handleCellClick = (params) => {
-  alert("click");
-  console.log(params);
-};
+// const handleCellClick = (params) => {
+//   alert("click");
+//   console.log(params.row.location);
+// };
 
 export default function UserTable(data) {
-  const 임시rows = 임시data.map((d) => {
-    return makeRow(d.CASE_ID, d.TOTALMONEY, d.NAME);
-  });
-  console.log(임시rows);
+  const date = useSelector((state) => state.getUseageReducer.selectDate);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleCellClick = (params) => {
+    const month = dayjs(date).format("MM");
+    const year = dayjs(date).format("YYYY");
+    const caseId = params.row.id;
+    const jijum = params.row.location;
+    dispatch(getRevenueTrend({ month, year, caseId }));
+    navigate(`/admin/revenue-trend/${caseId}`, {
+      state: { name: jijum, caseId },
+    });
+  };
+  const 임시data2 = useSelector((state) => state.getUseageReducer);
+  let 임시rows = null;
+  if (임시data2.data) {
+    임시rows = 임시data2.data.map((d) => {
+      return makeRow(d.CASE_ID, d.TOTALCOUNT, d.NAME);
+    });
+  }
 
   return (
     <>
       <div css={chartStyle}>
-        <div style={{ height: 500, width: "100%" }}>
-          <DataGrid
-            rows={임시rows}
-            columns={col}
-            onCellClick={handleCellClick}
-          />
+        <div style={{ height: "60vh", width: "95vw" }}>
+          {임시rows ? (
+            <DataGrid
+              rowHeight={40}
+              rows={임시rows}
+              columns={col}
+              onCellClick={handleCellClick}
+              sx={{
+                fontSize: 13,
+                "& .MuiDataGrid-cell:hover": {
+                  color: "primary.main",
+                },
+              }}
+            />
+          ) : (
+            "lodaing"
+          )}
         </div>
       </div>
     </>

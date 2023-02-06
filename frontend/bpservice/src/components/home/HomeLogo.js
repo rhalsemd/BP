@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const outerBox = css`
@@ -7,12 +8,9 @@ const outerBox = css`
   .centerRightWing {
     color: blue;
   }
+  height: 100vh;
 `;
-const container = css`
-  width: 100%;
-  height: 85vh;
-  /* border: 1px black solid; */
-`;
+
 const mapIcon = css`
   top: 80vh;
   position: fixed;
@@ -20,58 +18,174 @@ const mapIcon = css`
   z-index: 2;
 `;
 
-const 임시 = css``;
-
 function HomeLogo() {
   const navigation = useNavigate();
 
+  const [rightWingCss, setRightWingCss] = useState();
+  const [leftWingCss, setLeftWingCss] = useState();
+  const [centerWingCss, setCenterWingCss] = useState();
+  const [headCss, setHeadCss] = useState();
+  const [jiPangECss, setJiPangECss] = useState();
+
+  const rightWing = useRef();
+  const leftWing = useRef();
+  const centerWing = useRef();
+  const head = useRef();
+  const jiPangE = useRef();
+
+  useEffect(() => {
+    if (!rightWing || !leftWing || !jiPangE) return;
+    const rwLength = rightWing.current.getTotalLength();
+    const lwLength = leftWing.current.getTotalLength();
+    const cwLength = centerWing.current.getTotalLength();
+    const headLength = head.current.getTotalLength();
+    const jipLength = jiPangE.current.getTotalLength();
+
+    setRightWingCss(css`
+      stroke: black;
+      stroke-dasharray: ${rwLength};
+      stroke-dashoffset: ${rwLength};
+      animation: path 2s linear forwards;
+      fill: none;
+      stroke-width: 10px;
+      z-index: 100;
+      @keyframes path {
+        50% {
+          stroke-dashoffset: ${-rwLength / 5.827};
+          fill: white;
+        }
+        100% {
+          fill: #202a45;
+          stroke: black;
+        }
+      }
+    `);
+    setLeftWingCss(css`
+      stroke: black;
+      stroke-dasharray: ${lwLength};
+      stroke-dashoffset: ${lwLength};
+      animation: path1 2s linear forwards;
+      stroke-width: 10px;
+      fill: white;
+
+      @keyframes path1 {
+        50% {
+          stroke-dashoffset: ${-lwLength / 5.068};
+          fill: white;
+        }
+        100% {
+          fill: #202a45;
+          stroke: black;
+        }
+      }
+    `);
+
+    setCenterWingCss(css`
+      stroke: black;
+      stroke-dasharray: ${cwLength};
+      stroke-dashoffset: ${cwLength};
+      animation: path2 2s linear forwards;
+      animation-delay: 0.5s;
+      fill: none;
+      stroke-width: 10px;
+
+      @keyframes path2 {
+        50% {
+          stroke-dashoffset: 0;
+          fill: white;
+        }
+        100% {
+          fill: #202a45;
+          stroke: black;
+        }
+      }
+    `);
+
+    setHeadCss(css`
+      stroke: black;
+      stroke-dasharray: ${headLength};
+      stroke-dashoffset: ${headLength};
+      animation: path3 1s linear forwards;
+      animation-delay: 1s;
+      stroke-width: 10px;
+      fill: none;
+
+      @keyframes path3 {
+        50% {
+          stroke-dashoffset: 0;
+          fill: white;
+        }
+        100% {
+          fill: black;
+          stroke: black;
+        }
+      }
+    `);
+    setJiPangECss(css`
+      stroke: black;
+      stroke-dasharray: ${jipLength};
+      stroke-dashoffset: ${jipLength};
+      animation: path4 1s linear forwards;
+      animation-delay: 0.5s;
+      fill: none;
+      stroke-width: 10px;
+
+      @keyframes path4 {
+        50% {
+          stroke-dashoffset: 0;
+        }
+        75% {
+          fill: white;
+        }
+        100% {
+          fill: black;
+          stroke: yellow;
+        }
+      }
+    `);
+  }, [rightWing]);
   const goToMap = () => {
     navigation("/bp/map");
   };
   return (
     <div css={outerBox}>
-      <svg
-        id="Layer_1"
-        data-name="Layer 1"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 1172.04 509.22"
-      >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 921.111 546.274">
         <path
-          id="rightLine"
-          d="M814.88,431.08c22.34,0,44.68,0,67.03,0,23.6,0,47.2,0,70.8,0s48.39,0,72.58,0h71.12c22.56,0,45.11,0,67.67,0h7.92s.04-5,0-5c-22.34,0-44.68,0-67.03,0-23.6,0-47.2,0-70.8,0s-48.39,0-72.58,0c-23.71,0-47.42,0-71.12,0s-45.11,0-67.67,0h-7.92s-.04,5,0,5h0Z"
+          ref={jiPangE}
+          css={jiPangECss}
+          className="cls-1"
+          d="M481.753,479.861c-2.183-1.126-4.465-2.247-6.784-3.333l-1.307-.612-127.391,247a51.023,51.023,0,1,1-90.7-46.776l10-19.383-16-8.249-10,19.383a69.021,69.021,0,1,0,122.685,63.275l127.392-247-1.257-.71C486.172,482.2,483.936,480.987,481.753,479.861Z"
+          transform="translate(5.502 -226.269)"
         />
         <path
-          id="leftLine"
-          d="M.03,69.51c42.76,0,85.51,0,128.27,0s85.03,0,127.55,0c24,0,48.01,0,72.01,0,.04,0,.04-5,0-5H4.97c-1.41,0-2.98-.19-4.38,0-.18,.02-.38,0-.56,0-.04,0-.04,5,0,5H322.92c1.41,0,2.98,.19,4.38,0,.18-.02,.38,0,.56,0,.04,0,.04-5,0-5-42.76,0-85.51,0-128.27,0s-85.03,0-127.55,0c-24,0-48.01,0-72.01,0-.04,0-.04,5,0,5Z"
+          css={centerWingCss}
+          ref={centerWing}
+          d="M616.689,378.563c-.589-35.64-9.938-70.828-27.787-104.586l-.489-.923-1.035.137c-37.852,5.029-71.942,17.813-101.323,38-23.513,16.153-44.072,37.05-61.105,62.111a279.152,279.152,0,0,0-29.941,57.935,201.983,201.983,0,0,0-7.957,25.587l-.727,3.319,2.942-1.7c9.358-5.4,23.862-7.154,40.84-4.925,17.723,2.327,37.008,8.671,55.771,18.348s35.113,21.712,47.284,34.8c11.66,12.541,18.644,25.372,19.665,36.13l.322,3.386,2.283-2.521a202.742,202.742,0,0,0,16.232-21.316,279.067,279.067,0,0,0,29.845-57.985C612.053,435.951,617.16,407.085,616.689,378.563Z"
+          transform="translate(5.502 -226.269)"
+        />
+        <rect
+          className="head"
+          ref={head}
+          css={headCss}
+          x="581.479"
+          y="242.724"
+          width="35.871"
+          height="17.998"
+          transform="translate(106.439 442.805) rotate(-62.718)"
         />
         <path
-          id="leftWing"
-          d="M654.1,34.16c3.23,.07,6.39,.27,9.49,.58-111.73-57.23-246.46-42.46-342.94,34.8,27.15-2.66,55.35,4.25,79.11,21.62,20.27,14.81,34.27,35.02,41.49,57.2,46.1-46.93,96.94-82.53,143.71-100.54,24.75-9.53,48.02-14.13,69.15-13.66Z"
+          css={leftWingCss}
+          ref={leftWing}
+          d="M-5.5,370.63H211.425l.126-.057,3.27,1.686.746-.538c8.815-6.352,23.367-8.768,40.977-6.8,18.348,2.048,38.439,8.49,58.1,18.631,27.032,13.942,49.587,33.427,60.334,52.124l1.674,2.912,1.051-3.19c1.1-3.332,2.29-6.72,3.547-10.071a288.3,288.3,0,0,1,30.924-59.834c17.666-25.991,39.014-47.681,63.452-64.47,25.928-17.811,55.486-30.128,87.853-36.61l4.8-.961-4.517-1.893c-120.388-50.444-264.78-6.2-351.135,107.594l-1.079,1.422"
+          transform="translate(5.502 -226.269)"
         />
         <path
-          id="rightWing"
-          d="M744.74,94.04c1.23,2.87,2.39,5.81,3.43,8.87,6.86,19.99,9.55,43.55,7.99,70.03-2.95,50.02-21.42,109.28-52.12,167.45,23.33,.14,46.82,7.34,67.09,22.15,23.77,17.37,38.92,42.13,44.63,68.82,44.3-115.39,17.45-248.26-71.03-337.32Z"
-        />
-        <path
-          id="handle"
-          d="M558.36,254.38l-125.55,171.81c-2.71,.09-5.36,1.37-7.09,3.74l-36.01,49.27c-9.32,12.75-27.27,15.54-40.02,6.23-12.75-9.32-15.54-27.27-6.23-40.02,2.98-4.08,2.09-9.8-1.99-12.78s-9.8-2.09-12.78,1.99c-15.27,20.9-10.69,50.32,10.2,65.59,20.9,15.27,50.32,10.69,65.59-10.2l36.01-49.27c1.73-2.36,2.15-5.28,1.41-7.89l125.55-171.81c-3.65,.34-7.49,.7-7.49,.7,0,0-.82-3.77-1.6-7.35"
-        />
-        <path
-          id="hat"
-          d="M718.21,54.72c1.23-1.68,1.38-3.81,.6-5.59l18.61-25.47c.92-1.26,.64-3.02-.61-3.93s-3.02-.64-3.93,.61l-18.61,25.47c-1.93-.21-3.92,.59-5.15,2.27"
-        />
-        <path
-          id="centerLeftWing"
-          d="M570.96,236.29L706.6,50.67c-60.04-38.22-165.58,5.81-257.8,101.75,27.16-2.67,55.37,4.24,79.14,21.61,21.8,15.93,36.36,38.1,43.02,62.25Z"
-        />
-        <path
-          id="centerRightWing"
-          d="M714.99,56.8l-135.64,185.62c25.04-.99,50.58,6.14,72.38,22.07,23.77,17.37,38.93,42.14,44.63,68.83,63.39-117,73.27-230.93,18.62-276.52Z"
+          css={rightWingCss}
+          ref={rightWing}
+          d="M915.608,636.551H733.168l.382-1.7c42.649-136.335-5.017-279.633-115.917-348.476l-4.16-2.582,2,4.469c13.485,30.131,20.586,61.356,21.1,92.806.49,29.645-4.806,59.615-15.739,89.077a288.286,288.286,0,0,1-30.822,59.887c-2.006,2.973-4.075,5.91-6.149,8.729l-1.991,2.706,3.344-.324c21.465-2.084,50.418,5,77.45,18.937,19.662,10.141,36.559,22.775,48.866,36.538,11.811,13.208,18.28,26.465,18.215,37.331l0,.919,3.269,1.687"
+          transform="translate(5.502 -226.269)"
         />
       </svg>
-      <button css={mapIcon} onClick={goToMap}>
-        map
-      </button>
     </div>
   );
 }

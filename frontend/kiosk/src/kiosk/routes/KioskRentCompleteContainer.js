@@ -26,7 +26,7 @@ const KioskRentCompleteContainer = () => {
   const seconds = 60 * miliUnit
   useEffect(() => {
     let myTimer = setTimeout(() => {
-      navigate(`/kiosk/${id}`)
+      navigate(`/kiosk/${id[0]}`)
     }, seconds)
     return () => {
       clearTimeout(myTimer)

@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
-
 import { css } from "@emotion/react";
+
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -11,8 +11,13 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
+
+import LogoutIcon from "@mui/icons-material/Logout";
+import PermIdentityIcon from "@mui/icons-material/PermIdentity";
+import FmdGoodIcon from "@mui/icons-material/FmdGood";
+import LoginIcon from "@mui/icons-material/Login";
+import AssignmentIcon from "@mui/icons-material/Assignment";
+
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logOut } from "../modules/userLogin";
@@ -21,7 +26,10 @@ import { useEffect } from "react";
 const divStyle = css`
   display: flex;
   justify-content: space-between;
+  position: sticky;
+  width: 100%;
   height: 8vh;
+  font-size: 1rem;
 `;
 export default function Nav() {
   const [state, setState] = React.useState({
@@ -30,6 +38,7 @@ export default function Nav() {
 
   const navigation = useNavigate();
   const dispatch = useDispatch();
+  const iconRef = React.useRef(null);
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -45,7 +54,7 @@ export default function Nav() {
     // localStorage 값 읽기 (문자열)
     const objString = localStorage.getItem("login-token");
     // null 체크
-    if (objString) {
+    if (objString !== null && objString !== undefined) {
       // 문자열을 객체로 변환
       const obj = JSON.parse(objString);
       // 현재 시간과 localStorage의 expire 시간 비교
@@ -59,15 +68,16 @@ export default function Nav() {
   });
 
   const navItemClick = (e) => {
-    switch (e.target.textContent) {
+    switch (e.target.getAttribute("value") || e.target.textContent) {
       case "로그인":
         navigation("/bp/login");
         return;
       case "회원가입":
-        navigation("/bp/signUp");
+        navigation("/bp/terms");
         return;
       case "로그아웃":
         dispatch(logOut());
+        navigation("/bp");
         return;
       case "마이페이지":
         navigation("/bp/mypage");
@@ -94,12 +104,27 @@ export default function Nav() {
             ["로그아웃", "마이페이지", "지도"]
           : ["로그인", "회원가입"]
         ).map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <InboxIcon />
+          <ListItem
+            key={text}
+            value={text}
+            disablePadding
+            onClick={navItemClick}
+          >
+            <ListItemButton value={text}>
+              <ListItemIcon value={text}>
+                {text === "로그아웃" ? (
+                  <LogoutIcon value={text} />
+                ) : text === "마이페이지" ? (
+                  <PermIdentityIcon value={text} />
+                ) : text === "지도" ? (
+                  <FmdGoodIcon value={text} />
+                ) : text === "로그인" ? (
+                  <LoginIcon value={text} />
+                ) : text === "회원가입" ? (
+                  <AssignmentIcon value={text} />
+                ) : null}
               </ListItemIcon>
-              <ListItemText primary={text} onClick={navItemClick} />
+              <ListItemText primary={text} />
             </ListItemButton>
           </ListItem>
         ))}
@@ -121,16 +146,18 @@ export default function Nav() {
   );
 
   const goToHome = () => {
-    navigation("/");
+    navigation("/bp");
   };
 
   return (
     <div css={divStyle}>
-      <h2 onClick={goToHome}>BP</h2>
+      <h2 onClick={goToHome} style={{ cursor: "pointer" }}>
+        BP
+      </h2>
       <Button onClick={toggleDrawer("right", true)} height="30">
         <p
           css={{
-            fontSize: "7vw",
+            fontSize: "1.5rem",
             color: "black",
             fontWeight: "bolder",
           }}

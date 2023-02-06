@@ -40,8 +40,10 @@ export default function Timer({ setInfo, inputRef, setFindIdInfoReset }) {
   ]);
 
   return (
-    <span>
-      {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
-    </span>
+    <>
+      <div>
+        {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
+      </div>
+    </>
   );
 }

@@ -3,58 +3,91 @@ import { css } from "@emotion/react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-const ReturnCameraTakeAPictureDiv = css`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
+const videoSize = css`
+  width: 100vw !important;
+  height: 130vh;
+  max-width: 200vw;
 
-const canvasSize = css`
-  width: 730px;
-  height: 547.5px;
-  padding: 0px;
+  position: fixed;
+  top: -10px;
+  transform: translate(-50%, -50%);
 
-  position: absolute;
-  top: 0;
+  transform: rotateY(180deg);
+  -webkit-transform:rotateY(180deg);
+  -moz-transform:rotateY(180deg); 
 `;
 
 const canvasDiv = css`
+  width: 730px !important;
+  max-width: 1200px;
+  
+  position: fixed;
+  top: 10vh;
+  z-index: 0;
+  
+  transform: rotateY(180deg);
+  -webkit-transform:rotateY(180deg);
+  -moz-transform:rotateY(180deg);
+  `
+
+const canvasSize = css`
+  width: 100vw;
+  height: 130vh;
+  position: absolute;
+  top: -61px;
+  right: 0px;
+`;
+
+const buttonCenter = css`
+  width: 100vw;
+
   display: flex;
   justify-content: center;
   align-items: center;
-`;
-
-const videoSize = css`
-  width: 730px !important;
-  padding: 0px;
-  margin: 0px;
-  max-width: 1200px;
-`;
+`
 
 const buttonDiv = css`
-  width: 750px;
+  width: 80vw;
+  height: 20vh;
 
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 
-  & > button,
-  & > input {
-    height: 40px;
+  position : fixed;
+  top: 68vh;
+
+  button {
+    width: 30vw;
+    height: 15vh;
+
+    background-color: #B1B2FF;
+    font-size: 2.5em;
+    padding-top: 0.3em;
+    
+    border-radius: 20px;
+    border: 1px solid transparent;
   }
-`;
+  `;
+
+const TakeAPictureBtn = css`
+  position: absolute;
+  
+  left: 50%;
+  transform: translate(-50%, 0%);
+  `
 
 const KioskTakeAPicture = (data) => {
   const [iscapture, setIscapture] = useState(false);
+  const { id } = useSelector((store) => store);
 
   let videoRef = useRef(null);
   let photoRef = useRef(null);
 
   const qrdata = data.data.data.qrdata
-  console.log(qrdata)
   const navigate = useNavigate();
 
   // get access to user webcamera
@@ -80,11 +113,11 @@ const KioskTakeAPicture = (data) => {
   // count는 여기에 있음 (useInterval) 
   const [isCounting, setCounting] = useState(false);
   const [number, setNumber] = useState(5);
-  const number_ref = useRef(5);
+  let number_ref = useRef(5);
 
   const takePicture = () => {
-    const width = 1024;
-    const height = 600;
+    const width = 839.68;
+    const height = 629.75;
 
     let video = videoRef.current;
     let photo = photoRef.current;
@@ -104,11 +137,20 @@ const KioskTakeAPicture = (data) => {
 
   const TimeCounting = () => {
     const loop = setInterval(() => {
-      number_ref.current -= 1;
-      setNumber(number_ref.current);
-      console.log("number", number);
+      let count = number_ref.current
+      if (number_ref.current <= -1) {
+        number_ref.current = 5
+        count = 5
+      }
+      else {
+        number_ref.current -= 1;
+        count -= 1;
+      }
+      // 카운트 애니메이션 구현
+      console.log("count", count);
       console.log("number_ref.current", number_ref.current);
       if (number_ref.current === 0) {
+        setNumber(0);
         takePicture();
         clearInterval(loop);
       }
@@ -138,72 +180,77 @@ const KioskTakeAPicture = (data) => {
       url: 'http://192.168.100.79:8080/api/brolly/return',
       // url: 'http://bp.ssaverytime.kr:8080/api/auth/user/brolly/return/update/img',
       data: {
-        "brollyId": qrdata,
-        "caseId": 1,
-        "imgUrl": imgURL
+        'brollyId' : qrdata,
+        'caseId' : id[0],
+        'imgUrl' : imgURL
       }
-    }).then(() => navigate('/kiosk/return/guide', {
-      state: {
-        data: qrdata,
+    })
+    .then((res) => {
+      console.log(res.data)
+      navigate(`/kiosk/${id[0]}/return/guide`, {
+        state: {
+          data: qrdata,
+        }
       }
-    }))
+      )
+    }
+    )
+    .catch((err) => console.log(err));
 
-
-    // let blobBin = atob(imgdataUrl.split(',')[1]);
-    // let array = [];
-    // for (let i = 0; i < blobBin.length; i++) {
-    //   array.push(blobBin.charCodeAt(i));
-    // }
-    // let newfile = new Blob([new Uint8Array(array)], {type: 'image/png'});
-    // let formdata = new FormData();
-    // formdata.append("files", newfile);
-
-    // for (const KeyValue of formdata) console.log(KeyValue)
-
-    // const data = await fetch(`${dataUrl}`)
-    // const blob = await data.blob();
-    // const blobUrl = URL.createObjectURL(blob)
-    // console.log(blobUrl);
-    // axios.post('http://localhost:3001/posts ', {
-    //   data : formdata,
+    // 테스트용(아직안함)
+    // let isBrolly = false;
+    // axios({
+    //   method: 'GET',
+    //   url: 'http://localhost:3001/posts',
     // })
-    // .then((response) => console.log(response.data))
-    // .catch((error) => console.error(error));
+    //   .then((res) => {
+    //     if (res.data[0].isBrolly) {
+    //       navigate(`/kiosk/${id[0]}/return/guide`, {
+    //         state: {
+    //           data: qrdata,
+    //         }
+    //       })
+    //     }
+    //   }
+    //   )
+    //   .catch((err) => console.log(err))
+
   };
 
   // clear out the image from the screen
 
   const clearImage = () => {
+    setIscapture(false);
+    setCounting(false);
+    setNumber(5);
+
     let photo = photoRef.current;
     let ctx = photo.getContext("2d");
     ctx.clearRect(0, 0, photo.width, photo.height);
-
-    setIscapture(false);
   };
 
-
   return (
-    <div css={ReturnCameraTakeAPictureDiv}>
-      <video ref={videoRef} className="container" css={videoSize}></video>
+    <div>
+      <video ref={videoRef} css={videoSize}></video>
       <div css={canvasDiv}>
         <canvas
           id="$canvas"
           css={canvasSize}
-          className=""
           ref={photoRef}
         ></canvas>
       </div>
-      <div css={buttonDiv}>
-        <button onClick={setCountingOnClick} className="btn btn-danger">
-          Take Picture
-        </button>
-        <button onClick={clearImage} className="btn btn-primary">
-          Clear Image
-        </button>
-        {iscapture ? <button onClick={saveImage} className="btn btn-primary">
-          이미지 확인
-        </button> : null}
-        {/* <button onClick={setCountingOnClick}>{number}</button> */}
+      <div css={buttonCenter}>
+        <div css={buttonDiv}>
+          {iscapture ? null : <button onClick={setCountingOnClick} css={TakeAPictureBtn}>
+            촬영하기
+          </button>}
+          {iscapture ? <button onClick={clearImage}>
+            재촬영
+          </button> : null}
+          {iscapture ? <button onClick={saveImage}>
+            확인
+          </button> : null}
+        </div>
       </div>
     </div>
   );

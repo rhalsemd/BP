@@ -1,0 +1,6 @@
+sans-serif
+monospace
+Courier
+Monaco
+Consolas
+"Andale Mono", "DejaVu Sans Mono"

@@ -1,9 +1,37 @@
-import React from "react";
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
 
 import { connect } from "react-redux";
 import { userInfo } from "../../modules/signUp";
+import Alert from "@mui/material/Alert";
 
-function SignUpEmail({ info, setInfo }) {
+const inputBox = css`
+  position: relative;
+  margin: 10px 0;
+  width: 70vw;
+`;
+
+const inputChild = css`
+  background: transparent;
+  border: none;
+  border-bottom: solid 1px #ccc;
+  padding: 20px 0px 5px 0px;
+  font-size: 14pt;
+  width: 100%;
+`;
+
+const 확인버튼 = css`
+  background-color: #00b8ff;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  width: 100%;
+  height: 35px;
+  font-size: 14pt;
+  margin-top: 15px;
+`;
+
+function SignUpEmail({ info, setInfo, sighUpRequirement }) {
   // email 정규 표현식
   const emailRegExp =
     /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
@@ -28,25 +56,74 @@ function SignUpEmail({ info, setInfo }) {
     }
   };
 
+  const setSignUp = (e) => {
+    sighUpRequirement(info);
+  };
+
   return (
-    <div>
-      <label htmlFor="email">Email : </label>
-      <input
-        type="email"
-        id="email"
-        autoComplete="off"
-        required
-        placeholder="이메일@EXAMPLE.COM"
-        onChange={typeEmail}
-      />
+    <div css={inputBox}>
+      <div>
+        <input
+          type="email"
+          id="email"
+          css={inputChild}
+          autoComplete="off"
+          required
+          placeholder="이메일@EXAMPLE.COM"
+          onChange={typeEmail}
+        />
+        <label htmlFor="email">이메일</label>
+      </div>
       <div>
         {/* 유효성 검사 */}
-        {emailRegExp.test(info.email) || info.email.length === 0 ? null : (
-          <div>
-            <span style={{ color: "red" }}>uncomplete : </span>
-            <span>{"ex) 이메일@EXAMPLE.COM"}</span>
-          </div>
+        {emailRegExp.test(info.email) || info.email.length === 0 ? (
+          info.email.length === 0 ? null : (
+            <Alert
+              sx={{
+                hieght: "10%",
+                fontSize: "12px",
+                paddingTop: "0",
+                paddingBottom: "0",
+                display: "flex",
+                justifyContent: "center",
+              }}
+              variant="outlined"
+              severity="success"
+            >
+              일치합니다.
+            </Alert>
+          )
+        ) : (
+          <Alert
+            sx={{
+              hieght: "10%",
+              fontSize: "12px",
+              paddingTop: "0",
+              paddingBottom: "0",
+              display: "flex",
+              justifyContent: "center",
+            }}
+            variant="outlined"
+            severity="error"
+          >
+            {`ex) excample@naver.com`}
+          </Alert>
         )}
+
+        {/* 회원가입 버튼 */}
+        {info.idSuccess &&
+        info.pwdSuccess &&
+        info.isTrue &&
+        info.phoneSuccess &&
+        info.isCertification &&
+        info.isCertificationSuccess &&
+        info.addressSuccess &&
+        info.userNameSuccess &&
+        info.emailSuccess ? (
+          <button onClick={setSignUp} css={확인버튼}>
+            회원가입
+          </button>
+        ) : null}
       </div>
     </div>
   );
@@ -60,6 +137,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     sendEmail() {
       dispatch(userInfo.sendEmail());
+    },
+    sighUpRequirement(data) {
+      dispatch(userInfo.sighUpRequirement(data));
     },
   };
 };

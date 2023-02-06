@@ -1,37 +1,46 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import { Suspense } from "react";
 
 import { useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer";
+import LoadingPage from "../../components/LoadingPage";
 import Nav from "../../components/Nav";
 
-const comPleteArea = css`
-  width: 100%;
-  height: 72vh;
-  border: 1px black solid;
-`;
-
-const comPleteModalPosition = css`
-  height: 72vh;
+const completeModalStyle = css`
+  height: 40vh;
+  width: 90vw;
+  margin: 15vh 5vw 19vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  border-radius: 10px;
   align-items: center;
+  background-color: #f7f8f9;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.24);
 `;
 
-const comPleteModal = css`
-  width: 35vh;
-  height: 35vh;
-  border: 1px black solid;
-`;
-
-const title = css`
-  text-align: center;
+const 버튼 = css`
+  background-color: #00b8ff;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  width: 100%;
+  height: 45px;
+  font-size: 14pt;
+  margin-top: 15px;
+  width: 80%;
 `;
 
 function CompletePage() {
   const navigation = useNavigate();
+
   const goToHome = () => {
-    navigation("/");
+    navigation("/bp");
+  };
+
+  const goToLogin = () => {
+    navigation("/bp/login");
   };
   return (
     <div>
@@ -39,16 +48,17 @@ function CompletePage() {
         <Nav />
       </header>
 
-      <div css={comPleteArea}>
-        <div css={comPleteModalPosition}>
-          <div css={comPleteModal}>
-            <div css={title}>
-              <h2>완료 메시지</h2>
-              <button onClick={goToHome}>홈으로</button>
-            </div>
-          </div>
+      <Suspense fallback={<LoadingPage />}>
+        <div css={completeModalStyle}>
+          <h2>가입이 완료되었습니다.</h2>
+          <button onClick={goToLogin} css={버튼}>
+            로그인
+          </button>
+          <button onClick={goToHome} css={버튼}>
+            홈으로
+          </button>
         </div>
-      </div>
+      </Suspense>
 
       <footer>
         <Footer />

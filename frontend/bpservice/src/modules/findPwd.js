@@ -136,14 +136,14 @@ const findPwdReducer = handleActions(
         userInfo: action.payload,
       };
     },
+    [SET_ERROR_CERTIFICATION]: (state, action) => {
+      return { ...state, firstError: action.error };
+    },
     [SET_FIRST_SUCCESS_CERTIFICATION_RESET]: (state, action) => {
       return { ...state, firstSuccess: false, userInfo: "" };
     },
     [SET_SECOND_SUCCESS_CERTIFICATION]: (state, action) => {
       return { ...state, secondSuccess: action.success };
-    },
-    [SET_ERROR_CERTIFICATION]: (state, action) => {
-      return { ...state, firstError: action.error };
     },
     [SET_ERROR_RESET]: (state, action) => {
       return { ...state, firstError: false };

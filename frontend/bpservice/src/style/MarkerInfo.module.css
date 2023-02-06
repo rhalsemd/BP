@@ -5,13 +5,27 @@
 
 .infoBox {
   width: 90vw;
-  height: 18vh;
-  border: 1px, beige solid;
-  background-color: beige;
+  height: 12vh;
+  border: 1px, rgb(255, 255, 255) solid;
+  background-color: rgb(255, 255, 255);
   position: fixed;
-  top: 78vh;
+  top: 80vh;
   z-index: 3;
   margin-left: 5vw;
   display: flex;
   justify-content: space-around;
+  align-items: center;
+}
+
+.content {
+  text-align: center;
+}
+
+.RoadView {
+  height: 50%;
+  border-radius: 50px;
+  border: 0;
+  align-self: center;
+  font-weight: bolder;
+  background-color: rgb(140, 184, 255);
 }

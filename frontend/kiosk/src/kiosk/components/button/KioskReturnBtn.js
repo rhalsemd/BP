@@ -44,7 +44,7 @@ const KioskReturnBtn = () => {
   
   const navigate = useNavigate();
   const KioskReturnMove = () => {
-    navigate(`/kiosk/${id}/return`)
+    navigate(`/kiosk/${id[0]}/return`)
   }
 
   return (

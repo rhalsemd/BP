@@ -1,12 +1,14 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
-import App from "./components/App";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import { rootReducer, rootSaga } from "./modules/index";
 import createSagaMiddleware from "@redux-saga/core";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { createLogger } from "redux-logger";
+import WebIntro from "./components/WebIntro";
+// import App from "./components/App";
+const App = lazy(() => import("./components/App"));
 
 const logger = createLogger();
 const sagaMiddleware = createSagaMiddleware();

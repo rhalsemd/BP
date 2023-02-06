@@ -1,3 +1,21 @@
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
+
+const inputBox = css`
+  position: relative;
+  margin: 10px 0;
+  width: 70vw;
+`;
+
+const inputChild = css`
+  background: transparent;
+  border: none;
+  border-bottom: solid 1px #ccc;
+  padding: 20px 0px 5px 0px;
+  font-size: 14pt;
+  width: 100%;
+`;
+
 function ModifyPwdCurrent({ setInfo, info }) {
   const onChange = (e) => {
     const inputValue = e.target.value;
@@ -15,18 +33,23 @@ function ModifyPwdCurrent({ setInfo, info }) {
     }
   };
 
+  const onSubmit = (e) => {
+    e.preventDefault();
+  };
+
   return (
-    <div>
-      <form>
-        <label htmlFor="currentPwd">현재 비밀번호 : </label>
+    <div css={inputBox}>
+      <form onSubmit={onSubmit}>
         <input
           type="password"
           id="currentPwd"
+          css={inputChild}
           autoComplete="off"
           required
           placeholder="현재 비밀번호"
           onChange={onChange}
         />
+        <label htmlFor="currentPwd">현재 비밀번호</label>
       </form>
     </div>
   );

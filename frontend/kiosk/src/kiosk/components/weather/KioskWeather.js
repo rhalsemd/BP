@@ -61,7 +61,7 @@ const KioskWeather = () => {
   const getWeather = () => {
     // 키오스크 geo 에서 지점에 해당하는 위도 경도값 받아오기
     // let geoURL = `http://192.168.100.80:8080/api/kiosk/home/kiosk-geo?id=1`;
-    let geoURL = `http://bp.ssaverytime.kr:8080/api/kiosk/home/kiosk-geo?id=${id}`;
+    let geoURL = `http://bp.ssaverytime.kr:8080/api/kiosk/home/kiosk-geo?id=${id[0] || id}`;
     let weatherURL = ``;
     axios
       .get(geoURL)

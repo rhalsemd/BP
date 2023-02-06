@@ -1,77 +1,40 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { useEffect } from "react";
+
+import { useEffect, Suspense } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer";
+import LoadingPage from "../../components/LoadingPage";
 import Nav from "../../components/Nav";
-import { deleteUser, getUserInfo } from "../../modules/mypage";
+import { getUserInfo } from "../../modules/mypage";
+
+import MyPageUserInfo from "../../components/mypage/MyPageUserInfo";
+import MyPageUsage from "../../components/mypage/MyPageUsage";
+import MyPageUserBtn from "../../components/mypage/MyPageUserBtn";
 
 const myPageArea = css`
   width: 100%;
   height: 72vh;
-  border: 1px black solid;
+  overflow: auto;
 `;
 
-const sectionModalPosition = css`
-  height: 72vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-const userInfoModal = css`
-  width: 80vw;
-  height: 10vh;
-  border: 1px black solid;
-  margin-bottom: 4vh;
-  display: flex;
+const title = css`
+  flex-direction: row;
   justify-content: space-around;
-  .userInfoItem {
-    display: flex;
-    align-items: center;
-  }
-`;
-
-const contentModal = css`
-  width: 80vw;
-  height: 40vh;
-  border: 1px black solid;
-  margin-bottom: 10vh;
-`;
-
-const content = css`
-  text-align: center;
+  margin-left: 5vw;
+  margin-bottom: 1vh;
 `;
 
 function MyPage() {
-  const navigation = useNavigate();
   const dispatch = useDispatch();
-  const { userInfo: userInfo = "" } = useSelector(
-    ({ mypageReducer }) => mypageReducer
-  );
+  const { userInfo = "" } = useSelector(({ mypageReducer }) => mypageReducer);
 
   const { userName, sido, sigungu, dong } = userInfo;
-
-  const goToModifyInfo = () => {
-    navigation(`/bp/modify/user`);
-  };
-
-  const goToModifyPwd = () => {
-    navigation(`/bp/modify/pwd`);
-  };
-
-  const goToDeleteUser = () => {
-    dispatch(deleteUser());
-  };
 
   // 회원정보 - 아직 구현 X
   useEffect(() => {
     dispatch(getUserInfo());
   }, [dispatch]);
-
-  console.log(userInfo);
 
   return (
     <div>
@@ -79,46 +42,29 @@ function MyPage() {
         <Nav />
       </header>
 
-      <div css={myPageArea}>
-        <div css={sectionModalPosition}>
-          <div>
-            <h1>efs</h1>
-          </div>
+      <Suspense fallback={<LoadingPage />}>
+        <div css={myPageArea}>
+          <h1 css={title}>My B.P</h1>
+
           {/* 유저 정보 */}
-          <div css={userInfoModal}>
-            <h1>{userName}</h1>
-            <div className="userInfoItem">
-              <span>{sido} </span>
-              <span>{sigungu} </span>
-              <span>{dong}</span>
-            </div>
-          </div>
-          <div css={contentModal}>
-            <div css={content}>
-              <h1>마이 페이지</h1>
+          <MyPageUserInfo
+            userName={userName}
+            sido={sido}
+            sigungu={sigungu}
+            dong={dong}
+          />
 
-              {/* 회원 정보 수정 */}
-              <div>
-                <button onClick={goToModifyInfo}>회원 정보 수정</button>
-              </div>
+          {/* 유저 사용 정보 */}
+          <MyPageUsage />
 
-              {/* 비밀번호 변경 */}
-              <div>
-                <button onClick={goToModifyPwd}>비밀번호 변경</button>
-              </div>
-
-              {/* 회원 탈퇴 */}
-              <div>
-                <button onClick={goToDeleteUser}>회원 탈퇴</button>
-              </div>
-            </div>
-          </div>
+          {/* 회원 관련 버튼 */}
+          <MyPageUserBtn />
         </div>
+      </Suspense>
 
-        <footer>
-          <Footer />
-        </footer>
-      </div>
+      <footer>
+        <Footer />
+      </footer>
     </div>
   );
 }

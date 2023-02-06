@@ -1,35 +1,44 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
+import ReceiptImg from '../assets/ReceiptWhite.png'
 
 const KioskReturnReceiptStyle = css`
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  
+  background-color: #EEF1FF;
 
   width: 100vw;
-  height: 80vh;
+  height: 85vh;
 `
-const KioskReceiptImg = css`
+
+const KioskReceiptMent = css`
   width: 50vw;
-  height: 60vh;
-  
-  border: 1px solid black;
+  height: 70vh;
+
+  position: absolute;
+  bottom: 5%;
+  left: 4%;
 
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
 
-  button {
-    width: 250px;
-    height: 80px;
+  p {
+    font-size: 2.3em;
+    margin: 0;
   }
 `
 
 const KioskReturnReceiptView = css`
+  position: absolute;
+  bottom: 0%;
+  right: 5%;
 
   width: 45vw;
-  height: 60vh;
-
-  border: 1px solid black;
+  height: 80vh;
 
   display: flex;
   flex-direction: column;
@@ -50,108 +59,115 @@ const KioskReturnReceiptView = css`
 `
 
 const KioskReturnReceipt = css`
-    width: 25vw;
-    height: 50vh;
+    width: 38vw;
+    height: 100%;
 
-    border: 1px solid black;
+    background: url(${ReceiptImg}) no-repeat center;
+    background-size: contain;
 
-    padding-top: 3vh;
-    padding-left: 2vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .ReceiptTitle, .ReceiptTotal{
+      padding-left: 10%;
+    }
+
     .BranchName {
-      font-size: 1.5rem;
+      font-size: 1.8rem;
       font-weight: bold;
+      margin-bottom: -10px;
+      /* border-bottom: 3px solid #404040; */
     }
 
     .Payment {
-      font-size: 2.9rem;
+      font-size: 4.35rem;
       font-weight: bold;
+      margin-bottom: 3%;
+      border-bottom: 3px dashed #404040;
       span {
         font-weight: bold;    
-        font-size: 1.3rem;
+        font-size: 1.95rem;
       }
     }
 
     .ReceiptDetailView{
-      width: 22vw;
+      width: 100%;
 
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      align-items: end;
+
+      padding-left: 10%;
       
-      /* border: 1px solid black; */
-      .FirstHorizon, .SecondHorizon {
-        width: 20vw;
+      .FirstHorizon {
+        width: 100%;
+        height: 10%;
+      }
+
+      .SecondHorizon {
+        margin-top: 3%;
+        border-top: 3px dashed #404040;
+        margin-bottom: 5%;
+
+        width: 100%;
         height: 3vh;
-        
-        border: 1px solid transparent;
-        border-bottom: 1px solid black;
       }
   
       .ReceiptDetail {
-        width: 20vw;
+        width: 95%;
 
         display: flex;
         justify-content: space-between;
         align-items: center;
+
+        span {
+          font-size: 1.25em;
+        }
       }
-  
-      .FontColorGray {
-        color: gray !important;
-      }
-  
-      .FontColorBlack {
-        color: black !important;
+
+      .ReceiptDetailRefunds {
+        width: 95%;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        span {
+          display: block;
+          font-size: 2em;
+          font-weight: bold;
+        }
       }
     }
-`
-
-const KioskReturnSectionCompleteStyle = css`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  border: 1px solid black;
-
-  height: 80vh;
-  p {
-    font-size: 2.2rem;
-    margin-bottom: 20px;
-  }
-  button {
-    width: 450px;
-    height: 50px;
-  }
 `
 
 // 위에는 Emotion.js 입니다.
 // 밑에는 JS 입니다.
 
-// 위에는 JS 입니다.
-// 밑에는 JSX 입니다.
-
 const KioskReturnCompleteSection = () => {
 
   return (
     <div css={KioskReturnReceiptStyle}>
-      <div css={KioskReceiptImg}>
-        <div css={KioskReturnSectionCompleteStyle}>
-          <p>6번 케이스에 넣어주세요. 감사합니다!</p>
-        </div>
+      <div css={KioskReceiptMent}>
+          <p>반납이 완료되었습니다!</p>
+          <p>환급금액을 확인해보세요!</p>
       </div>
       <div css={KioskReturnReceiptView}>
         <h1>요금 사항</h1>
         <div css={KioskReturnReceipt}>
-          <p className='BranchName'>구미인동점</p>
-          <p className='Payment'>6,500<span>원</span></p>
+          <div className='ReceiptTitle'>
+            <p className='BranchName'>구미인동점</p>
+          </div>
+          <div className='ReceiptTotal'>
+            <p className='Payment'>6,500<span>원</span></p>
+          </div>
           <div className='ReceiptDetailView'>
             <div className='FirstHorizon'></div>
-            <div className='ReceiptDetail'><div className='FontColorGray'>보증금</div><div>10,000</div></div>
-            <div className='ReceiptDetail'><div className='FontColorGray'>이용 시간</div><div>2:30</div></div>
-            <div className='ReceiptDetail'><div className='FontColorGray'>이용 금액</div><div>3,500</div></div>
+            <div className='ReceiptDetail'><span className='FontColorGray'>보증금</span><span>10,000원</span></div>
+            <div className='ReceiptDetail'><span className='FontColorGray'>이용 기간</span><span>2일</span></div>
+            <div className='ReceiptDetail'><span className='FontColorGray'>이용 금액</span><span>3,500원</span></div>
             <div className='SecondHorizon'></div>
-            <div className='ReceiptDetail'><div className='FontSizeBig'>환급 금액</div><div>6,500</div></div>
+            <div className='ReceiptDetailRefunds'><span>환급 금액</span><span>6,500원</span></div>
           </div>
         </div>
       </div>

@@ -1,17 +1,17 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import dayjs from "dayjs";
-import { connect } from "react-redux";
-import { useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
-import HistogramDatasetTransition from "../../components/chart/barChart/HistogramDatasetTransition";
-import Nav from "../../components/Nav";
+import Nav from "../../components/NavAdmin";
 import Footer from "../../components/Footer";
-import UseageTable from "../../components/chart/UseageTable";
+import HistogramDatasetTransition from "../../components/chart/barChart/HistogramDatasetTransition";
+import HistogramTable from "../../components/chart/HistogramTable";
 import DayPicker from "../../components/UI/DayPicker";
 import MonthPicker from "../../components/UI/MonthPicker";
-import { getBranchRevenue } from "../../modules/histogram";
 import Button from "@mui/material/Button";
+import { connect } from "react-redux";
+import { useEffect, useState } from "react";
+import { getBranchRevenue } from "../../modules/histogram";
+import { useSelector } from "react-redux";
 
 const barChartStyle = css`
   height: 400px;
@@ -41,15 +41,28 @@ const 캘린더Style = css`
   width: 100vw;
   display: flex;
   justify-content: center;
+  box-shadow: 5px 5px 4px 10px #f333;
 `;
 
 const TotalIncome = ({ getBranchRevenue }) => {
+  const titleDateDemo = useSelector((state) => state.chagneDateReducer);
   const [monthOn, setMonthOn] = useState(false);
   const [weekOn, setWeekOn] = useState(false);
-  const urlName = useLocation().pathname;
-  const date = dayjs("2023-01-26"); // 임시날짜 (나중에 함수로 바꿔야함)
-  const dayData = dayjs(date).format("YYYY-MM-DD");
-  useEffect(() => getBranchRevenue(dayData), []);
+  const [selectDate, setSelectDate] = useState(
+    `${dayjs().format("MM월 DD일")}`
+  );
+
+  useEffect(() => {
+    if (titleDateDemo?.day) {
+      setSelectDate(dayjs(titleDateDemo.day).format("MM월 DD일"));
+    } else {
+      setSelectDate(dayjs(titleDateDemo.month).format("MM월"));
+    }
+  }, [titleDateDemo]);
+
+  useEffect(() => {
+    getBranchRevenue(dayjs());
+  }, []);
   return (
     <div>
       <Nav />
@@ -62,7 +75,7 @@ const TotalIncome = ({ getBranchRevenue }) => {
           setWeekOn(false);
         }}
       >
-        Month
+        Day
       </Button>
       <Button
         variant="contained"
@@ -73,19 +86,23 @@ const TotalIncome = ({ getBranchRevenue }) => {
           setMonthOn(false);
         }}
       >
-        Year
+        Month
       </Button>
-      <div css={캘린더Style}>
-        {monthOn && <DayPicker />}
-        {weekOn && <MonthPicker />}
-      </div>
-      <h1 css={h1Style}>
-        {urlName === "/admin/total_income" ? "TOTAL INCOME" : "TOTAL USEAGE"}
-      </h1>
+      {monthOn && (
+        <div css={캘린더Style}>
+          <DayPicker setMonthOn={setMonthOn} />
+        </div>
+      )}
+      {weekOn && (
+        <div css={캘린더Style}>
+          <MonthPicker setWeekOn={setWeekOn} />
+        </div>
+      )}
+      <h1 css={h1Style}>{selectDate} 매출 현황</h1>
       <div css={barChartStyle}>
         <HistogramDatasetTransition width={700} height={400} />
       </div>
-      <UseageTable />
+      <HistogramTable />
       <Footer />
     </div>
   );

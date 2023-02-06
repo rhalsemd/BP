@@ -1,9 +1,48 @@
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
+
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import { findPwdInfo } from "../../modules/findPwd";
 import Timer from "./Timer";
 import { useRef } from "react";
+
+const inputBox = css`
+  position: relative;
+  margin: 10px 0;
+  width: 70vw;
+`;
+
+const inputChild = css`
+  background: transparent;
+  border: none;
+  border-bottom: solid 1px #ccc;
+  padding: 20px 0px 5px 0px;
+  font-size: 14pt;
+  width: 100%;
+`;
+
+const 확인버튼 = css`
+  background-color: #00b8ff;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  width: 100%;
+  height: 35px;
+  font-size: 14pt;
+  margin-top: 15px;
+`;
+
+const timer = css`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const CertificationNumInputlabel = css`
+  display: block;
+  width: 100%;
+`;
 
 function InputCertification({
   findPwdReducer,
@@ -50,26 +89,41 @@ function InputCertification({
     findPwdReducer.secondSuccess,
   ]);
   return (
-    <>
+    <div css={inputBox}>
       {!findPwdReducer.success ? (
         <div>
-          <input
-            placeholder="인증번호"
-            type="text"
-            onChange={onChange}
-            ref={inputRef}
-          />
-          <button onClick={onClick}>확인</button>
-          <Timer
-            setInfo={setInfo}
-            inputRef={inputRef}
-            setFirstSuccessCertificationReset={
-              setFirstSuccessCertificationReset
-            }
-          />
+          <div>
+            <input
+              placeholder="인증번호"
+              type="text"
+              onChange={onChange}
+              css={inputChild}
+              ref={inputRef}
+            />
+
+            <label css={CertificationNumInputlabel}>
+              <div css={timer}>
+                <div>인증번호</div>
+
+                <div>
+                  <Timer
+                    setInfo={setInfo}
+                    inputRef={inputRef}
+                    setFirstSuccessCertificationReset={
+                      setFirstSuccessCertificationReset
+                    }
+                  />
+                </div>
+              </div>
+            </label>
+          </div>
+
+          <button onClick={onClick} css={확인버튼}>
+            확인
+          </button>
         </div>
       ) : null}
-    </>
+    </div>
   );
 }
 

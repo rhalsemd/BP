@@ -1,7 +1,44 @@
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
+
 import { connect } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { modifyPwdInfo } from "../../modules/modifyPwd";
+import ConfirmCondition from "./ConfirmCondition";
+
+const inputBox = css`
+  position: relative;
+  margin: 10px 0;
+  width: 70vw;
+`;
+
+const inputChild = css`
+  background: transparent;
+  border: none;
+  border-bottom: solid 1px #ccc;
+  padding: 20px 0px 5px 0px;
+  font-size: 14pt;
+  width: 100%;
+`;
+
+const 변경하기버튼 = css`
+  background-color: #00b8ff;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  width: 100%;
+  height: 35px;
+  font-size: 14pt;
+  margin-top: 15px;
+`;
 
 function ModifyPwdConfirm({ info, setInfo, setNewPwd }) {
+  const navigation = useNavigate();
+
+  const back = () => {
+    navigation(-1);
+  };
+
   const onChange = (e) => {
     const inputValue = e.target.value;
     setInfo((info) => {
@@ -28,17 +65,21 @@ function ModifyPwdConfirm({ info, setInfo, setNewPwd }) {
   };
 
   return (
-    <div>
+    <div css={inputBox}>
       <form onSubmit={requestModify}>
-        <label htmlFor="nextPwdConfirm">변경 비밀번호 확인 : </label>
         <input
           type="password"
           id="nextPwdConfirm"
+          css={inputChild}
           autoComplete="off"
           required
           placeholder="변경 비밀번호 확인"
           onChange={onChange}
         />
+        <label htmlFor="nextPwdConfirm">변경 비밀번호 확인</label>
+
+        {/* 수정 비밀번호 확인 유효성 검사 */}
+        <ConfirmCondition info={info} />
 
         <div>
           {/* 수정하기 버튼*/}
@@ -47,10 +88,21 @@ function ModifyPwdConfirm({ info, setInfo, setNewPwd }) {
           info.isConfirm &&
           info.next === info.confirmPwd &&
           info.next !== info.current ? (
-            <input type="submit" value="수정하기" />
+            <input type="submit" value="수정하기" css={변경하기버튼} />
           ) : null}
         </div>
       </form>
+      {/* 뒤로가기 버튼 */}
+      <button
+        onClick={back}
+        css={변경하기버튼}
+        style={{
+          backgroundColor: "lightgray",
+          color: "black",
+        }}
+      >
+        뒤로가기
+      </button>
     </div>
   );
 }

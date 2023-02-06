@@ -7,10 +7,12 @@ import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 const KioskHeaderStyle = css`
+  background-color: #EEF1FF;
   display: flex;
   justify-content: space-between;
   align-items: start;
-  height: 20vh;
+  width: 100vw;
+  height: 15vh;
 `
 
 const KioskLogo = css`
@@ -34,9 +36,10 @@ const KioskHeader = () => {
   const { id } = useSelector((store) => store);
   // 홈인지 아닌지 확인하기
   const [isHome, setIsHome] = useState(false);
+  
   // 홈일때는 true, 아닐때는 false
   const setIsHomeBtn = () => {
-    if (window.location.pathname === `/kiosk/${id}`) {
+    if (window.location.pathname === `/kiosk/${id[0]}`) {
       setIsHome(true)
     }
     else {
