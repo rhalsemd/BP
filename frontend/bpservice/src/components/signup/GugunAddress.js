@@ -8,7 +8,7 @@ function GugunAddress({ setInfo, getDong, info, dongRef, gugunRef, signUp }) {
       setInfo((info) => {
         return { ...info, gugun: value };
       });
-      getDong({ sido: info.sido, gugun: value });
+      getDong({ sido: info.sido, gugun: value, dong: "" });
       dongRef.current.value = "읍/면/동";
     }
   };

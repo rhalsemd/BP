@@ -6,7 +6,29 @@ import homeIntro2 from "../../style/homeIntro2.png";
 
 const outerBox = css`
   text-align: center;
-  margin-bottom: 15%;
+  margin-bottom: 5%;
+
+  @media (max-width: 1100px) {
+    .logo {
+      width: 300px;
+    }
+  }
+  @media (max-width: 900px) {
+    .logo {
+      width: 200px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .logo {
+      width: 150px;
+    }
+  }
+  @media (max-width: 500px) {
+    .logo {
+      width: 100px;
+    }
+  }
 `;
 
 function HomeIntro() {
@@ -14,7 +36,7 @@ function HomeIntro() {
 
   return (
     <div css={outerBox}>
-      <img src={homeIntro2} style={{ width: "40%", height: "40%" }} />
+      <img src={homeIntro2} className="logo" />
     </div>
   );
 }

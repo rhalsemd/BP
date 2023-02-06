@@ -13,8 +13,9 @@ function GunguAddress({
     const value = e.target.value;
     if (value !== "시/군/구") {
       setInfo((info) => {
-        return { ...info, sigugun: value };
+        return { ...info, sigugun: value, dong: "" };
       });
+
       getDong({ sido: info.sido, gugun: value });
       dongRef.current.value = "읍/면/동";
     }
