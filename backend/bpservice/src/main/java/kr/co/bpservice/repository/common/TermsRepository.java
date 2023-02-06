@@ -9,4 +9,7 @@ import org.springframework.stereotype.Repository;
 public interface TermsRepository extends JpaRepository<Terms, Integer> {
     @Query(value = "SELECT ID, CONTENT FROM MWS_TERMS WHERE ID = 1", nativeQuery = true)
     Terms getContent();
+
+    @Query(value = "SELECT ID, CONTENT FROM MWS_TERMS WHERE ID = 2", nativeQuery = true)
+    Terms getPrivacyContent();
 }
