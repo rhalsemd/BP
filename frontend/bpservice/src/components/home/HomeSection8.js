@@ -5,8 +5,8 @@ const outerBox = css`
   text-align: center;
 `;
 const container = css`
-  width: 100%;
-  height: 90vh;
+  width: 100vw;
+  height: 100vh;
   /* border: 1px black solid; */
 `;
 
