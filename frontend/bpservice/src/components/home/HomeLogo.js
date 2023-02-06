@@ -7,20 +7,15 @@ const outerBox = css`
   .centerRightWing {
     color: blue;
   }
+  height: 100vh;
 `;
-const container = css`
-  width: 100%;
-  height: 85vh;
-  /* border: 1px black solid; */
-`;
+
 const mapIcon = css`
   top: 80vh;
   position: fixed;
   justify-content: center;
   z-index: 2;
 `;
-
-const 임시 = css``;
 
 function HomeLogo() {
   const navigation = useNavigate();
@@ -69,9 +64,6 @@ function HomeLogo() {
           d="M714.99,56.8l-135.64,185.62c25.04-.99,50.58,6.14,72.38,22.07,23.77,17.37,38.93,42.14,44.63,68.83,63.39-117,73.27-230.93,18.62-276.52Z"
         />
       </svg>
-      <button css={mapIcon} onClick={goToMap}>
-        map
-      </button>
     </div>
   );
 }

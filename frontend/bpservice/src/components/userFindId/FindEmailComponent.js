@@ -7,6 +7,7 @@ import { useRef } from "react";
 const inputBox = css`
   position: relative;
   margin: 10px 0;
+  width: 70vw;
 `;
 
 const inputChild = css`

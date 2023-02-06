@@ -16,7 +16,7 @@ const EventMarkerContainer = lazy(() =>
   import("../../components/kakaoMap/EventMarkerContainer")
 );
 
-function KakaoMap({ getMapInfo }) {
+function KakaoMap({ getMapInfo, mapStore }) {
   const { caseInfo } = useSelector(({ mapStore }) => mapStore);
   const [isClickMarker, setIsClickMarker] = useState(false);
 
@@ -97,6 +97,7 @@ function KakaoMap({ getMapInfo }) {
                 index={index}
                 positions={positions}
                 setIsClickMarker={setIsClickMarker}
+                mapStore={mapStore}
               />
             </div>
           );

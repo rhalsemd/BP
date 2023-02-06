@@ -17,6 +17,14 @@ import HomeSection9 from "../components/home/HomeSection9";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getWhetherData } from "../modules/home";
+import FmdGoodIcon from "@mui/icons-material/FmdGood";
+
+const mapBtn = css`
+  display: inline-block;
+  height: 90vh;
+  position: fixed;
+  margin-left: 50%;
+`;
 
 function Home() {
   const dispatch = useDispatch();
@@ -47,6 +55,9 @@ function Home() {
 
       <HomeIntro />
       <HomeLogo />
+
+      <FmdGoodIcon color="primary" css={mapBtn} />
+
       <HomeSection1 />
       <HomeSection2 />
       <HomeSection3 />
