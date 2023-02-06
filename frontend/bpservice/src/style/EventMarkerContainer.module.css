@@ -56,6 +56,8 @@
   position: relative;
   margin: 13px 0 0 90px;
   height: 75px;
+  display: flex;
+  justify-content: space-around;
 }
 .desc .ellipsis {
   overflow: hidden;
@@ -89,4 +91,14 @@
 }
 .info .link {
   color: #5085bb;
+}
+
+.RoadView {
+  margin-top: 20%;
+  height: 50%;
+  border-radius: 50px;
+  border: 0;
+  align-self: center;
+  font-weight: bolder;
+  background-color: rgb(140, 184, 255);
 }

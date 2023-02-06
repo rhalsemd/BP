@@ -35,7 +35,6 @@ const Rectangle = ({
   if (y === undefined) {
     return null;
   }
-
   return (
     <animated.rect
       onClick={onclick}

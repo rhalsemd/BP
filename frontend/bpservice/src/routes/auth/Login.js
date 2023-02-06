@@ -3,7 +3,7 @@ import { css } from "@emotion/react";
 
 import { useState, useEffect } from "react";
 
-import Nav from "../../components/NavAdmin";
+import Nav from "../../components/Nav";
 import Footer from "../../components/Footer";
 import IdComponent from "../../components/userLogin/IdComponent";
 import PwdComponent from "../../components/userLogin/PwdComponent";
@@ -14,9 +14,9 @@ import LoadingPage from "../../components/LoadingPage";
 // import { cencleBootpay } from "../../modules/payment";
 
 const loginModalStyle = css`
-  height: 40vh;
+  height: 60vh;
   width: 95vw;
-  margin: 15vh 2.5vw 19vh;
+  margin: 5vh 2.5vw 9vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -78,7 +78,6 @@ function Login({ userLogin, setLoginInfo, getUserInfo, errorReset }) {
       <Suspense fallback={<LoadingPage />}>
         <div css={loginModalStyle}>
           <h1>Login</h1>
-
           {/* 아이디 */}
           <IdComponent setInfo={setInfo} />
 

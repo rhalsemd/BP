@@ -6,7 +6,7 @@ function BackBtn() {
   const navigator = useNavigate();
 
   const back = () => {
-    navigator("/");
+    navigator("/bp");
   };
 
   return (

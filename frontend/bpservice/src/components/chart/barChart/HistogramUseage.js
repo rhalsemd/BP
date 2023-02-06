@@ -5,7 +5,8 @@ import { useSelector } from "react-redux";
 
 const MARGIN = { top: 30, right: 30, bottom: 40, left: 50 };
 
-export const HistogramUseage = ({ width, height, data }) => {
+export const HistogramUseage = ({ height, data }) => {
+  const width = data.length * 80;
   const date = useSelector((state) => state.histogramReducer.selectDate);
   const cost = data.map((d) => d.TOTALCOUNT);
   const name = data.map((d) => d.NAME);
@@ -18,7 +19,17 @@ export const HistogramUseage = ({ width, height, data }) => {
   const xScale = useMemo(() => {
     return d3
       .scaleBand()
-      .domain(name.map((d, idx) => d))
+      .domain(
+        name.map((d, idx) => {
+          let jijum;
+          if (d.length > 7) {
+            jijum = d.slice(0, 7) + "...";
+          } else {
+            jijum = d;
+          }
+          return jijum;
+        })
+      )
       .range([0, boundsWidth]);
   }, [data, width]);
 

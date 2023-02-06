@@ -4,6 +4,8 @@ import { css } from "@emotion/react";
 function Footer() {
   const outerBox = css`
     text-align: center;
+    position: fixed;
+    width: 100%;
   `;
   const container = css`
     width: 100%;

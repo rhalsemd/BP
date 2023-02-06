@@ -25,7 +25,7 @@ const HistogramDatasetTransition = ({ width, height }) => {
       {data ? (
         url ? (
           <Histogram
-            width={width}
+            // width={width}
             height={height - BUTTONS_HEIGHT}
             data={data}
           />

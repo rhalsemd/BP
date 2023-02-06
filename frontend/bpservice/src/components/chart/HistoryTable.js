@@ -12,13 +12,13 @@ function makeRow(id, state, rent_money, deposite_money, rentTime, returnTime) {
   const newReturnTime = dayjs(returnTime).format("YYYY년 MM월 DD일");
   let OX;
   if (state == true) {
-    OX = "O";
-  } else {
     OX = "X";
+  } else {
+    OX = "O";
   }
   const data = {
     id: id,
-    col1: state,
+    col1: OX,
     col2: rent_money,
     col3: deposite_money,
     col4: newRentTime,
