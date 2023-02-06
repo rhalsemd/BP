@@ -87,6 +87,7 @@ public class KBrollyReturnService {
         brollyPayLogRepository.save(brollyPayLog);
 
         brollyRentLog.setRentMoney(rentMoney);
+        brollyRentLog.setState(true);
         brollyRentLog.setUptDt(uptDt);
         brollyRentLogRepository.save(brollyRentLog);
 

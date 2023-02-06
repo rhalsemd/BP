@@ -66,34 +66,6 @@ public class TokenProvider {
                 .build();
     }
 
-    // 로그아웃 토큰 생성
-    public TokenDto generateExpiredTokenDto(Authentication authentication) {
-
-        String authorities = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.joining(","));
-
-        long now = (new Date()).getTime();
-
-//        Date tokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
-        Date tokenExpiresIn = new Date(now + 50);
-
-        System.out.println(tokenExpiresIn);
-
-        String accessToken = Jwts.builder()
-                .setSubject(authentication.getName())
-                .claim(AUTHORITIES_KEY, authorities)
-                .setExpiration(tokenExpiresIn)
-                .signWith(key, SignatureAlgorithm.HS512)
-                .compact();
-
-        return TokenDto.builder()
-                .grantType(BEARER_TYPE)
-                .accessToken(accessToken)
-                .tokenExpiresIn(tokenExpiresIn.getTime())
-                .build();
-    }
-
     public Authentication getAuthentication(String accessToken) {
         Claims claims = parseClaims(accessToken);
 

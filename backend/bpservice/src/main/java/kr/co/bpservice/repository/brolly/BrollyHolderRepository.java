@@ -11,9 +11,14 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BrollyHolderRepository extends JpaRepository<BrollyHolder, Integer> {
 
+    // 특정 케이스의 전체 홀더 개수를 반환함.
+    Integer countBrollyHolderByBrollyCase(BrollyCase brollyCase);
+
+    // 특정 케이스에 비어있는 우산 개수를 반환함.
     @Query("SELECT COUNT(*) FROM BrollyHolder bh WHERE bh.brollyCase = :brollyCase AND bh.brolly IS NULL")
     Integer getEmptyHolderCount(@Param("brollyCase") BrollyCase brollyCase);
 
+    // 특정 케이스에 있는 우산 개수를 반환함.
     @Query("SELECT COUNT(*) FROM BrollyHolder bh WHERE bh.brollyCase = :brollyCase AND bh.brolly IS NOT NULL")
     Integer getBrollyCountInHolder(BrollyCase brollyCase);
 

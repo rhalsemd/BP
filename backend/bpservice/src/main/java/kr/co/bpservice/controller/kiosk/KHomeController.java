@@ -10,10 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -27,6 +24,11 @@ public class KHomeController {
     KHomeService kHomeService;
 
     // 특정 키오스크에 잔여 우산, 총 홀더의 개수를 반환하는 메소드
+    @GetMapping("/brolly/{caseId}")
+    @Operation(description = "키오스크 지점에 해당하는 잔여 우산 조회")
+    public ResponseEntity<?> getBrollyCount(@PathVariable("caseId") Integer caseId){
+        return new ResponseEntity<>(kHomeService.getBrollyCount(caseId), HttpStatus.OK);
+    }
 
 
     @GetMapping("/kiosk-geo")
