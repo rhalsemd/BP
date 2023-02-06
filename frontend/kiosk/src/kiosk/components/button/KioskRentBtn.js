@@ -40,7 +40,6 @@ const RentBtnTextBox = css`
 const KioskRentBtn = (rentCnt) => {
   const { id } = useSelector((store) => store)
 
-  console.log(rentCnt.rentCnt)
   const navigate = useNavigate();
   const KioskRentMove = () => {
     navigate(`/kiosk/${id[0]}/rent`)

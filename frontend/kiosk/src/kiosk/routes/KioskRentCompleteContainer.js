@@ -5,12 +5,20 @@ import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import KioskHeader from '../components/KioskHeader'
 import KioskRentCompleteSection from '../components/KioskRentCompleteSection'
+import sample from '../../sample.json'
+import KioskTTSBtn from '../components/button/KioskTTSBtn'
 
 const KioskRentStyle = css`
   box-sizing: border-box;
   width : 100vw;
   height : 100vh;
   background-color: #EEF1FF;
+
+  footer {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+  }
 `
 
 // 위에는 Emotion.js 입니다.
@@ -33,6 +41,8 @@ const KioskRentCompleteContainer = () => {
     }
   }, [])
 
+  let TTSMent = sample.rentcomplete
+
   return (
     <div css={KioskRentStyle}>
       <header>
@@ -41,6 +51,9 @@ const KioskRentCompleteContainer = () => {
       <section>
         <KioskRentCompleteSection />
       </section>
+      <footer>
+        <KioskTTSBtn data={TTSMent}/>
+      </footer>
     </div>
   )
 }
