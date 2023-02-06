@@ -11,7 +11,7 @@ const outerBox = css`
 `;
 
 const container = css`
-  width: 100%;
+  width: 100vw;
   height: 90vh;
   display: flex;
   flex-direction: column;

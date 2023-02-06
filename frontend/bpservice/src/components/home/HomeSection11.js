@@ -6,18 +6,18 @@ const outerBox = css`
 `;
 const container = css`
   width: 100vw;
-  height: 90vh;
+  height: 100vh;
   /* border: 1px black solid; */
 `;
 
-function HomeSection7() {
+function HomeSection9() {
   return (
     <div css={outerBox}>
       <div css={container}>
-        <h1>HomeSection7</h1>
+        <h1>HomeSection11</h1>
       </div>
     </div>
   );
 }
 
-export default HomeSection7;
+export default HomeSection9;
