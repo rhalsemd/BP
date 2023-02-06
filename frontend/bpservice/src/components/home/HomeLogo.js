@@ -5,12 +5,12 @@ import { useNavigate } from "react-router-dom";
 
 const outerBox = css`
   text-align: center;
+  .centerRightWing {
+    color: blue;
+  }
+  height: 100vh;
 `;
-const container = css`
-  width: 100%;
-  height: 85vh;
-  /* border: 1px black solid; */
-`;
+
 const mapIcon = css`
   top: 80vh;
   position: fixed;
@@ -186,9 +186,6 @@ function HomeLogo() {
           transform="translate(5.502 -226.269)"
         />
       </svg>
-      <button css={mapIcon} onClick={goToMap}>
-        map
-      </button>
     </div>
   );
 }

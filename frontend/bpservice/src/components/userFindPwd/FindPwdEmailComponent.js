@@ -9,6 +9,7 @@ import InputCertification from "./InputCertification";
 const inputBox = css`
   position: relative;
   margin: 10px 0;
+  width: 70vw;
 `;
 
 const inputChild = css`
@@ -21,7 +22,7 @@ const inputChild = css`
 `;
 
 const 비밀번호찾기 = css`
-  background-color: #191f28;
+  background-color: #00b8ff;
   border: none;
   color: white;
   border-radius: 5px;

@@ -3,7 +3,8 @@ import { css } from "@emotion/react";
 
 const inputBox = css`
   position: relative;
-  margin: 10px 0;
+  margin: 1% 0;
+  width: 70vw;
 `;
 
 const inputChild = css`

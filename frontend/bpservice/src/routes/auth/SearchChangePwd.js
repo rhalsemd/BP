@@ -14,9 +14,9 @@ import CheckPwdInput from "../../components/userFindChangePwd/CheckPwdInput";
 import { findPwdInfo } from "../../modules/findPwd";
 
 const loginModalStyle = css`
-  height: 40vh;
+  height: 55vh;
   width: 95vw;
-  margin: 15vh 2.5vw 19vh;
+  margin: 7.5vh 2.5vw 11.5vh;
   display: flex;
   flex-direction: column;
   justify-content: center;

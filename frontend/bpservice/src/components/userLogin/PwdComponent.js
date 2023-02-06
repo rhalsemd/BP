@@ -3,12 +3,18 @@ import { css } from "@emotion/react";
 
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 
 const inputBox = css`
   position: relative;
-  margin: 10px 0;
+  margin: 2% 0;
+  width: 70vw;
+`;
+
+const linkBtn = css`
+  position: relative;
+  width: 90vw;
+  text-align: center;
 `;
 
 const inputChild = css`
@@ -21,15 +27,15 @@ const inputChild = css`
 `;
 
 const 회원가입버튼 = css`
-  background-color: #191f28;
+  background-color: #00b8ff;
   border: none;
   color: white;
   border-radius: 5px;
   width: 100%;
   height: 35px;
   font-size: 14pt;
-  margin-top: 15px;
-  margin-bottom: 15px;
+  margin-top: 5%;
+  margin-bottom: 5%;
 `;
 
 function PwdComponent({ setInfo, info, setLoginInfo }) {
@@ -60,7 +66,7 @@ function PwdComponent({ setInfo, info, setLoginInfo }) {
 
   useEffect(() => {
     if (obj) {
-      navigation("/");
+      navigation("/bp");
     }
   }, [obj, navigation]);
 
@@ -88,10 +94,10 @@ function PwdComponent({ setInfo, info, setLoginInfo }) {
       </form>
 
       {/* 찾기 */}
-      <div css={inputBox}>
+      <div css={linkBtn}>
         <Button href="/bp/search/id">아이디 찾기</Button>|{" "}
         <Button href="/bp/search/pwd">비밀번호 찾기</Button>|{" "}
-        <Button href="/bp/signup">회원가입</Button>
+        <Button href="/bp/terms">회원가입</Button>
       </div>
     </>
   );

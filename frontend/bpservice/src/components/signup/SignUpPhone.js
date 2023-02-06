@@ -11,6 +11,7 @@ import Alert from "@mui/material/Alert";
 const inputBox = css`
   position: relative;
   margin: 5px 0;
+  width: 70vw;
 `;
 
 const inputChild = css`
@@ -23,7 +24,7 @@ const inputChild = css`
 `;
 
 const 회원가입버튼 = css`
-  background-color: #191f28;
+  background-color: #00b8ff;
   border: none;
   color: white;
   border-radius: 5px;

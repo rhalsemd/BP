@@ -2,18 +2,15 @@ import { useNavigate } from "react-router-dom";
 import styled from "../../style/MapBtn.module.css";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 
-function BackBtn() {
+function RoadViewBackBtn() {
   const navigator = useNavigate();
 
   const back = () => {
-    navigator("/bp");
+    navigator("/bp/map");
   };
 
   return (
     <>
-      {/* <button className={styled.backBtn} onClick={back}>
-        {"<"}
-      </button> */}
       <KeyboardBackspaceIcon
         className={styled.backBtn}
         onClick={back}
@@ -23,4 +20,4 @@ function BackBtn() {
   );
 }
 
-export default BackBtn;
+export default RoadViewBackBtn;
