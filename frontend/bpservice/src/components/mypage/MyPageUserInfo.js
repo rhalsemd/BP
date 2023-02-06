@@ -9,7 +9,7 @@ const firstModalStyle = css`
   margin-bottom: 2.5vh;
   border-radius: 10px;
   background-color: rgba(249, 250, 251, 0.9);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24);
+  /* box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24); */
 `;
 
 const userInfoModal = css`

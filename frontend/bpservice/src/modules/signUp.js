@@ -1,7 +1,9 @@
 import { createAction, handleActions } from "redux-actions";
-import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
-import { RestClient } from "@bootpay/server-rest-client";
+import { call, put, takeLatest } from "redux-saga/effects";
 import axios from "axios";
+
+const GET_TERMS_OF_USER = "signUp/GET_TERMS_OF_USER";
+const SET_TERMS_OF_USER = "signUp/SET_TERMS_OF_USER";
 
 const GET_CERTIFYCATION = "signUp/GET_CERTIFYCATION";
 const SET_CERTIFYCATION = "signUp/SET_CERTIFYCATION";
@@ -25,6 +27,7 @@ const SET_DONG_DATA = "signUp/SET_DONG_DATA";
 
 const CHECK_CERTIFICATION_NUM = "signUp/CHECK_CERTIFICATION_NUM";
 
+const getTermsOfUser = createAction(GET_TERMS_OF_USER, () => undefined);
 const getCertification = createAction(GET_CERTIFYCATION, (data) => data);
 const sighUpRequirement = createAction(SIGN_UP_REQUIREMENT, (data) => data);
 const getSidoData = createAction(GET_SIDO_DATA, () => undefined);
@@ -41,6 +44,25 @@ const errorCertifycationReset = createAction(
 );
 
 const API = `http://bp.ssaverytime.kr:8080`;
+
+function* getTermsOfUserFnc() {
+  try {
+    const get = yield call(() => {
+      return axios({
+        method: "get",
+        url: `${API}/api/terms/content`,
+      });
+    });
+
+    if (get.status === 200) {
+      yield put({
+        type: SET_TERMS_OF_USER,
+        content: get.data.content,
+        privacyContent: get.data.privacyContent,
+      });
+    }
+  } catch (e) {}
+}
 
 // 인증번호 요청 saga
 function* getCertifi(data) {
@@ -184,12 +206,20 @@ export function* certifiSaga() {
   yield takeLatest(GET_GUGUN_DATA, getGugunFnc);
   yield takeLatest(GET_DONG_DATA, getDongFnc);
   yield takeLatest(CHECK_CERTIFICATION_NUM, checkCertifiNumFnc);
+  yield takeLatest(GET_TERMS_OF_USER, getTermsOfUserFnc);
 }
 
 const initialState = { sido: [], gugun: [], dong: [] };
 
 const signUpReducer = handleActions(
   {
+    [SET_TERMS_OF_USER]: (state, action) => {
+      return {
+        ...state,
+        content: action.content,
+        privacyContent: action.privacyContent,
+      };
+    },
     [SET_CERTIFYCATION]: (state, action) => {
       return { ...state, isCertifyNum: action.success };
     },
@@ -225,6 +255,7 @@ const signUpReducer = handleActions(
 );
 
 export const userInfo = {
+  getTermsOfUser,
   getCertification,
   sighUpRequirement,
   getSidoData,

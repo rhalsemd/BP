@@ -2,13 +2,39 @@
 import { css } from "@emotion/react";
 import { useSelector } from "react-redux";
 
+import homeIntro2 from "../../style/homeIntro2.png";
+
 const outerBox = css`
   text-align: center;
-  margin-bottom: 15%;
-`;
-const container = css`
-  width: 100%;
-  height: 15vh;
+  margin-bottom: 5%;
+
+  @media (min-width: 1100px) {
+    .logo {
+      width: 350px;
+    }
+  }
+
+  @media (max-width: 1100px) {
+    .logo {
+      width: 300px;
+    }
+  }
+  @media (max-width: 900px) {
+    .logo {
+      width: 200px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .logo {
+      width: 150px;
+    }
+  }
+  @media (max-width: 500px) {
+    .logo {
+      width: 100px;
+    }
+  }
 `;
 
 function HomeIntro() {
@@ -16,12 +42,7 @@ function HomeIntro() {
 
   return (
     <div css={outerBox}>
-      <div css={container}>
-        <h1 style={{ fontSize: "3.7rem", marginBottom: "0" }}>비오는 날엔</h1>
-        <h1 style={{ color: "#00b8ff", fontSize: "3.2rem", marginTop: "0" }}>
-          BP
-        </h1>
-      </div>
+      <img src={homeIntro2} className="logo" />
     </div>
   );
 }

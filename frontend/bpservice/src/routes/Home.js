@@ -18,6 +18,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getWhetherData } from "../modules/home";
 import FmdGoodIcon from "@mui/icons-material/FmdGood";
+import HomeSpeedDial from "../components/home/HomeSpeedDial";
 
 const mapBtn = css`
   display: inline-block;
@@ -68,6 +69,7 @@ function Home() {
       <HomeSection8 />
       <HomeSection9 />
 
+      <HomeSpeedDial />
       <footer>
         <Footer />
       </footer>

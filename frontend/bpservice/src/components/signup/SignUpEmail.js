@@ -4,6 +4,7 @@ import { css } from "@emotion/react";
 import { connect } from "react-redux";
 import { userInfo } from "../../modules/signUp";
 import Alert from "@mui/material/Alert";
+import { useNavigate } from "react-router-dom";
 
 const inputBox = css`
   position: relative;
@@ -32,6 +33,8 @@ const 확인버튼 = css`
 `;
 
 function SignUpEmail({ info, setInfo, sighUpRequirement }) {
+  const navigation = useNavigate();
+
   // email 정규 표현식
   const emailRegExp =
     /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
@@ -58,6 +61,10 @@ function SignUpEmail({ info, setInfo, sighUpRequirement }) {
 
   const setSignUp = (e) => {
     sighUpRequirement(info);
+  };
+
+  const back = () => {
+    navigation("/bp");
   };
 
   return (
@@ -124,6 +131,14 @@ function SignUpEmail({ info, setInfo, sighUpRequirement }) {
             회원가입
           </button>
         ) : null}
+
+        <button
+          onClick={back}
+          css={확인버튼}
+          style={{ backgroundColor: "lightgray", color: "black" }}
+        >
+          뒤로가기
+        </button>
       </div>
     </div>
   );
