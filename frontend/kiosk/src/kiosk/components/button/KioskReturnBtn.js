@@ -39,9 +39,9 @@ const ReturnBtnTextBox = css`
 `
 
 
-const KioskReturnBtn = () => {
+const KioskReturnBtn = (returnCnt) => {
   const { id } = useSelector((store) => store);
-  
+
   const navigate = useNavigate();
   const KioskReturnMove = () => {
     navigate(`/kiosk/${id[0]}/return`)
@@ -49,10 +49,10 @@ const KioskReturnBtn = () => {
 
   return (
     <div css={KioskReturnBtnDiv} onClick={KioskReturnMove}>
-      <img css={ReturnBtnStyle} src={ReturnBtn} alt="ReturnBtn"/>
+      <img css={ReturnBtnStyle} src={ReturnBtn} alt="ReturnBtn" />
       <div css={ReturnBtnTextBox}>
         <p className='title'>반납</p>
-        <p className='content'>(반납가능 : 1개)</p>
+        <p className='content'>(반납가능 : {returnCnt.returnCnt}개)</p>
       </div>
     </div>
   );

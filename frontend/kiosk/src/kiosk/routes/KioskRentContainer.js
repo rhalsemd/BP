@@ -4,14 +4,22 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import KioskTTSBtn from '../components/button/KioskTTSBtn'
 import KioskHeader from '../components/KioskHeader'
 import KioskRentSection from '../components/KioskRentSection'
+import sample from '../../sample.json'
 
 const KioskRentStyle = css`
   box-sizing: border-box;
   width : 100vw;
   height : 100vh;
   background-color: #EEF1FF;
+
+  footer {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+  }
 `
 
 // 위에는 Emotion.js 입니다.
@@ -63,6 +71,8 @@ const KioskRentContainer = () => {
     getPayConfirm();
   }, [isconfirm])
 
+  let TTSMent = sample.rent
+
   return (
     <div css={KioskRentStyle}>
       <header>
@@ -71,6 +81,9 @@ const KioskRentContainer = () => {
       <section>
         <KioskRentSection />
       </section>
+      <footer>
+        <KioskTTSBtn data={TTSMent}/>
+      </footer>
     </div>
   )
 }
