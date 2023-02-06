@@ -1,14 +1,25 @@
 package kr.co.bpservice.controller.admin;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
+import kr.co.bpservice.util.auth.dto.AdminRequestDto;
+import kr.co.bpservice.util.auth.dto.TokenDto;
+import kr.co.bpservice.util.auth.service.AuthService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Admin Login", description = "관리자 로그인 API")
 @RequestMapping("/api/admin")
 @RequiredArgsConstructor
 @RestController
+@CrossOrigin("*")
 public class ALoginController {
+
+    private final AuthService authService;
+
+    @PostMapping("/login")
+    public ResponseEntity<TokenDto> adminLogin(@RequestBody AdminRequestDto requestDto, HttpServletRequest request) {
+        return ResponseEntity.ok(authService.adminLogin(requestDto, request));
+    }
 }

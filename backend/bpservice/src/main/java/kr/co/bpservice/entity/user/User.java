@@ -52,6 +52,5 @@ public class User extends Person {
         this.sigungu = sigungu;
         this.dong = dong;
         this.email = email;
-
     }
 }
