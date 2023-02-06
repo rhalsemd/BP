@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 
 @Tag(name = "Terms", description = "이용 약관 API")
 @RequestMapping("/api/terms")
@@ -22,8 +24,8 @@ public class TermsController {
 
     @GetMapping("/content")
     @Operation(description = "회원가입에 필요한 이용약관 내용")
-    public ResponseEntity<String> getContent() {
-        String content = termsService.getContent();
-        return new ResponseEntity<>(content, HttpStatus.OK);
+    public ResponseEntity<Map<String, String>> getContent() {
+        Map<String, String> map = termsService.getContent();
+        return new ResponseEntity<>(map, HttpStatus.OK);
     }
 }
