@@ -5,6 +5,9 @@ import KioskRentBtn from './button/KioskRentBtn'
 import KioskReturnBtn from './button/KioskReturnBtn'
 import KioskWeather from './weather/KioskWeather'
 import KioskRemoveEventListener from './removeEvent/KioskRemoveEventListener'
+import axios from 'axios'
+import { useSelector } from 'react-redux'
+import { useState } from 'react'
 
 const KioskSectionStyle = css`
   display: flex;
@@ -46,12 +49,29 @@ const KioskButtons = css`
 // 밑에는 JSX 입니다.
 
 const KioskHomeSection = () => {
+  const { id } = useSelector((store) => store);
+  const [rentCnt, setRentCnt] = useState(0);
+  const [returnCnt, setReturnCnt] = useState(0);
+
+  const BrollyURL = `http://192.168.100.79:8080/api/kiosk/home/brolly/${id}`
+  axios({
+    method: 'GET',
+    url: BrollyURL, 
+  })
+  .then((res) => {
+    setRentCnt(res.data.brollyCnt)
+    setReturnCnt(res.data.emptyCnt)
+  })
+  .catch((err) => {
+    console.log(err)
+  })
+
   return (
     <div css={KioskSectionStyle}>
       <div css={KioskButtons}>
-        <KioskRentBtn/>
+        <KioskRentBtn rentCnt={rentCnt}/>
         <KioskRemoveEventListener />
-        <KioskReturnBtn/>
+        <KioskReturnBtn returnCnt={returnCnt}/>
       </div>
       <KioskWeather/>
     </div>

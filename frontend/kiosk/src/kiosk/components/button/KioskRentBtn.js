@@ -37,9 +37,10 @@ const RentBtnTextBox = css`
 `
 
 // 컴포넌트 시작
-const KioskRentBtn = () => {
+const KioskRentBtn = (rentCnt) => {
   const { id } = useSelector((store) => store)
 
+  console.log(rentCnt.rentCnt)
   const navigate = useNavigate();
   const KioskRentMove = () => {
     navigate(`/kiosk/${id[0]}/rent`)
@@ -50,7 +51,7 @@ const KioskRentBtn = () => {
       <img css={RentBtnStyle} src={RentBtn} alt="RentBtn" />
       <div css={RentBtnTextBox}>
         <p className='title'>대여</p>
-        <p className='content'>(대여가능 : 1개)</p>
+        <p className='content'>(대여가능 : {rentCnt.rentCnt}개)</p>
       </div>
     </div>
   );
