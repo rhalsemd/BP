@@ -1,7 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { postAdminLogin } from "../../modules/loginAdmin";
 const loginModalStyle = css`
   height: 40vh;
   width: 90vw;
@@ -71,9 +73,22 @@ const 회원가입버튼 = css`
 `;
 
 export default function LoginModal() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const 로그인 = useSelector((state) => state.loginAdminReucer.success);
+
   const [id, setId] = useState("");
   const [pwd, setPwd] = useState("");
-  const 어드민로그인 = () => {};
+
+  const 어드민로그인 = (e) => {
+    e.preventDefault();
+    dispatch(postAdminLogin({ id, pwd }));
+  };
+
+  useEffect(() => {
+    if (로그인) navigate("/admin/total-income");
+  }, [로그인]);
+
   return (
     <div css={loginModalStyle}>
       <h1 css={{ color: "#646e7b" }}>ADMIN</h1>
@@ -97,10 +112,11 @@ export default function LoginModal() {
             type="password"
             name="password"
             placeholder="비밀번호"
+            onChange={(e) => setPwd(e.target.value)}
           />
           <label>비밀번호</label>
         </div>
-        <button onClick={() => 어드민로그인()} css={회원가입버튼}>
+        <button onClick={(e) => 어드민로그인(e)} css={회원가입버튼}>
           <span css={{ fontWeight: "bolder" }}>로그인</span>
         </button>
       </form>
