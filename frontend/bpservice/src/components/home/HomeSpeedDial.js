@@ -38,7 +38,7 @@ function HomeSpeedDial() {
       <div>
         <Box
           sx={{
-            height: 320,
+            height: 0,
             transform: "translateZ(0px)",
             flexGrow: 1,
           }}

@@ -25,6 +25,9 @@ import FmdGoodIcon from "@mui/icons-material/FmdGood";
 import HomeSpeedDial from "../components/home/HomeSpeedDial";
 import { gsap, ScrollTrigger } from "gsap/all";
 
+import section2 from "../style/section2.png";
+import section4 from "../style/section4.png";
+
 const mapBtn = css`
   display: inline-block;
   height: 90vh;
@@ -46,31 +49,39 @@ const 임시com2 = css`
   position: sticky;
   height: 90vh;
   top: 0;
-  background-color: blue;
+  background: url(${section2});
+  background-size: cover;
 `;
 const 임시com3 = css`
   position: sticky;
   height: 90vh;
   top: 0;
-  background-color: yellow;
+  background-color: #f9fafb;
 `;
 const 임시com4 = css`
   position: sticky;
   height: 90vh;
   top: 0;
-  background-color: tomato;
+  background: url(${section4});
+  background-size: cover;
+`;
+const 임시com5a = css`
+  position: sticky;
+  height: 90vh;
+  top: 0;
+  background-color: #f9fafb;
 `;
 const 임시com5 = css`
   position: sticky;
   height: 90vh;
   top: 0;
-  background-color: hotpink;
+  background: linear-gradient(#f9fafb, black);
 `;
 const 임시com6 = css`
   position: sticky;
   height: 100vh;
   top: 0;
-  background-color: red;
+  background-color: black;
   display: flex;
 `;
 const 임시com7 = css`
@@ -128,7 +139,7 @@ function Home() {
   }, []);
 
   return (
-    <div>
+    <div style={{ height: "100%" }}>
       <header>
         <Nav />
       </header>
@@ -147,10 +158,10 @@ function Home() {
         <div css={임시com3}>
           <HomeSection3 />
         </div>
-        <div css={임시com3}>
+        <div css={임시com4}>
           <HomeSection4 />
         </div>
-        <div css={임시com4}>
+        <div css={임시com5a}>
           <HomeSection5 />
         </div>
         <div css={임시com5}>
@@ -168,45 +179,49 @@ function Home() {
         <div
           css={{
             backgroundColor: "black",
-            opacity: 0.3,
           }}
         >
           <HomeSection8 />
         </div>
+
         <div
           css={{
-            backgroundColor: "blue",
-            opacity: 0.3,
+            background: [
+              "linear-gradient(to right,black, rgba(249, 250, 251, 0.9))",
+            ],
           }}
         >
           <HomeSection9 />
         </div>
         <div
           css={{
-            backgroundColor: "green",
-            opacity: 0.3,
+            backgroundColor: "rgba(249, 250, 251, 0.9)",
           }}
         >
           <HomeSection10 />
         </div>
         <div
           css={{
-            backgroundColor: "red",
-            opacity: 0.3,
+            backgroundColor: "rgba(249, 250, 251, 0.9)",
           }}
         >
           <HomeSection11 />
         </div>
         <div
           css={{
-            backgroundColor: "black",
-            opacity: 0.3,
+            background: [
+              "linear-gradient( to right,rgba(249, 250, 251, 0.9),black)",
+            ],
           }}
         >
           <HomeSection12 />
         </div>
       </div>
-      <div>
+      <div
+        css={{
+          backgroundColor: "black",
+        }}
+      >
         <HomeSection13 />
       </div>
 

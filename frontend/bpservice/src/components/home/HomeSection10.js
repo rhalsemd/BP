@@ -1,20 +1,47 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
-const outerBox = css`
-  text-align: center;
-`;
+import kiosk from "../../style/kiosk.png";
+import kiosk2 from "../../style/kiosk2.png";
+
 const container = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100vw;
-  height: 100vh;
-  /* border: 1px black solid; */
+  height: 90vh;
+`;
+
+const phoneStyle = css`
+  width: 70vw;
+  height: 24vh;
+  position: relative;
+`;
+
+const phone1Style = css`
+  position: absolute;
+  width: 60vw;
+  height: 16.3vh;
+  margin-bottom: 4vh;
+  border-radius: 8px;
+`;
+
+const fontStyle = css`
+  position: absolute;
+  color: black;
+  text-align: center;
+  top: 60%;
+  font-size: 2rem;
+  font-weight: 900;
 `;
 
 function HomeSection9() {
   return (
-    <div css={outerBox}>
+    <div>
       <div css={container}>
-        <h1>HomeSection10</h1>
+        <img src={kiosk} alt="phone" css={phoneStyle} />
+        <img src={kiosk2} alt="phone1" css={phone1Style} />
+        <span css={fontStyle}>QR로 결제</span>
       </div>
     </div>
   );
