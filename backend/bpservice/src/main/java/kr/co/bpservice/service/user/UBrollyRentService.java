@@ -150,13 +150,12 @@ public class UBrollyRentService {
                     System.out.println("FastAPI Status code: " + responseCode);
                     throw new RuntimeException("FastAPI: Http status 코드가 200이 아닙니다.");
                 }
+                String content = get.get();
+                JSONObject jsonObject = new JSONObject(content);
             } catch (IOException e) {
                 e.printStackTrace();
                 throw new RuntimeException("IO Exception이 발생했습니다!");
             }
-
-            String content = get.get();
-            JSONObject jsonObject = new JSONObject(content);
 
             // 남은 할 일 (후순위): 이후 동작에 대한 코드도 작성해야함.
             // 사용자가 우산을 정상적으로 가져갔을 때: 그냥 넘어간다.
