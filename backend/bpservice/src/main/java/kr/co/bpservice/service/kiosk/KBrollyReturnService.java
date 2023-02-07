@@ -48,7 +48,6 @@ public class KBrollyReturnService {
 
         //결제 취소할 데이터 가져오기
         Map<String,?> cancelDataMap = brollyPayLogRepository.findPayLogForRefund(brollyRentLog.getBrolly());
-        System.out.println(cancelDataMap.keySet());
         String receiptId = cancelDataMap.get("receiptId").toString();
         String userId = cancelDataMap.get("userId").toString();
         double price = Double.parseDouble(cancelDataMap.get("price").toString());
