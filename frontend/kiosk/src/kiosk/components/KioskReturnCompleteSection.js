@@ -1,5 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
+import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { useNavigate, useParams } from 'react-router'
 import ReceiptImg from '../assets/ReceiptWhite.png'
 
 const KioskReturnReceiptStyle = css`
@@ -145,32 +148,74 @@ const KioskReturnReceipt = css`
 // 밑에는 JS 입니다.
 
 const KioskReturnCompleteSection = () => {
+  const { isBrolly } = useParams();
+  const { id } = useSelector((store) => store)
+  const navigate = useNavigate();
+  const [isReturn, setIsReturn] = useState(false);
+
+  useEffect(() => {
+    if (isBrolly == 1) {
+      setIsReturn(true)
+    }
+    setTimeout(() => {
+      navigate(`/kiosk/${id[0] || id}`)
+    }, 10000)
+  }, [isReturn])
 
   return (
     <div css={KioskReturnReceiptStyle}>
-      <div css={KioskReceiptMent}>
-          <p>반납이 완료되었습니다!</p>
-          <p>환급금액을 확인해보세요!</p>
-      </div>
-      <div css={KioskReturnReceiptView}>
-        <h1>요금 사항</h1>
-        <div css={KioskReturnReceipt}>
-          <div className='ReceiptTitle'>
-            <p className='BranchName'>구미인동점</p>
+      {isReturn ?
+        <div>
+          <div css={KioskReceiptMent}>
+            <p>우산이 정상적으로 반납되었습니다</p>
+            <p>보증금 정산내역을 확인해주세요</p>
           </div>
-          <div className='ReceiptTotal'>
-            <p className='Payment'>6,500<span>원</span></p>
-          </div>
-          <div className='ReceiptDetailView'>
-            <div className='FirstHorizon'></div>
-            <div className='ReceiptDetail'><span className='FontColorGray'>보증금</span><span>10,000원</span></div>
-            <div className='ReceiptDetail'><span className='FontColorGray'>이용 기간</span><span>2일</span></div>
-            <div className='ReceiptDetail'><span className='FontColorGray'>이용 금액</span><span>3,500원</span></div>
-            <div className='SecondHorizon'></div>
-            <div className='ReceiptDetailRefunds'><span>환급 금액</span><span>6,500원</span></div>
+          <div css={KioskReturnReceiptView}>
+            <h1>요금 사항</h1>
+            <div css={KioskReturnReceipt}>
+              <div className='ReceiptTitle'>
+                <p className='BranchName'>구미인동점</p>
+              </div>
+              <div className='ReceiptTotal'>
+                <p className='Payment'>6,500<span>원</span></p>
+              </div>
+              <div className='ReceiptDetailView'>
+                <div className='FirstHorizon'></div>
+                <div className='ReceiptDetail'><span className='FontColorGray'>보증금</span><span>10,000원</span></div>
+                <div className='ReceiptDetail'><span className='FontColorGray'>이용 기간</span><span>2일</span></div>
+                <div className='ReceiptDetail'><span className='FontColorGray'>이용 금액</span><span>3,500원</span></div>
+                <div className='SecondHorizon'></div>
+                <div className='ReceiptDetailRefunds'><span>환급 금액</span><span>6,500원</span></div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+        :
+        <div>
+          <div css={KioskReceiptMent}>
+            <p>우산이 반납되지 않았습니다</p>
+            <p>반납을 다시 진행해주세요</p>
+          </div>
+          <div css={KioskReturnReceiptView}>
+            <h1>요금 사항</h1>
+            <div css={KioskReturnReceipt}>
+              <div className='ReceiptTitle'>
+                <p className='BranchName'>구미인동점</p>
+              </div>
+              <div className='ReceiptTotal'>
+                <p className='Payment'>0원</p>
+              </div>
+              <div className='ReceiptDetailView'>
+                <div className='FirstHorizon'></div>
+                <div className='ReceiptDetail'><span className='FontColorGray'>보증금</span><span>미환급</span></div>
+                <div className='ReceiptDetail'><span className='FontColorGray'>이용 기간</span><span>{parseInt(2)}</span></div>
+                <div className='ReceiptDetail'><span className='FontColorGray'>이용 금액</span><span>{parseInt(2) * 1000}</span></div>
+                <div className='SecondHorizon'></div>
+                <div className='ReceiptDetailRefunds'><span>환급 금액</span><span>0원</span></div>
+              </div>
+            </div>
+          </div>
+        </div>}
     </div>
   )
 }

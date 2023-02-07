@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router';
 
-const KioskRentSectionCompleteStyle = css`
+const KioskRentSectionGuideStyle = css`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -19,7 +19,7 @@ const KioskRentSectionCompleteStyle = css`
     font-size: 32px;
   }
 
-  .KioskRentSectionCompleteHolderBtn {
+  .KioskRentSectionGuideHolderBtn {
     width: 600px;
     height: 150px;
     background-color: #B1B2FF;
@@ -50,30 +50,34 @@ const KioskRentSectionCompleteStyle = css`
 // 위에는 Emotion.js 입니다.
 // 밑에는 JS 입니다.
 
-const KioskRentCompleteSection = () => {
-  const { isBrolly } = useParams();
-  const { id } = useSelector((store) => store)
+const KioskRentGuideSection = () => {
   const navigate = useNavigate();
-  const [ isRent, setIsRent ] = useState(false);
+  const { id } = useSelector((store) => store)
+  // const { isBrolly } = useParams();
+  const { holderNum } = useParams();
 
   useEffect(() => {
-    console.log(isBrolly)
-    if (isBrolly == 1) {
-      setIsRent(true)
-    }
     setTimeout(() => {
-      navigate(`/kiosk/${id[0] || id}`)
-    }, 20000)
-  }, [isRent])
+  //     axios({
+  //       method: 'GET',
+  //       url: "http://localhost:3001/posts"
+  //     }).then((res) => setIsBrolly(res.data[0].isBrolly))
+      console.log(id)
+      console.log(id[0])
+      navigate(`/kiosk/${id[0] || id}/rent/complete/${holderNum}/${parseInt(0)}`)
+    }, 5000)
+  })
+
+
 
   return (
-    <div css={KioskRentSectionCompleteStyle}>
-      <div className='KioskRentSectionCompleteHolderBtn'>
-        {isRent ? <span>감사합니다.</span> : <span>우산을 가져가지 않았습니다.</span>}
+    <div css={KioskRentSectionGuideStyle}>
+      <div className='KioskRentSectionGuideHolderBtn'>
+        <span>{holderNum}번 홀더가 열렸습니다</span>
       </div>
-      {isRent ? <span className='KioskRentSectionCompleteGuide'>또 이용해주세요</span> : <span className='KioskRentSectionCompleteGuide'>환불내역을 확인해주세요</span>}
+      <span className='KioskRentSectionCompleteGuide'>아직 우산이 있어요!</span>
     </div>
   )
 }
 
-export default KioskRentCompleteSection
+export default KioskRentGuideSection;

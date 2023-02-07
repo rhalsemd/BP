@@ -2,11 +2,9 @@
 import { css } from '@emotion/react'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import KioskHeader from '../components/KioskHeader'
 import KioskRentCompleteSection from '../components/KioskRentCompleteSection'
-import sample from '../../sample.json'
-import KioskTTSBtn from '../components/button/KioskTTSBtn'
 
 const KioskRentStyle = css`
   box-sizing: border-box;
@@ -33,14 +31,12 @@ const KioskRentCompleteContainer = () => {
   const seconds = 60 * miliUnit
   useEffect(() => {
     let myTimer = setTimeout(() => {
-      navigate(`/kiosk/${id[0]}`)
+      navigate(`/kiosk/${id || id[0]}`)
     }, seconds)
     return () => {
       clearTimeout(myTimer)
     }
   }, [])
-
-  let TTSMent = sample.rentcomplete
 
   return (
     <div css={KioskRentStyle}>
@@ -50,9 +46,6 @@ const KioskRentCompleteContainer = () => {
       <section>
         <KioskRentCompleteSection />
       </section>
-      <footer>
-        <KioskTTSBtn data={TTSMent} />
-      </footer>
     </div>
   )
 }
