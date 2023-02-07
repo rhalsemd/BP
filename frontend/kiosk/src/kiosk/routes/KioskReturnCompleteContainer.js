@@ -2,7 +2,7 @@
 import { css } from '@emotion/react'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import KioskHeader from '../components/KioskHeader'
 import KioskReturnCompleteSection from '../components/KioskReturnCompleteSection'
 
@@ -18,6 +18,7 @@ const KioskReturnReceiptStyle = css`
 const KiosktReturnCompleteContainer = () => {
   
   const { id } = useSelector((store) => store);
+  const { holderId } = useParams();
   const navigate = useNavigate();
   
   // 홈화면으로

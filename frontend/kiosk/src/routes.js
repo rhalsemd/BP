@@ -6,7 +6,7 @@ import KioskReturnCameraContainer from './kiosk/routes/KioskReturnCameraContaine
 import KioskReturnGuideContainer from './kiosk/routes/KioskReturnGuideContainer'
 import KioskReturnCompleteContainer from './kiosk/routes/KioskReturnCompleteContainer'
 import KioskFixingContainer from './kiosk/routes/KioskFixingContainer'
-import KioskTTS from './kiosk/components/tts/KioskTTS'
+import SpeechButton from './kiosk/components/tts/SpeechButton'
 
 const routes = [
   {
@@ -18,7 +18,7 @@ const routes = [
     element: <KioskRentContainer />
   },
   {
-    path: '/kiosk/:id/rent/complete',
+    path: '/kiosk/:id/rent/complete/:holderId',
     element: <KioskRentCompleteContainer />
   },
   {
@@ -34,7 +34,7 @@ const routes = [
     element: <KioskReturnGuideContainer />
   },
   {
-    path: '/kiosk/:id/return/complete',
+    path: '/kiosk/:id/return/complete/:holderId',
     element: <KioskReturnCompleteContainer />
   },
   {
@@ -42,8 +42,8 @@ const routes = [
     element: <KioskFixingContainer />
   },
   {
-    path: '/kiosk/:id/test1',
-    element: <KioskTTS />
+    path: '/kiosk/:id/SpeechButton',
+    element: <SpeechButton />
   },
 ]
 

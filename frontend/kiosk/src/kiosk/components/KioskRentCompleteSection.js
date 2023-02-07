@@ -2,6 +2,7 @@
 import { css } from '@emotion/react'
 import axios from 'axios';
 import { useEffect, useState } from 'react'
+import { useParams } from 'react-router';
 
 const KioskRentSectionCompleteStyle = css`
   display: flex;
@@ -50,6 +51,8 @@ const KioskRentSectionCompleteStyle = css`
 
 const KioskRentCompleteSection = () => {
   const [isBrolly, setIsBrolly] = useState(false);
+  const { holderId } = useParams();
+  console.log(holderId)
 
   useEffect(() => {
     setTimeout(() => {
@@ -63,7 +66,7 @@ const KioskRentCompleteSection = () => {
   return (
     <div css={KioskRentSectionCompleteStyle}>
       <div className='KioskRentSectionCompleteHolderBtn'>
-        {isBrolly ? <span>좋은 하루 되세요</span> : <span>5번 홀더가 열렸습니다</span>}
+        {isBrolly ? <span>좋은 하루 되세요</span> : <span>{holderId}번 홀더가 열렸습니다</span>}
       </div>
         {isBrolly ? <span className='KioskRentSectionCompleteGuide'>홀더에 우산이 없네요!</span> : <span className='KioskRentSectionCompleteGuide'>아직 우산이 있어요!</span>}
     </div>
