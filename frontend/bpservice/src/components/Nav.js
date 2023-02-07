@@ -11,6 +11,8 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import MenuIcon from "@mui/icons-material/Menu";
+import logo from "../style/logo.png";
 
 import LogoutIcon from "@mui/icons-material/Logout";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
@@ -139,19 +141,17 @@ export default function Nav() {
 
   return (
     <div css={divStyle}>
-      <h2 onClick={goToHome} style={{ cursor: "pointer" }}>
-        BP
-      </h2>
+      <img
+        src={logo}
+        css={{
+          height: "5.5vh",
+          width: "11vh",
+          marginLeft: "1.5vh",
+          marginTop: "1.5vh",
+        }}
+      />
       <Button onClick={toggleDrawer("right", true)} height="30">
-        <p
-          css={{
-            fontSize: "1.5rem",
-            color: "black",
-            fontWeight: "bolder",
-          }}
-        >
-          {"\u2261"}
-        </p>
+        <MenuIcon sx={{ fontSize: "35px", color: "black" }} />
       </Button>
       <Drawer
         anchor={"right"}

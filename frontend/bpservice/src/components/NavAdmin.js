@@ -16,16 +16,45 @@ import BarChartIcon from "@mui/icons-material/BarChart";
 import UmbrellaIcon from "@mui/icons-material/Umbrella";
 import AccountCircleTwoToneIcon from "@mui/icons-material/AccountCircleTwoTone";
 import LogoutTwoToneIcon from "@mui/icons-material/LogoutTwoTone";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import logo from "../style/logo.png";
+import { useDispatch, useSelector } from "react-redux";
+import { adminLogout } from "../modules/loginAdmin";
 
 const divStyle = css`
   display: flex;
   justify-content: space-between;
   height: 8vh;
 `;
+
 export default function Nav() {
+  // const useSelector = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const url = useLocation().pathname == "/admin";
+  const objString = localStorage.getItem("login-admin-token");
+  const 로그인 = useSelector((state) => state.loginAdminReucer.success);
+
+  React.useEffect(() => {
+    if (!로그인 && !url) {
+      alert("로그인이 필요합니다");
+      navigate("/admin");
+    }
+  }, [로그인]);
+
+  React.useEffect(() => {
+    const obj = JSON.parse(objString);
+    if (!url) {
+      if (Date.now() > obj?.expire) {
+        localStorage.removeItem("login-admin-token");
+        alert("다시 로그인해주세요.");
+        navigate("/admin");
+      }
+    }
+  }, [url]);
+
   const onClick = (index) => {
+    console.log("click");
     switch (index) {
       case 0:
         navigate("/admin/total-income");
@@ -39,6 +68,11 @@ export default function Nav() {
       default:
         break;
     }
+  };
+
+  const 로그아웃 = (e) => {
+    e.preventDefault();
+    dispatch(adminLogout());
   };
   const [state, setState] = React.useState({
     right: false,
@@ -79,20 +113,30 @@ export default function Nav() {
         ))}
       </List>
       <Divider />
-      <List>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon>{<LogoutTwoToneIcon />}</ListItemIcon>
-            <ListItemText primary={"로그아웃"} />
-          </ListItemButton>
-        </ListItem>
-      </List>
+      {objString ? (
+        <List>
+          <ListItem disablePadding>
+            <ListItemButton onClick={(e) => 로그아웃(e)}>
+              <ListItemIcon>{<LogoutTwoToneIcon />}</ListItemIcon>
+              {<ListItemText primary={"로그아웃"} />}
+            </ListItemButton>
+          </ListItem>
+        </List>
+      ) : null}
     </Box>
   );
 
   return (
     <div css={divStyle}>
-      <h2>BP</h2>
+      <img
+        src={logo}
+        css={{
+          height: "5.5vh",
+          width: "11vh",
+          marginLeft: "1.5vh",
+          marginTop: "1.5vh",
+        }}
+      />
       <Button onClick={toggleDrawer("right", true)} height="30">
         <MenuIcon sx={{ fontSize: "35px", color: "black" }} />
       </Button>
