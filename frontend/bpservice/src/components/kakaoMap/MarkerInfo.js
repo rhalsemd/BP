@@ -23,13 +23,15 @@ function MarkerInfo({ mapStore, isClickMarker }) {
         <div className={styled.outerBox}>
           <div className={styled.infoBox}>
             <div className={styled.content}>
-              <h2>위치</h2>
-              <h4>{title}</h4>
+              <p style={{ fontSize: "1.4rem", fontWeight: "800" }}>위치</p>
+              <p style={{ fontWeight: "600" }}>{title}</p>
             </div>
 
             <div className={styled.content}>
-              <h2>우산</h2>
-              <h4>{`${brollyCount} / ${brollyTotalCount}`} </h4>
+              <p style={{ fontSize: "1.4rem", fontWeight: "800" }}>우산</p>
+              <p style={{ fontWeight: "600" }}>
+                {`${brollyCount} / ${brollyTotalCount}`}{" "}
+              </p>
             </div>
             <button className={styled.RoadView} onClick={RoadView}>
               로드뷰

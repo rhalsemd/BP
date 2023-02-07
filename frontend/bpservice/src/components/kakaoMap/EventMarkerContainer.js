@@ -77,8 +77,8 @@ function EventMarkerContainer({
                 </div>
                 <div className={styled.desc}>
                   <div>
-                    <h2>남은 우산 수 : {position.brollyCount}</h2>
-                    <h2>전체 우산 수 : {position.brollyTotalCount}</h2>
+                    <p>남은 우산 수 : {position.brollyCount}</p>
+                    <p>전체 우산 수 : {position.brollyTotalCount}</p>
                   </div>
 
                   <div>

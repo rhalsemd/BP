@@ -3,6 +3,7 @@ import { css } from "@emotion/react";
 
 import { useEffect, useRef } from "react";
 import { connect } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { findPwdInfo } from "../../modules/findPwd";
 import InputCertification from "./InputCertification";
 
@@ -30,6 +31,19 @@ const 비밀번호찾기 = css`
   height: 35px;
   font-size: 14pt;
   margin-top: 15px;
+  font-weight: 600;
+`;
+
+const 취소버튼 = css`
+  background-color: "lightgray";
+  border: none;
+  color: black;
+  border-radius: 5px;
+  width: 100%;
+  height: 35px;
+  font-size: 14pt;
+  margin-top: 15px;
+  font-weight: 600;
 `;
 
 function FindPwdEmailComponent({
@@ -39,6 +53,7 @@ function FindPwdEmailComponent({
   setFirstSuccessCertificationReset,
 }) {
   const inputRef = useRef(null);
+  const navigation = useNavigate();
 
   const emailOnChange = (e) => {
     const inputValue = e.target.value;
@@ -78,6 +93,10 @@ function FindPwdEmailComponent({
     setFirstSuccessCertificationReset();
   };
 
+  const cencel = () => {
+    navigation("/bp");
+  };
+
   return (
     <div css={inputBox}>
       <input
@@ -112,6 +131,10 @@ function FindPwdEmailComponent({
             인증번호 받기
           </button>
         )}
+
+        <button onClick={cencel} css={취소버튼}>
+          취소
+        </button>
       </div>
     </div>
   );

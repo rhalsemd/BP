@@ -65,7 +65,7 @@ function SeachId({ infoErrorReset }) {
 
   useEffect(() => {
     if (success) {
-      navigation("/bp/search/id/result");
+      navigation("/bp/search/id/result", { state: { isSearchId: false } });
     } else if (isCertifiNum) {
       setInfo((info) => {
         return { ...info, isSend: true };

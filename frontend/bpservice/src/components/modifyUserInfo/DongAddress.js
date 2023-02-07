@@ -87,7 +87,11 @@ function DongAddress({
       </div>
       {/* 수정 버튼 */}
       {info.sido && info.sigugun && info.dong ? (
-        <button onClick={goToModify} css={회원정보수정버튼}>
+        <button
+          onClick={goToModify}
+          css={회원정보수정버튼}
+          style={{ marginTop: "2vh" }}
+        >
           수정하기
         </button>
       ) : null}

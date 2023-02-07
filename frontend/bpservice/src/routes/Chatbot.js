@@ -1,11 +1,28 @@
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
+
 import React from "react";
 
 import { ChatBotComponent } from "react-chatbot-with-text-and-speech";
 import "react-chatbot-with-text-and-speech/dist/index.css";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+const 뒤로가기 = css`
+  background-color: #00b8ff;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  width: 80%;
+  height: 35px;
+  font-size: 14pt;
+  margin-bottom: 10px;
+  margin-left: 10%;
+`;
 
 const Chatbot = () => {
   const { data } = useSelector(({ chatbot }) => chatbot);
+  const navigation = useNavigate();
 
   const options = {
     botImageUrl:
@@ -25,11 +42,18 @@ const Chatbot = () => {
       };
     }
   };
+
+  const back = () => {
+    navigation(-1);
+  };
   return (
     <>
       <div style={{ height: "100%", width: "97vw" }}>
         <ChatBotComponent options={options} handleMessage={handleMessage} />
       </div>
+      <button onClick={back} css={뒤로가기}>
+        뒤로가기
+      </button>
     </>
   );
 };

@@ -11,6 +11,7 @@ import { getUserInfo } from "../../modules/mypage";
 import MyPageUserInfo from "../../components/mypage/MyPageUserInfo";
 import MyPageUsage from "../../components/mypage/MyPageUsage";
 import MyPageUserBtn from "../../components/mypage/MyPageUserBtn";
+import { useNavigate } from "react-router-dom";
 
 const myPageArea = css`
   width: 100%;
@@ -27,14 +28,19 @@ const title = css`
 
 function MyPage() {
   const dispatch = useDispatch();
+  const navigation = useNavigate();
   const { userInfo = "" } = useSelector(({ mypageReducer }) => mypageReducer);
 
   const { userName, sido, sigungu, dong } = userInfo;
+  const objString = localStorage.getItem("login-token");
 
   // 회원정보 - 아직 구현 X
   useEffect(() => {
     dispatch(getUserInfo());
-  }, [dispatch]);
+    if (!objString) {
+      navigation("/bp/login");
+    }
+  }, [dispatch, objString, navigation]);
 
   return (
     <div>

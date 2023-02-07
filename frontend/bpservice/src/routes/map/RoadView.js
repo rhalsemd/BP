@@ -1,10 +1,25 @@
+import { useEffect } from "react";
 import { Roadview } from "react-kakao-maps-sdk";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import RoadViewBackBtn from "../../components/kakaoMap/RoadViewBackBtn";
 
 function RoadView() {
+  const navigation = useNavigate();
   const location = useLocation();
-  const { lat, lng } = location.state;
+
+  let lat = "";
+  let lng = "";
+
+  if (location.state) {
+    lat = location.state.lat;
+    lng = location.state.lng;
+  }
+
+  useEffect(() => {
+    if (!location.state) {
+      navigation("/bp");
+    }
+  }, [location, navigation]);
 
   return (
     <>

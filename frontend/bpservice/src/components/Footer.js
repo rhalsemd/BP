@@ -5,6 +5,7 @@ function Footer() {
   const outerBox = css`
     text-align: center;
     width: 100%;
+    height: 18vh;
   `;
   const container = css`
     display: flex;

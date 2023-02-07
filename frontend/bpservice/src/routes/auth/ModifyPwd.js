@@ -74,14 +74,20 @@ function ModifyPwd() {
     return /^(?=.*[a-z])(?=.*[0-9])(?=.*[$!@$!%*#^?&]).{8,20}$/;
   }, []);
 
+  const objString = localStorage.getItem("login-token");
+
   useEffect(() => {
+    if (!objString) {
+      navigation("/bp/login");
+    }
+
     if (error) {
       alert("현재 비밀번호가 잘못되었습니다.");
       dispatch(newPwdErrorReset());
     } else if (success) {
       navigation("/bp");
     }
-  }, [error, dispatch, success, navigation]);
+  }, [error, dispatch, success, objString, navigation]);
 
   return (
     <div>
