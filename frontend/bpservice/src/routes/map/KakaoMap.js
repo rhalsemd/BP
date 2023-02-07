@@ -3,6 +3,7 @@ import { Suspense, lazy, useEffect } from "react";
 import { useState } from "react";
 import { Map } from "react-kakao-maps-sdk";
 import { connect, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import LoadingPage from "../../components/LoadingPage";
 import { mapInfo } from "../../modules/mapStore";
 // import BackBtn from "../components/kakaoMap/BackBtn";
@@ -19,6 +20,9 @@ const EventMarkerContainer = lazy(() =>
 function KakaoMap({ getMapInfo, mapStore }) {
   const { caseInfo } = useSelector(({ mapStore }) => mapStore);
   const [isClickMarker, setIsClickMarker] = useState(false);
+  const objString = localStorage.getItem("login-token");
+
+  const navigation = useNavigate();
 
   // const positions = [
   //   {
@@ -72,9 +76,14 @@ function KakaoMap({ getMapInfo, mapStore }) {
   };
 
   useEffect(() => {
-    getMapInfo(mapLocation);
+    if (!objString) {
+      alert("로그인이 필요한 서비스입니다.");
+      navigation("/bp/login");
+    } else {
+      getMapInfo(mapLocation);
+    }
     // getLocation();
-  }, []);
+  }, [getMapInfo, mapLocation, navigation, objString]);
 
   return (
     <Suspense fallback={<LoadingPage />}>

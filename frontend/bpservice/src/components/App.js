@@ -70,7 +70,6 @@ function App() {
         <Route path="/bp/modify/pwd" element={<ModifyPwd />}></Route>
         <Route path="/bp/before/payment" element={<BeforePayment />} />
         <Route path="/bp/payment" element={<Payment />} />
-        <Route path="/404-not-found" element={<NotFound404 />} />
         <Route path="/bp/chatbot" element={<Chatbot />} />
 
         <Route path="/admin" element={<LoginAdmin />} />
@@ -79,6 +78,7 @@ function App() {
         <Route path="/admin/revenue-trend/:id" element={<RevenueTrend />} />
         <Route path="/admin/users" element={<Users />} />
         <Route path="/admin/users/:id" element={<UserLog />} />
+        <Route path="/*" element={<NotFound404 />} />
 
         {/* <Route path="/test" element={<Test />} /> */}
       </Routes>

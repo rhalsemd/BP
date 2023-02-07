@@ -58,6 +58,8 @@
   height: 75px;
   display: flex;
   justify-content: space-around;
+  font-size: 1.1rem;
+  font-weight: 900;
 }
 .desc .ellipsis {
   overflow: hidden;

@@ -1,6 +1,7 @@
 import { Bootpay } from "@bootpay/client-js";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 import { getBootpay } from "../../modules/payment";
 
 const startPay = async (dispatch) => {
@@ -82,9 +83,16 @@ const startPay = async (dispatch) => {
 };
 export default function Payment() {
   const dispatch = useDispatch();
+  const location = useLocation();
+  const navigation = useNavigate();
+
   useEffect(() => {
-    startPay(dispatch);
-  });
+    if (!location.state) {
+      navigation("/bp");
+    } else {
+      startPay(dispatch);
+    }
+  }, [navigation, dispatch, location]);
 
   return <></>;
 }

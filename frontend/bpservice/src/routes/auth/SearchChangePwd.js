@@ -5,7 +5,7 @@ import { Suspense } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { connect, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer";
 import LoadingPage from "../../components/LoadingPage";
 import Nav from "../../components/Nav";
@@ -58,16 +58,20 @@ const loginModalStyle = css`
 
 const pwdRegExp = /^(?=.*[a-z])(?=.*[0-9])(?=.*[$!@$!%*#^?&]).{8,20}$/;
 
-function SearchChangePwd({ setNewPwd }) {
+function SearchChangePwd() {
   const [info, setInfo] = useState({ pwd: "", check: "" });
   const { pwdSuccess } = useSelector(({ findPwdReducer }) => findPwdReducer);
   const navigation = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
+    if (!location.state) {
+      navigation("/bp");
+    }
     if (pwdSuccess) {
       navigation("/bp/login");
     }
-  }, [pwdSuccess, navigation]);
+  }, [pwdSuccess, navigation, location]);
 
   return (
     <div>

@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import Footer from "../../components/Footer";
 import LoadingPage from "../../components/LoadingPage";
@@ -36,6 +36,12 @@ const 버튼 = css`
 function SearchIdResultPage() {
   const { id } = useSelector(({ findIdReducer }) => findIdReducer);
   const navigation = useNavigate();
+  const location = useLocation();
+
+  let isSearchId = false;
+  if (location.state) {
+    isSearchId = location.state.isSearchId;
+  }
 
   const goToLogin = () => {
     navigation("/bp/login");
@@ -43,6 +49,12 @@ function SearchIdResultPage() {
   const goToSearchPwd = () => {
     navigation("/bp/search/pwd");
   };
+
+  useEffect(() => {
+    if (!isSearchId) {
+      navigation("/bp");
+    }
+  }, [isSearchId, navigation]);
 
   return (
     <div>

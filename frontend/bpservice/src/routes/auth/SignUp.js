@@ -15,7 +15,7 @@ import SignUpAddress from "../../components/signup/SignUpAddress";
 import SignUpEmail from "../../components/signup/SignUpEmail";
 import { userInfo } from "../../modules/signUp";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Suspense } from "react";
 import LoadingPage from "../../components/LoadingPage";
 
@@ -87,10 +87,15 @@ const loginModalStyle = css`
 
 function SignUp({ signUp, signUpFailureReset }) {
   const navigation = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
+    // 이용 약관을 먼저하고 와야지 회원가입 가능
+    if (!location.state) {
+      navigation("/bp/terms");
+    }
     if (signUp.signUpSuccess) {
-      navigation("/bp/login");
+      navigation("/bp/complete", { state: { isSignUp: false } });
     } else if (signUp.signUpFailure) {
       alert("아이디 혹은 이메일이 중복됩니다.");
       signUpFailureReset();
@@ -100,6 +105,7 @@ function SignUp({ signUp, signUpFailureReset }) {
     signUp.signUpFailure,
     signUpFailureReset,
     navigation,
+    location,
   ]);
 
   const [info, setInfo] = useState({

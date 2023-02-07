@@ -80,7 +80,7 @@ function InputCertification({
       alert("인증번호를 확인해주세요.");
       setSecondErrorReset();
     } else if (findPwdReducer.secondSuccess) {
-      navigation("/bp/search/change/pwd");
+      navigation("/bp/search/change/pwd", { state: { isSearchPwd: false } });
     }
   }, [
     findPwdReducer.secondError,

@@ -92,7 +92,7 @@ function UserToU() {
 
   const goToSignUp = () => {
     if (check.checked1 && check.checked2) {
-      navigation("/bp/signup");
+      navigation("/bp/signup", { state: { isTerms: true } });
     } else {
       alert("필수 약관에 동의해주세요.");
     }

@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer";
 import LoadingPage from "../../components/LoadingPage";
 import Nav from "../../components/Nav";
@@ -34,6 +34,7 @@ const 버튼 = css`
 
 function CompletePage() {
   const navigation = useNavigate();
+  const location = useLocation();
 
   const goToHome = () => {
     navigation("/bp");
@@ -42,6 +43,13 @@ function CompletePage() {
   const goToLogin = () => {
     navigation("/bp/login");
   };
+
+  useEffect(() => {
+    if (!location.state) {
+      navigation("/bp");
+    }
+  }, [location, navigation]);
+
   return (
     <div>
       <header>
