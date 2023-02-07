@@ -38,6 +38,8 @@ dependencies {
 	implementation 'org.json:json:20220924'//json라이브러리
 	implementation 'org.apache.httpcomponents:httpclient:4.5.13' // http통신 gradle
 	implementation 'io.github.bootpay:backend:+' //부트페이 gradle
+	implementation 'com.microsoft.onnxruntime:onnxruntime:1.13.1' //yolov5를 위한 라이브러리 2개
+	implementation 'org.openpnp:opencv:4.5.5-1'
 }
 
 tasks.named('test') {
