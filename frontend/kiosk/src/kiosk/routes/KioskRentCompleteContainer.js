@@ -2,7 +2,7 @@
 import { css } from '@emotion/react'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import KioskHeader from '../components/KioskHeader'
 import KioskRentCompleteSection from '../components/KioskRentCompleteSection'
 import sample from '../../sample.json'
@@ -26,7 +26,6 @@ const KioskRentStyle = css`
 
 const KioskRentCompleteContainer = () => {
   const { id } = useSelector((store) => store);
-
   const navigate = useNavigate();
 
   // 홈화면으로
@@ -52,7 +51,7 @@ const KioskRentCompleteContainer = () => {
         <KioskRentCompleteSection />
       </section>
       <footer>
-        <KioskTTSBtn data={TTSMent}/>
+        <KioskTTSBtn data={TTSMent} />
       </footer>
     </div>
   )
