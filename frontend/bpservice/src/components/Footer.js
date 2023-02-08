@@ -13,7 +13,7 @@ function Footer() {
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 18vh;
+    height: 100%;
     background-color: #28323c;
     color: #67707e;
     line-height: 10px;

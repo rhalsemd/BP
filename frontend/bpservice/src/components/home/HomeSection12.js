@@ -13,9 +13,7 @@ const container = css`
 function HomeSection9() {
   return (
     <div css={outerBox}>
-      <div css={container}>
-        <h1>HomeSection12</h1>
-      </div>
+      <div css={container}></div>
     </div>
   );
 }

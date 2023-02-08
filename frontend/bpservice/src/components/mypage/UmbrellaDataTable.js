@@ -7,34 +7,43 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
+import { useSelector } from "react-redux";
 
 const columns = [
-  { id: "umbrella", label: "우산 번호", minWidth: 170 },
-  { id: "umbrellaMoney", label: "금액", minWidth: 30 },
+  { id: "brollyName", label: "우산 코드", minWidth: 170 },
+  { id: "depositeMoney", label: "보증금", minWidth: 30 },
+  { id: "rentMoney", label: "사용료", minWidth: 30 },
   {
-    id: "umbrellaDate",
-    label: "날짜",
+    id: "regDt",
+    label: "대여일",
     minWidth: 170,
     align: "right",
-    format: (value) => value.toLocaleString("en-US"),
+    format: (value) => value.toLocaleString("ko-KR"),
+  },
+  {
+    id: "expDt",
+    label: "반납 기한",
+    minWidth: 170,
+    align: "right",
+    format: (value) => value.toLocaleString("ko-KR"),
+  },
+  {
+    id: "uptDt",
+    label: "반납일",
+    minWidth: 170,
+    align: "right",
+    format: (value) => value.toLocaleString("ko-KR"),
   },
 ];
 
-function createData(umbrella, umbrellaMoney, umbrellaDate) {
-  return { umbrella, umbrellaMoney, umbrellaDate };
+function createData(brollyName, depositeMoney, rentMoney, regDt, expDt, uptDt) {
+  return { brollyName, depositeMoney, rentMoney, regDt, expDt, uptDt };
 }
-
-const rows = [
-  createData("18458362", "1000", "2023-02-02"),
-  createData("23782636", "3000", "2023-01-25"),
-  createData("54048372", "4000", "2023-01-14"),
-  createData("18274827", "8000", "2023-01-10"),
-  createData("29429282", "2000", "2023-01-05"),
-];
 
 export default function UmbrellaDataTable() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const { umbrellaInfo } = useSelector(({ mypageReducer }) => mypageReducer);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -44,6 +53,29 @@ export default function UmbrellaDataTable() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
+  const rows = [];
+
+  if (umbrellaInfo) {
+    umbrellaInfo.forEach((item) => {
+      rows[rows.length] = createData(
+        item.brollyName,
+        item.depositeMoney,
+        item.expDt,
+        item.regDt,
+        item.rentMoney,
+        item.uptDt
+      );
+    });
+  }
+
+  // const rows = [
+  //   createData("18458362", "1000", "2023-02-02"),
+  //   createData("23782636", "3000", "2023-01-25"),
+  //   createData("54048372", "4000", "2023-01-14"),
+  //   createData("18274827", "8000", "2023-01-10"),
+  //   createData("29429282", "2000", "2023-01-05"),
+  // ];
 
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
@@ -65,13 +97,13 @@ export default function UmbrellaDataTable() {
           <TableBody>
             {rows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
+              .map((row, index) => {
                 return (
                   <TableRow
                     hover
                     role="checkbox"
                     tabIndex={-1}
-                    key={`${row.umbrella} - ${row.umbrellaMoney} - ${row.umbrellaDate}`}
+                    key={`${row.brollyName} - ${row.depositeMoney} - ${row.rentMoney}- ${row.regDt}- ${row.expDt}- ${row.uptDt} - ${index}`}
                   >
                     {columns.map((column) => {
                       const value = row[column.id];

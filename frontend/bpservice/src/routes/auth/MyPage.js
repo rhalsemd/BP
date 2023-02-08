@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Footer from "../../components/Footer";
 import LoadingPage from "../../components/LoadingPage";
 import Nav from "../../components/Nav";
-import { getUserInfo } from "../../modules/mypage";
+import { getUmbrellaInfo, getUserInfo } from "../../modules/mypage";
 
 import MyPageUserInfo from "../../components/mypage/MyPageUserInfo";
 import MyPageUsage from "../../components/mypage/MyPageUsage";
@@ -37,6 +37,7 @@ function MyPage() {
   // 회원정보 - 아직 구현 X
   useEffect(() => {
     dispatch(getUserInfo());
+    dispatch(getUmbrellaInfo());
     if (!objString) {
       navigation("/bp/login");
     }
