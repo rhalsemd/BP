@@ -6,7 +6,7 @@ const container = css`
   justify-content: center;
   align-items: center;
   width: 100vw;
-  height: 90vh;
+  height: 100vh;
   color: white;
   font-weight: 900;
   font-size: 2rem;

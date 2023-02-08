@@ -41,44 +41,43 @@ const testCss = css`
 
 const com1 = css`
   position: sticky;
-  height: 90vh;
+  height: 100vh;
   top: 0;
 `;
 
 const 임시com2 = css`
   position: sticky;
-  height: 90vh;
+  height: 100vh;
   top: 0;
   background: url(${section2});
   background-size: cover;
 `;
 const 임시com3 = css`
   position: sticky;
-  height: 90vh;
+  height: 100vh;
   top: 0;
   background-color: #f9fafb;
 `;
 const 임시com4 = css`
   position: sticky;
-  height: 90vh;
+  height: 100vh;
   top: 0;
   background: url(${section4});
   background-size: cover;
 `;
 const 임시com5a = css`
   position: sticky;
-  height: 90vh;
+  height: 100vh;
   top: 0;
   background-color: #f9fafb;
 `;
 const 임시com5 = css`
-  position: sticky;
-  height: 90vh;
-  top: 0;
+  position: relative;
+  height: 100vh;
   background: linear-gradient(#f9fafb, black);
 `;
 const 임시com6 = css`
-  position: sticky;
+  position: relative;
   height: 100vh;
   top: 0;
   background-color: black;
@@ -97,28 +96,30 @@ function Home() {
   const dispatch = useDispatch();
   const com7Ref = useRef();
   const triggerBox = useRef();
-  const oncScrollCom7 = (value) => {
-    console.log(1);
-  };
+
   useEffect(() => {
     if (!triggerBox) return;
 
     const 가로 = com7Ref.current.clientWidth;
     const composArry = gsap.utils.toArray(triggerBox.current.children);
+
+    // gsap.defaults({ ease: "power1", duration: 3 });
     let tl = gsap.timeline();
+
     tl = gsap.timeline({
       scrollTrigger: {
         trigger: "#section2",
         pin: true,
+        pinSpacing: true,
         scrub: 1,
         start: "top top",
-        end: `+=${가로 * 4}`,
+        end: "400vh",
       },
     });
     tl.to(composArry, {
       xPercent: -400,
-      duration: 2,
-      ease: "none",
+      duration: 3,
+      ease: "ease",
       // stagger: 3,
     });
     const option = {
@@ -167,23 +168,15 @@ function Home() {
         <div css={임시com5}>
           <HomeSection6 />
         </div>
-        <div css={임시com6} ref={com7Ref}>
-          <HomeSection7 />
-        </div>
       </div>
       <div
         ref={triggerBox}
         id="section2"
         css={{ display: "flex", overflow: "hidden" }}
       >
-        <div
-          css={{
-            backgroundColor: "black",
-          }}
-        >
-          <HomeSection8 />
+        <div css={임시com6} ref={com7Ref}>
+          <HomeSection7 />
         </div>
-
         <div
           css={{
             background: [
@@ -191,14 +184,15 @@ function Home() {
             ],
           }}
         >
-          <HomeSection9 />
+          <HomeSection8 />
         </div>
+
         <div
           css={{
-            backgroundColor: "rgba(249, 250, 251, 0.9)",
+            background: "rgba(249, 250, 251, 0.9)",
           }}
         >
-          <HomeSection10 />
+          <HomeSection9 />
         </div>
         <div
           css={{
@@ -207,14 +201,14 @@ function Home() {
             ],
           }}
         >
-          <HomeSection11 />
+          <HomeSection10 />
         </div>
         <div
           css={{
             backgroundColor: "black",
           }}
         >
-          <HomeSection12 />
+          <HomeSection11 />
         </div>
       </div>
       <div
