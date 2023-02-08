@@ -28,7 +28,7 @@ const phone1Style = css`
 
 const fontStyle = css`
   position: absolute;
-  color: black;
+  color: white;
   text-align: center;
   top: 60%;
   font-size: 2rem;

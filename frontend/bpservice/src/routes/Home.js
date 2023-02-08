@@ -16,7 +16,6 @@ import HomeSection8 from "../components/home/HomeSection8";
 import HomeSection9 from "../components/home/HomeSection9";
 import HomeSection10 from "../components/home/HomeSection10";
 import HomeSection11 from "../components/home/HomeSection11";
-import HomeSection12 from "../components/home/HomeSection12";
 import HomeSection13 from "../components/home/HomeSection13";
 import { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
@@ -83,13 +82,6 @@ const 임시com6 = css`
   background-color: black;
   display: flex;
 `;
-const 임시com7 = css`
-  position: sticky;
-  height: 90vh;
-  top: 0;
-  z-index: 900;
-  background-color: orange;
-`;
 
 function Home() {
   gsap.registerPlugin(ScrollTrigger);
@@ -100,9 +92,8 @@ function Home() {
   useEffect(() => {
     if (!triggerBox) return;
 
-    const 가로 = com7Ref.current.clientWidth;
     const composArry = gsap.utils.toArray(triggerBox.current.children);
-
+    const sectionWidth = gsap.getProperty("#section2", "width");
     // gsap.defaults({ ease: "power1", duration: 3 });
     let tl = gsap.timeline();
 
@@ -111,17 +102,18 @@ function Home() {
         trigger: "#section2",
         pin: true,
         pinSpacing: true,
-        scrub: 1,
+        scrub: 0.5,
         start: "top top",
-        end: "400vh",
+        end: () => `+=${sectionWidth * 4}`,
       },
     });
     tl.to(composArry, {
       xPercent: -400,
-      duration: 3,
+      duration: 5,
       ease: "ease",
       // stagger: 3,
     });
+
     const option = {
       enableHighAccuracy: true,
     };
@@ -145,7 +137,6 @@ function Home() {
         <Nav />
       </header>
 
-      <HomeIntro />
       <HomeLogo />
 
       <FmdGoodIcon color="primary" css={mapBtn} />
