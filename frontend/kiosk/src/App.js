@@ -8,8 +8,8 @@ import { useEffect } from 'react'
 
 function App() {
   const totalURL = window.location.href;
-  const urlSplit = totalURL.split("http://localhost:85/kiosk/");
-  // const urlSplit = totalURL.split("http://192.168.100.177:85/kiosk/");
+  // const urlSplit = totalURL.split("http://localhost:85/kiosk/");
+  const urlSplit = totalURL.split("http://192.168.100.177:85/kiosk/");
   const id = urlSplit[1].split("/");
   const dispatch = useDispatch();
 
