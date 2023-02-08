@@ -61,12 +61,12 @@ const KioskReturnMethod = css`
 
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
 
   position: absolute;
   right: 0px;
-  bottom: 15vh;
+  bottom: 17vh;
 
   ul {
     display: flex;

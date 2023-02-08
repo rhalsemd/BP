@@ -5,14 +5,17 @@ import { useEffect, useState } from 'react';
 import sample from '../../../sample.json';
 
 const KioskTTSBtnStyle = css`
-  width: 60px;
-  height: 60px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   background-color: #B1B2FF;
 
   display: flex;
   justify-content: center;
   align-items: center;
+
+  margin-bottom: 2vh;
+  margin-right: 2vw;
 `
 
 const getSpeech = (text) => {

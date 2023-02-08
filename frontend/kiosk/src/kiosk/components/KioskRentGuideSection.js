@@ -73,7 +73,7 @@ const KioskRentGuideSection = () => {
       <div className='KioskRentSectionGuideHolderBtn'>
         <span>{holderNum}번 홀더가 열렸습니다</span>
       </div>
-      <span className='KioskRentSectionCompleteGuide'>아직 우산이 있어요!</span>
+      <span className='KioskRentSectionCompleteGuide'>우산을 가져가주세요</span>
     </div>
   )
 }

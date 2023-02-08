@@ -7,6 +7,8 @@ import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
+import sample from '../../sample.json'
+import KioskTTSBtn from '../components/button/KioskTTSBtn'
 
 const KioskReturnGuideContainerStyle = css`
   display: flex;
@@ -15,6 +17,11 @@ const KioskReturnGuideContainerStyle = css`
   align-items: center;
 
   background-color: #EEF1FF;
+  footer {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+  }
 `
 
 const KioskReturnGuideContainer = () => {
@@ -58,6 +65,8 @@ const KioskReturnGuideContainer = () => {
     }
   }, [])
 
+  let TTSMent = sample.returncomplete
+
   return (
     <div css={KioskReturnGuideContainerStyle}>
       <div>
@@ -66,6 +75,9 @@ const KioskReturnGuideContainer = () => {
       <div>
         <KioskReturnGuideSection />
       </div>
+      <footer>
+        <KioskTTSBtn data={TTSMent} />
+      </footer>
     </div>
   )
 }

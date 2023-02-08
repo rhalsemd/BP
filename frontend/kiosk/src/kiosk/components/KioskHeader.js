@@ -26,7 +26,7 @@ const KioskLogo = css`
 
 const KioskLocation = css`
   margin-right: 3vw;
-  margin-top: 1vw;
+  margin-top: 3vw;
 `
 
 // 위에는 Emotion.js 입니다.
