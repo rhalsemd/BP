@@ -16,7 +16,13 @@ function Footer() {
     height: 100%;
     background-color: #28323c;
     color: #67707e;
-    line-height: 10px;
+    line-height: 0;
+    font-size: 0.8vh;
+    p {
+      height: 3vh;
+      display: block;
+      margin: 0;
+    }
   `;
 
   return (

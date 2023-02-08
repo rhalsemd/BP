@@ -23,7 +23,8 @@ const title = css`
   flex-direction: row;
   justify-content: space-around;
   margin-left: 5vw;
-  margin-bottom: 1vh;
+  margin-bottom: 2vh;
+  margin-top: 1vh;
 `;
 
 function MyPage() {

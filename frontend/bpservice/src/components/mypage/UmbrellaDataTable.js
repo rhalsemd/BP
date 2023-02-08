@@ -11,27 +11,24 @@ import { useSelector } from "react-redux";
 
 const columns = [
   { id: "brollyName", label: "우산 코드", minWidth: 170 },
-  { id: "depositeMoney", label: "보증금", minWidth: 30 },
-  { id: "rentMoney", label: "사용료", minWidth: 30 },
+  { id: "depositeMoney", label: "보증금", minWidth: 170 },
+  { id: "rentMoney", label: "사용료", minWidth: 170 },
   {
     id: "regDt",
     label: "대여일",
     minWidth: 170,
-    align: "right",
     format: (value) => value.toLocaleString("ko-KR"),
   },
   {
     id: "expDt",
     label: "반납 기한",
     minWidth: 170,
-    align: "right",
     format: (value) => value.toLocaleString("ko-KR"),
   },
   {
     id: "uptDt",
     label: "반납일",
     minWidth: 170,
-    align: "right",
     format: (value) => value.toLocaleString("ko-KR"),
   },
 ];
@@ -67,6 +64,15 @@ export default function UmbrellaDataTable() {
         item.uptDt
       );
     });
+  } else {
+    rows[rows.length] = createData(
+      "기록이 없습니다.",
+      "기록이 없습니다.",
+      "기록이 없습니다.",
+      "기록이 없습니다.",
+      "기록이 없습니다.",
+      "기록이 없습니다."
+    );
   }
 
   // const rows = [

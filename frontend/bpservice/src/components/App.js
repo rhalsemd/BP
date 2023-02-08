@@ -64,7 +64,7 @@ function App() {
           element={<SearchChangePwd />}
         ></Route>
         <Route path="/bp/map" element={<KakaoMap />}></Route>
-        <Route path="/bp/map/RoadView" element={<RoadView />} />
+        <Route path="/bp/map/roadView" element={<RoadView />} />
         <Route path="/bp/mypage" element={<MyPage />}></Route>
         <Route path="/bp/modify/user" element={<ModifyUserInfo />}></Route>
         <Route path="/bp/modify/pwd" element={<ModifyPwd />}></Route>
