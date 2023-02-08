@@ -81,6 +81,7 @@ const TakeAPictureBtn = css`
 const KioskTakeAPicture = (data) => {
   const [iscapture, setIscapture] = useState(false);
   const { id } = useParams();
+  const { holderNum } = useParams();
 
   let videoRef = useRef(null);
   let photoRef = useRef(null);
@@ -178,9 +179,9 @@ const KioskTakeAPicture = (data) => {
       url: 'http://192.168.100.79:8080/api/brolly/return',
       // url: 'http://bp.ssaverytime.kr:8080/api/auth/user/brolly/return/update/img',
       data: {
-        'brollyId': qrdata,
+        'brollyName': qrdata,
         'caseId': id,
-        'imgUrl': imgURL
+        'imgData': imgURL
       }
     })
       .then((res) => {
