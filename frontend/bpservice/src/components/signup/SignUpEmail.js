@@ -10,6 +10,7 @@ const inputBox = css`
   position: relative;
   margin: 10px 0;
   width: 70vw;
+  margin-top: 0;
 `;
 
 const inputChild = css`
@@ -36,8 +37,7 @@ function SignUpEmail({ info, setInfo, sighUpRequirement }) {
   const navigation = useNavigate();
 
   // email 정규 표현식
-  const emailRegExp =
-    /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+  const emailRegExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
 
   // email 입력
   const typeEmail = (e) => {

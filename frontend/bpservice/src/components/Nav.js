@@ -24,6 +24,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logOut } from "../modules/userLogin";
 import { useEffect } from "react";
+import { pointer, pointers } from "d3";
 
 const divStyle = css`
   display: flex;
@@ -148,7 +149,10 @@ export default function Nav() {
           width: "11vh",
           marginLeft: "1.5vh",
           marginTop: "1.5vh",
+          cursor: "pointer",
         }}
+        alt="Brolly Project"
+        onClick={goToHome}
       />
       <Button onClick={toggleDrawer("right", true)} height="30">
         <MenuIcon sx={{ fontSize: "35px", color: "black" }} />

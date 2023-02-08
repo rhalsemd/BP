@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Footer from "../../components/Footer";
 import LoadingPage from "../../components/LoadingPage";
 import Nav from "../../components/Nav";
-import { getUserInfo } from "../../modules/mypage";
+import { getUmbrellaInfo, getUserInfo } from "../../modules/mypage";
 
 import MyPageUserInfo from "../../components/mypage/MyPageUserInfo";
 import MyPageUsage from "../../components/mypage/MyPageUsage";
@@ -23,7 +23,8 @@ const title = css`
   flex-direction: row;
   justify-content: space-around;
   margin-left: 5vw;
-  margin-bottom: 1vh;
+  margin-bottom: 2vh;
+  margin-top: 1vh;
 `;
 
 function MyPage() {
@@ -37,6 +38,7 @@ function MyPage() {
   // 회원정보 - 아직 구현 X
   useEffect(() => {
     dispatch(getUserInfo());
+    dispatch(getUmbrellaInfo());
     if (!objString) {
       navigation("/bp/login");
     }

@@ -26,10 +26,7 @@ import RoadView from "../routes/map/RoadView";
 import Users from "../routes/admin/Users";
 import BeforePayment from "../routes/auth/BeforePayment";
 import WebIntro from "./WebIntro";
-import LoadingPage from "./LoadingPage";
 import Chatbot from "../routes/Chatbot";
-
-// import Test from "../../src/Test";
 
 export const GlobalStyle = css`
   @font-face {
@@ -64,7 +61,7 @@ function App() {
           element={<SearchChangePwd />}
         ></Route>
         <Route path="/bp/map" element={<KakaoMap />}></Route>
-        <Route path="/bp/map/RoadView" element={<RoadView />} />
+        <Route path="/bp/map/roadView" element={<RoadView />} />
         <Route path="/bp/mypage" element={<MyPage />}></Route>
         <Route path="/bp/modify/user" element={<ModifyUserInfo />}></Route>
         <Route path="/bp/modify/pwd" element={<ModifyPwd />}></Route>
@@ -79,8 +76,6 @@ function App() {
         <Route path="/admin/users" element={<Users />} />
         <Route path="/admin/users/:id" element={<UserLog />} />
         <Route path="/*" element={<NotFound404 />} />
-
-        {/* <Route path="/test" element={<Test />} /> */}
       </Routes>
     </Router>
     // </div>

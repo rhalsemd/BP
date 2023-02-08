@@ -202,16 +202,16 @@ function Home() {
         </div>
         <div
           css={{
-            backgroundColor: "rgba(249, 250, 251, 0.9)",
+            background: [
+              "linear-gradient( to right,rgba(249, 250, 251, 0.9),black)",
+            ],
           }}
         >
           <HomeSection11 />
         </div>
         <div
           css={{
-            background: [
-              "linear-gradient( to right,rgba(249, 250, 251, 0.9),black)",
-            ],
+            backgroundColor: "black",
           }}
         >
           <HomeSection12 />

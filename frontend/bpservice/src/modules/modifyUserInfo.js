@@ -2,6 +2,8 @@ import axios from "axios";
 import { createAction, handleActions } from "redux-actions";
 import { call, put, select, takeLatest } from "redux-saga/effects";
 
+import { SET_NEW_ADDRESS } from "./mypage";
+
 const GET_SIDO_DATA = "signUp/GET_SIDO_DATA";
 const SET_SIDO_DATA = "signUp/SET_SIDO_DATA";
 
@@ -103,6 +105,15 @@ function* modifyUserInfoFnc(data) {
         },
       });
     });
+
+    if (patch.status === 200) {
+      yield put({
+        type: SET_NEW_ADDRESS,
+        sido: info.sido,
+        sigungu: info.sigugun,
+        dong: info.dong,
+      });
+    }
   } catch (e) {}
 }
 

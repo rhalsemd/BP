@@ -25,7 +25,7 @@ function SignUpAddress({
   }, [getSidoData]);
 
   return (
-    <div>
+    <div style={{ marginTop: "1vh" }}>
       <span>주소</span>
 
       {/* 시 */}
