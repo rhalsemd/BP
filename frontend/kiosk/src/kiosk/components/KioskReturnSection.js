@@ -1,11 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { QrReader } from "react-qr-reader";
-import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import PictureImg from '../assets/PictureImg.png'
-import tutorial from '../assets/큐알체크튜토리얼.png'
 
 
 const KioskReturnSectionStyle = css`
@@ -95,27 +93,16 @@ const KioskReturnMethodTitle = css`
   }
 `
 
-const zindex8 = css`
-  display: block;
-  z-index: 8;
-  position: absolute;
-  top: 0;
-  left: 0;
-
-  width: 100vw;
-  height: 100vh;
-`
-
 // 위에는 Emotion.js 입니다.
 // 밑에는 JS 입니다.
 
 const KioskReturnSection = () => {
   const [data, setData] = useState("");
   const navigate = useNavigate();
-  const { id } = useSelector((store) => store)
+  const { id } = useParams();
 
   if (data) {
-    navigate(`/kiosk/${id[0]}/return/camera`, {
+    navigate(`/kiosk/${id}/return/camera`, {
       state: {
         qrdata: data,
       },

@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
 import { useEffect } from 'react'
-import { useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import KioskHeader from '../components/KioskHeader'
 import KioskReturnCompleteSection from '../components/KioskReturnCompleteSection'
@@ -16,8 +15,7 @@ const KioskReturnReceiptStyle = css`
 // 밑에는 JS 입니다.
 
 const KiosktReturnCompleteContainer = () => {
-  
-  const { id } = useSelector((store) => store);
+  const { id } = useParams();
   const navigate = useNavigate();
   
   // 홈화면으로
@@ -25,12 +23,12 @@ const KiosktReturnCompleteContainer = () => {
   const seconds = 6000 * miliUnit
   useEffect(() => {
     let myTimer = setTimeout(() => {
-      navigate(`/kiosk/${id[0] || id}`)
+      navigate(`/kiosk/${id}`)
     }, seconds)
     return () => {
       clearTimeout(myTimer)
     }
-  }, [])
+  }, [id, seconds, navigate])
 
   return (
     <div css={KioskReturnReceiptStyle}>

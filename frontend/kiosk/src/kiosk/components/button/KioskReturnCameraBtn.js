@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom'
 
 const ReturnCameraBtn = css`
@@ -22,10 +21,10 @@ const ReturnCameraBtn = css`
 
 const KioskReturnCameraBtn = () => {
   const navigate = useNavigate();
-  const { id } = useSelector((store) => store);
+  const { id } = useParams();
 
   const KioskReturnCameraViewMove = () => {
-    navigate(`/kiosk/${id[0]}/return/camera`)
+    navigate(`/kiosk/${id}/return/camera`)
   }
 
   return (

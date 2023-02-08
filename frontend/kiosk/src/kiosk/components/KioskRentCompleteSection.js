@@ -1,8 +1,6 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react'
-import axios from 'axios';
-import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux';
+import { css } from '@emotion/react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
 const KioskRentSectionCompleteStyle = css`
@@ -52,7 +50,7 @@ const KioskRentSectionCompleteStyle = css`
 
 const KioskRentCompleteSection = () => {
   const { isBrolly } = useParams();
-  const { id } = useSelector((store) => store)
+  const { id } = useParams();
   const navigate = useNavigate();
   const [ isRent, setIsRent ] = useState(false);
 
@@ -61,7 +59,7 @@ const KioskRentCompleteSection = () => {
       setIsRent(true)
     }
     setTimeout(() => {
-      navigate(`/kiosk/${id[0] || id}`)
+      navigate(`/kiosk/${id}`)
     }, 20000)
   }, [isRent])
 

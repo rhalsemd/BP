@@ -1,8 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
 import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { useNavigate, useParams } from 'react-router'
+import { useLocation, useNavigate, useParams } from 'react-router'
 import ReceiptImg from '../assets/ReceiptWhite.png'
 
 const KioskReturnReceiptStyle = css`
@@ -149,18 +148,28 @@ const KioskReturnReceipt = css`
 
 const KioskReturnCompleteSection = () => {
   const { isBrolly } = useParams();
-  const { id } = useSelector((store) => store)
+  const { id } = useParams();
   const navigate = useNavigate();
   const [isReturn, setIsReturn] = useState(false);
+  const location = useLocation()
 
   useEffect(() => {
-    if (isBrolly == 1) {
+    if (location.state) {
       setIsReturn(true)
+    } else {
+      // navigate('/kiosk/1')
+
     }
+    // if (isBrolly === 1) {
+    //   setIsReturn(true)
+    // }
+    // else {
+    //   setIsReturn(false)
+    // }
     setTimeout(() => {
-      navigate(`/kiosk/${id[0] || id}`)
+      navigate(`/kiosk/${id}`)
     }, 10000)
-  }, [isReturn])
+  }, [isReturn, id, navigate, isBrolly, location])
 
   return (
     <div css={KioskReturnReceiptStyle}>
