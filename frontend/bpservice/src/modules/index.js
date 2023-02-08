@@ -25,6 +25,11 @@ import home, { homeSaga } from "./home";
 import getUsersReducer, { usersSaga } from "./users";
 import getUserLogReducer, { userLogSaga } from "./userLog";
 import chagneDateReducer from "./changeDate";
+import chatbot from "./chatbot";
+import loginAdminReucer, {
+  loginAdminSaga,
+  adminLogoutSaga,
+} from "./loginAdmin";
 
 export const rootReducer = combineReducers({
   signUp,
@@ -43,6 +48,8 @@ export const rootReducer = combineReducers({
   getUsersReducer,
   getUserLogReducer,
   chagneDateReducer,
+  chatbot,
+  loginAdminReucer,
 });
 
 export function* rootSaga() {
@@ -65,6 +72,8 @@ export function* rootSaga() {
     homeSaga(),
     usersSaga(),
     userLogSaga(),
+    loginAdminSaga(),
+    adminLogoutSaga(),
   ]);
 }
 

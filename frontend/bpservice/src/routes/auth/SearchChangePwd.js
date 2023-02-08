@@ -5,7 +5,7 @@ import { Suspense } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { connect, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer";
 import LoadingPage from "../../components/LoadingPage";
 import Nav from "../../components/Nav";
@@ -22,8 +22,8 @@ const loginModalStyle = css`
   justify-content: center;
   border-radius: 10px;
   align-items: center;
-  background-color: rgba(249, 250, 251, 0.9);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24);
+  /* background-color: rgba(249, 250, 251, 0.9);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24); */
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   .card-1:hover {
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.55), 0 10px 10px rgba(0, 0, 0, 0.52);
@@ -58,16 +58,20 @@ const loginModalStyle = css`
 
 const pwdRegExp = /^(?=.*[a-z])(?=.*[0-9])(?=.*[$!@$!%*#^?&]).{8,20}$/;
 
-function SearchChangePwd({ setNewPwd }) {
+function SearchChangePwd() {
   const [info, setInfo] = useState({ pwd: "", check: "" });
   const { pwdSuccess } = useSelector(({ findPwdReducer }) => findPwdReducer);
   const navigation = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
+    if (!location.state) {
+      navigation("/bp");
+    }
     if (pwdSuccess) {
       navigation("/bp/login");
     }
-  }, [pwdSuccess, navigation]);
+  }, [pwdSuccess, navigation, location]);
 
   return (
     <div>

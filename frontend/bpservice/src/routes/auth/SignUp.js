@@ -15,7 +15,7 @@ import SignUpAddress from "../../components/signup/SignUpAddress";
 import SignUpEmail from "../../components/signup/SignUpEmail";
 import { userInfo } from "../../modules/signUp";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Suspense } from "react";
 import LoadingPage from "../../components/LoadingPage";
 
@@ -29,9 +29,9 @@ const loginModalStyle = css`
   justify-content: center;
   border-radius: 10px;
   align-items: center;
-  overflow-y: auto;
-  background-color: rgba(249, 250, 251, 0.9);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24);
+  overflow: auto;
+  /* background-color: rgba(249, 250, 251, 0.9);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24); */
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   .card-1:hover {
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.55), 0 10px 10px rgba(0, 0, 0, 0.52);
@@ -71,14 +71,31 @@ const loginModalStyle = css`
     flex-direction: column;
     align-items: center;
   }
+  &::-webkit-scrollbar {
+    width: 10px; /* 스크롤바의 너비 */
+  }
+  &::-webkit-scrollbar-thumb {
+    height: 30%; /* 스크롤바의 길이 */
+    background: #00b8ff; /* 스크롤바의 색상 */
+
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    background: rgba(33, 122, 244, 0.1);
+  }
 `;
 
 function SignUp({ signUp, signUpFailureReset }) {
   const navigation = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
+    // 이용 약관을 먼저하고 와야지 회원가입 가능
+    if (!location.state) {
+      navigation("/bp/terms");
+    }
     if (signUp.signUpSuccess) {
-      navigation("/bp/login");
+      navigation("/bp/complete", { state: { isSignUp: false } });
     } else if (signUp.signUpFailure) {
       alert("아이디 혹은 이메일이 중복됩니다.");
       signUpFailureReset();
@@ -88,6 +105,7 @@ function SignUp({ signUp, signUpFailureReset }) {
     signUp.signUpFailure,
     signUpFailureReset,
     navigation,
+    location,
   ]);
 
   const [info, setInfo] = useState({

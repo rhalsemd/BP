@@ -1,10 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import { useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer";
 import Nav from "../../components/Nav";
+import { userInfo } from "../../modules/signUp";
 
 const termsModalStyle = css`
   position: relative;
@@ -17,8 +19,8 @@ const termsModalStyle = css`
   justify-content: center;
   border-radius: 10px;
   align-items: center;
-  background-color: #f7f8f9;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.24);
+  /* background-color: #f7f8f9;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.24); */
   overflow: auto;
   &::-webkit-scrollbar {
     display: none;
@@ -37,7 +39,6 @@ const title = css`
   .firstBoxParent {
     display: flex;
     justify-content: center;
-    text-align: center;
     margin-bottom: 2.5%;
     margin-top: 1%;
   }
@@ -49,7 +50,16 @@ const title = css`
     height: 20vh;
     overflow: auto;
     &::-webkit-scrollbar {
-      display: none;
+      width: 10px; /* 스크롤바의 너비 */
+    }
+    &::-webkit-scrollbar-thumb {
+      height: 30%; /* 스크롤바의 길이 */
+      background: #00b8ff; /* 스크롤바의 색상 */
+
+      border-radius: 10px;
+    }
+    &::-webkit-scrollbar-track {
+      background: rgba(33, 122, 244, 0.1);
     }
   }
 `;
@@ -70,13 +80,19 @@ function UserToU() {
   const navigation = useNavigate();
   const checkBox1Ref = useRef(null);
   const checkBox2Ref = useRef(null);
-  const checkBox3Ref = useRef(null);
   const allCheckBox = useRef(null);
   const [check, setCheck] = useState({});
 
+  const dispatch = useDispatch();
+  const { content, privacyContent } = useSelector(({ signUp }) => signUp);
+
+  useEffect(() => {
+    dispatch(userInfo.getTermsOfUser());
+  }, [dispatch]);
+
   const goToSignUp = () => {
-    if (check.checked1 && check.checked2 && check.checked3) {
-      navigation("/bp/signup");
+    if (check.checked1 && check.checked2) {
+      navigation("/bp/signup", { state: { isTerms: true } });
     } else {
       alert("필수 약관에 동의해주세요.");
     }
@@ -90,9 +106,9 @@ function UserToU() {
     setCheck((checked) => {
       return { ...checked, checked1: !checked.checked1 };
     });
-    if (!check.checked1 && check.checked2 && check.checked3) {
+    if (!check.checked1 && check.checked2) {
       allCheckBox.current.checked = "true";
-    } else if (check.checked1 && check.checked2 && check.checked3) {
+    } else if (check.checked1 && check.checked2) {
       allCheckBox.current.checked = null;
     }
   };
@@ -101,20 +117,9 @@ function UserToU() {
     setCheck((checked) => {
       return { ...checked, checked2: !checked.checked2 };
     });
-    if (check.checked1 && !check.checked2 && check.checked3) {
+    if (check.checked1 && !check.checked2) {
       allCheckBox.current.checked = "true";
-    } else if (check.checked1 && check.checked2 && check.checked3) {
-      allCheckBox.current.checked = null;
-    }
-  };
-
-  const checkBox3 = () => {
-    setCheck((checked) => {
-      return { ...checked, checked3: !checked.checked3 };
-    });
-    if (check.checked1 && check.checked2 && !check.checked3) {
-      allCheckBox.current.checked = "true";
-    } else if (check.checked1 && check.checked2 && check.checked3) {
+    } else if (check.checked1 && check.checked2) {
       allCheckBox.current.checked = null;
     }
   };
@@ -126,12 +131,10 @@ function UserToU() {
         allChecked: allCheckBox.current.checked,
         checked1: allCheckBox.current.checked,
         checked2: allCheckBox.current.checked,
-        checked3: allCheckBox.current.checked,
       };
     });
     checkBox1Ref.current.checked = allCheckBox.current.checked;
     checkBox2Ref.current.checked = allCheckBox.current.checked;
-    checkBox3Ref.current.checked = allCheckBox.current.checked;
   };
 
   return (
@@ -144,24 +147,25 @@ function UserToU() {
         <div css={title} className="modalInnerStyle">
           <h1 style={{ textAlign: "center" }}>이용약관</h1>
 
+          <div
+            style={{ marginLeft: "4%", marginRight: "4%", marginBottom: "1%" }}
+          >
+            <input type="checkbox" onClick={onClick} ref={allCheckBox} />
+            <span>
+              BP 이용약관, 개인정보 수집 및 이용, 위치 기반 서비스 이용약관에
+              모두 동의합니다.
+            </span>
+          </div>
+
           <div style={{ marginLeft: "4%" }}>
             <input type="checkbox" ref={checkBox1Ref} onClick={checkBox1} />
             <span>BP 이용약관 동의 (필수)</span>
           </div>
           <div className="firstBoxParent">
-            <div className="firstBox">
-              <h3>여러분을 환영합니다.</h3>
-              <p
-                style={{
-                  textAlign: "left",
-                  marginLeft: "4%",
-                  marginRight: "4%",
-                }}
-              >
-                ㅁ라ㅣㄴ엄림너ㅓㄹ너마ㅏㄻ나ㅣ어럼ㄴ아ㅣ러ㅏㅣ너미러ㅏㄴ리더
-                리ㅏㅁㄴ덞디너러ㅣㅣㄹ 리담너ㅣ러니마
-              </p>
-            </div>
+            <div
+              className="firstBox"
+              dangerouslySetInnerHTML={{ __html: content }}
+            ></div>
           </div>
 
           <div style={{ marginLeft: "4%" }}>
@@ -169,31 +173,10 @@ function UserToU() {
             <span>개인정보 수집 및 이용안내 (필수)</span>
           </div>
           <div className="firstBoxParent">
-            <div className="firstBox">
-              <h3>여러분을 환영합니다.</h3>
-              <p
-                style={{
-                  textAlign: "left",
-                  marginLeft: "4%",
-                  marginRight: "4%",
-                }}
-              >
-                ㄹㄷㅁㄴㄹㄷㅁㄴ룀ㄷㄴ럳ㅁ나ㅣ러ㅏㅣㅁ다ㅣ라딤ㄴㅁ라ㅣㅁ라ㅣ라ㅣ더ㅏㅣㄴㄷ
-              </p>
-            </div>
-          </div>
-
-          <div style={{ marginLeft: "4%" }}>
-            <input type="checkbox" ref={checkBox3Ref} onClick={checkBox3} />
-            <span>개인정보 수집 및 이용안내 (필수)</span>
-          </div>
-
-          <div style={{ marginLeft: "4%", marginRight: "4%" }}>
-            <input type="checkbox" onClick={onClick} ref={allCheckBox} />
-            <span>
-              BP 이용약관, 개인정보 수집 및 이용, 위치 기반 서비스 이용약관에
-              모두 동의합니다.
-            </span>
+            <div
+              className="firstBox"
+              dangerouslySetInnerHTML={{ __html: privacyContent }}
+            ></div>
           </div>
 
           <div>

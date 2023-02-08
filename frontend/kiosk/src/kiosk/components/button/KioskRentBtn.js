@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import { useSelector } from 'react-redux';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import RentBtn from "../../assets/RentBtn.svg"
 
 const KioskRentBtnDiv = css`
@@ -37,12 +36,12 @@ const RentBtnTextBox = css`
 `
 
 // 컴포넌트 시작
-const KioskRentBtn = () => {
-  const { id } = useSelector((store) => store)
+const KioskRentBtn = (rentCnt) => {
+  const { id } = useParams();
 
   const navigate = useNavigate();
   const KioskRentMove = () => {
-    navigate(`/kiosk/${id[0]}/rent`)
+    navigate(`/kiosk/${id}/rent`)
   }
 
   return (
@@ -50,7 +49,7 @@ const KioskRentBtn = () => {
       <img css={RentBtnStyle} src={RentBtn} alt="RentBtn" />
       <div css={RentBtnTextBox}>
         <p className='title'>대여</p>
-        <p className='content'>(대여가능 : 1개)</p>
+        <p className='content'>(대여가능 : {rentCnt.rentCnt}개)</p>
       </div>
     </div>
   );

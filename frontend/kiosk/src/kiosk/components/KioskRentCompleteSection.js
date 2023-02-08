@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react'
-import axios from 'axios';
-import { useEffect, useState } from 'react'
+import { css } from '@emotion/react';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router';
 
 const KioskRentSectionCompleteStyle = css`
   display: flex;
@@ -49,23 +49,26 @@ const KioskRentSectionCompleteStyle = css`
 // 밑에는 JS 입니다.
 
 const KioskRentCompleteSection = () => {
-  const [isBrolly, setIsBrolly] = useState(false);
+  const { isBrolly } = useParams();
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [ isRent, setIsRent ] = useState(false);
 
   useEffect(() => {
+    if (isBrolly == 1) {
+      setIsRent(true)
+    }
     setTimeout(() => {
-      axios({
-        method: 'GET',
-        url: "http://localhost:3001/posts"
-      }).then((res) => setIsBrolly(res.data[0].isBrolly))
-    }, 5000)
-  })
+      navigate(`/kiosk/${id}`)
+    }, 20000)
+  }, [isRent])
 
   return (
     <div css={KioskRentSectionCompleteStyle}>
       <div className='KioskRentSectionCompleteHolderBtn'>
-        {isBrolly ? <span>좋은 하루 되세요</span> : <span>5번 홀더가 열렸습니다</span>}
+        {isRent ? <span>감사합니다.</span> : <span>우산을 가져가지 않았습니다.</span>}
       </div>
-        {isBrolly ? <span className='KioskRentSectionCompleteGuide'>홀더에 우산이 없네요!</span> : <span className='KioskRentSectionCompleteGuide'>아직 우산이 있어요!</span>}
+      {isRent ? <span className='KioskRentSectionCompleteGuide'>또 이용해주세요</span> : <span className='KioskRentSectionCompleteGuide'>환불내역을 확인해주세요</span>}
     </div>
   )
 }

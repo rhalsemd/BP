@@ -4,6 +4,7 @@ import { css } from "@emotion/react";
 import { useEffect } from "react";
 import { useRef } from "react";
 import { connect } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { findIdInfo } from "../../modules/findId";
 import CertificationNumInput from "./CertificationNumInput";
 
@@ -31,6 +32,18 @@ const 아이디찾기버튼 = css`
   height: 35px;
   font-size: 14pt;
   margin-top: 15px;
+  font-weight: 600;
+`;
+const 취소버튼 = css`
+  background-color: "lightgray";
+  border: none;
+  color: black;
+  border-radius: 5px;
+  width: 100%;
+  height: 35px;
+  font-size: 14pt;
+  margin-top: 15px;
+  font-weight: 600;
 `;
 
 function FindNameComponent({
@@ -40,6 +53,7 @@ function FindNameComponent({
   setFindIdInfoReset,
 }) {
   const inputRef = useRef(null);
+  const navigation = useNavigate();
 
   const nameOnChange = (e) => {
     const inputValue = e.target.value;
@@ -77,6 +91,9 @@ function FindNameComponent({
     }
   }, [info.isSend]);
 
+  const cencle = () => {
+    navigation("/bp");
+  };
   return (
     <div css={inputBox}>
       <input
@@ -111,6 +128,10 @@ function FindNameComponent({
             아이디 찾기
           </button>
         )}
+
+        <button onClick={cencle} css={취소버튼}>
+          취소
+        </button>
       </div>
     </div>
   );

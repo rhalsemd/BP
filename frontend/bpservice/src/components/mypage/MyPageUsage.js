@@ -17,7 +17,7 @@ const secondModalStyle = css`
   border-radius: 10px;
   align-items: center;
   background-color: rgba(249, 250, 251, 0.9);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24);
+  /* box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24); */
 `;
 
 function MyPageUsage() {
@@ -37,7 +37,7 @@ function MyPageUsage() {
               {/* 내 우산 사용 정보 */}
               <UmbrellaModal />
 
-              <Divider />
+              <Divider sx={{ backgroundColor: "lightgray" }} />
 
               {/* 보증금 정보 */}
               <CountsModal />

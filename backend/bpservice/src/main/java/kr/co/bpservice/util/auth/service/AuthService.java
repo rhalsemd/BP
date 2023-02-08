@@ -2,19 +2,24 @@ package kr.co.bpservice.util.auth.service;
 
 
 import jakarta.servlet.http.HttpServletRequest;
+import kr.co.bpservice.entity.admin.Admin;
+import kr.co.bpservice.entity.admin.AdminLoginLog;
 import kr.co.bpservice.entity.common.MailAuth;
 import kr.co.bpservice.entity.common.SmsAuth;
 import kr.co.bpservice.entity.user.User;
 import kr.co.bpservice.entity.user.UserLoginLog;
+import kr.co.bpservice.repository.admin.ALoginLogRepository;
 import kr.co.bpservice.repository.common.MailAuthRepository;
 import kr.co.bpservice.repository.common.SmsAuthRepository;
 import kr.co.bpservice.repository.user.ULogRepository;
 import kr.co.bpservice.service.common.CAuthService;
+import kr.co.bpservice.util.auth.dto.AdminRequestDto;
 import kr.co.bpservice.util.auth.dto.TokenDto;
 import kr.co.bpservice.util.auth.dto.UserRequestDto;
 import kr.co.bpservice.util.auth.dto.UserResponseDto;
 import kr.co.bpservice.util.auth.entity.Authority;
 import kr.co.bpservice.util.auth.jwt.TokenProvider;
+import kr.co.bpservice.util.auth.repository.AdminRepository;
 import kr.co.bpservice.util.auth.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,6 +46,7 @@ import java.util.regex.Pattern;
 public class AuthService {
     private final AuthenticationManagerBuilder managerBuilder;
     private final UserRepository userRepository;
+    private final AdminRepository adminRepository;
     private final MailAuthRepository mailAuthRepository;
     private final SmsAuthRepository smsAuthRepository;
     private final PasswordEncoder passwordEncoder;
@@ -48,6 +54,7 @@ public class AuthService {
     private final RedisTemplate redisTemplate;
     private final CAuthService cAuthService;
     private final ULogRepository uLogRepository;
+    private final ALoginLogRepository aLoginLogRepository;
 
     public UserResponseDto join(UserRequestDto requestDto) {
         String userId = requestDto.getUserId();
@@ -57,7 +64,7 @@ public class AuthService {
 
         checkUserIdFormat(userId);
 
-        if (userRepository.existsById(userId) || userRepository.existsByEmail(email) || userRepository.existsByPhoneNum(phoneNum)) {
+        if (adminRepository.existsById(userId) || userRepository.existsById(userId) || userRepository.existsByEmail(email) || userRepository.existsByPhoneNum(phoneNum)) {
             throw new RuntimeException("이미 등록된 아이디, 이메일, 또는 연락처입니다.");
         }
 
@@ -342,5 +349,31 @@ public class AuthService {
         resultMap.put("result", "success");
         resultMap.put("msg", "로그아웃 완료.");
         return resultMap;
+    }
+
+    public TokenDto adminLogin(AdminRequestDto requestDto, HttpServletRequest request) {
+        // 사용자 인증 과정
+        UsernamePasswordAuthenticationToken authenticationToken = requestDto.toAuthentication();
+        Authentication authentication = managerBuilder.getObject().authenticate(authenticationToken);
+
+        // 로그인 로그 삽입과정
+        Admin admin = adminRepository.findById(requestDto.getAdminId()).get();  // User 엔티티
+        String agent = request.getHeader("User-Agent");
+        String os = getClientOS(agent);                         // 클라이언트 운영체제
+        String browser = getClientBrowser(agent);              // 클라이언트 브라우저
+        String ipAddr = (String)request.getHeader("X-Forwarded-For");   // 클라이언트 IP주소
+        if(ipAddr == null || ipAddr.length() == 0 || ipAddr.toLowerCase().equals("unknown")) ipAddr = (String)request.getRemoteAddr();
+        LocalDateTime regDt = LocalDateTime.now();              // 로그인 시각
+
+        AdminLoginLog loginLog = new AdminLoginLog();
+        loginLog.setAdmin(admin);
+        loginLog.setBrowser(browser);
+        loginLog.setIpAddr(ipAddr);
+        loginLog.setOs(os);
+        loginLog.setRegDt(regDt);
+        aLoginLogRepository.save(loginLog);
+
+        // 토큰 반환
+        return tokenProvider.generateTokenDto(authentication);
     }
 }

@@ -6,7 +6,7 @@ function SidoAddress({ setInfo, getGugun, gugunRef, dongRef, signUp }) {
 
     if (value !== "시/도") {
       setInfo((info) => {
-        return { ...info, sido: value };
+        return { ...info, sido: value, gugun: "", dong: "" };
       });
       getGugun(value);
       gugunRef.current.value = "시/군/구";

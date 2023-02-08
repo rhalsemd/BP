@@ -17,6 +17,9 @@ function SidoAddress({
       });
       getGugun(value);
       gugunRef.current.value = "시/군/구";
+      setInfo((info) => {
+        return { ...info, sigugun: "", dong: "" };
+      });
       if (dongRef.current) {
         dongRef.current.value = "읍/면/동";
       }

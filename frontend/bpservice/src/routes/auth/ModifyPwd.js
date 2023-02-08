@@ -24,8 +24,8 @@ const loginModalStyle = css`
   justify-content: center;
   border-radius: 10px;
   align-items: center;
-  background-color: rgba(249, 250, 251, 0.9);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24);
+  /* background-color: rgba(249, 250, 251, 0.9);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24); */
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   .card-1:hover {
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.55), 0 10px 10px rgba(0, 0, 0, 0.52);
@@ -74,14 +74,20 @@ function ModifyPwd() {
     return /^(?=.*[a-z])(?=.*[0-9])(?=.*[$!@$!%*#^?&]).{8,20}$/;
   }, []);
 
+  const objString = localStorage.getItem("login-token");
+
   useEffect(() => {
+    if (!objString) {
+      navigation("/bp/login");
+    }
+
     if (error) {
       alert("현재 비밀번호가 잘못되었습니다.");
       dispatch(newPwdErrorReset());
     } else if (success) {
       navigation("/bp");
     }
-  }, [error, dispatch, success, navigation]);
+  }, [error, dispatch, success, objString, navigation]);
 
   return (
     <div>

@@ -1,5 +1,5 @@
 import { createAction, handleActions } from "redux-actions";
-import { call, put, takeLatest, select } from "redux-saga/effects";
+import { call, put, takeLatest } from "redux-saga/effects";
 import * as api from "../lib/api";
 
 const GET_REVENUE_TREND = "revenueTrend/GET_TOTAL_KIOSK";
@@ -58,7 +58,6 @@ export function* revenueTrendMonthSaga() {
 
 function* axiosTotalKioskSaga(data) {
   try {
-    console.log(data.payload);
     const getData = yield call(() => api.getRevenueTrend(data.payload));
     yield put({
       type: GET_REVENUE_TREND_SUCCESE,

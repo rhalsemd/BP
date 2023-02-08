@@ -1,12 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import axios from 'axios';
 import KioskHeader from "../components/KioskHeader";
 import KioskReturnGuideSection from "../components/KioskReturnGuideSection";
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import sample from '../../sample.json';
+import KioskTTSBtn from '../components/button/KioskTTSBtn';
 
 const KioskReturnGuideContainerStyle = css`
   display: flex;
@@ -15,57 +14,42 @@ const KioskReturnGuideContainerStyle = css`
   align-items: center;
 
   background-color: #EEF1FF;
+  footer {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+  }
 `
 
 const KioskReturnGuideContainer = () => {
-  const { id } = useSelector((store) => store);
-
-  // 환불관련 useHook
-  const [isRefunds, setIsRefunds] = useState(false);
+  const { id } = useParams();
   const navigate = useNavigate();
 
-  // 환불되었는지 확인
-  const getRefundsConfirm = () => {
-    setTimeout(() => {
-      const RefundsConfirmURL = `http://localhost:3001/posts`;
-      axios.get(RefundsConfirmURL)
-        .then((res) => {
-          setIsRefunds(res.data[0].isBrolly)
-          return res.data[0].isBrolly
-        })
-        .catch((err) => console.log(err))
-        .then((data) => {
-          if(data) {
-            navigate(`/kiosk/${id}/return/complete`)
-          }
-        })
-    }, 3000)
-  }
-
-  useEffect(() => {
-    getRefundsConfirm();
-  }, [isRefunds])
-  
   // 홈화면으로
   const miliUnit = 1000
   const seconds = 6000 * miliUnit
   useEffect(() => {
     let myTimer = setTimeout(() => {
-      navigate(`/kiosk/${id[0]}`)
+      navigate(`/kiosk/${id}`)
     }, seconds)
     return () => {
       clearTimeout(myTimer)
     }
-  }, [])
+  }, [id, seconds, navigate])
+
+  let TTSMent = sample.returncomplete
 
   return (
     <div css={KioskReturnGuideContainerStyle}>
       <div>
-        <KioskHeader/>
+        <KioskHeader />
       </div>
       <div>
-        <KioskReturnGuideSection/>
+        <KioskReturnGuideSection />
       </div>
+      <footer>
+        <KioskTTSBtn data={TTSMent} />
+      </footer>
     </div>
   )
 }

@@ -1,8 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
 import { useEffect } from 'react'
-import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import KioskHeader from '../components/KioskHeader'
 import KioskRentCompleteSection from '../components/KioskRentCompleteSection'
 
@@ -11,14 +10,19 @@ const KioskRentStyle = css`
   width : 100vw;
   height : 100vh;
   background-color: #EEF1FF;
+
+  footer {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+  }
 `
 
 // 위에는 Emotion.js 입니다.
 // 밑에는 JS 입니다.
 
 const KioskRentCompleteContainer = () => {
-  const { id } = useSelector((store) => store);
-
+  const { id } = useParams();
   const navigate = useNavigate();
 
   // 홈화면으로
@@ -26,12 +30,12 @@ const KioskRentCompleteContainer = () => {
   const seconds = 60 * miliUnit
   useEffect(() => {
     let myTimer = setTimeout(() => {
-      navigate(`/kiosk/${id[0]}`)
+      navigate(`/kiosk/${id}`)
     }, seconds)
     return () => {
       clearTimeout(myTimer)
     }
-  }, [])
+  }, [miliUnit, seconds, id, navigate])
 
   return (
     <div css={KioskRentStyle}>

@@ -30,13 +30,10 @@ const GRAPH_HEIGHT = HEIGHT - mt - mb;
 
 export default function LineChart() {
   const data = useSelector((state) => state.revenueTrendReducer.data);
-  // const testData = JSON.parse(localStorage.getItem("lineData"));
 
   const lineChart = useRef(null);
-  // console.log(JSON.stringify(data));
   useEffect(() => {
     if (!data) return;
-    // localStorage.setItem("lineData", JSON.stringify(data));
 
     const svgElement = d3.select(lineChart.current);
     svgElement.selectAll("*").remove();
@@ -54,11 +51,11 @@ export default function LineChart() {
     if (dataDemo.length < 10) {
       maxValue = 300;
     } else if (dataDemo.length < 15) {
-      maxValue = dataDemo.length * 50;
+      maxValue = dataDemo.length * 120;
     } else if (dataDemo.length < 20) {
-      maxValue = dataDemo.length * 40;
+      maxValue = dataDemo.length * 100;
     } else {
-      maxValue = dataDemo.length * 20;
+      maxValue = dataDemo.length * 80;
     }
 
     const xScale = d3
@@ -78,7 +75,7 @@ export default function LineChart() {
 
     const svg = d3
       .select(lineChart.current)
-      .attr("width", GRAPH_WIDTH)
+      .attr("width", maxValue * 1.1)
       .attr("height", HEIGHT)
       .style("overflow", "scorll");
 

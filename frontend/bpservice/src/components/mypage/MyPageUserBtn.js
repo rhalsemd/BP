@@ -22,7 +22,7 @@ const thirdModalStyle = css`
   border-radius: 10px;
   align-items: center;
   background-color: rgba(249, 250, 251, 0.9);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24);
+  /* box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24); */
 `;
 
 function MyPageUserBtn() {
@@ -69,7 +69,7 @@ function MyPageUserBtn() {
                 </ListItemIcon>
               </ListItem>
 
-              <Divider />
+              <Divider sx={{ backgroundColor: "lightgray" }} />
 
               {/* 비밀번호 변경 */}
               <ListItem disablePadding>
@@ -82,7 +82,7 @@ function MyPageUserBtn() {
                 </ListItemIcon>
               </ListItem>
 
-              <Divider />
+              <Divider sx={{ backgroundColor: "lightgray" }} />
 
               {/* 회원 탈퇴 */}
               <ListItem disablePadding>

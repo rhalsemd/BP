@@ -1,8 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import KioskCameraHeader from '../components/KioskCameraHeader';
 import KioskReturnCameraSection from '../components/KioskReturnCameraSection';
 
@@ -36,7 +35,7 @@ const section = css`
 // 밑에는 JS 입니다.
 
 const KioskReturnCameraContainer = () => {
-  const { id } = useSelector((store) => store)
+  const { id } = useParams();
 
   // 데이터 수령
   const location = useLocation();
@@ -46,14 +45,13 @@ const KioskReturnCameraContainer = () => {
   const miliUnit = 1000
   const seconds = 6000 * miliUnit
   useEffect(() => {
-    console.log(location.state)
     let myTimer = setTimeout(() => {
-      navigate(`/kiosk/${id[0]}`)
+      navigate(`/kiosk/${id}`)
     }, seconds)
     return () => {
       clearTimeout(myTimer)
     }
-  }, [])
+  }, [id, seconds, miliUnit, navigate])
 
   return (
     <div css={KioskReturnCameraStyle}>

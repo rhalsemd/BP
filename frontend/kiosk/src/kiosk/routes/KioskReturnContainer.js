@@ -2,9 +2,10 @@
 import { css } from '@emotion/react'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+import KioskTTSBtn from '../components/button/KioskTTSBtn'
 import KioskHeader from '../components/KioskHeader'
+import sample from '../../sample.json'
 import KioskReturnSection from '../components/KioskReturnSection'
 
 const KioskReturnStyle = css`
@@ -12,13 +13,19 @@ const KioskReturnStyle = css`
   width : 100vw;
   height : 100vh;
   background-color: #EEF1FF;
+
+  footer {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+  }
 `
 
 // 위에는 Emotion.js 입니다.
 // 밑에는 JS 입니다.
 
 const KioskReturnContainer = () => {
-  const { id } = useSelector((store) => store);
+  const { id } = useParams();
   // 환불관련 useHook
   const [isconfirm, setIsconfirm] = useState(false);
   const navigate = useNavigate();
@@ -44,13 +51,14 @@ const KioskReturnContainer = () => {
   const seconds = 60 * miliUnit
   useEffect(() => {
     let myTimer = setTimeout(() => {
-      navigate(`/kiosk/${id[0]}`)
+      navigate(`/kiosk/${id}`)
     }, seconds)
     return () => {
       clearTimeout(myTimer)
     }
-  }, [])
+  }, [id, seconds, navigate])
 
+  let TTSMent = sample.return
 
   return (
     <div css={KioskReturnStyle}>
@@ -60,6 +68,9 @@ const KioskReturnContainer = () => {
       <section>
         <KioskReturnSection />
       </section>
+      <footer>
+        <KioskTTSBtn data={TTSMent}/>
+      </footer>
     </div>
   )
 }

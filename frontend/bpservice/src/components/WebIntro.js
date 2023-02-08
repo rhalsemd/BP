@@ -6,7 +6,7 @@ function WebIntro() {
 
   setTimeout(() => {
     navigation("/bp");
-  }, 12000);
+  }, 3500);
 
   return (
     <>

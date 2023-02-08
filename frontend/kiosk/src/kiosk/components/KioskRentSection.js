@@ -11,7 +11,7 @@ const KioskRentSectionStyle = css`
   justify-content: center;
   align-items: center;
 
-  height: 90vh;
+  height: 85vh;
 `
 const KioskRentQR = css`
   position:absolute;

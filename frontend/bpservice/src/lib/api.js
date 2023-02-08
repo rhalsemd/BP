@@ -94,3 +94,41 @@ export const getUserLog = (userId) => {
     },
   });
 };
+
+export const loginAdmin = (data) => {
+  console.log(data.id, data.pwd);
+  return axios({
+    method: "post",
+    url: "http://192.168.100.79:8080/api/admin/login",
+    data: {
+      adminId: data.id,
+      pwd: data.pwd,
+    },
+    headers: {
+      "Content-Type ": "application/json",
+    },
+  });
+};
+
+export const logoutAdmin = () => {
+  const objString = localStorage.getItem("login-admin-token");
+  const obj = JSON.parse(objString);
+
+  return axios({
+    method: "get",
+    url: "http://192.168.100.79:8080/api/auth/admin/logout",
+    headers: {
+      Authorization: `Bearer ${obj.value}`,
+    },
+  });
+};
+
+export const getUserImg = (id) => {
+  return axios({
+    method: "get",
+    url: `${url}/api/auth/admin/log/get-img-url/997`,
+    headers: {
+      "Content-Type ": "application/json",
+    },
+  });
+};

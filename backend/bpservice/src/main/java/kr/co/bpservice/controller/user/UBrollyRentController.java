@@ -43,23 +43,7 @@ public class UBrollyRentController {
         int price = Integer.parseInt(requestMap.get("price"));
         LocalDateTime regDt = LocalDateTime.parse(requestMap.get("regDt").split("\\+")[0]);
 
-
-        Integer brollyCnt = uBrollyRentService.getBrollyCountInHolder(caseId);
-        if(brollyCnt == 0) {
-            responseMap.put("success", false);
-            responseMap.put("message", "대여할 수 있는 우산이 없습니다.");
-            return new ResponseEntity<>(responseMap, HttpStatus.OK);
-        }
-
-        // 결제로그 삽입
-        responseMap = uBrollyRentService.savePayLog(userId, receiptId, price, regDt);
-        if(!(Boolean)responseMap.get("success"))
-            return new ResponseEntity<>(responseMap, HttpStatus.OK);
-
-        responseMap = uBrollyRentService.saveRentLog(userId, receiptId, caseId);
+        responseMap = uBrollyRentService.rentBrolly(caseId, userId, receiptId, price, regDt);
         return new ResponseEntity<>(responseMap, HttpStatus.OK);
-
-        // 추후에 키오스크 FastAPI쪽으로 오픈할 홀더 번호를 넘겨줘야함.
-        // 일단 responseMap안에 "holderNum" 키 이름으로 홀더 번호를 저장하는 걸로 구현함.
     }
 }

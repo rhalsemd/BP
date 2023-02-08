@@ -1,8 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
-import { useSelector } from 'react-redux';
 
 const KioskHomeBtnStyle = css`
   position: absolute;
@@ -24,11 +23,11 @@ const homeFont = css`
 `
 
 const KioskHomeBtn = () => {
-  const { id } = useSelector((store) => store)
+  const { id } = useParams();
   const navigate = useNavigate();
 
   const KioskHomeMove = () => {
-    navigate(`/kiosk/${id[0]}`)
+    navigate(`/kiosk/${id}`)
   }
 
   return (

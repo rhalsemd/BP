@@ -1,7 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Amatic+SC);
-
 .box {
-  font-family: "Amatic SC", cursive;
   background-color: #000000;
   color: #ffffff;
   height: 100vh;
@@ -29,17 +26,17 @@
 }
 
 .t1 {
-  animation: t-animation 4s;
+  animation: t-animation 1s;
 }
 
 .t2 {
-  animation: t-animation 4s;
-  animation-delay: 4s;
+  animation: t-animation 1s;
+  animation-delay: 1s;
 }
 
 .end {
-  animation: end-animation 2s;
-  animation-delay: 8s;
+  animation: end-animation 1s;
+  animation-delay: 2s;
   animation-fill-mode: forwards;
 }
 

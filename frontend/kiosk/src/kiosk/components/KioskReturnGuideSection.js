@@ -1,5 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router';
 
 const KioskReturnGuideSectionStyle = css`
   width: 100vw;
@@ -11,7 +13,7 @@ const KioskReturnGuideSectionStyle = css`
   align-items: center;
 
   .KioskReturnGuideSectionHolderBtn{
-    width: 600px;
+    width: 700px;
     height: 150px;
     background-color: #B1B2FF;
     border-radius: 45px;
@@ -39,9 +41,19 @@ const KioskReturnGuideSectionStyle = css`
 `
 
 const KioskReturnGuideSection = () => {
+  const { holderNum } = useParams();
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setTimeout(() => {
+      navigate(`/kiosk/${id}/return/complete/${holderNum}/${parseInt(1)}`)
+    }, 1000)
+  })
+
   return (
     <div css={KioskReturnGuideSectionStyle}>
-      <div className='KioskReturnGuideSectionHolderBtn'><span>3번 홀더가 열렸습니다</span></div>
+      <div className='KioskReturnGuideSectionHolderBtn'><span>{holderNum}번 홀더에 우산을 반납해주세요</span></div>
       <span className='KioskRentSectionCompleteGuide'>반납할 우산을 넣어주세요!</span>
     </div>
   )

@@ -59,7 +59,7 @@ public class CAuthService {
 
 
         message.setText(msg, "utf-8", "html");//내용
-        message.setFrom(new InternetAddress(adminId,"Babble"));//보내는 사람
+        message.setFrom(new InternetAddress(adminId,"BP 관리자"));//보내는 사람
 
         return message;
     }

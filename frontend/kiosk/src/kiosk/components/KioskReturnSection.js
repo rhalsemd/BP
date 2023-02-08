@@ -1,11 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { QrReader } from "react-qr-reader";
-import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import PictureImg from '../assets/PictureImg.png'
-import tutorial from '../assets/큐알체크튜토리얼.png'
 
 
 const KioskReturnSectionStyle = css`
@@ -61,12 +59,12 @@ const KioskReturnMethod = css`
 
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
 
   position: absolute;
   right: 0px;
-  bottom: 15vh;
+  bottom: 17vh;
 
   ul {
     display: flex;
@@ -95,27 +93,16 @@ const KioskReturnMethodTitle = css`
   }
 `
 
-const zindex8 = css`
-  display: block;
-  z-index: 8;
-  position: absolute;
-  top: 0;
-  left: 0;
-
-  width: 100vw;
-  height: 100vh;
-`
-
 // 위에는 Emotion.js 입니다.
 // 밑에는 JS 입니다.
 
 const KioskReturnSection = () => {
   const [data, setData] = useState("");
   const navigate = useNavigate();
-  const { id } = useSelector((store) => store)
+  const { id } = useParams();
 
   if (data) {
-    navigate(`/kiosk/${id[0]}/return/camera`, {
+    navigate(`/kiosk/${id}/return/camera`, {
       state: {
         qrdata: data,
       },
@@ -148,9 +135,9 @@ const KioskReturnSection = () => {
         <ul>
           <li>우산의 QR을 현재화면에 체크해주세요.</li>
           <li>우산 사진을 화면에 보이게 찍어주세요.</li>
-          <li>정확하게 찍혔는지 확인하고 전송버튼을 눌러</li>
+          <li>정확하게 찍혔는지 확인버튼을 눌러주세요.</li>
           <li>우산 케이스가 열리면 우산을 넣어주세요.</li>
-          <li>보증금이 환급되었는지 확인</li>
+          <li>보증금이 환급되었는지 확인해주세요.</li>
         </ul>
       </div>
 

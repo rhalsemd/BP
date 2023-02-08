@@ -5,7 +5,7 @@ import styled from "../../style/Receipt.module.css";
 function BeforePayment() {
   const navigation = useNavigate();
   const onClick = () => {
-    navigation("/bp/payment");
+    navigation("/bp/payment", { state: { isBeforePayment: false } });
   };
 
   return (
@@ -46,7 +46,7 @@ function BeforePayment() {
                 </tr>
 
                 <tr>
-                  <td colspan="2" className={styled.center}>
+                  <td colSpan="2" className={styled.center}>
                     <input type="button" value="결제하기" onClick={onClick} />
                   </td>
                 </tr>
