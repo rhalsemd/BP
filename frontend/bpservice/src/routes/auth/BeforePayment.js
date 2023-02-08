@@ -1,12 +1,28 @@
-import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import styled from "../../style/Receipt.module.css";
 
 function BeforePayment() {
   const navigation = useNavigate();
+  const location = useLocation();
+
+  const queryParams = new URLSearchParams(
+    `?${location.pathname.split("?")[1]}`
+  );
+  const term = queryParams.get("kioskID");
+
   const onClick = () => {
-    navigation("/bp/payment", { state: { isBeforePayment: false } });
+    navigation("/bp/payment", { state: { kioskId: term } });
   };
+
+  const objString = localStorage.getItem("login-token");
+
+  useEffect(() => {
+    if (!objString) {
+      navigation("/bp/login");
+    }
+  }, [objString, navigation]);
 
   return (
     <div>

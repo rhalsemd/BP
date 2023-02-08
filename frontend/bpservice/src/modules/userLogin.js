@@ -53,6 +53,7 @@ function* setLoginFnc(data) {
       yield put({
         type: GET_USER_TOKEN,
         success: true,
+        userId: userInfo.id,
       });
     }
   } catch (e) {
@@ -60,21 +61,21 @@ function* setLoginFnc(data) {
   }
 }
 
-// 유저 정보 가져옴
-function* getUserInfoFnc() {
-  try {
-    const get = yield call(() => {
-      return axios({
-        method: "get",
-        url: `${API}/api/auth/user`,
-      });
-    });
+// // 유저 정보 가져옴
+// function* getUserInfoFnc() {
+//   try {
+//     const get = yield call(() => {
+//       return axios({
+//         method: "get",
+//         url: `${API}/api/auth/user`,
+//       });
+//     });
 
-    if (get.status === 200) {
-      yield put({ type: SET_USER_INFO, payload: get.data });
-    }
-  } catch (e) {}
-}
+//     if (get.status === 200) {
+//       yield put({ type: SET_USER_INFO, payload: get.data });
+//     }
+//   } catch (e) {}
+// }
 
 export function* loginSaga() {
   yield takeEvery(SET_LOGIN_INFO, setLoginFnc);
@@ -108,7 +109,7 @@ const initialState = { token: "" };
 const userLoginReducer = handleActions(
   {
     [GET_USER_TOKEN]: (state, action) => {
-      return { ...state, success: action.success };
+      return { ...state, success: action.success, userId: action.userId };
     },
     [GET_USER_ERROR]: (state, action) => {
       return { ...state, error: action.error };

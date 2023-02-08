@@ -67,6 +67,8 @@ function SignUpEmail({ info, setInfo, sighUpRequirement }) {
     navigation("/bp");
   };
 
+  console.log(info);
+
   return (
     <div css={inputBox}>
       <div>

@@ -95,7 +95,7 @@ function SignUp({ signUp, signUpFailureReset }) {
       navigation("/bp/terms");
     }
     if (signUp.signUpSuccess) {
-      navigation("/bp/complete", { state: { isSignUp: false } });
+      navigation("/bp/complete", { state: { isSignUp: true } });
     } else if (signUp.signUpFailure) {
       alert("아이디 혹은 이메일이 중복됩니다.");
       signUpFailureReset();

@@ -113,6 +113,7 @@ function SignUpPhone({
           pattern="[0-9]+"
           placeholder="-를 빼고 입력해주세요."
           onChange={typePhone}
+          autoComplete="off"
           ref={inputRef}
         />
         <label htmlFor="phone">핸드폰 번호</label>
