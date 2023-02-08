@@ -4,8 +4,6 @@ import KioskTTSBtn from '../components/button/KioskTTSBtn'
 import KioskHeader from '../components/KioskHeader'
 import KioskHomeSection from '../components/KioskHomeSection'
 import sample from '../../sample.json'
-import { useEffect } from 'react'
-
 const KioskHomeContainerStyle = css`
   box-sizing: border-box;
   /* border : 1px solid black; */
@@ -26,7 +24,7 @@ const KioskHomeContainerStyle = css`
 
 const KioskHomeContainer = () => {
   let TTSMent = sample.home
-  
+
   return (
     <div css={KioskHomeContainerStyle}>
       <div>
@@ -37,7 +35,7 @@ const KioskHomeContainer = () => {
           <KioskHomeSection />
         </section>
         <footer>
-          <KioskTTSBtn data={TTSMent}/>
+          <KioskTTSBtn data={TTSMent} />
         </footer>
       </div>
     </div>

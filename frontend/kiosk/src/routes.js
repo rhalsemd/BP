@@ -7,8 +7,13 @@ import KioskReturnCameraContainer from './kiosk/routes/KioskReturnCameraContaine
 import KioskReturnGuideContainer from './kiosk/routes/KioskReturnGuideContainer'
 import KioskReturnCompleteContainer from './kiosk/routes/KioskReturnCompleteContainer'
 import KioskFixingContainer from './kiosk/routes/KioskFixingContainer'
+import Home from './kiosk/routes/Home'
 
 const routes = [
+  {
+    path: '/',
+    element: <Home />
+  },
   {
     path: '/kiosk/:id',
     element: <KioskHomeContainer />

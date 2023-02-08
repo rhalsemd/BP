@@ -2,7 +2,6 @@
 import { css } from "@emotion/react";
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
 const videoSize = css`
@@ -81,8 +80,7 @@ const TakeAPictureBtn = css`
 
 const KioskTakeAPicture = (data) => {
   const [iscapture, setIscapture] = useState(false);
-  const { id } = useSelector((store) => store);
-  const { holderNum } = useParams();
+  const { id } = useParams();
 
   let videoRef = useRef(null);
   let photoRef = useRef(null);
@@ -161,12 +159,12 @@ const KioskTakeAPicture = (data) => {
     if (isCounting) {
       TimeCounting();
     }
-  }, [isCounting])
+  }, [isCounting, TimeCounting])
 
 
   useEffect(() => {
     getVideo();
-  }, [videoRef]);
+  }, [videoRef, getVideo]);
 
   // save canvas Image in server
 
@@ -181,33 +179,15 @@ const KioskTakeAPicture = (data) => {
       // url: 'http://bp.ssaverytime.kr:8080/api/auth/user/brolly/return/update/img',
       data: {
         'brollyId': qrdata,
-        'caseId': id[0],
+        'caseId': id,
         'imgUrl': imgURL
       }
     })
-    .then((res) => {
-      console.log(res.data)
-    }
-    )
-    .catch((err) => console.log(err));
-
-    // 테스트용(아직안함)
-    // let isBrolly = false;
-    // axios({
-    //   method: 'GET',
-    //   url: 'http://localhost:3001/posts',
-    // })
-    //   .then((res) => {
-    //     if (res.data[0].isBrolly) {
-    //       navigate(`/kiosk/${id[0]}/return/guide`, {
-    //         state: {
-    //           data: qrdata,
-    //         }
-    //       })
-    //     }
-    //   }
-    //   )
-    //   .catch((err) => console.log(err))
+      .then((res) => {
+        console.log(res.data)
+      }
+      )
+      .catch((err) => console.log(err));
 
   };
 

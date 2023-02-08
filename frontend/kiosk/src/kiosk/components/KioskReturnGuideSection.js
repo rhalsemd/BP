@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router';
 
 const KioskReturnGuideSectionStyle = css`
@@ -43,13 +42,13 @@ const KioskReturnGuideSectionStyle = css`
 
 const KioskReturnGuideSection = () => {
   const { holderNum } = useParams();
-  const { id } = useSelector((store) => store);
+  const { id } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     setTimeout(() => {
-      navigate(`/kiosk/${id[0] || id}/return/complete/${holderNum}/${parseInt(1)}`)
-    }, 10000) 
+      navigate(`/kiosk/${id}/return/complete/${holderNum}/${parseInt(1)}`)
+    }, 1000)
   })
 
   return (
