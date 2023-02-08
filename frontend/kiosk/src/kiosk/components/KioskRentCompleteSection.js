@@ -57,7 +57,6 @@ const KioskRentCompleteSection = () => {
   const [ isRent, setIsRent ] = useState(false);
 
   useEffect(() => {
-    console.log(isBrolly)
     if (isBrolly == 1) {
       setIsRent(true)
     }

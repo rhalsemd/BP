@@ -62,8 +62,6 @@ const KioskRentGuideSection = () => {
   //       method: 'GET',
   //       url: "http://localhost:3001/posts"
   //     }).then((res) => setIsBrolly(res.data[0].isBrolly))
-      console.log(id)
-      console.log(id[0])
       navigate(`/kiosk/${id[0] || id}/rent/complete/${holderNum}/${parseInt(0)}`)
     }, 5000)
   })

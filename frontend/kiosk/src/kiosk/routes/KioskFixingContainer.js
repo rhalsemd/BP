@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { jsx, css } from "@emotion/react";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { css } from "@emotion/react";
 
 const KioskFixingContainerStyle = css`
   background-color: #EEF1FF;

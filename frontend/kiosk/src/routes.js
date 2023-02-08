@@ -7,7 +7,6 @@ import KioskReturnCameraContainer from './kiosk/routes/KioskReturnCameraContaine
 import KioskReturnGuideContainer from './kiosk/routes/KioskReturnGuideContainer'
 import KioskReturnCompleteContainer from './kiosk/routes/KioskReturnCompleteContainer'
 import KioskFixingContainer from './kiosk/routes/KioskFixingContainer'
-// import TTS from './kiosk/components/tts/TTS'
 
 const routes = [
   {
@@ -47,10 +46,6 @@ const routes = [
     path: '/kiosk/:id/404',
     element: <KioskFixingContainer />
   },
-  // {
-  //   path: '/kiosk/:id/SpeechButton',
-  //   element: <TTS />
-  // },
 ]
 
 export default routes;
