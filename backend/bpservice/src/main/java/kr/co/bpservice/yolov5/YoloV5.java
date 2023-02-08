@@ -4,12 +4,9 @@ import ai.onnxruntime.*;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
-import org.springframework.core.io.Resource;
-import org.springframework.security.core.parameters.P;
+import org.springframework.core.io.ClassPathResource;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 import java.util.*;
@@ -30,35 +27,7 @@ public class YoloV5 {
 
     OnnxTensor inputTensor;
 
-    /*public YoloV5(String modelPath, String labelPath, float confThreshold, float nmsThreshold, int gpuDeviceId) throws OrtException, IOException {
-        nu.pattern.OpenCV.loadLocally();
-
-        this.env = OrtEnvironment.getEnvironment();
-        var sessionOptions = new OrtSession.SessionOptions();
-        sessionOptions.addCPU(false);
-        sessionOptions.setOptimizationLevel(OrtSession.SessionOptions.OptLevel.ALL_OPT);
-
-        if (gpuDeviceId >= 0) sessionOptions.addCUDA(gpuDeviceId);
-        //this.session = this.env.createSession(modelPath, sessionOptions);
-        this.session = this.env.createSession(modelPath,sessionOptions);
-
-        Map<String, NodeInfo> inputMetaMap = this.session.getInputInfo();
-        this.inputName = this.session.getInputNames().iterator().next();
-        NodeInfo inputMeta = inputMetaMap.get(this.inputName);
-        this.inputType = ((TensorInfo) inputMeta.getInfo()).type;
-
-        this.confThreshold = confThreshold;
-        this.nmsThreshold = nmsThreshold;
-
-        BufferedReader br = new BufferedReader(new FileReader(labelPath));
-        String line;
-        this.labelNames = new ArrayList<>();
-        while ((line = br.readLine()) != null) {
-            this.labelNames.add(line);
-        }
-
-    }*/
-    public YoloV5(byte[] model, byte[] label, float confThreshold, float nmsThreshold, int gpuDeviceId) throws OrtException, IOException {
+    public YoloV5(byte[] model, ClassPathResource label, float confThreshold, float nmsThreshold, int gpuDeviceId) throws OrtException, IOException {
         nu.pattern.OpenCV.loadLocally();
 
         this.env = OrtEnvironment.getEnvironment();
@@ -78,11 +47,18 @@ public class YoloV5 {
         this.confThreshold = confThreshold;
         this.nmsThreshold = nmsThreshold;
 
-        String coverted = new String(label);
         this.labelNames = new ArrayList<>();
-        String[] splitLabelNames = coverted.split("\n");
-        for(int splitlength=0;splitlength<splitLabelNames.length;splitlength++){
-            this.labelNames.add(splitLabelNames[splitlength]);
+        try {
+            InputStream inputStream = label.getInputStream();
+            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, "utf-8"));
+            while (true) {
+                String line = br.readLine();
+                if(line == null ) break;
+                this.labelNames.add(line);
+            }
+
+        } catch (IOException e) {
+
         }
     }
 
