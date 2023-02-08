@@ -189,6 +189,11 @@ public class KBrollyReturnService {
             binaryData = binaryData.replaceAll("data:image/png;base64,", "");
             byte[] file = Base64.decodeBase64(binaryData);
 
+            // YOLO5
+            // 이쯤에 들어가야함
+            // 메소드(file) // 우산 라벨이 있는지 없는지에 따라서 나머지 로직 수행
+            // 리턴 우산이 아닙니다
+
             String fileName = UUID.randomUUID().toString();
             String imgURL = ImageUtils.getImageUrl(fileName);
 
