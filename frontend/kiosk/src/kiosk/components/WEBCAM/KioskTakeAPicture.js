@@ -3,7 +3,7 @@ import { css } from "@emotion/react";
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const videoSize = css`
   width: 100vw !important;
@@ -82,6 +82,7 @@ const TakeAPictureBtn = css`
 const KioskTakeAPicture = (data) => {
   const [iscapture, setIscapture] = useState(false);
   const { id } = useSelector((store) => store);
+  const { holderNum } = useParams();
 
   let videoRef = useRef(null);
   let photoRef = useRef(null);
@@ -179,19 +180,13 @@ const KioskTakeAPicture = (data) => {
       url: 'http://192.168.100.79:8080/api/brolly/return',
       // url: 'http://bp.ssaverytime.kr:8080/api/auth/user/brolly/return/update/img',
       data: {
-        'brollyId' : qrdata,
-        'caseId' : id[0],
-        'imgUrl' : imgURL
+        'brollyId': qrdata,
+        'caseId': id[0],
+        'imgUrl': imgURL
       }
     })
     .then((res) => {
       console.log(res.data)
-      navigate(`/kiosk/${id[0]}/return/guide`, {
-        state: {
-          data: qrdata,
-        }
-      }
-      )
     }
     )
     .catch((err) => console.log(err));
