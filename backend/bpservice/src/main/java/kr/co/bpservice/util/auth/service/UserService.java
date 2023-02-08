@@ -1,7 +1,9 @@
 package kr.co.bpservice.util.auth.service;
 
 
+import kr.co.bpservice.dto.brolly.RentLogResponseDto;
 import kr.co.bpservice.entity.user.User;
+import kr.co.bpservice.repository.brolly.BrollyRentLogRepository;
 import kr.co.bpservice.util.auth.config.SecurityUtil;
 import kr.co.bpservice.util.auth.dto.UserRequestDto;
 import kr.co.bpservice.util.auth.dto.UserResponseDto;
@@ -14,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -22,6 +25,7 @@ import java.util.regex.Pattern;
 @Transactional(readOnly = true)
 public class UserService {
     private final UserRepository userRepository;
+    private final BrollyRentLogRepository brollyRentLogRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthService authService;
 
@@ -90,5 +94,17 @@ public class UserService {
         resultMap.put("result", "success");
         resultMap.put("msg", "회원탈퇴가 완료되었습니다.");
         return resultMap;
+    }
+
+    public Map<String, Object> getBrollyRentLog() {
+        Map<String, Object> responseMap = new HashMap<>();
+
+        User user = userRepository.findById(SecurityUtil.getCurrentUserId()).orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다"));
+        List<RentLogResponseDto> brollyRentLogList = brollyRentLogRepository.findByUser(user);
+
+        responseMap.put("success", true);
+        responseMap.put("message", "우산 대여기록 조회를 성공했습니다.");
+        responseMap.put("brollyRentLog", brollyRentLogList);
+        return responseMap;
     }
 }
