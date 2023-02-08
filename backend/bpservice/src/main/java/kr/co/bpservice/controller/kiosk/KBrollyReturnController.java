@@ -20,8 +20,6 @@ public class KBrollyReturnController {
     @Autowired
     private KBrollyReturnService kBrollyReturnService;
 
-
-
     // 반납 우산 정보 + 이미지를 받아서 저장하는 메소드 (반환값으로 키오스크에게 몇번 홀더를 열어야하는지 알려준다.)
     @PostMapping("")
     @Operation(description = "우산 반납을 담당하는 API (반납 로그, 이미지 등을 저장)")

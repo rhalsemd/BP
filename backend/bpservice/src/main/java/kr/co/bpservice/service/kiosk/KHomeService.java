@@ -36,7 +36,7 @@ public class KHomeService {
     public Map<String, Object> getBrollyCount(Integer caseId) {
         Optional<BrollyCase> optionalCase = brollyCaseRepository.findById(caseId);
         if(optionalCase.isEmpty()){
-            return CommonService.failReturn("키오스크 아이디가 잘못되었습니다.");
+            return CommonService.returnFail("키오스크 아이디가 잘못되었습니다.");
         }
         BrollyCase brollyCase = optionalCase.get();
         Integer holderCnt = brollyHolderRepository.countBrollyHolderByBrollyCase(brollyCase); // 홀더의 개수
