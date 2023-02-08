@@ -17,7 +17,7 @@ export const postAdminLogin = createAction(
 export const adminLogout = createAction(ADMIN_LOGOUT);
 
 const initalState = {
-  success: false,
+  success: Boolean(localStorage.getItem("login-admin-token")),
 };
 
 const loginAdminReucer = handleActions(
@@ -68,7 +68,6 @@ function* axiosAdminLogin(data) {
 function* axiosAdminSaga() {
   try {
     yield call(() => logoutAdmin());
-    console.log("로그아웃 성공");
     localStorage.removeItem("login-admin-token");
     yield put({
       type: ADMIN_LOGOUT_SUCCESS,

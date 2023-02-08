@@ -113,13 +113,22 @@ export const loginAdmin = (data) => {
 export const logoutAdmin = () => {
   const objString = localStorage.getItem("login-admin-token");
   const obj = JSON.parse(objString);
-  console.log(obj);
 
   return axios({
     method: "get",
     url: "http://192.168.100.79:8080/api/auth/admin/logout",
     headers: {
       Authorization: `Bearer ${obj.value}`,
+    },
+  });
+};
+
+export const getUserImg = (id) => {
+  return axios({
+    method: "get",
+    url: `${url}/api/auth/admin/log/get-img-url/997`,
+    headers: {
+      "Content-Type ": "application/json",
     },
   });
 };
