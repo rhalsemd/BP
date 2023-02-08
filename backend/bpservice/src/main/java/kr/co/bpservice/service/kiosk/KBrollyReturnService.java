@@ -1,5 +1,6 @@
 package kr.co.bpservice.service.kiosk;
 
+import ai.onnxruntime.OrtException;
 import kr.co.bootpay.Bootpay;
 import kr.co.bootpay.model.request.Cancel;
 import kr.co.bpservice.entity.brolly.*;
@@ -9,9 +10,14 @@ import kr.co.bpservice.util.HTTPUtils;
 import kr.co.bpservice.util.image.ImageUtils;
 import kr.co.bpservice.util.network.Get;
 import kr.co.bpservice.util.network.Header;
-import lombok.RequiredArgsConstructor;
+import kr.co.bpservice.yolov5.Detection;
+import kr.co.bpservice.yolov5.YoloV5;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.json.JSONObject;
+import org.opencv.core.Mat;
+import org.opencv.core.MatOfByte;
+import org.opencv.imgcodecs.Imgcodecs;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,13 +26,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
-@RequiredArgsConstructor
 public class KBrollyReturnService {
 
     private final BrollyRentLogRepository brollyRentLogRepository;
@@ -34,6 +36,7 @@ public class KBrollyReturnService {
     private final BrollyHolderRepository brollyHolderRepository;
     private final BrollyCaseRepository brollyCaseRepository;
     private final BrollyPayLogRepository brollyPayLogRepository;
+    private final YoloV5 inferenceSession;
 
     @Value("${BootPay.applicationID}")
     public String applicationID;
@@ -41,7 +44,22 @@ public class KBrollyReturnService {
     @Value("${BootPay.privateKey}")
     public String privateKey;
 
-    //결제 환불 및 DB 변경
+    @Autowired
+    public KBrollyReturnService(BrollyRentLogRepository brollyRentLogRepository, BrollyRepository brollyRepository, BrollyHolderRepository brollyHolderRepository, BrollyCaseRepository brollyCaseRepository, BrollyPayLogRepository brollyPayLogRepository)  throws OrtException, IOException {
+        this.brollyRentLogRepository = brollyRentLogRepository;
+        this.brollyRepository = brollyRepository;
+        this.brollyHolderRepository = brollyHolderRepository;
+        this.brollyCaseRepository = brollyCaseRepository;
+        this.brollyPayLogRepository = brollyPayLogRepository;
+
+        String modelPath = Objects.requireNonNull(KBrollyReturnService.class.getResource("/yolov5s.onnx")).getFile();
+        modelPath=modelPath.substring(1);
+        String labelPath = Objects.requireNonNull(KBrollyReturnService.class.getResource("/coco.names")).getFile();
+        this.inferenceSession = new YoloV5(modelPath, labelPath, 0.25f, 0.45f, -1);
+    }
+
+
+        //결제 환불 및 DB 변경
     @Transactional
     public Map<String,Object> refundMoney(String brollyName, int caseId){
         //QR 데이터를 이용한 RentLog 반환
@@ -107,7 +125,7 @@ public class KBrollyReturnService {
     }
 
     @Transactional
-    public Map<String, Object> returnBrolly(Integer caseId, String brollyName, String imgUrl) throws IOException {
+    public Map<String, Object> returnBrolly(Integer caseId, String brollyName, String imgData) throws IOException {
         Map<String, Object> responseMap = new HashMap<>();
 
         Optional<BrollyCase> optionalBrollyCase = brollyCaseRepository.findById(caseId);
@@ -133,7 +151,7 @@ public class KBrollyReturnService {
         BrollyRentLog brollyRentLog = optionalBrollyRentLog.get();
 
         /// 이미지 저장 로직
-        if(!imgSave(imgUrl, brollyRentLog)) {
+        if(!imgSave(imgData, brollyRentLog)) {
             return CommonService.returnFail("이미지를 저장하는 도중 오류가 발생했습니다.");
         }
 
@@ -178,8 +196,8 @@ public class KBrollyReturnService {
         }
     }
 
-    private boolean imgSave(String imgUrl, BrollyRentLog brollyRentLog) throws IOException {
-        String binaryData = imgUrl;
+    private boolean imgSave(String imgData, BrollyRentLog brollyRentLog) throws IOException {
+        String binaryData = imgData;
         FileOutputStream stream = null;
         try {
             if (binaryData == null || binaryData.trim().equals("")) {
@@ -189,10 +207,11 @@ public class KBrollyReturnService {
             binaryData = binaryData.replaceAll("data:image/png;base64,", "");
             byte[] file = Base64.decodeBase64(binaryData);
 
-            // YOLO5
-            // 이쯤에 들어가야함
-            // 메소드(file) // 우산 라벨이 있는지 없는지에 따라서 나머지 로직 수행
-            // 리턴 우산이 아닙니다
+            // YOLO5 우산 이미지 확인
+            boolean detectionResult = detectionBrolly(imgData);
+            if(!detectionResult) { // 우산이 감지되지 않았을 경우
+                return false;
+            }
 
             String fileName = UUID.randomUUID().toString();
             String imgURL = ImageUtils.getImageUrl(fileName);
@@ -217,5 +236,21 @@ public class KBrollyReturnService {
         }
         return true;
     }
-    
+
+    public boolean detectionBrolly(String imgData) throws OrtException, IOException {
+        byte[] bytes = Base64.decodeBase64(imgData
+                .replaceAll("data:image/png;base64,", "")
+                .replaceAll("data:image/jpeg;base64,", "")
+        );
+
+        Mat img = Imgcodecs.imdecode(new MatOfByte(bytes), Imgcodecs.IMREAD_COLOR);
+        List<Detection> result = inferenceSession.run(img);
+        for (Detection d: result) {
+            if (d.label().equals("umbrella") && d.confidence() >= 0.5f) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

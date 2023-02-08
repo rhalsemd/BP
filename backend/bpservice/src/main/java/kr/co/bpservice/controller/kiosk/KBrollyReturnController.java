@@ -24,13 +24,13 @@ public class KBrollyReturnController {
     @PostMapping("")
     @Operation(description = "우산 반납을 담당하는 API (반납 로그, 이미지 등을 저장)")
     @Parameters({@Parameter(name = "brolly_id", description = "BROLLY_NAME")
-            ,@Parameter(name = "img_url", description = "이미지 파일 이름")
+            ,@Parameter(name = "img_data", description = "이미지 파일 데이터")
     })
     public ResponseEntity<?> returnBrolly(@RequestBody Map<String, String> requestMap) throws IOException {
         return new ResponseEntity<>(kBrollyReturnService.returnBrolly(
                 Integer.parseInt(requestMap.get("caseId")),
-                requestMap.get("brollyId"),
-                requestMap.get("imgUrl")),
+                requestMap.get("brollyName"),
+                requestMap.get("imgData")),
                 HttpStatus.OK);
     }
 
