@@ -106,7 +106,7 @@ function SignUpPhone({
     <div css={inputBox}>
       <div>
         <input
-          type="number"
+          type="tel"
           css={inputChild}
           id="phone"
           required

@@ -26,10 +26,7 @@ import RoadView from "../routes/map/RoadView";
 import Users from "../routes/admin/Users";
 import BeforePayment from "../routes/auth/BeforePayment";
 import WebIntro from "./WebIntro";
-import LoadingPage from "./LoadingPage";
 import Chatbot from "../routes/Chatbot";
-
-// import Test from "../../src/Test";
 
 export const GlobalStyle = css`
   @font-face {
@@ -79,8 +76,6 @@ function App() {
         <Route path="/admin/users" element={<Users />} />
         <Route path="/admin/users/:id" element={<UserLog />} />
         <Route path="/*" element={<NotFound404 />} />
-
-        {/* <Route path="/test" element={<Test />} /> */}
       </Routes>
     </Router>
     // </div>
