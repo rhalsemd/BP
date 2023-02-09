@@ -32,6 +32,6 @@ public interface BrollyHolderRepository extends JpaRepository<BrollyHolder, Inte
 
     BrollyHolder findByBrolly(@Param("brolly") Brolly brolly);
 
-    @Query(value = "SELECT bh FROM MWS_BROLLY_HOLDER bh WHERE bh.CASE_ID = :caseId AND bh.NUM = :holderNum", nativeQuery = true)
+    @Query(value = "SELECT bh.* FROM MWS_BROLLY_HOLDER bh WHERE bh.CASE_ID = :caseId AND bh.NUM = :holderNum", nativeQuery = true)
     BrollyHolder findByCaseIdAndHolderNum(@Param("caseId") int caseId, @Param("holderNum") int holderNum);
 }
