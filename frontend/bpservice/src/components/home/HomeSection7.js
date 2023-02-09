@@ -6,11 +6,11 @@ import phone1 from "../../style/phone1.png";
 
 const container = css`
   display: flex;
+  background-color: black;
   justify-content: center;
   align-items: center;
   width: 100vw;
   height: 100vh;
-  /* border: 1px black solid; */
 `;
 
 const phoneStyle = css`

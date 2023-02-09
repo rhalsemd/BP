@@ -10,6 +10,8 @@ const container = css`
   align-items: center;
   width: 100vw;
   height: 100vh;
+  background-color: black;
+
   /* border: 1px black solid; */
 `;
 

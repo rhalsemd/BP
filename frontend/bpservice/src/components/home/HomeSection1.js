@@ -2,17 +2,16 @@
 import { css } from "@emotion/react";
 import { gsap, ScrollTrigger } from "gsap/all";
 import { useEffect, useRef } from "react";
-
 import homeumbrella from "../../style/homeumbrella.png";
 
 const outerBox = css`
   display: flex;
   background-color: rgba(249, 250, 251, 0.9);
+  width: 100vw;
+  height: 100vh;
 `;
 
 const container = css`
-  width: 100vw;
-  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: left;
@@ -23,19 +22,19 @@ const container = css`
 const img = css`
   width: 35vw;
   height: 15vh;
-  margin-left: 10%;
-  margin-bottom: 2%;
+  margin-left: 5%;
+  margin-bottom: 7%;
 `;
 
 const content = css`
   font-size: 1rem;
-  margin-left: 10%;
+  margin-left: 5%;
   margin-top: 0;
 `;
 
 const spanStyle = css`
   margin-right: 5vw;
-  margin-left: 10vw;
+  margin-left: 5%;
   margin-top: 1.5vh;
   text-align: justify;
   opacity: 0;
@@ -52,28 +51,29 @@ function HomeSection1() {
     if (!frame) return;
 
     gsap.to(".imgScroll", {
-      y: "0",
+      y: 0,
       duration: 1,
       opacity: 1,
       scrollTrigger: {
         trigger: ".imgScroll",
         scrub: 1,
-        start: "top 90%",
+        start: "-100 70%",
         id: "section-span-1",
-        end: "bottom 50%",
+        end: "top 70%",
         // markers: true,
       },
     });
 
     gsap.to(".frame", {
       x: "0",
+      y: "0",
       duration: 1,
       opacity: 1,
       scrollTrigger: {
         trigger: ".frame",
         scrub: 1,
-        start: "top 90%",
-        end: "bottom 60%",
+        start: "-100 70%",
+        end: "-100 70%",
         // markers: true,
         id: "imgScroll",
       },
@@ -84,7 +84,7 @@ function HomeSection1() {
       <div css={container}>
         <div
           className="imgScroll"
-          css={{ transform: " translateY(-50px)", opacity: 0 }}
+          css={{ transform: " translateY(-100px)", opacity: 0 }}
         >
           <div>
             <img src={homeumbrella} alt="homeumbrella" css={img} />
