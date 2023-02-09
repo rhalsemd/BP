@@ -17,6 +17,6 @@ public interface ALogRepository extends JpaRepository<User,Integer> {
     @Query(value = "SELECT IMG_NAME FROM MWS_BROLLY_RENT_LOG WHERE ID = :rentLogId", nativeQuery = true)
     String getImageName(@Param("rentLogId") int rentLogId);
 
-    @Query(value = "SELECT ID, STATE, REG_DT, UPT_DT, IMG_NAME, DEPOSITE_MONEY, RENT_MONEY FROM MWS_BROLLY_RENT_LOG WHERE USER_ID = :userId", nativeQuery = true)
+    @Query(value = "SELECT ID, STATE, REG_DT, UPT_DT, IMG_NAME, DEPOSITE_MONEY, RENT_MONEY FROM MWS_BROLLY_RENT_LOG WHERE USER_ID = :userId ORDER BY ID DESC", nativeQuery = true)
     List<Map<String, ?>> getUserLentLog(@Param("userId") String userId);
 }
