@@ -4,7 +4,6 @@ import { css } from "@emotion/react";
 import Nav from "../components/Nav";
 import HomeLogo from "../components/home/HomeLogo";
 import Footer from "../components/Footer";
-import HomeIntro from "../components/home/HomeIntro";
 import HomeSection1 from "../components/home/HomeSection1";
 import HomeSection2 from "../components/home/HomeSection2";
 import HomeSection3 from "../components/home/HomeSection3";
@@ -23,8 +22,6 @@ import { getWhetherData } from "../modules/home";
 import FmdGoodIcon from "@mui/icons-material/FmdGood";
 import HomeSpeedDial from "../components/home/HomeSpeedDial";
 import { gsap, ScrollTrigger } from "gsap/all";
-
-import section2 from "../style/section2.png";
 import section4 from "../style/section4.png";
 
 const mapBtn = css`
@@ -35,39 +32,29 @@ const mapBtn = css`
 `;
 
 const testCss = css`
-  height: 100%;
+  height: auto;
+  overflow: hidden;
 `;
 
 const com1 = css`
-  position: sticky;
   height: 100vh;
-  top: 0;
 `;
 
-const 임시com2 = css`
-  position: sticky;
-  height: 100vh;
-  top: 0;
-  background: url(${section2});
-  background-size: cover;
-`;
 const 임시com3 = css`
-  position: sticky;
   height: 100vh;
-  top: 0;
   background-color: #f9fafb;
 `;
 const 임시com4 = css`
-  position: sticky;
+  /* position: sticky; */
+  /* top: 0; */
   height: 100vh;
-  top: 0;
   background: url(${section4});
   background-size: cover;
 `;
 const 임시com5a = css`
-  position: sticky;
+  /* position: sticky; */
+  /* top: 0; */
   height: 100vh;
-  top: 0;
   background-color: #f9fafb;
 `;
 const 임시com5 = css`
@@ -88,31 +75,29 @@ function Home() {
   const dispatch = useDispatch();
   const com7Ref = useRef();
   const triggerBox = useRef();
-
+  const section1 = useRef();
   useEffect(() => {
-    if (!triggerBox) return;
-
-    const composArry = gsap.utils.toArray(triggerBox.current.children);
-    const sectionWidth = gsap.getProperty("#section2", "width");
-    // gsap.defaults({ ease: "power1", duration: 3 });
-    let tl = gsap.timeline();
-
-    tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: "#section2",
-        pin: true,
-        pinSpacing: true,
-        scrub: 0.5,
-        start: "top top",
-        end: () => `+=${sectionWidth * 4}`,
-      },
-    });
-    tl.to(composArry, {
-      xPercent: -400,
-      duration: 5,
-      ease: "ease",
-      // stagger: 3,
-    });
+    // if (!triggerBox) return;
+    // const composArry = gsap.utils.toArray(triggerBox.current.children);
+    // const sectionWidth = gsap.getProperty("#section2", "width");
+    // gsap.to(composArry, {
+    //   xPercent: -400,
+    //   ease: "none",
+    //   scrollTrigger: {
+    //     trigger: "#section2",
+    //     start: "top top",
+    //     end: () => `+=${sectionWidth * (composArry.length - 1)}`,
+    //     pin: true,
+    //     pinSpacing: true,
+    //     scrub: 0.1,
+    //     id: "가로",
+    //     // markers: true,
+    //   },
+    // });
+    // tl.to(composArry, {
+    //   xPercent: -400,
+    //   ease: "none",
+    // });
 
     const option = {
       enableHighAccuracy: true,
@@ -132,7 +117,7 @@ function Home() {
   }, []);
 
   return (
-    <div style={{ height: "100%" }}>
+    <div style={{ height: "100%", overflow: "hidden", overflowX: "hidden" }}>
       <header>
         <Nav />
       </header>
@@ -140,11 +125,11 @@ function Home() {
       <HomeLogo />
 
       <FmdGoodIcon color="primary" css={mapBtn} />
-      <div css={testCss}>
+      <div css={testCss} ref={section1}>
         <div css={com1}>
           <HomeSection1 />
         </div>
-        <div css={임시com2}>
+        <div>
           <HomeSection2 />
         </div>
         <div css={임시com3}>
