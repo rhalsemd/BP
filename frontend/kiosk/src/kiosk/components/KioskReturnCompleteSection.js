@@ -151,25 +151,15 @@ const KioskReturnCompleteSection = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [isReturn, setIsReturn] = useState(false);
-  const location = useLocation()
 
   useEffect(() => {
-    if (location.state) {
+    if (isBrolly == 1) {
       setIsReturn(true)
-    } else {
-      // navigate('/kiosk/1')
-
     }
-    // if (isBrolly === 1) {
-    //   setIsReturn(true)
-    // }
-    // else {
-    //   setIsReturn(false)
-    // }
     setTimeout(() => {
       navigate(`/kiosk/${id}`)
-    }, 10000)
-  }, [isReturn, id, navigate, isBrolly, location])
+    }, 18000)
+  }, [isReturn])
 
   return (
     <div css={KioskReturnReceiptStyle}>

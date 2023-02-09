@@ -27,7 +27,7 @@ const KioskReturnGuideContainer = () => {
 
   // 홈화면으로
   const miliUnit = 1000
-  const seconds = 6000 * miliUnit
+  const seconds = 180 * miliUnit
   useEffect(() => {
     let myTimer = setTimeout(() => {
       navigate(`/kiosk/${id}`)

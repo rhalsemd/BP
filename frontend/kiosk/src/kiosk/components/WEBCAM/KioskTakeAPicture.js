@@ -201,7 +201,7 @@ const KioskTakeAPicture = (data) => {
 
     axios({
       method: 'POST',
-      url: 'http://192.168.100.79:8080/api/brolly/return',
+      url: 'http://bp.ssaverytime.kr:8080/api/brolly/return',
       // url: 'http://bp.ssaverytime.kr:8080/api/auth/user/brolly/return/update/img',
       data: {
         'brollyName': qrdata,

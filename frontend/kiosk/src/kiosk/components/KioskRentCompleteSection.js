@@ -52,7 +52,7 @@ const KioskRentCompleteSection = () => {
   const { isBrolly } = useParams();
   const { id } = useParams();
   const navigate = useNavigate();
-  const [ isRent, setIsRent ] = useState(false);
+  const [isRent, setIsRent] = useState(false);
 
   useEffect(() => {
     if (isBrolly == 1) {
@@ -60,7 +60,7 @@ const KioskRentCompleteSection = () => {
     }
     setTimeout(() => {
       navigate(`/kiosk/${id}`)
-    }, 20000)
+    }, 18000)
   }, [isRent])
 
   return (

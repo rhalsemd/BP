@@ -49,17 +49,7 @@ const KioskRentSectionGuideStyle = css`
 // 밑에는 JS 입니다.
 
 const KioskRentGuideSection = () => {
-  const navigate = useNavigate();
-  const { id } = useParams();
   const { holderNum } = useParams();
-
-  useEffect(() => {
-    setTimeout(() => {
-      navigate(`/kiosk/${id}/rent/complete/${holderNum}/${parseInt(0)}`)
-    }, 5000)
-  })
-
-
 
   return (
     <div css={KioskRentSectionGuideStyle}>
