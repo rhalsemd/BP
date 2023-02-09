@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router';
+import { useParams } from 'react-router';
 
 const KioskReturnGuideSectionStyle = css`
   width: 100vw;
@@ -42,14 +41,6 @@ const KioskReturnGuideSectionStyle = css`
 
 const KioskReturnGuideSection = () => {
   const { holderNum } = useParams();
-  const { id } = useParams();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    setTimeout(() => {
-      navigate(`/kiosk/${id}/return/complete/${holderNum}/${parseInt(1)}`)
-    }, 1000)
-  })
 
   return (
     <div css={KioskReturnGuideSectionStyle}>
