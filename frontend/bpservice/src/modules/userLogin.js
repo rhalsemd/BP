@@ -44,6 +44,7 @@ function* setLoginFnc(data) {
       const obj = {
         value: post.data.accessToken,
         expire: Date.now() + 1800000,
+        userId: userInfo.id,
       };
 
       // 객체를 JSON 문자열로 변환
@@ -53,7 +54,6 @@ function* setLoginFnc(data) {
       yield put({
         type: GET_USER_TOKEN,
         success: true,
-        userId: userInfo.id,
       });
     }
   } catch (e) {
@@ -109,7 +109,7 @@ const initialState = { token: "" };
 const userLoginReducer = handleActions(
   {
     [GET_USER_TOKEN]: (state, action) => {
-      return { ...state, success: action.success, userId: action.userId };
+      return { ...state, success: action.success };
     },
     [GET_USER_ERROR]: (state, action) => {
       return { ...state, error: action.error };

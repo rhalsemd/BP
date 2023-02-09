@@ -58,9 +58,9 @@ export default function UmbrellaDataTable() {
       rows[rows.length] = createData(
         item.brollyName,
         item.depositeMoney,
-        item.expDt,
-        item.regDt,
         item.rentMoney,
+        item.regDt,
+        item.expDt,
         item.uptDt
       );
     });

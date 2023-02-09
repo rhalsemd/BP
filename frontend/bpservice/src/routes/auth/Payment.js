@@ -9,11 +9,12 @@ export default function Payment() {
   const location = useLocation();
   const navigation = useNavigate();
 
-  const startPay = async (dispatch) => {
+  const startPay = async (dispatch, location) => {
     try {
       const response = await Bootpay.requestPayment({
         application_id: "63d0816b3049c8001a5dc07b",
-        price: 100,
+        price: location.state.depositeMoney,
+        // price: "100",
         order_name: "테스트결제",
         order_id: "TEST_ORDER_ID",
         pg: "kcp",
@@ -30,7 +31,8 @@ export default function Payment() {
             id: "item_id",
             name: "테스트아이템",
             qty: 1,
-            price: 100,
+            price: location.state.depositeMoney,
+            // price: 100,
           },
         ],
         extra: {
@@ -96,7 +98,7 @@ export default function Payment() {
     if (!location.state) {
       navigation("/bp");
     } else {
-      startPay(dispatch);
+      startPay(dispatch, location);
     }
   }, [navigation, dispatch, location, startPay]);
 

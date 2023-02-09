@@ -18,7 +18,9 @@ function BeforePayment() {
   const term = queryParams.get("kioskId");
 
   const onClick = () => {
-    navigation("/bp/payment", { state: { kioskId: term } });
+    navigation("/bp/payment", {
+      state: { kioskId: term, depositeMoney: depositeMoney },
+    });
   };
 
   const objString = localStorage.getItem("login-token");

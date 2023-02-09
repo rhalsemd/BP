@@ -1,16 +1,16 @@
 import { Bootpay } from "@bootpay/backend-js";
-import { call, put, select } from "redux-saga/effects";
+import { call, put } from "redux-saga/effects";
 import axios from "axios";
 import { SET_CASE_INFO, SET_COST } from "../modules/payment";
 
-// const url = "http://192.168.100.176:8080";
-// const url = "http://192.168.100.79:8080";
 const url = `http://bp.ssaverytime.kr:8080`;
 
 // bootpay로 받은 데이터 DB로 전송
 export function* getBootpayFnc(data) {
   const { DATA, kioskId } = data.payload;
-  const { userId } = yield select(({ userLogin }) => userLogin);
+
+  const objString = localStorage.getItem("login-token");
+  const obj = JSON.parse(objString);
 
   try {
     const post = yield call(() => {
@@ -21,12 +21,13 @@ export function* getBootpayFnc(data) {
           receiptId: DATA.receipt_id,
           price: DATA.price,
           regDt: DATA.purchased_at,
-          userId: userId, /// 임시값
-          caseId: kioskId, ///임시값
+          userId: obj.userId,
+          caseId: kioskId,
           // "결제 상태": "받아야 함",
         },
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${obj.value}`,
         },
       });
     });
@@ -47,7 +48,6 @@ export function* getCostFnc() {
       return axios({
         method: "get",
         url: `${url}/api/auth/brolly/price`,
-        // url: `http://192.168.100.79:8080/api/auth/brolly/price`,
         headers: {
           Authorization: `Bearer ${obj.value}`,
         },

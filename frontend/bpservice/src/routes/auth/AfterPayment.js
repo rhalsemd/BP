@@ -57,7 +57,7 @@ function AfterPayment() {
       <Suspense fallback={<LoadingPage />}>
         <div css={completeModalStyle}>
           <h2>결제가 완료되었습니다.</h2>
-          <h2>{holderNum} 케이스가 열립니다.</h2>
+          <h2>{holderNum} 홀더가 열립니다.</h2>
           <button onClick={goToHome} css={버튼}>
             홈으로
           </button>
