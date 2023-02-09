@@ -1,12 +1,12 @@
 import axios from "axios";
 import dayjs from "dayjs";
 
-const objString = localStorage.getItem("login-admin-token");
-const obj = JSON.parse(objString);
 const url = "http://bp.ssaverytime.kr:8080";
 // const url = "http://192.168.100.176:8080";
 
 export const getBranchRevenue = (day) => {
+  const objString = localStorage.getItem("login-admin-token");
+  const obj = JSON.parse(objString);
   const dayData = dayjs(day).format("YYYY-MM-DD");
   return axios({
     method: "get",
@@ -19,6 +19,8 @@ export const getBranchRevenue = (day) => {
 };
 
 export const getBranchRevenueMonth = (date) => {
+  const objString = localStorage.getItem("login-admin-token");
+  const obj = JSON.parse(objString);
   const year = dayjs(date).format("YYYY");
   const month = dayjs(date).format("MM");
   console.log("getBranchRevenueMonth axios");
@@ -33,6 +35,8 @@ export const getBranchRevenueMonth = (date) => {
 };
 
 export const getUseageRevenu = (day) => {
+  const objString = localStorage.getItem("login-admin-token");
+  const obj = JSON.parse(objString);
   const dayData = dayjs(day).format("YYYY-MM-DD");
   return axios({
     method: "get",
@@ -46,6 +50,8 @@ export const getUseageRevenu = (day) => {
 };
 
 export const getUseageRevenuMonth = (date) => {
+  const objString = localStorage.getItem("login-admin-token");
+  const obj = JSON.parse(objString);
   const year = dayjs(date).format("YYYY");
   const month = dayjs(date).format("MM");
   return axios({
@@ -59,6 +65,8 @@ export const getUseageRevenuMonth = (date) => {
 };
 
 export const getRevenueTrend = ({ month, year, caseId }) => {
+  const objString = localStorage.getItem("login-admin-token");
+  const obj = JSON.parse(objString);
   return axios({
     method: "get",
     url: `${url}/api/auth/admin/kiosk-money-month/${month}/${year}/${caseId}`,
@@ -70,6 +78,8 @@ export const getRevenueTrend = ({ month, year, caseId }) => {
 };
 
 export const getRevenueTrendMonth = ({ year, caseId }) => {
+  const objString = localStorage.getItem("login-admin-token");
+  const obj = JSON.parse(objString);
   return axios({
     method: "get",
     url: `${url}/api/auth/admin/kiosk-money-year/${year}/${caseId}`,
@@ -81,7 +91,8 @@ export const getRevenueTrendMonth = ({ year, caseId }) => {
 };
 
 export const getUsers = () => {
-  console.log("getUsers axios");
+  const objString = localStorage.getItem("login-admin-token");
+  const obj = JSON.parse(objString);
   return axios({
     method: "get",
     url: `${url}/api/auth/admin/log/get-user-data`,
@@ -93,7 +104,9 @@ export const getUsers = () => {
 };
 
 export const getUserLog = (userId) => {
-  console.log("getUserLog API 엑시오스", userId);
+  const objString = localStorage.getItem("login-admin-token");
+  const obj = JSON.parse(objString);
+
   return axios({
     method: "get",
     url: `${url}/api/auth/admin/log/get-rent-log-data/${userId}`,
@@ -120,6 +133,8 @@ export const loginAdmin = (data) => {
 };
 
 export const logoutAdmin = () => {
+  const objString = localStorage.getItem("login-admin-token");
+  const obj = JSON.parse(objString);
   return axios({
     method: "get",
     url: `${url}/api/auth/admin/logout`,
@@ -130,6 +145,8 @@ export const logoutAdmin = () => {
 };
 
 export const getUserImg = (id) => {
+  const objString = localStorage.getItem("login-admin-token");
+  const obj = JSON.parse(objString);
   console.log(id);
   return axios({
     method: "get",
