@@ -57,14 +57,7 @@ public class KBrollyReturnService {
         ClassPathResource yolCpr = new ClassPathResource("yolov5s.onnx");
         byte[] yoloResource = FileCopyUtils.copyToByteArray(yolCpr.getInputStream());
         ClassPathResource cocoCpr = new ClassPathResource("coco.names");
-        byte[] cocoResource = FileCopyUtils.copyToByteArray(cocoCpr.getInputStream());
-
-        /*String modelPath = KBrollyReturnService.class.getResource("/yolov5s.onnx").getFile();
-        modelPath=modelPath.substring(1);
-        String labelPath = KBrollyReturnService.class.getResource("/coco.names").getFile();
-        labelPath=labelPath.substring(1);
-        this.inferenceSession = new YoloV5(modelPath, labelPath, 0.25f, 0.45f, -1);*/
-        this.inferenceSession = new YoloV5(yoloResource, cocoResource,0.25f, 0.45f, -1);
+        this.inferenceSession = new YoloV5(yoloResource, cocoCpr,0.25f, 0.45f, -1);
     }
 
 
