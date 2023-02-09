@@ -3,10 +3,7 @@ package kr.co.bpservice.service.user;
 import jakarta.transaction.Transactional;
 import kr.co.bpservice.entity.brolly.*;
 import kr.co.bpservice.entity.user.User;
-import kr.co.bpservice.repository.brolly.BrollyCaseRepository;
-import kr.co.bpservice.repository.brolly.BrollyHolderRepository;
-import kr.co.bpservice.repository.brolly.BrollyPayLogRepository;
-import kr.co.bpservice.repository.brolly.BrollyRentLogRepository;
+import kr.co.bpservice.repository.brolly.*;
 import kr.co.bpservice.service.common.CommonService;
 import kr.co.bpservice.service.kiosk.KBrollyReturnService;
 import kr.co.bpservice.util.HTTPUtils;
@@ -29,15 +26,11 @@ import java.util.Optional;
 public class UBrollyRentService {
 
     private final UserRepository userRepository;
-
     private final BrollyHolderRepository brollyHolderRepository;
-
     private final BrollyCaseRepository brollyCaseRepository;
-
     private final BrollyPayLogRepository brollyPayLogRepository;
-
     private final BrollyRentLogRepository brollyRentLogRepository;
-
+    private final PriceRepository priceRepository;
     private final KBrollyReturnService kBrollyReturnService;
 
     @Transactional
@@ -128,6 +121,10 @@ public class UBrollyRentService {
         openHolderThread.start();
 
         return responseMap;
+    }
+
+    public Price getPrice() {
+        return priceRepository.getPrice();
     }
 
     static class OpenHolderThread implements Runnable {
