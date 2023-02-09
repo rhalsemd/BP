@@ -38,6 +38,7 @@ public class KBrollyReturnService {
     private final BrollyHolderRepository brollyHolderRepository;
     private final BrollyCaseRepository brollyCaseRepository;
     private final BrollyPayLogRepository brollyPayLogRepository;
+    private final PriceRepository priceRepository;
     private final YoloV5 inferenceSession;
 
     @Value("${BootPay.applicationID}")
@@ -47,12 +48,13 @@ public class KBrollyReturnService {
     public String privateKey;
 
     @Autowired
-    public KBrollyReturnService(BrollyRentLogRepository brollyRentLogRepository, BrollyRepository brollyRepository, BrollyHolderRepository brollyHolderRepository, BrollyCaseRepository brollyCaseRepository, BrollyPayLogRepository brollyPayLogRepository)  throws OrtException, IOException {
+    public KBrollyReturnService(BrollyRentLogRepository brollyRentLogRepository, BrollyRepository brollyRepository, BrollyHolderRepository brollyHolderRepository, BrollyCaseRepository brollyCaseRepository, BrollyPayLogRepository brollyPayLogRepository, PriceRepository priceRepository)  throws OrtException, IOException {
         this.brollyRentLogRepository = brollyRentLogRepository;
         this.brollyRepository = brollyRepository;
         this.brollyHolderRepository = brollyHolderRepository;
         this.brollyCaseRepository = brollyCaseRepository;
         this.brollyPayLogRepository = brollyPayLogRepository;
+        this.priceRepository = priceRepository;
 
         ClassPathResource yolCpr = new ClassPathResource("yolov5s.onnx");
         byte[] yoloResource = FileCopyUtils.copyToByteArray(yolCpr.getInputStream());
@@ -71,8 +73,12 @@ public class KBrollyReturnService {
         }
         BrollyRentLog brollyRentLog = optionalBrollyRentLog.get();
 
+        // 보증금, 시간당 지불해야 할 금액 가져오기
+        Integer depositeMoney = brollyRentLog.getDepositeMoney();
+        Integer payMoney = priceRepository.getPrice().getMoney();
+
         //결제 취소할 데이터 가져오기
-        Map<String,?> cancelDataMap = brollyPayLogRepository.findPayLogForRefund(brollyRentLog.getBrolly());
+        Map<String,?> cancelDataMap = brollyPayLogRepository.findPayLogForRefund(brollyRentLog.getBrolly(), depositeMoney, payMoney);
         String receiptId = cancelDataMap.get("receiptId").toString();
         String userId = cancelDataMap.get("userId").toString();
         double price = Double.parseDouble(cancelDataMap.get("price").toString());
