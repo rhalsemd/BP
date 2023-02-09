@@ -12,14 +12,20 @@ const KioskHeaderStyle = css`
 
   display: flex;
   justify-content: space-between;
-  align-items: start;
   width: 100vw;
-  height: 10vh;
+  height: 15vh;
 `
 
 const KioskLogo = css`
   margin-left: 3vw;
   margin-top: 2vw;
+
+  & > div {
+    margin-top: 0.2vw;
+    div > div > svg {
+      margin-bottom: -5px;
+    }
+  }
 
   img {
     width: 10vw;
@@ -28,7 +34,13 @@ const KioskLogo = css`
 
 const KioskLocation = css`
   margin-right: 3vw;
-  margin-top: 1vw;
+  margin-top: 2vw;
+
+ & > div {
+  svg {
+    margin-top: -5px;
+  }
+ }
 `
 
 // 위에는 Emotion.js 입니다.
@@ -40,17 +52,17 @@ const KioskHeader = () => {
   const [isHome, setIsHome] = useState(false);
 
   // 홈일때는 true, 아닐때는 false
-  const setIsHomeBtn = () => {
-    if (window.location.pathname === `/kiosk/${id}`) {
-      setIsHome(true)
-    }
-    else {
-      setIsHome(false)
-    }
-  }
   useEffect(() => {
+    const setIsHomeBtn = () => {
+      if (window.location.pathname === `/kiosk/${id}`) {
+        setIsHome(true)
+      }
+      else {
+        setIsHome(false)
+      }
+    }
     setIsHomeBtn();
-  }, [id, setIsHomeBtn])
+  }, [id])
 
   return (
     <div css={KioskHeaderStyle}>

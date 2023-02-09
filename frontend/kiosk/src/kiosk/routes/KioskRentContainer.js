@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import KioskTTSBtn from '../components/button/KioskTTSBtn';
@@ -26,8 +25,6 @@ const KioskRentStyle = css`
 
 const KioskRentContainer = () => {
   const { id } = useParams();
-  // 지불관련 useHook
-  const [isconfirm, setIsconfirm] = useState(false);
   const navigate = useNavigate();
 
   // 홈화면으로
@@ -35,38 +32,12 @@ const KioskRentContainer = () => {
   const seconds = 60 * miliUnit
   useEffect(() => {
     let myTimer = setTimeout(() => {
-      navigate(`/kiosk/${id[0]}`)
+      navigate(`/kiosk/${id}`)
     }, seconds)
     return () => {
       clearTimeout(myTimer)
     }
   }, [id, seconds, miliUnit, navigate])
-
-  useEffect(() => {
-    const getPayConfirm = () => {
-      setTimeout(() => {
-        const PayConfirmURL = `http://192.168.100.79/posts`;
-        axios({
-          method: 'POST',
-          url: PayConfirmURL,
-          data: {
-            'caseId': id
-          }
-        })
-          .then((res) => {
-            setIsconfirm(res.data[0].isPay)
-            return true
-          })
-          .then((bool) => {
-            // 대여완료 화면으로
-            navigate(`/kiosk/${id}/rent/complete`)
-          })
-          .catch((err) => console.log(err))
-      }, 5000)
-    }
-
-    getPayConfirm();
-  }, [id, isconfirm, navigate])
 
   let TTSMent = sample.rent
 

@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
+import { css, keyframes } from "@emotion/react";
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const videoSize = css`
   width: 100vw !important;
@@ -24,7 +24,6 @@ const canvasDiv = css`
   
   position: fixed;
   top: 10vh;
-  z-index: 0;
   
   transform: rotateY(180deg);
   -webkit-transform:rotateY(180deg);
@@ -38,6 +37,71 @@ const canvasSize = css`
   top: -61px;
   right: 0px;
 `;
+
+// 배경 애니메이션
+const countDownDivStyle = ({ isActive }) => css`
+  width: 100vw;
+  height: 100vh;
+
+  position: absolute;
+  top: -60px;
+  right: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: ${isActive ? 'rgba(0, 0, 0, 0.5)' : 'rgba(0, 0, 0, 0.00)'};
+  transition-property: background-color;
+  transition-timing-function: ease-out;
+  transition-duration: 1s;
+`
+
+// 글씨 애니메이션
+// grow && fadeOut 
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: rotateY(180deg);
+    -webkit-transform:rotateY(180deg);
+    -moz-transform:rotateY(180deg);
+  }
+  to {
+    opacity: 1;
+    transform: rotateY(180deg);
+    -webkit-transform:rotateY(180deg);
+    -moz-transform:rotateY(180deg);
+  }
+`;
+
+const grow = keyframes`
+  from {
+    transform: rotateY(200deg) scale(0);
+    -webkit-transform:rotateY(200deg) scale(0);
+    -moz-transform:rotateY(200deg) scale(0);
+  }
+  to {
+    transform: rotateY(200deg) scale(1.5);
+    -webkit-transform:rotateY(200deg) scale(1.5);
+    -moz-transform:rotateY(200deg) scale(1.5);
+  }
+`;
+
+const countDownStyle = ({ isActive }) => css`
+  display: block !important;
+  font-size: 15vw;
+  color: ${isActive ? 'white !important' : 'black !important'};
+  animation: ${fadeIn} 1s ease forwards, ${grow} 1s ease forwards;
+  animation-iteration-count: infinite;
+  animation-play-state: ${isActive ? 'running' : 'paused'};
+
+  z-index: 999 !important;
+
+  transform: rotateY(180deg);
+  -webkit-transform:rotateY(180deg);
+  -moz-transform:rotateY(180deg);
+`
 
 const buttonCenter = css`
   width: 100vw;
@@ -76,21 +140,18 @@ const TakeAPictureBtn = css`
   
   left: 50%;
   transform: translate(-50%, 0%);
-  `
+`
 
 const KioskTakeAPicture = (data) => {
   const [iscapture, setIscapture] = useState(false);
   const { id } = useParams();
-  const { holderNum } = useParams();
 
   let videoRef = useRef(null);
   let photoRef = useRef(null);
 
   const qrdata = data.data.data.qrdata
-  const navigate = useNavigate();
 
   // get access to user webcamera
-
   const getVideo = () => {
     navigator.mediaDevices
       .getUserMedia({
@@ -98,77 +159,41 @@ const KioskTakeAPicture = (data) => {
       })
       .then((stream) => {
         let video = videoRef.current;
-        video.srcObject = stream;
-        video.play();
+        if (video.paused) {
+          video.srcObject = stream;
+          video.play();
+        }
       })
       .catch((err) => {
         console.error(err);
       });
   };
 
-  // to take picture of user
-  let ctx = "";
-
-  // count는 여기에 있음 (useInterval) 
-  const [isCounting, setCounting] = useState(false);
-  const [number, setNumber] = useState(5);
-  let number_ref = useRef(5);
-
-  const takePicture = () => {
-    const width = 839.68;
-    const height = 629.75;
-
-    let video = videoRef.current;
-    let photo = photoRef.current;
-
-    photo.width = width;
-    photo.height = height;
-
-    ctx = photo.getContext("2d");
-    ctx.drawImage(video, 0, 0, width, height);
-
-    setIscapture(true);
-  };
-
-  const setCountingOnClick = () => {
-    setCounting(true);
-  }
-
-  const TimeCounting = () => {
-    const loop = setInterval(() => {
-      let count = number_ref.current
-      if (number_ref.current <= -1) {
-        number_ref.current = 5
-        count = 5
-      }
-      else {
-        number_ref.current -= 1;
-        count -= 1;
-      }
-      // 카운트 애니메이션 구현
-      console.log("count", count);
-      console.log("number_ref.current", number_ref.current);
-      if (number_ref.current === 0) {
-        setNumber(0);
-        takePicture();
-        clearInterval(loop);
-      }
-    }, 1000);
-  }
-
-  useEffect(() => {
-    if (isCounting) {
-      TimeCounting();
-    }
-  }, [isCounting, TimeCounting])
-
-
   useEffect(() => {
     getVideo();
   }, [videoRef, getVideo]);
 
-  // save canvas Image in server
+  // to take picture of user
+  const takePicture = () => {
+    setIsActive(!isActive);
+    if (isActive) {
+      const width = 839.68;
+      const height = 629.75;
 
+      let video = videoRef.current;
+      let photo = photoRef.current;
+
+      photo.width = width;
+      photo.height = height;
+
+      let ctx = photo.getContext("2d");
+      ctx.drawImage(video, 0, 0, width, height);
+
+      setIscapture(true);
+    }
+  };
+
+  // save canvas Image in server
   const saveImage = () => {
     // 데이터 URL로 그대로 보내기
     const canvas = document.getElementById("$canvas");
@@ -189,25 +214,59 @@ const KioskTakeAPicture = (data) => {
       }
       )
       .catch((err) => console.log(err));
-
   };
 
   // clear out the image from the screen
-
   const clearImage = () => {
     setIscapture(false);
-    setCounting(false);
-    setNumber(5);
+    // 6초로 세팅
+    setTimeLeft(5);
 
     let photo = photoRef.current;
     let ctx = photo.getContext("2d");
     ctx.clearRect(0, 0, photo.width, photo.height);
   };
 
+  // useInterval로 카운트다운을 하면서 애니메이션 구현하려고
+  // useInterval
+  const [timeLeft, setTimeLeft] = useState(5);
+  const [isActive, setIsActive] = useState(false);
+
+  const useInterval = (callback, delay) => {
+    const savedCallback = useRef();
+
+    useEffect(() => {
+      savedCallback.current = callback;
+    }, [callback]);
+
+    useEffect(() => {
+      function tick() {
+        savedCallback.current();
+      }
+      if (delay !== null) {
+        let id = setInterval(tick, delay);
+        return () => clearInterval(id);
+      }
+    }, [delay]);
+  }
+
+  useInterval(() => {
+    if (timeLeft <= 1) {
+      takePicture();
+      setTimeLeft("")
+      setIsActive(false);
+      return;
+    }
+    setTimeLeft((timeLeft) => timeLeft - 1);
+  }, isActive ? 1000 : null);
+
   return (
     <div>
       <video ref={videoRef} css={videoSize}></video>
       <div css={canvasDiv}>
+        <div css={countDownDivStyle({ isActive })}>
+          <p css={countDownStyle({ isActive })}>{timeLeft}</p>
+        </div>
         <canvas
           id="$canvas"
           css={canvasSize}
@@ -216,9 +275,11 @@ const KioskTakeAPicture = (data) => {
       </div>
       <div css={buttonCenter}>
         <div css={buttonDiv}>
-          {iscapture ? null : <button onClick={setCountingOnClick} css={TakeAPictureBtn}>
-            촬영하기
-          </button>}
+          {iscapture ? null :
+            (isActive ? null : <button onClick={takePicture} css={TakeAPictureBtn}>
+              촬영하기
+            </button>)
+          }
           {iscapture ? <button onClick={clearImage}>
             재촬영
           </button> : null}
