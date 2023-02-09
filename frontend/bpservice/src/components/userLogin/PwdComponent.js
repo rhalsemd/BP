@@ -38,7 +38,7 @@ const 회원가입버튼 = css`
   margin-bottom: 5%;
 `;
 
-function PwdComponent({ setInfo, info, setLoginInfo }) {
+function PwdComponent({ setInfo, info, setLoginInfo, location }) {
   const navigation = useNavigate();
 
   const obj = localStorage.getItem("login-token");
@@ -66,9 +66,17 @@ function PwdComponent({ setInfo, info, setLoginInfo }) {
 
   useEffect(() => {
     if (obj) {
-      navigation("/bp");
+      if (
+        location.state &&
+        location.state.beforePayment &&
+        location.state.kioskId
+      ) {
+        navigation(`/bp/before/payment?kioskId=${location.state.kioskId}`);
+      } else {
+        navigation("/bp");
+      }
     }
-  }, [obj, navigation]);
+  }, [obj, navigation, location]);
 
   return (
     <>

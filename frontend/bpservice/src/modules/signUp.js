@@ -27,6 +27,8 @@ const SET_DONG_DATA = "signUp/SET_DONG_DATA";
 
 const CHECK_CERTIFICATION_NUM = "signUp/CHECK_CERTIFICATION_NUM";
 
+const CLEAR_INFO = "signUp/CLEAR_INFO";
+
 const getTermsOfUser = createAction(GET_TERMS_OF_USER, () => undefined);
 const getCertification = createAction(GET_CERTIFYCATION, (data) => data);
 const sighUpRequirement = createAction(SIGN_UP_REQUIREMENT, (data) => data);
@@ -42,6 +44,7 @@ const errorCertifycationReset = createAction(
   ERROR_CERTIFYCATION_RESET,
   () => undefined
 );
+export const clearInfo = createAction(CLEAR_INFO, () => undefined);
 
 const API = `http://bp.ssaverytime.kr:8080`;
 
@@ -226,7 +229,7 @@ const signUpReducer = handleActions(
     [ERROR_CERTIFYCATION]: (state, action) => {
       return { ...state, isCertifyNumError: action.error };
     },
-    [ERROR_CERTIFYCATION_RESET]: (state, action) => {
+    [ERROR_CERTIFYCATION_RESET]: (state) => {
       return { ...state, isCertifyNumError: false };
     },
     [SUCCESS_CERTIFYCATION]: (state, action) => {
@@ -242,13 +245,16 @@ const signUpReducer = handleActions(
       return { ...state, dong: action.payload };
     },
     [SIGN_UP_SUCCESS]: (state, action) => {
-      return { signUpSuccess: action.success };
+      return { ...state, signUpSuccess: action.success };
     },
     [SIGN_UP_FAILURE]: (state, action) => {
       return { ...state, signUpFailure: action.error };
     },
-    [SIGN_UP_FAILURE_RESET]: (state, action) => {
+    [SIGN_UP_FAILURE_RESET]: (state) => {
       return { ...state, signUpFailure: false };
+    },
+    [CLEAR_INFO]: () => {
+      return { sido: [], gugun: [], dong: [] };
     },
   },
   initialState

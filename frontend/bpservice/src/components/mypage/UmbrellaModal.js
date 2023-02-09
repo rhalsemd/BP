@@ -15,6 +15,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 function UmbrellaModal() {
   const [open, setOpen] = React.useState(false);
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -22,6 +24,7 @@ function UmbrellaModal() {
 
   const handleClose = () => {
     setOpen(false);
+    setPage(0);
   };
 
   return (
@@ -43,7 +46,12 @@ function UmbrellaModal() {
         aria-describedby="alert-dialog-slide-description"
       >
         <DialogContent>
-          <UmbrellaDataTable />
+          <UmbrellaDataTable
+            page={page}
+            setPage={setPage}
+            rowsPerPage={rowsPerPage}
+            setRowsPerPage={setRowsPerPage}
+          />
         </DialogContent>
       </Dialog>
     </div>

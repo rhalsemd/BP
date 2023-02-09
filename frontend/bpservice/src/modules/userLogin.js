@@ -44,6 +44,7 @@ function* setLoginFnc(data) {
       const obj = {
         value: post.data.accessToken,
         expire: Date.now() + 1800000,
+        userId: userInfo.id,
       };
 
       // 객체를 JSON 문자열로 변환
@@ -60,21 +61,21 @@ function* setLoginFnc(data) {
   }
 }
 
-// 유저 정보 가져옴
-function* getUserInfoFnc() {
-  try {
-    const get = yield call(() => {
-      return axios({
-        method: "get",
-        url: `${API}/api/auth/user`,
-      });
-    });
+// // 유저 정보 가져옴
+// function* getUserInfoFnc() {
+//   try {
+//     const get = yield call(() => {
+//       return axios({
+//         method: "get",
+//         url: `${API}/api/auth/user`,
+//       });
+//     });
 
-    if (get.status === 200) {
-      yield put({ type: SET_USER_INFO, payload: get.data });
-    }
-  } catch (e) {}
-}
+//     if (get.status === 200) {
+//       yield put({ type: SET_USER_INFO, payload: get.data });
+//     }
+//   } catch (e) {}
+// }
 
 export function* loginSaga() {
   yield takeEvery(SET_LOGIN_INFO, setLoginFnc);
@@ -116,7 +117,7 @@ const userLoginReducer = handleActions(
     [SET_USER_INFO]: (state, action) => {
       return { ...state, userInfo: action.payload };
     },
-    [ERROR_RESET]: (state, action) => {
+    [ERROR_RESET]: (state) => {
       return { ...state, error: false };
     },
   },

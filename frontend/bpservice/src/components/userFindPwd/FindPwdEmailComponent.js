@@ -31,7 +31,6 @@ const 비밀번호찾기 = css`
   height: 35px;
   font-size: 14pt;
   margin-top: 15px;
-  font-weight: 600;
 `;
 
 const 취소버튼 = css`
@@ -43,7 +42,6 @@ const 취소버튼 = css`
   height: 35px;
   font-size: 14pt;
   margin-top: 15px;
-  font-weight: 600;
 `;
 
 function FindPwdEmailComponent({

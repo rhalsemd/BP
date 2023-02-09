@@ -2,13 +2,13 @@
 import { css } from "@emotion/react";
 import { Suspense, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
 
+import { useLocation, useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer";
 import LoadingPage from "../../components/LoadingPage";
 import Nav from "../../components/Nav";
 
-const resultModalStyle = css`
+const completeModalStyle = css`
   height: 40vh;
   width: 90vw;
   margin: 15vh 5vw 19vh;
@@ -33,16 +33,13 @@ const 버튼 = css`
   width: 80%;
 `;
 
-function SearchIdResultPage() {
-  const { id } = useSelector(({ findIdReducer }) => findIdReducer);
+function AfterPayment() {
   const navigation = useNavigate();
   const location = useLocation();
+  const { holderNum } = useSelector(({ paymentReducer }) => paymentReducer);
 
-  const goToLogin = () => {
-    navigation("/bp/login");
-  };
-  const goToSearchPwd = () => {
-    navigation("/bp/search/pwd");
+  const goToHome = () => {
+    navigation("/bp");
   };
 
   useEffect(() => {
@@ -58,20 +55,11 @@ function SearchIdResultPage() {
       </header>
 
       <Suspense fallback={<LoadingPage />}>
-        <div css={resultModalStyle}>
-          <h1>사용자 아이디</h1>
-          <h2>{id}</h2>
-
-          <button css={버튼} onClick={goToLogin}>
-            {" "}
-            로그인
-          </button>
-          <button
-            css={버튼}
-            style={{ marginBottom: "2%" }}
-            onClick={goToSearchPwd}
-          >
-            비밀번호 찾기
+        <div css={completeModalStyle}>
+          <h2>결제가 완료되었습니다.</h2>
+          <h2>{holderNum} 홀더가 열립니다.</h2>
+          <button onClick={goToHome} css={버튼}>
+            홈으로
           </button>
         </div>
       </Suspense>
@@ -83,4 +71,4 @@ function SearchIdResultPage() {
   );
 }
 
-export default SearchIdResultPage;
+export default AfterPayment;

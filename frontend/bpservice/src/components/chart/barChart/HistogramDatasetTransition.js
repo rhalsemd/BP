@@ -19,7 +19,7 @@ const HistogramDatasetTransition = ({ width, height }) => {
     } else {
       setData(임시data2);
     }
-  }, [임시data1, setData, 임시data2]);
+  }, [임시data1, setData, 임시data2, data]);
   return (
     <div>
       {data ? (
