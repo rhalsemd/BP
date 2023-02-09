@@ -37,9 +37,12 @@ function createData(brollyName, depositeMoney, rentMoney, regDt, expDt, uptDt) {
   return { brollyName, depositeMoney, rentMoney, regDt, expDt, uptDt };
 }
 
-export default function UmbrellaDataTable() {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+export default function UmbrellaDataTable({
+  page,
+  setPage,
+  rowsPerPage,
+  setRowsPerPage,
+}) {
   const { umbrellaInfo } = useSelector(({ mypageReducer }) => mypageReducer);
 
   const handleChangePage = (event, newPage) => {
@@ -52,11 +55,10 @@ export default function UmbrellaDataTable() {
   };
 
   const rows = [];
-
   if (umbrellaInfo) {
     umbrellaInfo.forEach((item) => {
       rows[rows.length] = createData(
-        item.brollyName,
+        `******${item.brollyName.slice(-3)}`,
         item.depositeMoney,
         item.rentMoney,
         item.regDt,

@@ -1,7 +1,8 @@
 import axios from "axios";
 import dayjs from "dayjs";
 
-// const url = "http://192.168.137.138:8080";
+const objString = localStorage.getItem("login-admin-token");
+const obj = JSON.parse(objString);
 const url = "http://bp.ssaverytime.kr:8080";
 // const url = "http://192.168.100.176:8080";
 
@@ -12,6 +13,7 @@ export const getBranchRevenue = (day) => {
     url: `${url}/api/auth/admin/all-kiosk-money-day/${dayData}`,
     headers: {
       "Content-Type ": "application/json",
+      Authorization: `Bearer ${obj.value}`,
     },
   });
 };
@@ -25,6 +27,7 @@ export const getBranchRevenueMonth = (date) => {
     url: `${url}/api/auth/admin/all-kiosk-money-month/${month}/${year}`,
     headers: {
       "Content-Type ": "application/json",
+      Authorization: `Bearer ${obj.value}`,
     },
   });
 };
@@ -37,6 +40,7 @@ export const getUseageRevenu = (day) => {
     // url: `${url}/api/auth/admin/allKioskCountDay/${dayData}`,
     headers: {
       "Content-Type ": "application/json",
+      Authorization: `Bearer ${obj.value}`,
     },
   });
 };
@@ -49,6 +53,7 @@ export const getUseageRevenuMonth = (date) => {
     url: `${url}/api/auth/admin/all-kiosk-count-month/${month}/${year}`,
     headers: {
       "Content-Type ": "application/json",
+      Authorization: `Bearer ${obj.value}`,
     },
   });
 };
@@ -59,6 +64,7 @@ export const getRevenueTrend = ({ month, year, caseId }) => {
     url: `${url}/api/auth/admin/kiosk-money-month/${month}/${year}/${caseId}`,
     headers: {
       "Content-Type ": "application/json",
+      Authorization: `Bearer ${obj.value}`,
     },
   });
 };
@@ -69,6 +75,7 @@ export const getRevenueTrendMonth = ({ year, caseId }) => {
     url: `${url}/api/auth/admin/kiosk-money-year/${year}/${caseId}`,
     headers: {
       "Content-Type ": "application/json",
+      Authorization: `Bearer ${obj.value}`,
     },
   });
 };
@@ -80,6 +87,7 @@ export const getUsers = () => {
     url: `${url}/api/auth/admin/log/get-user-data`,
     headers: {
       "Content-Type ": "application/json",
+      Authorization: `Bearer ${obj.value}`,
     },
   });
 };
@@ -91,6 +99,7 @@ export const getUserLog = (userId) => {
     url: `${url}/api/auth/admin/log/get-rent-log-data/${userId}`,
     headers: {
       "Content-Type ": "application/json",
+      Authorization: `Bearer ${obj.value}`,
     },
   });
 };
@@ -99,7 +108,7 @@ export const loginAdmin = (data) => {
   console.log(data.id, data.pwd);
   return axios({
     method: "post",
-    url: "http://192.168.100.79:8080/api/admin/login",
+    url: `${url}/api/admin/login`,
     data: {
       adminId: data.id,
       pwd: data.pwd,
@@ -111,12 +120,9 @@ export const loginAdmin = (data) => {
 };
 
 export const logoutAdmin = () => {
-  const objString = localStorage.getItem("login-admin-token");
-  const obj = JSON.parse(objString);
-
   return axios({
     method: "get",
-    url: "http://192.168.100.79:8080/api/auth/admin/logout",
+    url: `${url}/api/auth/admin/logout`,
     headers: {
       Authorization: `Bearer ${obj.value}`,
     },
@@ -124,11 +130,13 @@ export const logoutAdmin = () => {
 };
 
 export const getUserImg = (id) => {
+  console.log(id);
   return axios({
     method: "get",
-    url: `${url}/api/auth/admin/log/get-img-url/997`,
+    url: `${url}/api/auth/admin/log/get-img-url/${id}`,
     headers: {
       "Content-Type ": "application/json",
+      Authorization: `Bearer ${obj.value}`,
     },
   });
 };
