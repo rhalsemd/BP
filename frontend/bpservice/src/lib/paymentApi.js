@@ -46,8 +46,8 @@ export function* getCostFnc() {
     const get = yield call(() => {
       return axios({
         method: "get",
-        // url: `${url}/api/auth/brolly/price`,
-        url: `http://192.168.100.79:8080/api/auth/brolly/price`,
+        url: `${url}/api/auth/brolly/price`,
+        // url: `http://192.168.100.79:8080/api/auth/brolly/price`,
         headers: {
           Authorization: `Bearer ${obj.value}`,
         },
