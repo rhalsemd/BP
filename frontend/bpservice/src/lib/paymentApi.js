@@ -1,7 +1,7 @@
 import { Bootpay } from "@bootpay/backend-js";
 import { call, put, select } from "redux-saga/effects";
 import axios from "axios";
-import { SET_CASE_INFO } from "../modules/payment";
+import { SET_CASE_INFO, SET_COST } from "../modules/payment";
 
 // const url = "http://192.168.100.176:8080";
 // const url = "http://192.168.100.79:8080";
@@ -37,4 +37,25 @@ export function* getBootpayFnc(data) {
   } catch (e) {
     console.error("백으로 부트페이 던져줌", e);
   }
+}
+
+export function* getCostFnc() {
+  const objString = localStorage.getItem("login-token");
+  const obj = JSON.parse(objString);
+  try {
+    const get = yield call(() => {
+      return axios({
+        method: "get",
+        // url: `${url}/api/auth/brolly/price`,
+        url: `http://192.168.100.79:8080/api/auth/brolly/price`,
+        headers: {
+          Authorization: `Bearer ${obj.value}`,
+        },
+      });
+    });
+
+    if (get.status === 200) {
+      yield put({ type: SET_COST, payload: get.data.price });
+    }
+  } catch (e) {}
 }

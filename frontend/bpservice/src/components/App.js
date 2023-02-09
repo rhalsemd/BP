@@ -45,6 +45,7 @@ function App() {
     <Router>
       <Global styles={GlobalStyle} />
       <Routes>
+        <Route path="/" exact element={<WebIntro />}></Route>
         <Route path="/bp" exact element={<Home />}></Route>
         <Route path="/bp/login" element={<Login />}></Route>
         <Route path="/bp/signup" element={<SignUp />}></Route>

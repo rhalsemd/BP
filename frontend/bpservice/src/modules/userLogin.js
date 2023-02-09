@@ -117,7 +117,7 @@ const userLoginReducer = handleActions(
     [SET_USER_INFO]: (state, action) => {
       return { ...state, userInfo: action.payload };
     },
-    [ERROR_RESET]: (state, action) => {
+    [ERROR_RESET]: (state) => {
       return { ...state, error: false };
     },
   },

@@ -1,16 +1,21 @@
 import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
+import { getCost } from "../../modules/payment";
 
 import styled from "../../style/Receipt.module.css";
 
 function BeforePayment() {
   const navigation = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
 
-  const queryParams = new URLSearchParams(
-    `?${location.pathname.split("?")[1]}`
+  const { depositeMoney, money } = useSelector(
+    ({ paymentReducer }) => paymentReducer.price
   );
-  const term = queryParams.get("kioskID");
+
+  const queryParams = new URLSearchParams(location.search);
+  const term = queryParams.get("kioskId");
 
   const onClick = () => {
     navigation("/bp/payment", { state: { kioskId: term } });
@@ -20,9 +25,13 @@ function BeforePayment() {
 
   useEffect(() => {
     if (!objString) {
-      navigation("/bp/login");
+      navigation("/bp/login", {
+        state: { beforePayment: true, kioskId: term },
+      });
+    } else {
+      dispatch(getCost());
     }
-  }, [objString, navigation]);
+  }, [objString, navigation, dispatch]);
 
   return (
     <div>
@@ -43,12 +52,13 @@ function BeforePayment() {
                       color: "green",
                     }}
                   >
-                    우산 번호
+                    항목
                   </td>
                   <td
                     className={styled.right}
                     style={{
-                      fontSize: "0.8rem",
+                      fontSize: "1rem",
+                      fontWeight: "bolder",
                       color: "green",
                     }}
                   >
@@ -57,8 +67,12 @@ function BeforePayment() {
                 </tr>
 
                 <tr>
-                  <td>312321312</td>
-                  <td className={styled.right}>10000원</td>
+                  <td>보증금</td>
+                  <td className={styled.right}>{depositeMoney}원</td>
+                </tr>
+                <tr>
+                  <td>시간 당 금액</td>
+                  <td className={styled.right}>{money}원</td>
                 </tr>
 
                 <tr>
@@ -71,7 +85,7 @@ function BeforePayment() {
             <div className={(styled.sign, styled.center)}>
               <div className={styled.barcode}></div>
               <br />
-              312321312
+              {term}
               <br />
               <div className={styled.thankyou}>이용해주셔서 감사합니다.</div>
             </div>

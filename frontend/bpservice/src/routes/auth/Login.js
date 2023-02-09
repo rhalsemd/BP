@@ -60,6 +60,7 @@ const loginModalStyle = css`
 function Login({ userLogin, setLoginInfo, getUserInfo, errorReset }) {
   const dispatch = useDispatch();
   const [info, setInfo] = useState({});
+  const location = useLocation();
 
   useEffect(() => {
     if (userLogin.error) {
@@ -87,6 +88,7 @@ function Login({ userLogin, setLoginInfo, getUserInfo, errorReset }) {
             setInfo={setInfo}
             info={info}
             setLoginInfo={setLoginInfo}
+            location={location}
           />
         </div>
       </Suspense>

@@ -1,11 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { Suspense, useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 import { useLocation, useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer";
 import LoadingPage from "../../components/LoadingPage";
 import Nav from "../../components/Nav";
+import { clearInfo } from "../../modules/signUp";
 
 const completeModalStyle = css`
   height: 40vh;
@@ -35,6 +37,7 @@ const 버튼 = css`
 function CompletePage() {
   const navigation = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
 
   const goToHome = () => {
     navigation("/bp");
@@ -47,8 +50,10 @@ function CompletePage() {
   useEffect(() => {
     if (!location.state) {
       navigation("/bp");
+    } else {
+      dispatch(clearInfo());
     }
-  }, [location, navigation]);
+  }, [location, navigation, dispatch]);
 
   return (
     <div>

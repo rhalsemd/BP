@@ -32,7 +32,6 @@ const 아이디찾기버튼 = css`
   height: 35px;
   font-size: 14pt;
   margin-top: 15px;
-  font-weight: 600;
 `;
 const 취소버튼 = css`
   background-color: "lightgray";
@@ -43,7 +42,6 @@ const 취소버튼 = css`
   height: 35px;
   font-size: 14pt;
   margin-top: 15px;
-  font-weight: 600;
 `;
 
 function FindNameComponent({
