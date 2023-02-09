@@ -45,7 +45,10 @@ export const HistogramUseage = ({ height, data }) => {
   }, [xScale]);
 
   const yScale = useMemo(() => {
-    return d3.scaleLinear().range([boundsHeight, 0]).domain([0, maxValue]);
+    return d3
+      .scaleLinear()
+      .range([boundsHeight, 0])
+      .domain([0, maxValue]);
   }, [data, height]);
 
   useEffect(() => {
@@ -66,7 +69,7 @@ export const HistogramUseage = ({ height, data }) => {
     // .attr("transform", "rotate(-15)")
     // .attr("transform", "rotate(-15)");
     // .attr("text-anchor", "center");
-    const yAxisGenerator = d3.axisLeft(yScale).ticks(maxValue);
+    const yAxisGenerator = d3.axisLeft(yScale);
 
     svgElement.append("g").call(yAxisGenerator);
   }, [xScale, yScale, boundsHeight]);

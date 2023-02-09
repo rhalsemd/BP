@@ -2,7 +2,6 @@
 import { css } from '@emotion/react'
 import HeadsetMicIcon from '@mui/icons-material/HeadsetMic';
 import { useEffect, useState } from 'react';
-import sample from '../../../sample.json';
 
 const KioskTTSBtnStyle = css`
   width: 100px;
@@ -57,7 +56,7 @@ const KioskTTSBtn = (data) => {
     useEffect(() => {
       window.speechSynthesis.getVoices();
       setValue(data.data)
-    }, [value]);
+    }, [value, data.data]);
 
     const handleButton = () => {
       getSpeech(value);

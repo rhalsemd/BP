@@ -8,7 +8,7 @@ const outerBox = css`
   .centerRightWing {
     color: blue;
   }
-  height: 60vh;
+  height: 100vh;
 `;
 
 const mapIcon = css`

@@ -1,8 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import axios from 'axios';
-import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router';
 
 const KioskRentSectionGuideStyle = css`
@@ -52,17 +50,12 @@ const KioskRentSectionGuideStyle = css`
 
 const KioskRentGuideSection = () => {
   const navigate = useNavigate();
-  const { id } = useSelector((store) => store)
-  // const { isBrolly } = useParams();
+  const { id } = useParams();
   const { holderNum } = useParams();
 
   useEffect(() => {
     setTimeout(() => {
-  //     axios({
-  //       method: 'GET',
-  //       url: "http://localhost:3001/posts"
-  //     }).then((res) => setIsBrolly(res.data[0].isBrolly))
-      navigate(`/kiosk/${id[0] || id}/rent/complete/${holderNum}/${parseInt(0)}`)
+      navigate(`/kiosk/${id}/rent/complete/${holderNum}/${parseInt(0)}`)
     }, 5000)
   })
 

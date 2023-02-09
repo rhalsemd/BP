@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import { useSelector } from 'react-redux';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import RentBtn from "../../assets/RentBtn.svg"
 
 const KioskRentBtnDiv = css`
@@ -38,11 +37,11 @@ const RentBtnTextBox = css`
 
 // 컴포넌트 시작
 const KioskRentBtn = (rentCnt) => {
-  const { id } = useSelector((store) => store)
+  const { id } = useParams();
 
   const navigate = useNavigate();
   const KioskRentMove = () => {
-    navigate(`/kiosk/${id[0]}/rent`)
+    navigate(`/kiosk/${id}/rent`)
   }
 
   return (

@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import { useSelector } from 'react-redux';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ReturnBtn from '../../assets/ReturnBtn.svg'
 
 const ReturnBtnStyle = css`
@@ -40,11 +39,11 @@ const ReturnBtnTextBox = css`
 
 
 const KioskReturnBtn = (returnCnt) => {
-  const { id } = useSelector((store) => store);
+  const { id } = useParams();
 
   const navigate = useNavigate();
   const KioskReturnMove = () => {
-    navigate(`/kiosk/${id[0]}/return`)
+    navigate(`/kiosk/${id}/return`)
   }
 
   return (

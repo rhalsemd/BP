@@ -3,7 +3,7 @@ import { css } from '@emotion/react'
 import axios from "axios";
 import { useEffect, useState } from "react";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import { useSelector } from 'react-redux';
+import { useParams } from 'react-router';
 
 const addressDiv = css`
   height: 80px;
@@ -18,37 +18,38 @@ const addressFont = css`
 `
 
 const KioskAddress = () => {
-  const { id } = useSelector((store) => store)
+  const { id } = useParams()
   const [address, setAddress] = useState('');
-  
-  // 이거 수정해야함
-  const getAddress = () => {
-    // 키오스크 geo 에서 지점에 해당하는 위도 경도값 받아오기
-    // let geoURL = `http://192.168.100.80:8080/api/kiosk/home/kiosk-geo?id=1`
-    let geoURL = `http://bp.ssaverytime.kr:8080/api/kiosk/home/kiosk-geo?id=${id[0] || id}`
-    let addressURL = ``;
-    axios.get(geoURL)
-    .then((res) => {
-      return res.data;
-    })
-    .then((data) => {
-      // addressURL = `http://192.168.100.80:8080/api/address/reverse-geo?lat=${data.lat}&lng=${data.lng}`;
-      addressURL = `http://bp.ssaverytime.kr:8080/api/address/reverse-geo?lat=${data.lat}&lng=${data.lng}`;
-      axios.get(addressURL)
-        .then((res) => {
-          setAddress(res.data.address_name)
-        })
-    })
-    .catch((err) => console.log(err))
-  };
+
+
 
   useEffect(() => {
+    // 이거 수정해야함
+    const getAddress = () => {
+      // 키오스크 geo 에서 지점에 해당하는 위도 경도값 받아오기
+      // let geoURL = `http://192.168.100.80:8080/api/kiosk/home/kiosk-geo?id=1`
+      let geoURL = `http://bp.ssaverytime.kr:8080/api/kiosk/home/kiosk-geo?id=${id}`
+      let addressURL = ``;
+      axios.get(geoURL)
+        .then((res) => {
+          return res.data;
+        })
+        .then((data) => {
+          // addressURL = `http://192.168.100.80:8080/api/address/reverse-geo?lat=${data.lat}&lng=${data.lng}`;
+          addressURL = `http://bp.ssaverytime.kr:8080/api/address/reverse-geo?lat=${data.lat}&lng=${data.lng}`;
+          axios.get(addressURL)
+            .then((res) => {
+              setAddress(res.data.address_name)
+            })
+        })
+        .catch((err) => console.log(err))
+    };
     getAddress();
-  }, [])
+  }, [id])
 
   return (
     <div css={addressDiv}>
-      <LocationOnIcon color="action" fontSize="large"/><span css={addressFont}>{address}</span>
+      <LocationOnIcon color="action" fontSize="large" /><span css={addressFont}>{address}</span>
     </div>
   )
 }
