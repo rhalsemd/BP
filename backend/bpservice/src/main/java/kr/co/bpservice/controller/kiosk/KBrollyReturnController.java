@@ -34,16 +34,16 @@ public class KBrollyReturnController {
                 HttpStatus.OK);
     }
 
-    // (부분) 환불처리를 진행하는 메소드 (반환값으로 우산 반납일시, 환불금액 등을 보내준다.)
-    @PostMapping("/refund")
-    @Operation(description = "반납 시 결제 환불 데이터를 받아 대여 로그 작성하는 기능")
-    @Parameters({@Parameter(name = "brollyId", description = "우산 QR 정보")
-            ,@Parameter(name = "caseId", description = "케이스 ID")
-    })
-    public ResponseEntity<?> refundMoney(@RequestBody Map<String, String> requestMap){
-        System.out.println(requestMap);
-        return new ResponseEntity<>(kBrollyReturnService.refundMoney(
-                requestMap.get("brollyId"),
-                Integer.parseInt(requestMap.get("caseId"))), HttpStatus.OK);
-    }
+//    // (부분) 환불처리를 진행하는 메소드 (반환값으로 우산 반납일시, 환불금액 등을 보내준다.)
+//    @PostMapping("/refund")
+//    @Operation(description = "반납 시 결제 환불 데이터를 받아 대여 로그 작성하는 기능")
+//    @Parameters({@Parameter(name = "brollyId", description = "우산 QR 정보")
+//            ,@Parameter(name = "caseId", description = "케이스 ID")
+//    })
+//    public ResponseEntity<?> refundMoney(@RequestBody Map<String, String> requestMap){
+//        System.out.println(requestMap);
+//        return new ResponseEntity<>(kBrollyReturnService.refundMoney(
+//                requestMap.get("brollyId"),
+//                Integer.parseInt(requestMap.get("caseId"))), HttpStatus.OK);
+//    }
 }

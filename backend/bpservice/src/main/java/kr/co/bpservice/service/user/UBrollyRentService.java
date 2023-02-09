@@ -178,7 +178,7 @@ public class UBrollyRentService {
                 brollyHolderRepository.save(brollyHolder);
 
             } else { // 사용자가 우산을 가져가지 않았을때 환불처리 진행
-                kBrollyReturnService.refundMoney(brollyName, caseId);
+                kBrollyReturnService.refundMoney(brollyName, caseId, true);
             }
         }
 

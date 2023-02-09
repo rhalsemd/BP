@@ -65,7 +65,7 @@ public class KBrollyReturnService {
 
         //결제 환불 및 DB 변경
     @Transactional
-    public Map<String,Object> refundMoney(String brollyName, int caseId){
+    public Map<String,Object> refundMoney(String brollyName, int caseId, boolean isCancelAction){
         //QR 데이터를 이용한 RentLog 반환
         Optional<BrollyRentLog> optionalBrollyRentLog = brollyRentLogRepository.findBrollyRentLogForRefund(brollyName);
         if(optionalBrollyRentLog.isEmpty()){
@@ -76,9 +76,15 @@ public class KBrollyReturnService {
         // 보증금, 시간당 지불해야 할 금액 가져오기
         Integer depositeMoney = brollyRentLog.getDepositeMoney();
         Integer payMoney = priceRepository.getPrice().getMoney();
+        Map<String,?> cancelDataMap = null;
 
         //결제 취소할 데이터 가져오기
-        Map<String,?> cancelDataMap = brollyPayLogRepository.findPayLogForRefund(brollyRentLog.getBrolly(), depositeMoney, payMoney);
+        if(isCancelAction) {    // 우산 대여할때 우산을 안가져갔을 때
+            cancelDataMap = brollyPayLogRepository.findPayLogForCancel(brollyRentLog.getBrolly(), depositeMoney);
+        } else {    // 우산 반납 시 (일반적인 환불)
+            cancelDataMap = brollyPayLogRepository.findPayLogForRefund(brollyRentLog.getBrolly(), depositeMoney, payMoney);
+        }
+
         String receiptId = cancelDataMap.get("receiptId").toString();
         String userId = cancelDataMap.get("userId").toString();
         double price = Double.parseDouble(cancelDataMap.get("price").toString());
@@ -108,7 +114,7 @@ public class KBrollyReturnService {
             return CommonService.returnFail("환불 진행 중 오류가 발생했습니다.");
         }
         LocalDateTime uptDt = LocalDateTime.now();
-        int rentMoney = (int)(10000.0 - price);
+        int rentMoney = (int)(depositeMoney - price);
 
         // DB에 있는 로그 업데이트
         BrollyPayLog brollyPayLog = brollyRentLog.getPay();
@@ -198,7 +204,7 @@ public class KBrollyReturnService {
             BrollyHolder brollyHolder = brollyHolderRepository.findByCaseIdAndHolderNum(caseId, holderNum);
             brollyHolder.setBrolly(brolly);
             brollyHolderRepository.save(brollyHolder);
-            return this.refundMoney(brolly.getName(), caseId); // 환불 진행
+            return this.refundMoney(brolly.getName(), caseId, false); // 환불 진행
         } else {
             return CommonService.returnFail("홀더에 우산을 넣지 않았습니다.");
         }
