@@ -74,6 +74,7 @@ public class UBrollyRentService {
         BrollyCase brollyCase = brollyCaseRepository.findById(caseId).get();
         Brolly brolly = brollyHolderRepository.findFirstBrollyByCase(brollyCase);
         User user = userRepository.findById(userId).get();
+        Price price = priceRepository.getPrice();
 
         BrollyRentLog brollyRentLog = new BrollyRentLog();
         LocalDateTime now = LocalDateTime.now();
@@ -84,7 +85,7 @@ public class UBrollyRentService {
         brollyRentLog.setState(false);
         brollyRentLog.setRegDt(now);
         brollyRentLog.setExpDt(now.plusDays(7));
-        brollyRentLog.setDepositeMoney(10_000);
+        brollyRentLog.setDepositeMoney(price.getDepositeMoney());
         brollyRentLog.setRentMoney(0);
         brollyRentLogRepository.save(brollyRentLog);
 
