@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import axios from 'axios'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import KioskTTSBtn from '../components/button/KioskTTSBtn'
 import KioskHeader from '../components/KioskHeader'
@@ -26,25 +25,7 @@ const KioskReturnStyle = css`
 
 const KioskReturnContainer = () => {
   const { id } = useParams();
-  // 환불관련 useHook
-  const [isconfirm, setIsconfirm] = useState(false);
   const navigate = useNavigate();
-
-  // 환불되었는지 확인
-  const getRefundsConfirm = () => {
-    setTimeout(() => {
-      const RefundsConfirmURL = `http://localhost:3001/posts`;
-      axios.get(RefundsConfirmURL)
-        .then((res) => {
-          setIsconfirm(res.data[0].isRefunds)
-        })
-        .catch((err) => console.log(err))
-    }, 5000)
-  }
-
-  useEffect(() => {
-    getRefundsConfirm();
-  }, [isconfirm])
 
   // 홈화면으로
   const miliUnit = 1000
