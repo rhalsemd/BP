@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { QrReader } from "react-qr-reader";
 import { useNavigate, useParams } from 'react-router-dom'
 import PictureImg from '../assets/PictureImg.png'
@@ -101,14 +101,16 @@ const KioskReturnSection = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  if (data) {
-    navigate(`/kiosk/${id}/return/camera`, {
-      state: {
-        qrdata: data,
-      },
+  useEffect(() => {
+    if (data) {
+      navigate(`/kiosk/${id}/return/camera`, {
+        state: {
+          qrdata: data,
+        },
+      }
+      );
     }
-    );
-  }
+  }, [data])
 
   return (
     <div css={KioskReturnSectionStyle}>
@@ -140,7 +142,6 @@ const KioskReturnSection = () => {
           <li>보증금이 환급되었는지 확인해주세요.</li>
         </ul>
       </div>
-
     </div>
   )
 }
