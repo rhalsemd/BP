@@ -30,8 +30,8 @@ from pyvirtualdisplay import Display
 WINDOW_OPTION = True
 KIOSK_ID = 1
 
-# KIOSK_HOST = 'http://192.168.100.177:85'
-KIOSK_HOST = 'http://bp.ssaverytime.kr:85'
+KIOSK_HOST = 'http://localhost:85'
+# KIOSK_HOST = 'http://bp.ssaverytime.kr:85'
 
 # 크롬 드라이버 설정
 print('[INFO] 크롬 드라이버 세팅')
@@ -91,7 +91,7 @@ async def root():
     return {'message': 'root directory'}
 
 @app.get('/open')
-async def open(caseId: int, holderNum: int, action: str):
+async def open(caseId: int, holderNum: int, action: str, depositeMoney: int=0, period: int=0, price: int=0, refundMoney: int=0):
     if action == 'rent':        # 대여
         driver.get(url=f'{KIOSK_HOST}/kiosk/{caseId}/rent/guide/{holderNum}')
     elif action == 'return':    # 반납
@@ -133,7 +133,7 @@ async def open(caseId: int, holderNum: int, action: str):
             driver.get(url=f'{KIOSK_HOST}/kiosk/{caseId}/rent/complete/{holderNum}/0')
     elif action == 'return':    # 반납
         if brollyResult == True:
-            driver.get(url=f'{KIOSK_HOST}/kiosk/{caseId}/return/complete/{holderNum}/1')
+            driver.get(url=f'{KIOSK_HOST}/kiosk/{caseId}/return/complete/{holderNum}/1?depositeMoney={depositeMoney}&period={period}&price={price}&refundMoney={refundMoney}')
         else:
             driver.get(url=f'{KIOSK_HOST}/kiosk/{caseId}/return/complete/{holderNum}/0')
 
