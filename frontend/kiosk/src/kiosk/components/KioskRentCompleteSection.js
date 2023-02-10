@@ -10,7 +10,7 @@ const KioskRentSectionCompleteStyle = css`
   align-items: center;
 
   position: relative;
-  bottom: 30px;
+  bottom: -40px;
 
   height: 80vh;
   .KioskRentSectionCompleteGuide {
@@ -18,8 +18,8 @@ const KioskRentSectionCompleteStyle = css`
   }
 
   .KioskRentSectionCompleteHolderBtn {
-    width: 600px;
-    height: 150px;
+    width: 650px;
+    height: 100px;
     background-color: #B1B2FF;
     border-radius: 45px;
 
@@ -28,15 +28,12 @@ const KioskRentSectionCompleteStyle = css`
 
     display: flex;
     justify-content: center;
-    margin-bottom: 20px;
-
-    position: relative;
+    align-items: center;
+    margin-bottom: 5vh;
+    padding-top: 2.5vh;
 
     span {
-      position: absolute;
-      top: 55px;
-
-      font-size: 1.2em;
+      font-size: 1.4em;
     }
   }
   button {
