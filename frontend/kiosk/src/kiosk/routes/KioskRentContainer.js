@@ -2,10 +2,9 @@
 import { css } from '@emotion/react';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import KioskTTSBtn from '../components/button/KioskTTSBtn';
 import KioskHeader from '../components/KioskHeader';
 import KioskRentSection from '../components/KioskRentSection';
-import sample from '../../sample.json';
+import audioFile from '../assets/BPRentAudio.mp3'
 
 const KioskRentStyle = css`
   box-sizing: border-box;
@@ -13,11 +12,6 @@ const KioskRentStyle = css`
   height : 100vh;
   background-color: #EEF1FF;
 
-  footer {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-  }
 `
 
 // 위에는 Emotion.js 입니다.
@@ -26,6 +20,15 @@ const KioskRentStyle = css`
 const KioskRentContainer = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [audio, setAudio] = useState(new Audio(audioFile));
+
+  useEffect(() => {
+    audio.play();
+  return () => {
+    audio.pause();
+  };
+  }, [isPlaying]);
 
   // 홈화면으로
   const miliUnit = 1000
@@ -39,8 +42,6 @@ const KioskRentContainer = () => {
     }
   }, [id, seconds, miliUnit, navigate])
 
-  let TTSMent = sample.rent
-
   return (
     <div css={KioskRentStyle}>
       <header>
@@ -49,9 +50,6 @@ const KioskRentContainer = () => {
       <section>
         <KioskRentSection />
       </section>
-      <footer>
-        <KioskTTSBtn data={TTSMent} />
-      </footer>
     </div>
   )
 }
