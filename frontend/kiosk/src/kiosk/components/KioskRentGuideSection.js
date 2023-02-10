@@ -9,7 +9,7 @@ const KioskRentSectionGuideStyle = css`
   align-items: center;
 
   position: relative;
-  bottom: 30px;
+  bottom: -30px;
 
   height: 80vh;
   .KioskRentSectionCompleteGuide {
@@ -18,7 +18,7 @@ const KioskRentSectionGuideStyle = css`
 
   .KioskRentSectionGuideHolderBtn {
     width: 600px;
-    height: 150px;
+    height: 100px;
     background-color: #B1B2FF;
     border-radius: 45px;
 
@@ -27,14 +27,11 @@ const KioskRentSectionGuideStyle = css`
 
     display: flex;
     justify-content: center;
-    margin-bottom: 20px;
-
-    position: relative;
+    align-items: center;
+    margin-bottom: 3vh;
+    padding-top: 2.5vh;
 
     span {
-      position: absolute;
-      top: 55px;
-
       font-size: 1.2em;
     }
   }

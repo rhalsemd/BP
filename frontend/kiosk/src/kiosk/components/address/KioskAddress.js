@@ -11,6 +11,13 @@ const addressDiv = css`
   display : flex;
   justify-content: center;
   align-items: flex-start;
+  position: relative;
+
+  .addressIcon {
+    position: absolute;
+    top: -7px;
+    left: -36px;
+  }
 `
 
 const addressFont = css`
@@ -49,7 +56,10 @@ const KioskAddress = () => {
 
   return (
     <div css={addressDiv}>
-      <LocationOnIcon color="action" fontSize="large" /><span css={addressFont}>{address}</span>
+      <div className='addressIcon'>
+        <LocationOnIcon color="action" fontSize="large" />
+      </div>
+      <span css={addressFont}>{address}</span>
     </div>
   )
 }
