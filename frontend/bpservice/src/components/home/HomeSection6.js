@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { gsap } from "gsap/all";
 
 const container = css`
   display: flex;
@@ -15,23 +16,34 @@ const container = css`
 `;
 
 function HomeSection6() {
-  const txt = "오늘은 뭐할까 아아아아";
+  const txt = "절차는 간단해요";
+  const textArea = useRef();
   const [Text, setText] = useState("");
   const [Count, setCount] = useState(0);
 
   useEffect(() => {
+    if (!textArea) return;
+
+    gsap.to(".section6-text", {
+      duration: 2,
+      scrollTrigger: {
+        trigger: ".section6-text",
+        start: "50vh 60%",
+        end: "70vh 60%",
+        markers: true,
+      },
+    });
     const interval = setInterval(() => {
-      setText(Text + txt[Count]); // 이전 set한 문자 + 다음 문자
-      setCount(Count + 1); // 개수 만큼 체크
+      setText(Text + txt[Count]);
+      setCount(Count + 1);
     }, 100);
     if (Count === txt.length) {
-      // Count를 따로 두지 않고 Text.length 체크도 가능
-      clearInterval(interval); // 문자열 체크를 통해 setInterval을 해제합니다
+      clearInterval(interval);
     }
-    return () => clearInterval(interval); // 언마운트시 setInterval을 해제합니다
+    return () => clearInterval(interval);
   });
   return (
-    <div css={container} className="text">
+    <div css={container} className="section6-text" ref={textArea}>
       <p>{Text}</p>
     </div>
   );
