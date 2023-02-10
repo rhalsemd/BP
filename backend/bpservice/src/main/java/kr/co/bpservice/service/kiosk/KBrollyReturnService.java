@@ -179,8 +179,8 @@ public class KBrollyReturnService {
         Price priceInfo = priceRepository.getPrice();
         Integer depositeMoney = priceInfo.getDepositeMoney();   // 보증금
         Map<String, ?> refundInfo = brollyPayLogRepository.findPayLogForRefund(brolly, depositeMoney, priceInfo.getMoney());
-        Integer period = (Integer) refundInfo.get("period");    // 이용기간
-        Integer price = (Integer) refundInfo.get("price");      // 이용금액
+        Integer period = ((Long) refundInfo.get("period")).intValue();    // 이용기간
+        Integer price = ((Long) refundInfo.get("price")).intValue();      // 이용금액
         Integer refundMoney = depositeMoney - price;            // 환불금액
 
 
