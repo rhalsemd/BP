@@ -195,25 +195,7 @@ const KioskReturnCompleteSection = () => {
             <p>우산이 반납되지 않았습니다</p>
             <p>반납을 다시 진행해주세요</p>
           </div>
-          <div css={KioskReturnReceiptView}>
-            <h1>요금 사항</h1>
-            <div css={KioskReturnReceipt}>
-              <div className='ReceiptTitle'>
-                <p className='BranchName'>구미인동점</p>
-              </div>
-              <div className='ReceiptTotal'>
-                <p className='Payment'>0원</p>
-              </div>
-              <div className='ReceiptDetailView'>
-                <div className='FirstHorizon'></div>
-                <div className='ReceiptDetail'><span className='FontColorGray'>보증금</span><span>미환급</span></div>
-                <div className='ReceiptDetail'><span className='FontColorGray'>이용 기간</span><span>{parseInt(2)}</span></div>
-                <div className='ReceiptDetail'><span className='FontColorGray'>이용 금액</span><span>{parseInt(2) * 1000}</span></div>
-                <div className='SecondHorizon'></div>
-                <div className='ReceiptDetailRefunds'><span>환급 금액</span><span>0원</span></div>
-              </div>
-            </div>
-          </div>
+          
         </div>}
     </div>
   )
