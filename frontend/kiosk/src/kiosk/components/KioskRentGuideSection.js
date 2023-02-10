@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import { useEffect } from 'react'
-import { useNavigate, useParams } from 'react-router';
+import { useParams } from 'react-router';
 
 const KioskRentSectionGuideStyle = css`
   display: flex;

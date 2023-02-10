@@ -2,9 +2,7 @@
 import { css } from '@emotion/react'
 import { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import KioskTTSBtn from '../components/button/KioskTTSBtn'
 import KioskHeader from '../components/KioskHeader'
-import sample from '../../sample.json'
 import KioskReturnSection from '../components/KioskReturnSection'
 
 const KioskReturnStyle = css`
@@ -39,8 +37,6 @@ const KioskReturnContainer = () => {
     }
   }, [id, seconds, navigate])
 
-  let TTSMent = sample.return
-
   return (
     <div css={KioskReturnStyle}>
       <header>
@@ -49,9 +45,6 @@ const KioskReturnContainer = () => {
       <section>
         <KioskReturnSection />
       </section>
-      <footer>
-        <KioskTTSBtn data={TTSMent}/>
-      </footer>
     </div>
   )
 }

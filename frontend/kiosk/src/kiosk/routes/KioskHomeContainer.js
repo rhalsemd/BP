@@ -1,9 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import KioskTTSBtn from '../components/button/KioskTTSBtn'
+// import { useEffect, useRef, useState } from 'react'
 import KioskHeader from '../components/KioskHeader'
 import KioskHomeSection from '../components/KioskHomeSection'
-import sample from '../../sample.json'
+// import audioFile from '../assets/BPHomeAudio.mp3'
+// import { useLocation } from 'react-router-dom'
+
 const KioskHomeContainerStyle = css`
   box-sizing: border-box;
   /* border : 1px solid black; */
@@ -11,19 +13,31 @@ const KioskHomeContainerStyle = css`
   height : 100vh;
 
   background-color: #EEF1FF;  
-
-  footer {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-  }
 `
 
 // 위에는 Emotion.js 입니다.
 // 밑에는 JS 입니다.
 
 const KioskHomeContainer = () => {
-  let TTSMent = sample.home
+  // const [isPlaying, setIsPlaying] = useState(true);
+  // const [audio, setAudio] = useState(new Audio(audioFile))
+  // const [volume, setVolume] = useState(0.2);
+  // const location = useLocation();
+
+  // useEffect(() => {
+  //   if (isPlaying) {
+  //     audio.addEventListener('ended', () => {
+  //       audio.currentTime = 0;
+  //       audio.volume = volume;
+  //       audio.play();
+  //     });
+  //     audio.volume = volume;
+  //     audio.play();
+  //   }
+  //   return () => {
+  //     audio.pause();
+  //   };
+  // }, [location.pathname, isPlaying])
 
   return (
     <div css={KioskHomeContainerStyle}>
@@ -34,9 +48,6 @@ const KioskHomeContainer = () => {
         <section>
           <KioskHomeSection />
         </section>
-        <footer>
-          <KioskTTSBtn data={TTSMent} />
-        </footer>
       </div>
     </div>
   )

@@ -2,10 +2,8 @@
 import { css } from '@emotion/react'
 import { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import KioskTTSBtn from '../components/button/KioskTTSBtn'
 import KioskHeader from '../components/KioskHeader'
 import KioskRentGuideSection from '../components/KioskRentGuideSection'
-import sample from '../../sample.json'
 
 const KioskRentStyle = css`
   box-sizing: border-box;
@@ -39,8 +37,6 @@ const KioskRentCompleteContainer = () => {
     }
   }, [id, seconds, miliUnit, navigate])
 
-  let TTSMent = sample.returncomplete
-
   return (
     <div css={KioskRentStyle}>
       <header>
@@ -49,9 +45,6 @@ const KioskRentCompleteContainer = () => {
       <section>
         <KioskRentGuideSection />
       </section>
-      <footer>
-        <KioskTTSBtn data={TTSMent} />
-      </footer>
     </div>
   )
 }

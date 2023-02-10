@@ -106,11 +106,10 @@ const KioskRentSection = () => {
           <img css={BPlogoImageSize} src={BPlogoImage} alt="BPlogoImage" /><span>대여 방법</span>
         </div>
         <ul>
-          <li>QR 코드를 카메라로 찍어주세요.</li>
-          <li>BP에 회원가입 혹은 로그인 해주세요.</li>
-          <li>결제를 해주세요.</li>
-          <li>열린 우산 케이스를 확인한 뒤 가져가주세요.</li>
-          <li>30초 뒤 뚜껑이 자동으로 닫힙니다.</li>
+          <li>스마트폰 카메라로 QR 코드를 인식해주세요.</li>
+          <li>로그인 및 회원가입을 통해 결제를 진행해주세요.</li>
+          <li>홀더 번호를 확인한 뒤 우산을 가져가주세요.</li>
+          <li>홀더는 30초 뒤에 자동으로 닫힙니다.</li>
         </ul>
       </div>
     </div>
