@@ -8,9 +8,9 @@ const KioskPaymentQR = () => {
   return (
     <div>
       <QRCodeSVG
-        value={`http://bp.ssaverytime.kr/before/payment?kioskId=${id}`}
+        value={`http://bp.ssaverytime.kr/bp/before/payment?kioskId=${id}`}
         size={400}
-        imageSettings={{ src: `http://bp.ssaverytime.kr/before/payment?kioskId=${id}`, width: 10, height: 10 }}
+        imageSettings={{ src: `http://bp.ssaverytime.kr/bp/before/payment?kioskId=${id}`, width: 10, height: 10 }}
         id="qr-gen"
         level={"H"}
         includeMargin={true}
