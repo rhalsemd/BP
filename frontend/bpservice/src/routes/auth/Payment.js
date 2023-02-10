@@ -15,7 +15,7 @@ export default function Payment() {
         application_id: "63d0816b3049c8001a5dc07b",
         price: location.state.depositeMoney,
         // price: "100",
-        order_name: "테스트결제",
+        order_name: "비피우산대여",
         order_id: "TEST_ORDER_ID",
         pg: "kcp",
         method: "카드",
@@ -29,7 +29,7 @@ export default function Payment() {
         items: [
           {
             id: "item_id",
-            name: "테스트아이템",
+            name: "비피우산",
             qty: 1,
             price: location.state.depositeMoney,
             // price: 100,
