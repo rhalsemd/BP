@@ -23,8 +23,9 @@ public class KBrollyReturnController {
     // 반납 우산 정보 + 이미지를 받아서 저장하는 메소드 (반환값으로 키오스크에게 몇번 홀더를 열어야하는지 알려준다.)
     @PostMapping("")
     @Operation(description = "우산 반납을 담당하는 API (반납 로그, 이미지 등을 저장)")
-    @Parameters({@Parameter(name = "brolly_id", description = "BROLLY_NAME")
-            ,@Parameter(name = "img_data", description = "이미지 파일 데이터")
+    @Parameters({@Parameter(name = "caseId", description = "키오스크 번호"),
+            @Parameter(name = "brollyName", description = "우산 QR코드")
+            ,@Parameter(name = "imgData", description = "이미지 파일 데이터")
     })
     public ResponseEntity<?> returnBrolly(@RequestBody Map<String, String> requestMap) throws IOException {
         return new ResponseEntity<>(kBrollyReturnService.returnBrolly(

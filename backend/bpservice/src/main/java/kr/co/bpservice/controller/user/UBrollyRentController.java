@@ -25,6 +25,7 @@ public class UBrollyRentController {
     private final UBrollyRentService uBrollyRentService;
 
     @GetMapping("/price")
+    @Operation(description = "우산 보증금, 일별 요금을 조회하는 API")
     public ResponseEntity<?> informPrice() {
         Price price = uBrollyRentService.getPrice();
         Map<String, Object> responseMap = new HashMap<>();

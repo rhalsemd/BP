@@ -1,5 +1,8 @@
 package kr.co.bpservice.controller.admin;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import kr.co.bpservice.util.auth.dto.AdminRequestDto;
@@ -19,6 +22,7 @@ public class ALoginController {
     private final AuthService authService;
 
     @PostMapping("/login")
+    @Operation(description = "관리자 로그인")
     public ResponseEntity<TokenDto> adminLogin(@RequestBody AdminRequestDto requestDto, HttpServletRequest request) {
         return ResponseEntity.ok(authService.adminLogin(requestDto, request));
     }
