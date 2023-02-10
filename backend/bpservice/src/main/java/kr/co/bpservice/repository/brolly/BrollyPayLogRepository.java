@@ -14,7 +14,7 @@ public interface BrollyPayLogRepository extends JpaRepository<BrollyPayLog, Inte
 
     BrollyPayLog findByReceiptId(@Param("receiptId") String receiptId);
 
-    @Query(value = "SELECT R.user.id as userId, P.receiptId as receiptId, :depositeMoney-((TIMESTAMPDIFF(DAY, P.regDt ,now())+1) * :payMoney) as price (TIMESTAMPDIFF(DAY, P.regDt ,now()) as period FROM BrollyPayLog P INNER JOIN BrollyRentLog R ON P = R.pay\n" +
+    @Query(value = "SELECT R.user.id as userId, P.receiptId as receiptId, :depositeMoney-((TIMESTAMPDIFF(DAY, P.regDt ,now())+1) * :payMoney) as price, TIMESTAMPDIFF(DAY, P.regDt ,now()) as period FROM BrollyPayLog P INNER JOIN BrollyRentLog R ON P = R.pay\n" +
             "Where R.state = false AND P.status = '결제완료' AND R.brolly = :brolly ORDER BY P.regDt DESC LIMIT 1")
     Map<String,?> findPayLogForRefund(@Param("brolly") Brolly brolly, @Param("depositeMoney") Integer depositeMoney, @Param("payMoney") Integer payMoney);
 
