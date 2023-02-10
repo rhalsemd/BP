@@ -26,6 +26,9 @@ function BeforePayment() {
   const objString = localStorage.getItem("login-token");
 
   useEffect(() => {
+    if (!term) {
+      navigation("/bp");
+    }
     if (!objString) {
       navigation("/bp/login", {
         state: { beforePayment: true, kioskId: term },
@@ -79,16 +82,19 @@ function BeforePayment() {
 
                 <tr>
                   <td colSpan="2" className={styled.center}>
-                    <input type="button" value="결제하기" onClick={onClick} />
+                    <input
+                      type="button"
+                      value="결제하기"
+                      onClick={onClick}
+                      style={{ marginBottom: "4vh" }}
+                    />
                   </td>
                 </tr>
               </tbody>
             </table>
             <div className={(styled.sign, styled.center)}>
               <div className={styled.barcode}></div>
-              <br />
-              {term}
-              <br />
+
               <div className={styled.thankyou}>이용해주셔서 감사합니다.</div>
             </div>
           </div>
