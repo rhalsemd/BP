@@ -29,6 +29,14 @@ public class KHomeService {
         return kBrollyHomeRepository.findAll();
     }
 
+    public String getBrollyCaseName(int id) {
+        BrollyCase brollyCase = kBrollyHomeRepository.selectBrollyCase(id);
+        if (brollyCase == null) {
+            return null;
+        }
+        return brollyCase.getName();
+    }
+
     public List<Map<String,?>> getBaseCoordinateBrollyCaseList(double lat, double lng) {
         return kBrollyHomeRepository.selectBaseCoordinateBrollyCase(lat,lng);
     }

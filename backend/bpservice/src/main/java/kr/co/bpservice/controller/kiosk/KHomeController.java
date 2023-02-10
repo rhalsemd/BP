@@ -8,6 +8,7 @@ import kr.co.bpservice.entity.brolly.BrollyCase;
 import kr.co.bpservice.service.kiosk.KHomeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -46,6 +47,14 @@ public class KHomeController {
     public ResponseEntity<List<BrollyCase>> getBrollyCaseList() {
         List<BrollyCase> brollyCaseList = kHomeService.getBrollyCaseList();
         return new ResponseEntity<>(brollyCaseList, HttpStatus.OK);
+    }
+
+    @GetMapping("/kiosk-name")
+    @Operation(description = "키오스크 지점명 조회")
+    @Parameter(name = "id", description = "키오스크 지점 고유번호")
+    public ResponseEntity<String> getBrollyCaseName(@RequestParam int id) {
+        String brollyCaseName = kHomeService.getBrollyCaseName(id);
+        return new ResponseEntity<String>(brollyCaseName, HttpStatus.OK);
     }
 
     @GetMapping("/base-coordinate-kiosk-list")
