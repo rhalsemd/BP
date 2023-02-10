@@ -175,7 +175,19 @@ public class KBrollyReturnService {
     }
 
     private Map<String, Object> requestOpenHolder(Integer caseId, Integer holderNum, Brolly brolly, String action) {
-        String url = String.format("http://rigizer2.iptime.org:8000/open?caseId=%d&holderNum=%d&action=%s", caseId, holderNum, action);
+        // 환불정보 사전에 계산 (FastAPI에 전달할 용도)
+        Price priceInfo = priceRepository.getPrice();
+        Integer depositeMoney = priceInfo.getDepositeMoney();   // 보증금
+        Map<String, ?> refundInfo = brollyPayLogRepository.findPayLogForRefund(brolly, depositeMoney, priceInfo.getMoney());
+        Integer period = (Integer) refundInfo.get("period");    // 이용기간
+        Integer price = (Integer) refundInfo.get("price");      // 이용금액
+        Integer refundMoney = depositeMoney - price;            // 환불금액
+
+
+        String url = String.format("http://rigizer2.iptime.org:8000/open" +
+                        "?caseId=%d&holderNum=%d&action=%s" +
+                        "&depositeMoney=%d&period=%d&price=%d&refundMoney=%d",
+                caseId, holderNum, action, depositeMoney, period, price, refundMoney);
 
         Header header = new Header();
         header.append("User-Agent", HTTPUtils.USER_AGENT);

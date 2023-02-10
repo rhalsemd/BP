@@ -27,6 +27,7 @@ import Users from "../routes/admin/Users";
 import BeforePayment from "../routes/auth/BeforePayment";
 import WebIntro from "./WebIntro";
 import Chatbot from "../routes/Chatbot";
+import AfterPayment from "../routes/auth/AfterPayment";
 
 export const GlobalStyle = css`
   @font-face {
@@ -44,6 +45,7 @@ function App() {
     <Router>
       <Global styles={GlobalStyle} />
       <Routes>
+        <Route path="/" exact element={<WebIntro />}></Route>
         <Route path="/bp" exact element={<Home />}></Route>
         <Route path="/bp/login" element={<Login />}></Route>
         <Route path="/bp/signup" element={<SignUp />}></Route>
@@ -65,6 +67,7 @@ function App() {
         <Route path="/bp/modify/user" element={<ModifyUserInfo />}></Route>
         <Route path="/bp/modify/pwd" element={<ModifyPwd />}></Route>
         <Route path="/bp/before/payment" element={<BeforePayment />} />
+        <Route path="/bp/after/payment" element={<AfterPayment />} />
         <Route path="/bp/payment" element={<Payment />} />
         <Route path="/bp/chatbot" element={<Chatbot />} />
 

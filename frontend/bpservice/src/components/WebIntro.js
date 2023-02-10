@@ -8,8 +8,12 @@ function WebIntro() {
     navigation("/bp");
   }, 3500);
 
+  const onClick = () => {
+    navigation("/bp");
+  };
+
   return (
-    <>
+    <div onClick={onClick}>
       <div className={styled.box}>
         <div className={(styled.text, styled.flicker)}>
           <p className={styled.t1} style={{ fontSize: "5.5rem" }}>
@@ -27,7 +31,7 @@ function WebIntro() {
           </p>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

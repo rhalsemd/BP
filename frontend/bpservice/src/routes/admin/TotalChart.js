@@ -52,6 +52,7 @@ const TotalIncome = ({ getBranchRevenue }) => {
     `${dayjs().format("MM월 DD일")}`
   );
 
+  const objString = localStorage.getItem("login-admin-token");
   useEffect(() => {
     if (titleDateDemo?.day) {
       setSelectDate(dayjs(titleDateDemo.day).format("MM월 DD일"));

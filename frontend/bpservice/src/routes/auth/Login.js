@@ -11,6 +11,7 @@ import { connect, useDispatch } from "react-redux";
 import { loginInfo } from "../../modules/userLogin";
 import { Suspense } from "react";
 import LoadingPage from "../../components/LoadingPage";
+import { useLocation } from "react-router-dom";
 // import { cencleBootpay } from "../../modules/payment";
 
 const loginModalStyle = css`
@@ -59,6 +60,7 @@ const loginModalStyle = css`
 function Login({ userLogin, setLoginInfo, getUserInfo, errorReset }) {
   const dispatch = useDispatch();
   const [info, setInfo] = useState({});
+  const location = useLocation();
 
   useEffect(() => {
     if (userLogin.error) {
@@ -86,6 +88,7 @@ function Login({ userLogin, setLoginInfo, getUserInfo, errorReset }) {
             setInfo={setInfo}
             info={info}
             setLoginInfo={setLoginInfo}
+            location={location}
           />
         </div>
       </Suspense>

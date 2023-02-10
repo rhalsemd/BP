@@ -4,8 +4,6 @@ import KioskHeader from "../components/KioskHeader";
 import KioskReturnGuideSection from "../components/KioskReturnGuideSection";
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import sample from '../../sample.json';
-import KioskTTSBtn from '../components/button/KioskTTSBtn';
 
 const KioskReturnGuideContainerStyle = css`
   display: flex;
@@ -37,8 +35,6 @@ const KioskReturnGuideContainer = () => {
     }
   }, [id, seconds, navigate])
 
-  let TTSMent = sample.returncomplete
-
   return (
     <div css={KioskReturnGuideContainerStyle}>
       <div>
@@ -47,9 +43,6 @@ const KioskReturnGuideContainer = () => {
       <div>
         <KioskReturnGuideSection />
       </div>
-      <footer>
-        <KioskTTSBtn data={TTSMent} />
-      </footer>
     </div>
   )
 }

@@ -3,6 +3,36 @@ import { css, keyframes } from "@emotion/react";
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
+///////////////////////////////// 모달 //////////////////////////////////////
+import * as React from 'react';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Slide from '@mui/material/Slide';
+import Stack from '@mui/material/Stack';
+import CircularProgress from '@mui/material/CircularProgress';
+///////////////////////////////// 모달 //////////////////////////////////////
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
+///////////////////////////////// 모달 //////////////////////////////////////
+
+///////////////////////////////// 모달 //////////////////////////////////////
 
 const videoSize = css`
   width: 100vw !important;
@@ -142,9 +172,26 @@ const TakeAPictureBtn = css`
   transform: translate(-50%, 0%);
 `
 
+const SpinnerDiv = css`
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width:'40vw';
+  height:'20vh';
+  background-color:'white';
+`
+
 const KioskTakeAPicture = (data) => {
   const [iscapture, setIscapture] = useState(false);
   const { id } = useParams();
+  // 모달
+  const [open, setOpen] = useState(false);
+  const handleClose = () => setOpen(false);
+  // 모달
 
   let videoRef = useRef(null);
   let photoRef = useRef(null);
@@ -194,10 +241,14 @@ const KioskTakeAPicture = (data) => {
   };
 
   // save canvas Image in server
+  const [loading, setLoading] = useState(false);
+
   const saveImage = () => {
     // 데이터 URL로 그대로 보내기
     const canvas = document.getElementById("$canvas");
     const imgURL = canvas.toDataURL("image/png");
+
+    setLoading(true);
 
     axios({
       method: 'POST',
@@ -210,9 +261,13 @@ const KioskTakeAPicture = (data) => {
       }
     })
       .then((res) => {
-        console.log(res.data)
-      }
-      )
+        console.log(res.data.success)
+        if (!res.data.success) {
+          clearImage();
+          setOpen(true);
+          setLoading(false);
+        }
+      })
       .catch((err) => console.log(err));
   };
 
@@ -287,6 +342,31 @@ const KioskTakeAPicture = (data) => {
             확인
           </button> : null}
         </div>
+      </div>
+      <div css={SpinnerDiv}>
+        {loading ? <Stack sx={{ zIndex: '990', backgroundColor:'rgba(255, 255, 255, 0.5)', width:'102vw', height:'102vh', display:'flex', justifyContent:'center', alignItems:'center'}} spacing={5} direction="row">
+          <CircularProgress sx={{ color:'white'  }}/>
+        </Stack> : null}
+      </div>
+      <div>
+        <Dialog
+          sx={{ width: '900px' }}
+          open={open}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={handleClose}
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle fontSize={32} fontWeight={900}>{"우산이 인식되지 않았습니다."}</DialogTitle>
+          <DialogContent>
+            <DialogContentText fontSize={12} fontWeight={500} id="alert-dialog-slide-description">
+              우산을 꼭 펼쳐서 촬영해주세요. 우산이 인식되지 않으면 반납 처리가 되지않습니다.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>닫기</Button>
+          </DialogActions>
+        </Dialog>
       </div>
     </div>
   );
