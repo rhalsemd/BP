@@ -87,8 +87,8 @@ public class KBrollyReturnService {
 
         String receiptId = cancelDataMap.get("receiptId").toString();
         String userId = cancelDataMap.get("userId").toString();
-        double price = Double.parseDouble(cancelDataMap.get("price").toString());
-        if(price <= 0.0){ //이 부분 환불할 필요없다는걸 알려줘야함
+        double cancelPrice = Double.parseDouble(cancelDataMap.get("cancelPrice").toString());
+        if(cancelPrice <= 0.0){ //이 부분 환불할 필요없다는걸 알려줘야함
             return CommonService.returnFail("환불할 금액이 없습니다.");
         }
         try {
@@ -101,7 +101,7 @@ public class KBrollyReturnService {
             cancel.receiptId = receiptId;
             cancel.cancelUsername = userId;
             cancel.cancelMessage = "우산 반납";
-            cancel.cancelPrice = price;
+            cancel.cancelPrice = cancelPrice;
 
             HashMap<String, Object>  res = bootpay.receiptCancel(cancel);
             if(res.get("error_code") == null) { //success
@@ -114,7 +114,7 @@ public class KBrollyReturnService {
             return CommonService.returnFail("환불 진행 중 오류가 발생했습니다.");
         }
         LocalDateTime uptDt = LocalDateTime.now();
-        int rentMoney = (int)(depositeMoney - price);
+        int rentMoney = (int)(depositeMoney - cancelPrice);
 
         // DB에 있는 로그 업데이트
         BrollyPayLog brollyPayLog = brollyRentLog.getPay();
@@ -179,9 +179,9 @@ public class KBrollyReturnService {
         Price priceInfo = priceRepository.getPrice();
         Integer depositeMoney = priceInfo.getDepositeMoney();   // 보증금
         Map<String, ?> refundInfo = brollyPayLogRepository.findPayLogForRefund(brolly, depositeMoney, priceInfo.getMoney());
-        Integer period = ((Long) refundInfo.get("period")).intValue();    // 이용기간
-        Integer price = ((Long) refundInfo.get("price")).intValue();      // 이용금액
-        Integer refundMoney = depositeMoney - price;            // 환불금액
+        Integer period = ((Long) refundInfo.get("period")).intValue();  // 이용기간
+        Integer refundMoney = ((Long) refundInfo.get("cancelPrice")).intValue();    // 환불금액
+        Integer price = depositeMoney - refundMoney;    // 이용금액
 
 
         String url = String.format("http://rigizer2.iptime.org:8000/open" +
