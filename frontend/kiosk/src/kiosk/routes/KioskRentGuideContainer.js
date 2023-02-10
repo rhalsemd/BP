@@ -1,9 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import KioskHeader from '../components/KioskHeader'
 import KioskRentGuideSection from '../components/KioskRentGuideSection'
+import audioFile from '../assets/KioskRentGuideContainerAudio.mp3'
 
 const KioskRentStyle = css`
   box-sizing: border-box;
@@ -24,6 +25,19 @@ const KioskRentStyle = css`
 const KioskRentCompleteContainer = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+
+  // 오디오
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [audio, setAudio] = useState(new Audio(audioFile));
+
+  useEffect(() => {
+    audio.volume = 0.1
+    audio.play();
+  return () => {
+    audio.pause();
+  };
+  }, [isPlaying]);
+  // 오디오
 
   // 홈화면으로
   const miliUnit = 1000
