@@ -1,6 +1,8 @@
 package kr.co.bpservice.controller.admin;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kr.co.bpservice.util.auth.service.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +24,10 @@ public class ALogoutController {
     private final AuthService authService;
 
     @GetMapping("/logout")
-    @Operation(description = "사용자 로그아웃")
+    @Operation(description = "관리자 로그아웃")
+    @Parameters({@Parameter(name = "adminId", description = "관리자")
+            ,@Parameter(name = "pwd", description = "관리자 비밀번호")
+    })
     public ResponseEntity<?> logout(RequestEntity<?> httpMessage) {
         Map<String, String> resultMap = authService.logout(httpMessage);
         return new ResponseEntity<>(resultMap, HttpStatus.OK);

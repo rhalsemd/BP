@@ -1,7 +1,6 @@
 package kr.co.bpservice.controller.user;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kr.co.bpservice.util.auth.dto.ChangePasswordRequestDto;
 import kr.co.bpservice.util.auth.dto.UserRequestDto;
@@ -32,7 +31,6 @@ public class UInfoController {
 
     @PatchMapping("")
     @Operation(description = "사용자 정보 수정")
-    @Parameter(name = "UserRequestDto", description = "사용자 ID, 비밀번호, 이름, 휴대전화 번호, 시/도, 시/군/구, 읍/면/동, 이메일")
     public ResponseEntity<UserResponseDto> changeUserInfo(@RequestBody UserRequestDto requestDto) {
         UserResponseDto responseDto = userService.changeUserInfo(requestDto);
         return ResponseEntity.ok(responseDto);
@@ -46,7 +44,6 @@ public class UInfoController {
 
     @GetMapping("/rent-log")
     @Operation(description = "사용자 우산 대여기록 조회")
-    @Parameter()
     public ResponseEntity<?> getBrollyRentLog() {
         Map<String, Object> responseMap = userService.getBrollyRentLog();
         return new ResponseEntity<>(responseMap, HttpStatus.OK);
@@ -54,7 +51,6 @@ public class UInfoController {
 
     @PatchMapping("/pwd")
     @Operation(description = "사용자 비밀번호 변경")
-    @Parameter(name = "ChangePasswordRequestDto", description = "사용자 ID, 기존 비밀번호, 신규 비밀번호")
     public ResponseEntity<UserResponseDto> changeUserPassword(@RequestBody ChangePasswordRequestDto requestDto) {
         return ResponseEntity.ok(userService.changeUserPassword(requestDto.getExPwd(), requestDto.getNewPwd()));
     }

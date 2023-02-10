@@ -2,20 +2,9 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import "./App.css"
 import routes from './routes'
 import { Global, css } from '@emotion/react'
-// import { useDispatch } from 'react-redux'
-// import { getKioskId } from './store'
-// import { useEffect } from 'react'
 
 function App() {
-  // const totalURL = window.location.href;
-  // const urlSplit = totalURL.split("http://localhost:85/kiosk/");
-  // // const urlSplit = totalURL.split("http://192.168.100.177:85/kiosk/");
-  // const id = urlSplit[1].split("/");
-  // const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(getKioskId(id))
-  // }, [])
 
   return (
     <div className="App">
@@ -29,10 +18,10 @@ function App() {
 
       <Router>
         <Routes>
-          {routes.map((route) => {
+          {routes.map((route, idx) => {
             return (
               <Route
-                key={route.path}
+                key={idx}
                 path={route.path}
                 element={
                   route.element

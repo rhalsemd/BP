@@ -2,6 +2,7 @@ package kr.co.bpservice.controller.user;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kr.co.bpservice.service.common.CAuthService;
 import kr.co.bpservice.util.auth.dto.UserRequestDto;
@@ -25,7 +26,6 @@ public class UJoinController {
 
     @PostMapping("")
     @Operation(description = "사용자 회원가입")
-    @Parameter(name = "UserRequestDto", description = "사용자 ID, 비밀번호, 이름, 휴대전화 번호, 시/도, 시/군/구, 읍/면/동, 이메일")
     public ResponseEntity<?> join(@RequestBody UserRequestDto requestDto) {
         UserResponseDto userResponseDto = authService.join(requestDto);
         if(userResponseDto != null)
@@ -40,7 +40,7 @@ public class UJoinController {
 
     @PostMapping("/sms-request")
     @Operation(description = "휴대전화 인증번호 송신")
-    @Parameter(name = "requestMap", description = "phoneNum")
+    @Parameter(name = "phoneNum", description = "휴대폰 번호")
     public ResponseEntity<?> smsRequest(@RequestBody Map<String, String> requestMap) {
         Map<String, String> resultMap = cAuthService.requestSmsMessage(requestMap.get("phoneNum"));
         if(resultMap.get("result").equals("success"))
@@ -51,7 +51,9 @@ public class UJoinController {
 
     @PostMapping("/sms-auth")
     @Operation(description = "휴대전화 인증번호 일치여부 확인")
-    @Parameter(name = "requestMap", description = "phoneNum")
+    @Parameters({@Parameter(name = "phoneNum", description = "휴대폰 번호"),
+            @Parameter(name = "authNum", description = "인증번호")
+    })
     public ResponseEntity<?> smsAuthenticate(@RequestBody Map<String, String> requestMap) throws Exception {
         Map<String, String> resultMap = cAuthService.validateSmsMessage(requestMap.get("phoneNum"), requestMap.get("authNum"));
         if(resultMap.get("result").equals("success")){

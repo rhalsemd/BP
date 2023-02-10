@@ -2,8 +2,9 @@
 import { css } from '@emotion/react';
 import KioskHeader from "../components/KioskHeader";
 import KioskReturnGuideSection from "../components/KioskReturnGuideSection";
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import audioFile from '../assets/KioskReturnGuideContainerAudio.mp3'
 
 const KioskReturnGuideContainerStyle = css`
   display: flex;
@@ -22,6 +23,19 @@ const KioskReturnGuideContainerStyle = css`
 const KioskReturnGuideContainer = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+
+  // 오디오
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [audio, setAudio] = useState(new Audio(audioFile));
+
+  useEffect(() => {
+    audio.volume = 0.1
+    audio.play();
+  return () => {
+    audio.pause();
+  };
+  }, [isPlaying]);
+  // 오디오
 
   // 홈화면으로
   const miliUnit = 1000

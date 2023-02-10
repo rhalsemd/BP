@@ -1,9 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import KioskCameraHeader from '../components/KioskCameraHeader';
 import KioskReturnCameraSection from '../components/KioskReturnCameraSection';
+import audioFile from '../assets/KioskReturnCameraContainerAudio.mp3'
 
 const KioskReturnCameraStyle = css`
   box-sizing: border-box;
@@ -36,6 +37,18 @@ const section = css`
 
 const KioskReturnCameraContainer = () => {
   const { id } = useParams();
+  // 오디오
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [audio, setAudio] = useState(new Audio(audioFile));
+
+  useEffect(() => {
+    audio.volume = 0.1
+    audio.play();
+  return () => {
+    audio.pause();
+  };
+  }, [isPlaying]);
+  // 오디오
 
   // 데이터 수령
   const location = useLocation();
