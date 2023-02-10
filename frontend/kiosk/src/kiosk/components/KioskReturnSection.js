@@ -48,7 +48,7 @@ const KioskReturnQRCheckSection = css`
 
 const PictureImgSize = css`
   position: absolute;
-  top: 10px;
+  top: -5px;
   left: 0px;
   width: 60px;
 `
@@ -71,8 +71,11 @@ const KioskReturnMethod = css`
     flex-direction: column;
     width: 500px;
     margin: 0;
+    margin-left: 10vw;
+    line-height: 6vh;
 
     li {
+      list-style-type: disc;
       font-size: 26px;
     }
   } 

@@ -12,6 +12,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
+import Stack from '@mui/material/Stack';
+import CircularProgress from '@mui/material/CircularProgress';
 ///////////////////////////////// 모달 //////////////////////////////////////
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -170,6 +172,19 @@ const TakeAPictureBtn = css`
   transform: translate(-50%, 0%);
 `
 
+const SpinnerDiv = css`
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width:'40vw';
+  height:'20vh';
+  background-color:'white';
+`
+
 const KioskTakeAPicture = (data) => {
   const [iscapture, setIscapture] = useState(false);
   const { id } = useParams();
@@ -226,10 +241,14 @@ const KioskTakeAPicture = (data) => {
   };
 
   // save canvas Image in server
+  const [loading, setLoading] = useState(false);
+
   const saveImage = () => {
     // 데이터 URL로 그대로 보내기
     const canvas = document.getElementById("$canvas");
     const imgURL = canvas.toDataURL("image/png");
+
+    setLoading(true);
 
     axios({
       method: 'POST',
@@ -246,6 +265,7 @@ const KioskTakeAPicture = (data) => {
         if (!res.data.success) {
           clearImage();
           setOpen(true);
+          setLoading(false);
         }
       })
       .catch((err) => console.log(err));
@@ -322,6 +342,11 @@ const KioskTakeAPicture = (data) => {
             확인
           </button> : null}
         </div>
+      </div>
+      <div css={SpinnerDiv}>
+        {loading ? <Stack sx={{ zIndex: '990', backgroundColor:'rgba(255, 255, 255, 0.5)', width:'102vw', height:'102vh', display:'flex', justifyContent:'center', alignItems:'center'}} spacing={5} direction="row">
+          <CircularProgress sx={{ color:'white'  }}/>
+        </Stack> : null}
       </div>
       <div>
         <Dialog

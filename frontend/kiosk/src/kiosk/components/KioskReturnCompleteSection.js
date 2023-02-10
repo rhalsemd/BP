@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
 import { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router'
+import { useLocation, useNavigate, useParams } from 'react-router'
 import ReceiptImg from '../assets/ReceiptWhite.png'
 
 const KioskReturnReceiptStyle = css`
@@ -29,7 +29,7 @@ const KioskReceiptMent = css`
   align-items: center;
 
   p {
-    font-size: 2.3em;
+    font-size: 2em;
     margin: 0;
   }
 `
@@ -78,12 +78,12 @@ const KioskReturnReceipt = css`
     .BranchName {
       font-size: 1.8rem;
       font-weight: bold;
-      margin-bottom: -10px;
+      margin-bottom: 0px;
       /* border-bottom: 3px solid #404040; */
     }
 
     .Payment {
-      font-size: 4.35rem;
+      font-size: 4rem;
       font-weight: bold;
       margin-bottom: 3%;
       border-bottom: 3px dashed #404040;
@@ -143,6 +143,45 @@ const KioskReturnReceipt = css`
     }
 `
 
+/////////////////////////////////// 반납안되었을때 /////////////////////////////////
+
+const KioskNoReturnStyle = css`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  position: relative;
+  left:40%;
+
+  height: 80vh;
+  .KioskNoReturnGuide {
+    font-size: 32px;
+  }
+
+  .KioskNoReturnGuideHolderBtn {
+    width: 600px;
+    height: 100px;
+    background-color: #B1B2FF;
+    border-radius: 45px;
+
+    font-size: 2.2rem;
+    padding-top: 2.5vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    p {
+      font-size: 1em;
+    }
+  }
+  button {
+    width: 450px;
+    height: 50px;
+  }
+`
+
 // 위에는 Emotion.js 입니다.
 // 밑에는 JS 입니다.
 
@@ -152,14 +191,23 @@ const KioskReturnCompleteSection = () => {
   const navigate = useNavigate();
   const [isReturn, setIsReturn] = useState(false);
 
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search)
+  const depositeMoney = Number(queryParams.get('depositeMoney')).toLocaleString('ko-KR');
+  const period = Number(queryParams.get('period')).toLocaleString('ko-KR');
+  const price = Number(queryParams.get('price')).toLocaleString('ko-KR');
+  const refundMoney = Number(queryParams.get('refundMoney')).toLocaleString('ko-KR');
+
   useEffect(() => {
     if (isBrolly == 1) {
       setIsReturn(true)
     }
     setTimeout(() => {
       navigate(`/kiosk/${id}`)
-    }, 18000)
+    }, 180000)
   }, [isReturn])
+
+
 
   return (
     <div css={KioskReturnReceiptStyle}>
@@ -176,43 +224,26 @@ const KioskReturnCompleteSection = () => {
                 <p className='BranchName'>구미인동점</p>
               </div>
               <div className='ReceiptTotal'>
-                <p className='Payment'>6,500<span>원</span></p>
+                <p className='Payment'>{refundMoney}<span>원</span></p>
               </div>
               <div className='ReceiptDetailView'>
                 <div className='FirstHorizon'></div>
-                <div className='ReceiptDetail'><span className='FontColorGray'>보증금</span><span>10,000원</span></div>
-                <div className='ReceiptDetail'><span className='FontColorGray'>이용 기간</span><span>2일</span></div>
-                <div className='ReceiptDetail'><span className='FontColorGray'>이용 금액</span><span>3,500원</span></div>
+                <div className='ReceiptDetail'><span className='FontColorGray'>보증금</span><span>{depositeMoney}원</span></div>
+                <div className='ReceiptDetail'><span className='FontColorGray'>이용 기간</span><span>{period}일</span></div>
+                <div className='ReceiptDetail'><span className='FontColorGray'>이용 금액</span><span>{price}원</span></div>
                 <div className='SecondHorizon'></div>
-                <div className='ReceiptDetailRefunds'><span>환급 금액</span><span>6,500원</span></div>
+                <div className='ReceiptDetailRefunds'><span>환급 금액</span><span>{refundMoney}원</span></div>
               </div>
             </div>
           </div>
         </div>
         :
         <div>
-          <div css={KioskReceiptMent}>
-            <p>우산이 반납되지 않았습니다</p>
-            <p>반납을 다시 진행해주세요</p>
-          </div>
-          <div css={KioskReturnReceiptView}>
-            <h1>요금 사항</h1>
-            <div css={KioskReturnReceipt}>
-              <div className='ReceiptTitle'>
-                <p className='BranchName'>구미인동점</p>
-              </div>
-              <div className='ReceiptTotal'>
-                <p className='Payment'>0원</p>
-              </div>
-              <div className='ReceiptDetailView'>
-                <div className='FirstHorizon'></div>
-                <div className='ReceiptDetail'><span className='FontColorGray'>보증금</span><span>미환급</span></div>
-                <div className='ReceiptDetail'><span className='FontColorGray'>이용 기간</span><span>{parseInt(2)}</span></div>
-                <div className='ReceiptDetail'><span className='FontColorGray'>이용 금액</span><span>{parseInt(2) * 1000}</span></div>
-                <div className='SecondHorizon'></div>
-                <div className='ReceiptDetailRefunds'><span>환급 금액</span><span>0원</span></div>
-              </div>
+          <div css={KioskNoReturnStyle}>
+            <div className='KioskNoReturnGuideHolderBtn'>
+              <p>우산이 반납되지 않았습니다</p>
             </div>
+            <span className='KioskNoReturnGuide'>반납을 다시 진행해주세요</span>
           </div>
         </div>}
     </div>

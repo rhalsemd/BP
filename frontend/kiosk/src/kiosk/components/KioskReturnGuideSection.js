@@ -13,23 +13,19 @@ const KioskReturnGuideSectionStyle = css`
 
   .KioskReturnGuideSectionHolderBtn{
     width: 700px;
-    height: 150px;
+    height: 100px;
     background-color: #B1B2FF;
     border-radius: 45px;
 
     font-size: 2.2rem;
     margin-bottom: 20px;
+    padding-top: 2.5vh;
 
     display: flex;
     justify-content: center;
-    margin-bottom: 20px;
-
-    position: relative;
+    align-items: center;
 
     span {
-      position: absolute;
-      top: 55px;
-
       font-size: 1.2em;
     }
   }
@@ -45,7 +41,7 @@ const KioskReturnGuideSection = () => {
   return (
     <div css={KioskReturnGuideSectionStyle}>
       <div className='KioskReturnGuideSectionHolderBtn'><span>{holderNum}번 홀더에 우산을 반납해주세요</span></div>
-      <span className='KioskRentSectionCompleteGuide'>반납할 우산을 넣어주세요!</span>
+      <span className='KioskRentSectionCompleteGuide'>우산을 넣어주세요!</span>
     </div>
   )
 };
