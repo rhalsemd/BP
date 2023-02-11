@@ -18,12 +18,12 @@ const KioskHeaderStyle = css`
 
 const KioskLogo = css`
   margin-left: 3vw;
-  margin-top: 2vw;
+  margin-top: 3vw;
 
   & > div {
-    margin-top: 0.2vw;
+    margin-top: -0.1vh;
     div > div > svg {
-      margin-bottom: -5px;
+      margin-bottom: 0px;
     }
   }
 
@@ -34,11 +34,11 @@ const KioskLogo = css`
 
 const KioskLocation = css`
   margin-right: 3vw;
-  margin-top: 2vw;
+  margin-top: 3vw;
 
  & > div {
   svg {
-    margin-top: -5px;
+    margin-top: 0px;
   }
  }
 `

@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react'
+import { css, keyframes } from '@emotion/react'
 import { useEffect, useState } from "react";
 import axios from 'axios'
 import { useParams } from 'react-router';
@@ -52,13 +52,20 @@ const KioskHomeWeatherTextBox = css`
   }
 `
 
+const ani = keyframes`
+  0%{transform:translate(0,-1px);}
+  100%{transform:translate(0,5px);}
+`
+
+const weatherImg = css`
+  animation: ${ani} 1s infinite alternate;
+`
+
 const KioskWeather = () => {
   const [celsius, setCelsius] = useState(0);
   const [windspeed, setWindspeed] = useState(0);
   const [imgsrc, setImgsrc] = useState("");
   const { id } = useParams();
-
-  
 
   useEffect(() => {
     const getWeather = () => {
@@ -89,7 +96,7 @@ const KioskWeather = () => {
   return (
     <div css={KioskHomeWeatherStyle}>
       <div css={KioskHomeWeatherImg}>
-        <img src={imgsrc} alt="weatherImage" />
+        <img css={weatherImg} src={imgsrc} alt="weatherImage" />
       </div>
       <div css={KioskHomeWeatherTextBox}>
         <p className='celsius'>현재 기온 {Math.round(celsius).toFixed(1)}<span>⁰</span></p>

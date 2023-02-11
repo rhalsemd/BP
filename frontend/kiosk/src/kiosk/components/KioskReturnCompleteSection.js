@@ -31,7 +31,18 @@ const KioskReceiptMent = css`
 
   p {
     font-size: 2em;
+    padding-top: 3vh;
+    padding-left: 0.7vw;
     margin: 0;
+    margin-bottom: 3vh;
+    background-color: #B1B2FF;
+    border-radius: 10px;
+    width: 45vw;
+    height: 10vh
+  }
+
+  span {
+    font-size: 1.5em;
   }
 `
 
@@ -154,7 +165,7 @@ const KioskNoReturnStyle = css`
 
   position: relative;
   left:40%;
-
+    
   height: 80vh;
   .KioskNoReturnGuide {
     font-size: 32px;
@@ -224,7 +235,7 @@ const KioskReturnCompleteSection = () => {
         <div>
           <div css={KioskReceiptMent}>
             <p>우산이 정상적으로 반납되었습니다</p>
-            <p>보증금 정산내역을 확인해주세요</p>
+            <span>보증금 정산내역을 확인해주세요</span>
           </div>
           <div css={KioskReturnReceiptView}>
             <h1>요금 사항</h1>
