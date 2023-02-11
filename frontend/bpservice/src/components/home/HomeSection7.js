@@ -38,7 +38,7 @@ const fontStyle = css`
 function HomeSection7() {
   return (
     <div>
-      <div css={container}>
+      <div css={container} className="section7-text">
         <img src={phone} alt="phone" css={phoneStyle} />
         <img src={phone1} alt="phone1" css={phone1Style} />
         <span css={fontStyle}>로그인을 하고</span>

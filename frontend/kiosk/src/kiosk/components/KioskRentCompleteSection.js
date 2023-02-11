@@ -10,7 +10,7 @@ const KioskRentSectionCompleteStyle = css`
   align-items: center;
 
   position: relative;
-  bottom: -40px;
+  bottom: -20px;
 
   height: 80vh;
   .KioskRentSectionCompleteGuide {

@@ -2,10 +2,9 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import "./App.css"
 import routes from './routes'
 import { Global, css } from '@emotion/react'
+import { cloneElement } from 'react';
 
 function App() {
-
-
   return (
     <div className="App">
       <Global
@@ -23,9 +22,7 @@ function App() {
               <Route
                 key={idx}
                 path={route.path}
-                element={
-                  route.element
-                }
+                element={cloneElement(route.element, { isVisible: true })}
               />
             );
           })}

@@ -24,10 +24,12 @@ import HomeSpeedDial from "../components/home/HomeSpeedDial";
 import { gsap, ScrollTrigger } from "gsap/all";
 
 const mapBtn = css`
-  display: inline-block;
-  height: 90vh;
+  display: inline;
+  width: 100vw;
+  height: 50px;
   position: fixed;
-  margin-left: 50%;
+  bottom: 0;
+  transform: translate(82%, -60%);
 `;
 
 const frame = css`
@@ -58,8 +60,17 @@ function Home() {
         // markers: true,
       },
     });
-
-    ///////////////////////////////////////////////////
+    // ScrollTrigger.create({
+    //   trigger: ".section1",
+    //   snap: {
+    //     snapTo: 1 / 8,
+    //     inertia: false,
+    //     duration: { min: 0.6, max: 0.6 },
+    //     markers: true,
+    //     scrub: 1,
+    //   },
+    // });
+    /////////////////////////////////////////////////
     //            geolocation /////////////////////////
     ///////////////////////////////////////////////////
     const option = {
@@ -82,21 +93,22 @@ function Home() {
 
   return (
     <div css={frame}>
-      <header>
-        <Nav />
-      </header>
-      <HomeLogo />
-      <FmdGoodIcon color="primary" css={mapBtn} />
-      <HomeSection1 />
-      <HomeSection2 />
-      <HomeSection3 />
-      <HomeSection4 />
-      <HomeSection5 />
-      <HomeSection6 />
+      <div className="section1">
+        <header>
+          <Nav />
+        </header>
+        <HomeLogo />
+        <HomeSection1 />
+        <HomeSection2 />
+        <HomeSection3 />
+        <HomeSection4 />
+        <HomeSection5 />
+        <HomeSection6 />
+      </div>
       <div
         ref={triggerBox}
         id="section2"
-        css={{ display: "flex", overflow: "hidden" }}
+        css={{ display: "flex", overflow: "hidden", backgroundColor: "blcak" }}
       >
         <HomeSection7 />
         <HomeSection8 />
@@ -111,8 +123,9 @@ function Home() {
       >
         <HomeSection13 />
       </div>
-
-      <HomeSpeedDial />
+      <div css={mapBtn}>
+        <HomeSpeedDial />
+      </div>
       <footer>
         <Footer />
       </footer>

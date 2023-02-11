@@ -1,10 +1,23 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react'
+import { css, keyframes } from '@emotion/react'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import KioskHeader from '../components/KioskHeader'
 import KioskReturnSection from '../components/KioskReturnSection'
 import audioFile from '../assets/KioskReturnContainerAudio.mp3'
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+
+const componentStyles = css`
+  animation: ${fadeIn} 1s ease-in;
+`;
 
 const KioskReturnStyle = css`
   box-sizing: border-box;
@@ -52,13 +65,15 @@ const KioskReturnContainer = () => {
   }, [id, seconds, navigate])
 
   return (
-    <div css={KioskReturnStyle}>
-      <header>
-        <KioskHeader />
-      </header>
-      <section>
-        <KioskReturnSection />
-      </section>
+    <div css={componentStyles}>
+      <div css={KioskReturnStyle}>
+        <header>
+          <KioskHeader />
+        </header>
+        <section>
+          <KioskReturnSection />
+        </section>
+      </div>
     </div>
   )
 }

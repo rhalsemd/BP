@@ -29,33 +29,10 @@ import Chatbot from "../routes/Chatbot";
 import AfterPayment from "../routes/auth/AfterPayment";
 import WebIntro from "../components/WebIntro";
 
+import Test from "./Test";
+
 export const GlobalStyle = css`
   @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
-  /* @font-face {
-    font-family: "dohyun";
-    src: url("../../../public/fonts/BMDOHYEON_ttf.ttf");
-  } */
-
-  /* @font-face {
-    font-family: "HanSan-light";
-    src: url("../style/fonts/SpoqaHanSansNeo-Regular.ttf");
-  } */
-
-  /* @font-face {
-    font-family: "HanSan-medium";
-    src: url("../style/fonts/SpoqaHanSansNeo-Medium.ttf");
-  }
-
-  @font-face {
-    font-family: HanSan-Bold;
-    src: url("../style/fonts/SpoqaHanSansNeo-Bold.ttf") format("truetype");
-  }
-
-  @font-face {
-    font-family: "testFont";
-    src: url("../style/fonts/BlackHanSans-Regular.ttf") format("truetype");
-  } */
-
   body {
     font-family: "Spoqa Han Sans Neo", "sans-serif";
     margin: 0px;
@@ -99,6 +76,9 @@ function App() {
         <Route path="/admin/revenue-trend/:id" element={<RevenueTrend />} />
         <Route path="/admin/users" element={<Users />} />
         <Route path="/admin/users/:id" element={<UserLog />} />
+
+        <Route path="/test" element={<Test />} />
+
         <Route path="/*" element={<NotFound404 />} />
       </Routes>
     </Router>

@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react'
+import { css, keyframes } from '@emotion/react'
 import { useEffect, useState } from 'react';
 import { QrReader } from "react-qr-reader";
 import { useNavigate, useParams } from 'react-router-dom'
@@ -32,6 +32,7 @@ const QR = css`
 `
 
 const KioskReturnQRCheckSection = css`
+
   section {
     position: absolute;
     bottom: 0px;
@@ -45,6 +46,92 @@ const KioskReturnQRCheckSection = css`
     width: 100vw;
   }
 `;
+
+const QRBox = css`
+  border: 10px solid #B1B2FF;
+  height: 370px;
+  width: 489px;
+
+  position: absolute;
+  left: -10px;
+  top: 30px;
+  z-index: 100;
+`
+
+const scan = keyframes`
+  0% {
+    transform: translateY(0px);
+  }
+  30%{
+    transform: translateY(80px);
+  }
+  40%{
+    transform: translateY(280px);
+  }
+  50% {
+    transform: translateY(360px);
+  }
+  60%{
+    transform: translateY(280px);
+  }
+  70%{
+    transform: translateY(80px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+`;
+
+const QRLine = css`
+  z-index: 99;
+  position: absolute;
+  top: 30px;
+  left: -10px;
+  right: 0;
+  height: 4px;
+  width: 489px;
+  background-color: #B1B2FF;
+  animation: ${scan} 5s linear infinite;
+`
+
+const blackBox = keyframes`
+  0% {
+    height: 0px;
+  }
+  30%{
+    height: 80px;
+  }
+  40%{
+    height: 280px;
+  }
+  50% {
+    height: 360px;
+  }
+  60%{
+    height: 280px;
+  }
+  70%{
+    height: 80px;
+  }
+  100% {
+    height: 0px;
+  }
+`;
+
+const QRBlackBox = css`
+  border: 0px solid transparent;
+  height: 0px;
+  width: 489px;
+  background-color: rgba( 0, 0, 0, 0.5 );
+  position: absolute;
+  left: -10px;
+  top: 30px;
+  z-index: 100;
+
+  animation: ${blackBox} 5s linear infinite;
+
+  filter: grayscale(100%);
+`
 
 const PictureImgSize = css`
   position: absolute;
@@ -96,6 +183,8 @@ const KioskReturnMethodTitle = css`
   }
 `
 
+
+
 // 위에는 Emotion.js 입니다.
 // 밑에는 JS 입니다.
 
@@ -120,6 +209,9 @@ const KioskReturnSection = () => {
       <div css={KioskReturnQR}>
         <div css={QR}>
           <div css={KioskReturnQRCheckSection}>
+            <div css={QRBox}></div>
+            <div css={QRBlackBox}></div>
+            <div css={QRLine} />
             <QrReader
               onResult={(result, error) => {
                 if (!!result) {
