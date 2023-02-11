@@ -1,13 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import homeIntro2 from "../../style/homeIntro2.png";
 import { gsap } from "gsap/all";
 
 const outerBox = css`
   text-align: center;
-  height: 90vh;
+  height: 92vh;
   background-color: #f9fafb;
   .centerRightWing {
     color: blue;
@@ -31,8 +30,6 @@ const arrowStyle = css`
 `;
 
 function HomeLogo() {
-  const navigation = useNavigate();
-
   const [rightWingCss, setRightWingCss] = useState();
   const [leftWingCss, setLeftWingCss] = useState();
   const [centerWingCss, setCenterWingCss] = useState();
@@ -170,7 +167,7 @@ function HomeLogo() {
   return (
     <>
       <div css={outerBox}>
-        <img src={homeIntro2} className="logo" />
+        <img src={homeIntro2} className="logo" alt="logo" />
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 921.111 546.274">
           <path
             ref={jiPangE}
@@ -224,7 +221,7 @@ function HomeLogo() {
           </defs>
           <g
             transform="matrix(0.31222081184387207,0,0,0.31222081184387207,11.485397338867188,91.41468048095703)"
-            opacity="0.1703892173912973"
+            opacity="0.5"
             css={{ display: "block" }}
           >
             <path

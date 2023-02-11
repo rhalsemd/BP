@@ -39,7 +39,6 @@ const spanStyle = css`
   text-align: justify;
   opacity: 0;
   transform: translateX(-50px);
-  font-family: dohyun;
 `;
 
 function HomeSection1() {
