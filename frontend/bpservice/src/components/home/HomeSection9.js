@@ -9,8 +9,8 @@ const container = css`
   justify-content: center;
   align-items: center;
   width: 100vw;
-  height: 90vh;
-  /* border: 1px black solid; */
+  height: 100vh;
+  background-color: black;
 `;
 
 const phoneStyle = css`
@@ -29,9 +29,9 @@ const phone1Style = css`
 
 const fontStyle = css`
   position: absolute;
-  color: black;
+  color: white;
   text-align: center;
-  top: 60%;
+  top: 65%;
   font-size: 2rem;
   font-weight: 900;
 `;

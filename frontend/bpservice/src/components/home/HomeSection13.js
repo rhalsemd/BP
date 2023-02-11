@@ -14,12 +14,23 @@ const container = css`
   margin-top: 7vh;
 `;
 
+const smallBox = css`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 95vw;
+  height: 9vh;
+  background-color: #ececec;
+  margin-bottom: 2vh;
+  border-radius: 50px;
+`;
+
 const box = css`
   display: flex;
   flex-direction: column;
   justify-content: center;
   width: 95vw;
-  height: 10vh;
+  height: 11vh;
   background-color: #ececec;
   margin-bottom: 2vh;
   border-radius: 50px;
@@ -64,8 +75,10 @@ function HomeSection9() {
             style={{
               fontWeight: "600",
               marginBottom: "3vh",
-              marginLeft: "1vw",
-              marginRight: "1vw",
+              marginLeft: "10vw",
+              marginRight: "10vw",
+              // marginTop: "1vh",
+              // marginBottom: "1vh",
             }}
           >
             모두가 함께 사용하는 우산이기 때문에, 배려의 마음으로 착실한 반납
@@ -89,8 +102,8 @@ function HomeSection9() {
             style={{
               fontWeight: "600",
               marginBottom: "3vh",
-              marginLeft: "1vw",
-              marginRight: "1vw",
+              marginLeft: "5vw",
+              marginRight: "5vw",
             }}
           >
             BP에서 정해진 가격으로 다시 매입합니다! 버릴 예정이라면, 고객센터로
@@ -115,8 +128,8 @@ function HomeSection9() {
             style={{
               fontWeight: "600",
               marginBottom: "3vh",
-              marginLeft: "1vw",
-              marginRight: "1vw",
+              marginLeft: "4vw",
+              marginRight: "4vw",
             }}
           >
             다른 분들도 써야하기 때문에, 꼭 고장난 우산을 알려주세요! 고의로
@@ -141,8 +154,8 @@ function HomeSection9() {
             style={{
               fontWeight: "600",
               marginBottom: "3vh",
-              marginLeft: "1vw",
-              marginRight: "1vw",
+              marginLeft: "10vw",
+              marginRight: "10vw",
             }}
           >
             순수하게 우산으로만 사용해주세요! 우리 BP에서는 상식적인 행동을
@@ -150,7 +163,7 @@ function HomeSection9() {
           </p>
         </div>
 
-        <div css={box}>
+        <div css={smallBox}>
           <p
             style={{
               marginBottom: "0",
