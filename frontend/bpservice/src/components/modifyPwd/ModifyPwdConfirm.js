@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import gsap from "gsap";
 
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -56,12 +57,28 @@ function ModifyPwdConfirm({ info, setInfo, setNewPwd }) {
   };
 
   const requestModify = (e) => {
+    gsap.to(".checkModiBtn", {
+      scale: 0.9,
+      repeat: 1,
+      yoyo: true,
+      duration: 0.1,
+    });
+
     e.preventDefault();
     const userInfo = {
       exPwd: info.current,
       newPwd: info.next,
     };
     setNewPwd(userInfo);
+  };
+
+  const cencelModiPwd = () => {
+    gsap.to(".cencelModiPwd", {
+      scale: 0.9,
+      repeat: 1,
+      yoyo: true,
+      duration: 0.1,
+    });
   };
 
   return (
@@ -88,10 +105,16 @@ function ModifyPwdConfirm({ info, setInfo, setNewPwd }) {
           info.isConfirm &&
           info.next === info.confirmPwd &&
           info.next !== info.current ? (
-            <input type="submit" value="수정하기" css={변경하기버튼} />
+            <input
+              type="submit"
+              value="수정하기"
+              css={변경하기버튼}
+              className="checkModiBtn"
+            />
           ) : null}
         </div>
       </form>
+
       {/* 뒤로가기 버튼 */}
       <button
         onClick={back}
@@ -100,6 +123,8 @@ function ModifyPwdConfirm({ info, setInfo, setNewPwd }) {
           backgroundColor: "lightgray",
           color: "black",
         }}
+        onTouchStart={cencelModiPwd}
+        className="cencelModiPwd"
       >
         뒤로가기
       </button>

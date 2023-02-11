@@ -27,6 +27,7 @@ import Users from "../routes/admin/Users";
 import BeforePayment from "../routes/auth/BeforePayment";
 import Chatbot from "../routes/Chatbot";
 import AfterPayment from "../routes/auth/AfterPayment";
+import WebIntro from "../components/WebIntro";
 
 export const GlobalStyle = css`
   @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);

@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import gsap from "gsap";
 
 import { useEffect } from "react";
 import { useRef } from "react";
@@ -57,6 +58,8 @@ function CertificationInput({ info, setInfo, checkCertificationNum, signUp }) {
 
   // 인증 번호 확인
   const getConfirm = () => {
+    gsap.to(".checkBtn", { scale: 0.9, repeat: 1, yoyo: true, duration: 0.1 });
+
     if (signUp.isCertifyNum) {
       setInfo((info) => {
         return { ...info, isCertificationSuccess: true };
@@ -108,7 +111,7 @@ function CertificationInput({ info, setInfo, checkCertificationNum, signUp }) {
 
         {info.isCertification && !signUp.successCertifycation ? (
           <span>
-            <button onClick={getConfirm} css={확인버튼}>
+            <button onClick={getConfirm} css={확인버튼} className="checkBtn">
               확인
             </button>
           </span>

@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { findPwdInfo } from "../../modules/findPwd";
 
 import Alert from "@mui/material/Alert";
+import gsap from "gsap";
 
 const inputBox = css`
   position: relative;
@@ -41,6 +42,7 @@ function CheckPwdInput({ info, setInfo, setNewPwd }) {
   };
 
   const onSubmit = (e) => {
+    gsap.to(".checkBtn", { scale: 0.9, repeat: 1, yoyo: true, duration: 0.2 });
     e.preventDefault();
     if (info.pwd && info.check && info.pwd === info.check) {
       setNewPwd({ pwd: info.check });
@@ -96,7 +98,12 @@ function CheckPwdInput({ info, setInfo, setNewPwd }) {
         </div>
 
         {info.pwd === info.check && info.pwd && info.check ? (
-          <input type="submit" css={비밀번호변경} value="변경하기" />
+          <input
+            type="submit"
+            css={비밀번호변경}
+            value="변경하기"
+            className="checkBtn"
+          />
         ) : null}
       </form>
     </div>

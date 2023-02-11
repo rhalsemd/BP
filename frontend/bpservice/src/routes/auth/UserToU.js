@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import gsap from "gsap";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -98,8 +99,26 @@ function UserToU() {
     }
   };
 
+  const checkBtnTouch = () => {
+    gsap.to(".termsCheckBtn", {
+      scale: 0.9,
+      repeat: 1,
+      yoyo: true,
+      duration: 0.1,
+    });
+  };
+
   const goToHome = () => {
     navigation("/bp");
+  };
+
+  const cencelBtnTouch = () => {
+    gsap.to(".termsCencelBtn", {
+      scale: 0.9,
+      repeat: 1,
+      yoyo: true,
+      duration: 0.1,
+    });
   };
 
   const checkBox1 = () => {
@@ -180,7 +199,12 @@ function UserToU() {
           </div>
 
           <div>
-            <button onClick={goToSignUp} css={이용약관버튼}>
+            <button
+              onClick={goToSignUp}
+              css={이용약관버튼}
+              className="termsCheckBtn"
+              onTouchStart={checkBtnTouch}
+            >
               확인
             </button>
             <button
@@ -191,8 +215,9 @@ function UserToU() {
                 backgroundColor: "lightgray",
                 color: "black",
               }}
+              className="termsCencelBtn"
+              onTouchStart={cencelBtnTouch}
             >
-              {" "}
               취소
             </button>
           </div>

@@ -8,7 +8,7 @@
   text-align: left;
   overflow: hidden;
   font-size: 12px;
-  font-family: "Malgun Gothic", dotum, "돋움", sans-serif;
+  /* font-family: "Malgun Gothic", dotum, "돋움", sans-serif; */
   line-height: 1.5;
 }
 .wrap * {
@@ -55,7 +55,7 @@
 .info .desc {
   position: relative;
   margin: 13px 0 0 90px;
-  height: 75px;
+  height: 85px;
   display: flex;
   justify-content: space-around;
   font-size: 1.1rem;
@@ -72,13 +72,13 @@
   margin-top: -2px;
 }
 .info .img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
-  top: 6px;
   left: 5px;
   width: 73px;
-  height: 71px;
-  border: 1px solid #ddd;
-  color: #888;
+  height: 85px;
   overflow: hidden;
 }
 .info:after {

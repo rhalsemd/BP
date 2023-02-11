@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import gsap from "gsap";
 
 import { useRef } from "react";
 import { connect } from "react-redux";
@@ -64,6 +65,13 @@ function CertificationNumInput({
   };
 
   const onClick = () => {
+    gsap.from(".userFindId-chechBtn", {
+      scale: 0.9,
+      repeat: 1,
+      yoyo: true,
+      duration: 0.2,
+    });
+
     if (findIdReducer.isCertifiNum) {
       checkCertificationNum({
         email: info.email,
@@ -102,7 +110,7 @@ function CertificationNumInput({
         </label>
       </div>
 
-      <button onClick={onClick} css={확인버튼}>
+      <button onClick={onClick} css={확인버튼} className="userFindId-chechBtn">
         확인
       </button>
     </div>

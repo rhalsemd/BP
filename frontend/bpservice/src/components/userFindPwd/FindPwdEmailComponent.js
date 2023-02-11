@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import gsap from "gsap";
 
 import { useEffect, useRef } from "react";
 import { connect } from "react-redux";
@@ -69,6 +70,8 @@ function FindPwdEmailComponent({
   }, [info.isSendEmail]);
 
   const findPwd = () => {
+    gsap.to(".checkBtn", { scale: 0.9, repeat: 1, yoyo: true, duration: 0.1 });
+
     if (info.id && info.email && info.userName) {
       setInfo((info) => {
         return { ...info, isSendEmail: true };
@@ -85,6 +88,8 @@ function FindPwdEmailComponent({
   };
 
   const modify = () => {
+    gsap.to(".checkBtn", { scale: 0.9, repeat: 1, yoyo: true, duration: 0.1 });
+
     setInfo((info) => {
       return { ...info, isSendEmail: false };
     });
@@ -93,6 +98,15 @@ function FindPwdEmailComponent({
 
   const cencel = () => {
     navigation("/bp");
+  };
+
+  const cencelFindId = () => {
+    gsap.to(".cencelFindId", {
+      scale: 0.9,
+      repeat: 1,
+      yoyo: true,
+      duration: 0.1,
+    });
   };
 
   return (
@@ -121,16 +135,21 @@ function FindPwdEmailComponent({
       {/* 비밀번호 찾기 버튼 */}
       <div>
         {info.isSendEmail ? (
-          <button onClick={modify} css={비밀번호찾기}>
+          <button onClick={modify} css={비밀번호찾기} className="checkBtn">
             수정
           </button>
         ) : (
-          <button onClick={findPwd} css={비밀번호찾기}>
+          <button onClick={findPwd} css={비밀번호찾기} className="checkBtn">
             인증번호 받기
           </button>
         )}
 
-        <button onClick={cencel} css={취소버튼}>
+        <button
+          onClick={cencel}
+          css={취소버튼}
+          onTouchStart={cencelFindId}
+          className="cencelFindId"
+        >
           취소
         </button>
       </div>

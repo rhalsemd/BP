@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import gsap from "gsap";
 
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -48,6 +49,13 @@ function DongAddress({
   };
 
   const goToModify = () => {
+    gsap.to(".checkModiBtn", {
+      scale: 0.9,
+      repeat: 1,
+      yoyo: true,
+      duration: 0.2,
+    });
+
     if (window.confirm("저장하시겠습니까?")) {
       // They clicked Yes
       setNewUserInfo(info);
@@ -60,6 +68,15 @@ function DongAddress({
 
   const back = () => {
     navigation(-1);
+  };
+
+  const cencelModiBtn = () => {
+    gsap.to(".cencelModiBtn", {
+      scale: 0.9,
+      repeat: 1,
+      yoyo: true,
+      duration: 0.2,
+    });
   };
 
   return (
@@ -85,9 +102,14 @@ function DongAddress({
           </select>
         ) : null}
       </div>
+
       {/* 수정 버튼 */}
       {info.sido && info.sigugun && info.dong ? (
-        <button onClick={goToModify} css={회원정보수정버튼}>
+        <button
+          onClick={goToModify}
+          css={회원정보수정버튼}
+          className="checkModiBtn"
+        >
           수정하기
         </button>
       ) : null}
@@ -97,6 +119,8 @@ function DongAddress({
         onClick={back}
         css={회원정보수정버튼}
         style={{ backgroundColor: "lightgray", color: "black" }}
+        onTouchStart={cencelModiBtn}
+        className="cencelModiBtn"
       >
         뒤로가기
       </button>
