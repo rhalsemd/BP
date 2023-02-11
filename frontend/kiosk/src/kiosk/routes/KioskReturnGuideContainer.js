@@ -29,7 +29,7 @@ const KioskReturnGuideContainer = () => {
   const [audio, setAudio] = useState(new Audio(audioFile));
 
   useEffect(() => {
-    audio.volume = 0.1
+    audio.volume = 1
     audio.play();
   return () => {
     audio.pause();

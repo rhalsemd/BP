@@ -28,11 +28,11 @@ const KiosktReturnCompleteContainer = () => {
 
   useEffect(() => {
     if (isBrolly == 1) {
-      audio.volume = 0.1
+      audio.volume = 1
       audio.play();
     }
     else if(isBrolly == 0) {
-      Noaudio.volume = 0.1
+      Noaudio.volume = 1
       Noaudio.play();
     }
   return () => {

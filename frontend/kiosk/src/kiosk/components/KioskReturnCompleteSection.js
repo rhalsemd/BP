@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
+import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router'
 import ReceiptImg from '../assets/ReceiptWhite.png'
@@ -190,6 +191,7 @@ const KioskReturnCompleteSection = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [isReturn, setIsReturn] = useState(false);
+  const [kioskName, setKioskName] = useState('');
 
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search)
@@ -198,16 +200,23 @@ const KioskReturnCompleteSection = () => {
   const price = Number(queryParams.get('price')).toLocaleString('ko-KR');
   const refundMoney = Number(queryParams.get('refundMoney')).toLocaleString('ko-KR');
 
+  const KioskNameURL = `http://bp.ssaverytime.kr:8080/api/kiosk/home/kiosk-name?id=${id}`
+
   useEffect(() => {
     if (isBrolly == 1) {
       setIsReturn(true)
     }
+    axios({
+      method:'GET',
+      url: KioskNameURL,
+    })
+    .then((res) => setKioskName(res.data))
+    .catch((err) => console.log(err))
+
     setTimeout(() => {
       navigate(`/kiosk/${id}`)
     }, 180000)
   }, [isReturn])
-
-
 
   return (
     <div css={KioskReturnReceiptStyle}>
@@ -221,7 +230,7 @@ const KioskReturnCompleteSection = () => {
             <h1>요금 사항</h1>
             <div css={KioskReturnReceipt}>
               <div className='ReceiptTitle'>
-                <p className='BranchName'>구미인동점</p>
+                <p className='BranchName'>{kioskName}</p>
               </div>
               <div className='ReceiptTotal'>
                 <p className='Payment'>{refundMoney}<span>원</span></p>
