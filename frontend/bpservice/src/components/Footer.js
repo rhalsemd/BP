@@ -17,7 +17,7 @@ function Footer() {
     background-color: #28323c;
     color: #67707e;
     line-height: 0;
-    font-size: 0.8vh;
+    font-size: 12px;
     p {
       height: 3vh;
       display: block;

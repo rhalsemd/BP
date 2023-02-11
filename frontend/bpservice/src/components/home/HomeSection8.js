@@ -9,7 +9,9 @@ const container = css`
   justify-content: center;
   align-items: center;
   width: 100vw;
-  height: 90vh;
+  height: 100vh;
+  background-color: black;
+
   /* border: 1px black solid; */
 `;
 

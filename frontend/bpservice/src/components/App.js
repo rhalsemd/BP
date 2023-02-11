@@ -25,17 +25,38 @@ import NotFound404 from "../routes/NotFound404";
 import RoadView from "../routes/map/RoadView";
 import Users from "../routes/admin/Users";
 import BeforePayment from "../routes/auth/BeforePayment";
-import WebIntro from "./WebIntro";
 import Chatbot from "../routes/Chatbot";
 import AfterPayment from "../routes/auth/AfterPayment";
 
 export const GlobalStyle = css`
-  @font-face {
+  @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
+  /* @font-face {
     font-family: "dohyun";
     src: url("../../../public/fonts/BMDOHYEON_ttf.ttf");
+  } */
+
+  /* @font-face {
+    font-family: "HanSan-light";
+    src: url("../style/fonts/SpoqaHanSansNeo-Regular.ttf");
+  } */
+
+  /* @font-face {
+    font-family: "HanSan-medium";
+    src: url("../style/fonts/SpoqaHanSansNeo-Medium.ttf");
   }
-  font-family: dohyun;
+
+  @font-face {
+    font-family: HanSan-Bold;
+    src: url("../style/fonts/SpoqaHanSansNeo-Bold.ttf") format("truetype");
+  }
+
+  @font-face {
+    font-family: "testFont";
+    src: url("../style/fonts/BlackHanSans-Regular.ttf") format("truetype");
+  } */
+
   body {
+    font-family: "Spoqa Han Sans Neo", "sans-serif";
     margin: 0px;
   }
 `;
