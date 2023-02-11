@@ -50,7 +50,6 @@ const KioskHomeSection = () => {
     url: BrollyURL,
   })
     .then((res) => {
-      console.log(res.data)
       setRentCnt(res.data.brollyCnt)
       setReturnCnt(res.data.emptyCnt)
     })
