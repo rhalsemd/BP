@@ -11,7 +11,6 @@ const KioskReturnSectionStyle = css`
   justify-content: center;
   align-items: center;
   height: 80vh;
-  animation: ${fadeIn} 1s ease-in;
 `
 
 const KioskReturnQR = css`
@@ -184,18 +183,7 @@ const KioskReturnMethodTitle = css`
   }
 `
 
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`;
 
-const componentStyles = css`
-  animation: ${fadeIn} 1s ease-in;
-`;
 
 // 위에는 Emotion.js 입니다.
 // 밑에는 JS 입니다.
