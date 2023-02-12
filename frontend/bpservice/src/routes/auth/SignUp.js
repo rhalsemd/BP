@@ -19,6 +19,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Suspense } from "react";
 import LoadingPage from "../../components/LoadingPage";
 import { gsap, ScrollTrigger } from "gsap/all";
+import { useLayoutEffect } from "react";
 
 const loginModalStyle = css`
   position: relative;
@@ -92,24 +93,24 @@ function SignUp({ signUp, signUpFailureReset }) {
   const navigation = useNavigate();
   const location = useLocation();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
     const animation = [
       gsap.to(".underContent-phone", {
         opacity: 1,
         x: 0,
-        duration: 1.2,
+        duration: 1,
       }),
       gsap.to(".underContent-address", {
         opacity: 1,
         x: 0,
-        duration: 1.2,
+        duration: 1,
       }),
       gsap.to(".underContent-email", {
         opacity: 1,
         x: 0,
-        duration: 1.2,
+        duration: 1,
       }),
     ];
 
@@ -118,22 +119,24 @@ function SignUp({ signUp, signUpFailureReset }) {
         trigger: `.${animation[index]._targets[0].className}`,
         scroller: "#scroller",
         endTrigger: `.${animation[index]._targets[0].className}`,
-        start: "top+=20% 90%",
+        start: "top+=20% 82%",
         end: "bottom+=10% 67%",
-
+        scrub: 1,
         // markers: true,
         onEnter() {
           item.restart();
         },
         onLeaveBack() {
           gsap.to(`.${animation[index]._targets[0].className}`, {
+            x: -50,
             opacity: 0,
-            x: -150,
           });
         },
       });
     });
+  }, []);
 
+  useEffect(() => {
     // 이용 약관을 먼저하고 와야지 회원가입 가능
     if (!location.state) {
       navigation("/bp/terms");
@@ -202,8 +205,8 @@ function SignUp({ signUp, signUpFailureReset }) {
             <span
               className="underContent-phone"
               style={{
-                opacity: 0,
-                transform: "translate(-150px,0)",
+                opacity: "0",
+                transform: "translateX(-50px)",
               }}
             >
               {/* 전화번호 / 인증 번호*/}
@@ -212,7 +215,7 @@ function SignUp({ signUp, signUpFailureReset }) {
 
             <span
               className="underContent-address"
-              style={{ opacity: 0, transform: "translate(-100px,0)" }}
+              style={{ opacity: 0, transform: "translateX(-50px)" }}
             >
               {/* 주소 */}
               <SignUpAddress info={info} setInfo={setInfo} />
@@ -220,7 +223,10 @@ function SignUp({ signUp, signUpFailureReset }) {
 
             <span
               className="underContent-email"
-              style={{ opacity: 0, transform: "translate(-100px,0)" }}
+              style={{
+                opacity: 0,
+                transform: "translateX(-50px)",
+              }}
             >
               {/* 이메일 */}
               <SignUpEmail info={info} setInfo={setInfo} />

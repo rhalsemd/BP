@@ -82,8 +82,18 @@ function EventMarkerContainer({
                 </div>
                 <div className={styled.desc}>
                   <div>
-                    <p>남은 우산 수 : {position.brollyCount}</p>
-                    <p>전체 우산 수 : {position.brollyTotalCount}</p>
+                    <p>
+                      남은 우산 수 :{" "}
+                      <span style={{ fontWeight: "400" }}>
+                        {position.brollyCount}
+                      </span>
+                    </p>
+                    <p>
+                      전체 우산 수 :{" "}
+                      <span style={{ fontWeight: "400" }}>
+                        {position.brollyTotalCount}
+                      </span>
+                    </p>
                   </div>
 
                   <div>
