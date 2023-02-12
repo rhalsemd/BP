@@ -43,6 +43,7 @@ function CheckPwdInput({ info, setInfo, setNewPwd }) {
 
   const onSubmit = (e) => {
     gsap.to(".checkBtn", { scale: 0.9, repeat: 1, yoyo: true, duration: 0.2 });
+
     e.preventDefault();
     if (info.pwd && info.check && info.pwd === info.check) {
       setNewPwd({ pwd: info.check });

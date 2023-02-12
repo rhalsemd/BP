@@ -45,7 +45,7 @@ function PwdComponent({ setInfo, info, setLoginInfo, location }) {
   const obj = localStorage.getItem("login-token");
 
   const getLogin = (e) => {
-    gsap.from(".loginBtn", { scale: 0.9, repeat: 1, yoyo: true });
+    gsap.to(".loginBtn", { scale: 0.9, repeat: 1, yoyo: true, duration: 0.1 });
 
     e.preventDefault();
 
