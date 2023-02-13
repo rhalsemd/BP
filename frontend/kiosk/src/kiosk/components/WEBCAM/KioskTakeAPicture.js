@@ -104,8 +104,7 @@ const grow = keyframes`
 `;
 
 const countDownStyle = ({ isActive }) => css`
-  display: block !important;
-
+  display: ${isActive ? 'block !important' : 'none !important'};
   position: absolute;
   top: 52vh;
   font-size: 15vw;
@@ -263,7 +262,7 @@ const KioskTakeAPicture = (data) => {
   const clearImage = () => {
     setIscapture(false);
     // 6초로 세팅
-    setTimeLeft(5);
+    setTimeLeft(10);
 
     let photo = photoRef.current;
     let ctx = photo.getContext("2d");
@@ -272,7 +271,7 @@ const KioskTakeAPicture = (data) => {
 
   // useInterval로 카운트다운을 하면서 애니메이션 구현하려고
   // useInterval
-  const [timeLeft, setTimeLeft] = useState(5);
+  const [timeLeft, setTimeLeft] = useState(10);
   const [isActive, setIsActive] = useState(false);
 
   const useInterval = (callback, delay) => {
@@ -332,8 +331,8 @@ const KioskTakeAPicture = (data) => {
         </div>
       </div>
       <div css={SpinnerDiv}>
-        {loading ? <Stack sx={{ zIndex: '990', backgroundColor:'rgba(255, 255, 255, 0.5)', width:'102vw', height:'102vh', display:'flex', justifyContent:'center', alignItems:'center'}} spacing={5} direction="row">
-          <CircularProgress sx={{ color:'white'  }}/>
+        {loading ? <Stack sx={{ zIndex: '990', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '102vw', height: '102vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }} spacing={5} direction="row">
+          <CircularProgress sx={{ color: 'white' }} />
         </Stack> : null}
       </div>
       <div>
