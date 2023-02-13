@@ -70,14 +70,14 @@ export default function Setting() {
         </Box>
         <Stack spacing={2} direction="row">
           <Button
-            variant="outlined"
-            onClick={() => dispatch(getKioskOpen(age))}
+            variant="contained"
+            onClick={() => dispatch(getKioskClose(age))}
           >
             키오스크 닫기
           </Button>
           <Button
-            variant="contained"
-            onClick={() => dispatch(getKioskClose(age))}
+            variant="outlined"
+            onClick={() => dispatch(getKioskOpen(age))}
           >
             키오스크 열기
           </Button>
