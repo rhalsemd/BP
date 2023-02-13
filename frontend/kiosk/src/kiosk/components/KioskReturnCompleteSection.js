@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
+import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router'
 import ReceiptImg from '../assets/ReceiptWhite.png'
@@ -30,7 +31,18 @@ const KioskReceiptMent = css`
 
   p {
     font-size: 2em;
+    padding-top: 3vh;
+    padding-left: 0.7vw;
     margin: 0;
+    margin-bottom: 3vh;
+    background-color: #B1B2FF;
+    border-radius: 10px;
+    width: 45vw;
+    height: 10vh
+  }
+
+  span {
+    font-size: 1.5em;
   }
 `
 
@@ -153,7 +165,7 @@ const KioskNoReturnStyle = css`
 
   position: relative;
   left:40%;
-
+    
   height: 80vh;
   .KioskNoReturnGuide {
     font-size: 32px;
@@ -190,6 +202,7 @@ const KioskReturnCompleteSection = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [isReturn, setIsReturn] = useState(false);
+  const [kioskName, setKioskName] = useState('');
 
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search)
@@ -198,16 +211,23 @@ const KioskReturnCompleteSection = () => {
   const price = Number(queryParams.get('price')).toLocaleString('ko-KR');
   const refundMoney = Number(queryParams.get('refundMoney')).toLocaleString('ko-KR');
 
+  const KioskNameURL = `http://bp.ssaverytime.kr:8080/api/kiosk/home/kiosk-name?id=${id}`
+
   useEffect(() => {
     if (isBrolly == 1) {
       setIsReturn(true)
     }
+    axios({
+      method:'GET',
+      url: KioskNameURL,
+    })
+    .then((res) => setKioskName(res.data))
+    .catch((err) => console.log(err))
+
     setTimeout(() => {
       navigate(`/kiosk/${id}`)
     }, 180000)
   }, [isReturn])
-
-
 
   return (
     <div css={KioskReturnReceiptStyle}>
@@ -215,13 +235,13 @@ const KioskReturnCompleteSection = () => {
         <div>
           <div css={KioskReceiptMent}>
             <p>우산이 정상적으로 반납되었습니다</p>
-            <p>보증금 정산내역을 확인해주세요</p>
+            <span>보증금 정산내역을 확인해주세요</span>
           </div>
           <div css={KioskReturnReceiptView}>
             <h1>요금 사항</h1>
             <div css={KioskReturnReceipt}>
               <div className='ReceiptTitle'>
-                <p className='BranchName'>구미인동점</p>
+                <p className='BranchName'>{kioskName}</p>
               </div>
               <div className='ReceiptTotal'>
                 <p className='Payment'>{refundMoney}<span>원</span></p>

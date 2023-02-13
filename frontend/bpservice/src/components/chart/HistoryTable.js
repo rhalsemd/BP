@@ -136,7 +136,6 @@ const UserTable = () => {
     "2023-01-22T15:00:23.000+00:00",
     "null"
   );
-  console.log(rows);
   return (
     <>
       <Modal

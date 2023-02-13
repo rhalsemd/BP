@@ -38,15 +38,23 @@ export default function LineChart() {
     const svgElement = d3.select(lineChart.current);
     svgElement.selectAll("*").remove();
     const dataDemo = data.map((d) => {
-      const arr = {
-        data: `${dayjs(d.FINALDT).format("MM")}월 ${dayjs(d.FINALDT).format(
-          "DD"
-        )}일`,
-        cost: d.TOTALMoney,
-      };
+      let arr;
+      if (d.FINALDT.length > 8) {
+        arr = {
+          data: `${dayjs(d.FINALDT).format("MM")}월 ${dayjs(d.FINALDT).format(
+            "DD"
+          )}일`,
+          cost: d.TOTALMoney,
+        };
+      } else {
+        arr = {
+          data: `${dayjs(d.FINALDT).format("MM")}월`,
+          cost: d.TOTALMoney,
+        };
+      }
+
       return arr;
     });
-    const name = dataDemo.map((d) => d.data);
     let maxValue;
     if (dataDemo.length < 10) {
       maxValue = 300;
@@ -101,7 +109,10 @@ export default function LineChart() {
       .attr("dy", ".35em")
       .attr("font-weight", "bold")
       .attr("font-style", "oblique");
-    svg.append("g").call(yAxis).attr("transform", `translate(${ml}, ${mt})`);
+    svg
+      .append("g")
+      .call(yAxis)
+      .attr("transform", `translate(${ml}, ${mt})`);
 
     const path = svg
       .append("path")
@@ -114,7 +125,10 @@ export default function LineChart() {
       .attr("d", generateScaleLine);
 
     const pathLength = path.node().getTotalLength();
-    const transitionPath = d3.transition().ease(d3.easeSin).duration(2000);
+    const transitionPath = d3
+      .transition()
+      .ease(d3.easeSin)
+      .duration(2000);
 
     path
       .attr("stroke-dashoffset", pathLength)

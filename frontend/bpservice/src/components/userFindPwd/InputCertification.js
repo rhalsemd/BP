@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import { findPwdInfo } from "../../modules/findPwd";
 import Timer from "./Timer";
 import { useRef } from "react";
+import gsap from "gsap";
 
 const inputBox = css`
   position: relative;
@@ -67,6 +68,13 @@ function InputCertification({
 
   // 인증번호 확인
   const onClick = () => {
+    gsap.to(".checkCertiNumBtn", {
+      scale: 0.9,
+      repeat: 1,
+      yoyo: true,
+      duration: 0.1,
+    });
+
     setCertificationNum({
       authNum: info.certifiNum,
       email: info.email,
@@ -118,7 +126,7 @@ function InputCertification({
             </label>
           </div>
 
-          <button onClick={onClick} css={확인버튼}>
+          <button onClick={onClick} css={확인버튼} className="checkCertiNumBtn">
             확인
           </button>
         </div>

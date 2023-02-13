@@ -1,7 +1,6 @@
 import React from "react";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import DeleteIcon from "@mui/icons-material/Delete";
 import SendIcon from "@mui/icons-material/Send";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -141,9 +140,6 @@ export default function UserTable() {
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button variant="outlined" startIcon={<DeleteIcon />}>
-            Delete
-          </Button>
           <Button
             variant="contained"
             onClick={() =>

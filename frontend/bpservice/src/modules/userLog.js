@@ -39,7 +39,7 @@ function* getUserImgSaga(data) {
       payload: img.data,
     });
   } catch (e) {
-    console.log("이미지 가져오기", e);
+    console.log("이미지 가져오기 실패", e);
   }
 }
 

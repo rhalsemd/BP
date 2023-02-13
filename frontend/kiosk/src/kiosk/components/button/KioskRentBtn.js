@@ -31,7 +31,7 @@ const RentBtnTextBox = css`
   .content {
     font-size: 24px;
     position: absolute;
-    bottom: 70px;
+    bottom: 90px;
   }
 `
 

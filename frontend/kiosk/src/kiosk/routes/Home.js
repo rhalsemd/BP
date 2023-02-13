@@ -1,5 +1,13 @@
+import React from "react";
+// /** @jsxImportSource @emotion/react */
+// import { jsx, css, keyframes } from '@emotion/react'
 
-export default function Home() {
-
-  return <h1>HOME</h1>
+function Home() {
+  return (
+    <div>
+      Home
+    </div>
+  )
 }
+
+export default Home;

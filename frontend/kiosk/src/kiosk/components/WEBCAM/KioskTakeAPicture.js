@@ -19,21 +19,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
-///////////////////////////////// 모달 //////////////////////////////////////
-
-///////////////////////////////// 모달 //////////////////////////////////////
-
 const videoSize = css`
   width: 100vw !important;
   height: 130vh;
@@ -45,7 +30,7 @@ const videoSize = css`
 
   transform: rotateY(180deg);
   -webkit-transform:rotateY(180deg);
-  -moz-transform:rotateY(180deg); 
+  -moz-transform:rotateY(180deg);
 `;
 
 const canvasDiv = css`
@@ -120,6 +105,9 @@ const grow = keyframes`
 
 const countDownStyle = ({ isActive }) => css`
   display: block !important;
+
+  position: absolute;
+  top: 52vh;
   font-size: 15vw;
   color: ${isActive ? 'white !important' : 'black !important'};
   animation: ${fadeIn} 1s ease forwards, ${grow} 1s ease forwards;

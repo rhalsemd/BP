@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { userInfo } from "../../modules/signUp";
 import Alert from "@mui/material/Alert";
 import { useNavigate } from "react-router-dom";
+import gsap from "gsap";
 
 const inputBox = css`
   position: relative;
@@ -37,7 +38,8 @@ function SignUpEmail({ info, setInfo, sighUpRequirement }) {
   const navigation = useNavigate();
 
   // email 정규 표현식
-  const emailRegExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+  const emailRegExp =
+    /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
 
   // email 입력
   const typeEmail = (e) => {
@@ -60,11 +62,26 @@ function SignUpEmail({ info, setInfo, sighUpRequirement }) {
   };
 
   const setSignUp = (e) => {
+    gsap.to(".signUpRequestBtn", {
+      scale: 0.9,
+      repeat: 1,
+      yoyo: true,
+      duration: 0.1,
+    });
     sighUpRequirement(info);
   };
 
   const back = () => {
     navigation("/bp");
+  };
+
+  const cencelSignUp = () => {
+    gsap.to(".cencelBtn", {
+      scale: 0.9,
+      repeat: 1,
+      yoyo: true,
+      duration: 0.1,
+    });
   };
 
   return (
@@ -127,7 +144,11 @@ function SignUpEmail({ info, setInfo, sighUpRequirement }) {
         info.addressSuccess &&
         info.userNameSuccess &&
         info.emailSuccess ? (
-          <button onClick={setSignUp} css={확인버튼}>
+          <button
+            onClick={setSignUp}
+            css={확인버튼}
+            className="signUpRequestBtn"
+          >
             회원가입
           </button>
         ) : null}
@@ -136,8 +157,10 @@ function SignUpEmail({ info, setInfo, sighUpRequirement }) {
           onClick={back}
           css={확인버튼}
           style={{ backgroundColor: "lightgray", color: "black" }}
+          onTouchStart={cencelSignUp}
+          className="cencelBtn"
         >
-          뒤로가기
+          취소
         </button>
       </div>
     </div>
