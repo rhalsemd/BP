@@ -10,6 +10,8 @@ function BeforePayment() {
   const location = useLocation();
   const dispatch = useDispatch();
 
+  const date = new Date();
+
   const { depositeMoney, money } = useSelector(
     ({ paymentReducer }) => paymentReducer.price
   );
@@ -46,7 +48,9 @@ function BeforePayment() {
         <div className={styled.receipt}>
           <div className={styled.paper}>
             {/* <div className={styled.title}>Receipt</div> */}
-            <div className={styled.date}>날짜: 2023/02/04</div>
+            <div className={styled.date}>
+              날짜: {date.toLocaleString("ko-kr")}
+            </div>
             <table>
               <tbody>
                 <tr>
