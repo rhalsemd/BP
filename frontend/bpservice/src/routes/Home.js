@@ -33,7 +33,7 @@ const mapBtn = css`
 `;
 
 const frame = css`
-  height: 3000vh;
+  height: auto;
   overflow: hidden;
   position: relative;
 `;
