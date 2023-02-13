@@ -13,7 +13,7 @@ const KioskPaymentQR = () => {
         imageSettings={{ src: `http://bp.ssaverytime.kr/bp/before/payment?kioskId=${id}`, width: 10, height: 10 }}
         id="qr-gen"
         level={"H"}
-        includeMargin={true}
+        includeMargin={true}  
         bgColor={"white"}
         fgColor={"#404040"}
       />

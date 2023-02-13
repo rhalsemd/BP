@@ -48,7 +48,7 @@ const KioskRentContainer = () => {
 
   // 홈화면으로
   const miliUnit = 1000
-  const seconds = 180 * miliUnit
+  const seconds = 300 * miliUnit
   useEffect(() => {
     let myTimer = setTimeout(() => {
       navigate(`/kiosk/${id}`)

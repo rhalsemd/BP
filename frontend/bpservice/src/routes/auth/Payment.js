@@ -21,10 +21,10 @@ export default function Payment() {
         method: "카드",
         tax_free: 0,
         user: {
-          id: "회원아이디",
-          username: "회원이름",
-          phone: "01000000000",
-          email: "test@test.com",
+          id: "",
+          username: "",
+          phone: "",
+          email: "",
         },
         items: [
           {

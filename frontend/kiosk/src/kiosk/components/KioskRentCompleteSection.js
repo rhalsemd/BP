@@ -33,7 +33,7 @@ const KioskRentSectionCompleteStyle = css`
     padding-top: 2.5vh;
 
     span {
-      font-size: 1.4em;
+      font-size: 1.2em;
     }
   }
   button {
@@ -55,9 +55,13 @@ const KioskRentCompleteSection = () => {
     if (isBrolly == 1) {
       setIsRent(true)
     }
-    setTimeout(() => {
-      navigate(`/kiosk/${id}`)
-    }, 18000)
+    const timer = setTimeout(() => {
+      navigate(`/kiosk/${id}`);
+    }, 30000);
+
+    return () => {
+      clearTimeout(timer);
+    };
   }, [isRent])
 
   return (

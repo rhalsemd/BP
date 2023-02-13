@@ -224,9 +224,13 @@ const KioskReturnCompleteSection = () => {
     .then((res) => setKioskName(res.data))
     .catch((err) => console.log(err))
 
-    setTimeout(() => {
-      navigate(`/kiosk/${id}`)
-    }, 180000)
+    const timer = setTimeout(() => {
+      navigate(`/kiosk/${id}`);
+    }, 30000);
+
+    return () => {
+      clearTimeout(timer);
+    };
   }, [isReturn])
 
   return (

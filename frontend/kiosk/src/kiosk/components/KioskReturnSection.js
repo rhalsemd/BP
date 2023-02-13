@@ -90,7 +90,7 @@ const QRLine = css`
   right: 0;
   height: 4px;
   width: 489px;
-  background-color: #B1B2FF;
+  background-color: red;
   animation: ${scan} 5s linear infinite;
 `
 
@@ -210,7 +210,7 @@ const KioskReturnSection = () => {
         <div css={QR}>
           <div css={KioskReturnQRCheckSection}>
             <div css={QRBox}></div>
-            <div css={QRBlackBox}></div>
+            {/* <div css={QRBlackBox}></div> */}
             <div css={QRLine} />
             <QrReader
               onResult={(result, error) => {
