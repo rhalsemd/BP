@@ -9,7 +9,7 @@ import java.net.HttpURLConnection;
 
 @Service
 public class AKioskManageService {
-    private String kioskUrl = "http://rigizer2.iptime.org:8000/%s?caseid=%d";
+    private String kioskUrl = "http://rigizer2.iptime.org:8000/%s/%d";
 
     public boolean openAllKiosk(int kioskId) {
         try {
