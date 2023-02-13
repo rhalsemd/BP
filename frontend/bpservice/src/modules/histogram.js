@@ -68,7 +68,6 @@ export function* histogramMonthSaga() {
 function* getBranchDataSaga({ payload }) {
   try {
     const dataGet = yield call(() => api.getBranchRevenue(payload));
-    console.log("총 매출(day)", dataGet);
     yield put({
       type: GET_BRANCH_REVENUE_SUCCESS,
       payload: dataGet.data,
