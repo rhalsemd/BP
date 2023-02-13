@@ -27,8 +27,7 @@ import Users from "../routes/admin/Users";
 import BeforePayment from "../routes/auth/BeforePayment";
 import Chatbot from "../routes/Chatbot";
 import AfterPayment from "../routes/auth/AfterPayment";
-
-import Test from "./Test";
+import WebIntro from "../components/WebIntro";
 
 export const GlobalStyle = css`
   @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
@@ -75,8 +74,6 @@ function App() {
         <Route path="/admin/revenue-trend/:id" element={<RevenueTrend />} />
         <Route path="/admin/users" element={<Users />} />
         <Route path="/admin/users/:id" element={<UserLog />} />
-
-        <Route path="/test" element={<Test />} />
 
         <Route path="/*" element={<NotFound404 />} />
       </Routes>

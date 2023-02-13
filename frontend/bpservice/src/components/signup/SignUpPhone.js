@@ -7,6 +7,7 @@ import { useRef } from "react";
 import CertificationInput from "./CertificationInput";
 import { useEffect } from "react";
 import Alert from "@mui/material/Alert";
+import gsap from "gsap";
 
 const inputBox = css`
   position: relative;
@@ -69,6 +70,13 @@ function SignUpPhone({
 
   // 인증 번호 받기
   const getCertificationNumber = () => {
+    gsap.to(".certifiBtn", {
+      scale: 0.9,
+      repeat: 1,
+      yoyo: true,
+      duration: 0.1,
+    });
+
     errorCertifycationReset();
     if (
       phoneRegExp.test(info.phone) &&
@@ -96,6 +104,13 @@ function SignUpPhone({
 
   // 전화번호 수정
   const modifyPhone = () => {
+    gsap.to(".certifiBtn", {
+      scale: 0.9,
+      repeat: 1,
+      yoyo: true,
+      duration: 0.1,
+    });
+
     setInfo((info) => {
       return { ...info, isCertification: false };
     });
@@ -156,11 +171,15 @@ function SignUpPhone({
 
       {/* 인증 받기 버튼 / 수정 버튼 */}
       {!info.isCertification ? (
-        <button onClick={getCertificationNumber} css={회원가입버튼}>
+        <button
+          onClick={getCertificationNumber}
+          css={회원가입버튼}
+          className="certifiBtn"
+        >
           인증 받기
         </button>
       ) : (
-        <button onClick={modifyPhone} css={회원가입버튼}>
+        <button onClick={modifyPhone} css={회원가입버튼} className="certifiBtn">
           수정
         </button>
       )}

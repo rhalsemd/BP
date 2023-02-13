@@ -1,7 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import gsap from "gsap/all";
 
 import React from "react";
+import { useEffect } from "react";
 
 import { ChatBotComponent } from "react-chatbot-with-text-and-speech";
 import "react-chatbot-with-text-and-speech/dist/index.css";
@@ -37,8 +39,7 @@ const Chatbot = () => {
       return { text: data.answer[index - 1].text };
     } else {
       return {
-        text:
-          "1. 우산을 대여하는 방법 / 2. 우산을 반납하는 방법 / 3. 관리자 문의",
+        text: "1. 우산을 대여하는 방법 2. 우산을 반납하는 방법 3. 관리자 문의",
       };
     }
   };
@@ -46,12 +47,27 @@ const Chatbot = () => {
   const back = () => {
     navigation(-1);
   };
+
+  const cencelBtn = () => {
+    gsap.from(".chatbotBtn", {
+      scale: 0.9,
+      duration: 0.1,
+      repeat: 1,
+      yoyo: true,
+    });
+  };
+
   return (
     <>
       <div style={{ height: "100%", width: "97vw" }}>
         <ChatBotComponent options={options} handleMessage={handleMessage} />
       </div>
-      <button onClick={back} css={뒤로가기}>
+      <button
+        onClick={back}
+        css={뒤로가기}
+        className="chatbotBtn"
+        onTouchStart={cencelBtn}
+      >
         뒤로가기
       </button>
     </>

@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import gsap from "gsap";
 
 import { useEffect } from "react";
 import { useRef } from "react";
@@ -61,6 +62,13 @@ function FindNameComponent({
   };
 
   const findIdFnc = () => {
+    gsap.to(".checkFindId", {
+      scale: 0.9,
+      repeat: 1,
+      yoyo: true,
+      duration: 0.2,
+    });
+
     if (info.email && info.userName) {
       setInfo((info) => {
         return { ...info, isSend: true };
@@ -75,6 +83,13 @@ function FindNameComponent({
   };
 
   const modify = () => {
+    gsap.to(".checkFindId", {
+      scale: 0.9,
+      repeat: 1,
+      yoyo: true,
+      duration: 0.2,
+    });
+
     setInfo((info) => {
       return { ...info, isSend: false };
     });
@@ -92,6 +107,16 @@ function FindNameComponent({
   const cencle = () => {
     navigation("/bp");
   };
+
+  const cencelFindId = () => {
+    gsap.to(".cencelFindId", {
+      scale: 0.9,
+      repeat: 1,
+      yoyo: true,
+      duration: 0.2,
+    });
+  };
+
   return (
     <div css={inputBox}>
       <input
@@ -118,16 +143,25 @@ function FindNameComponent({
       {/* 아이디 찾기 버튼 */}
       <div>
         {info.isSend ? (
-          <button onClick={modify} css={아이디찾기버튼}>
+          <button onClick={modify} css={아이디찾기버튼} className="checkFindId">
             수정
           </button>
         ) : (
-          <button onClick={findIdFnc} css={아이디찾기버튼}>
+          <button
+            onClick={findIdFnc}
+            css={아이디찾기버튼}
+            className="checkFindId"
+          >
             아이디 찾기
           </button>
         )}
 
-        <button onClick={cencle} css={취소버튼}>
+        <button
+          onClick={cencle}
+          css={취소버튼}
+          onTouchStart={cencelFindId}
+          className="cencelFindId"
+        >
           취소
         </button>
       </div>

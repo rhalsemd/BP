@@ -4,6 +4,7 @@ import { css } from "@emotion/react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
+import { gsap } from "gsap";
 
 const inputBox = css`
   position: relative;
@@ -44,6 +45,8 @@ function PwdComponent({ setInfo, info, setLoginInfo, location }) {
   const obj = localStorage.getItem("login-token");
 
   const getLogin = (e) => {
+    gsap.to(".loginBtn", { scale: 0.9, repeat: 1, yoyo: true, duration: 0.1 });
+
     e.preventDefault();
 
     if (info.id && info.pwd) {
@@ -95,7 +98,7 @@ function PwdComponent({ setInfo, info, setLoginInfo, location }) {
 
         {/* 로그인 버튼 */}
         <div>
-          <button onClick={getLogin} css={회원가입버튼}>
+          <button onClick={getLogin} css={회원가입버튼} className="loginBtn">
             로그인
           </button>
         </div>

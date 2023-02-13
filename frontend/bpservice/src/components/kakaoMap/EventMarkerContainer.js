@@ -1,10 +1,11 @@
-import { memo, useState } from "react";
+import { memo, useRef, useState } from "react";
 import { MapMarker, CustomOverlayMap, useMap } from "react-kakao-maps-sdk";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { mapInfo } from "../../modules/mapStore";
 import styled from "../../style/EventMarkerContainer.module.css";
 import markerImg from "../../style/umbrella.png";
+import homeIntro from "../../style/homeIntro.png";
 
 function EventMarkerContainer({
   position,
@@ -14,6 +15,8 @@ function EventMarkerContainer({
   setIsClickMarker,
   mapStore,
 }) {
+  const markerRef = useRef();
+
   const [isOpen, setIsOpen] = useState(Array(positions.length).fill(false));
   const map = useMap();
   const navigation = useNavigate();
@@ -25,6 +28,8 @@ function EventMarkerContainer({
   return (
     <>
       <MapMarker
+        ref={markerRef}
+        className="marker"
         position={position.latlng}
         image={{
           src: markerImg,
@@ -69,16 +74,26 @@ function EventMarkerContainer({
               <div className={styled.body}>
                 <div className={styled.img}>
                   <img
-                    src="//t1.daumcdn.net/thumb/C84x76/?fname=http://t1.daumcdn.net/cfile/2170353A51B82DE005"
-                    width="73"
-                    height="70"
+                    src={homeIntro}
+                    // width="73"
+                    // height="40"
                     alt={position.title}
                   />
                 </div>
                 <div className={styled.desc}>
                   <div>
-                    <p>남은 우산 수 : {position.brollyCount}</p>
-                    <p>전체 우산 수 : {position.brollyTotalCount}</p>
+                    <p>
+                      남은 우산 수 :{" "}
+                      <span style={{ fontWeight: "400" }}>
+                        {position.brollyCount}
+                      </span>
+                    </p>
+                    <p>
+                      전체 우산 수 :{" "}
+                      <span style={{ fontWeight: "400" }}>
+                        {position.brollyTotalCount}
+                      </span>
+                    </p>
                   </div>
 
                   <div>
