@@ -70,7 +70,7 @@ const KioskRentCompleteContainer = () => {
   const miliUnit = 1000
   const seconds = 300 * miliUnit
   useEffect(() => {
-    let myTimer = setTimeout(() => {
+    const myTimer = setTimeout(() => {
       navigate(`/kiosk/${id}`)
     }, seconds)
     return () => {
