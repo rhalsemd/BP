@@ -55,9 +55,13 @@ const KioskRentCompleteSection = () => {
     if (isBrolly == 1) {
       setIsRent(true)
     }
-    setTimeout(() => {
-      navigate(`/kiosk/${id}`)
-    }, 30000)
+    const timer = setTimeout(() => {
+      navigate(`/kiosk/${id}`);
+    }, 30000);
+
+    return () => {
+      clearTimeout(timer);
+    };
   }, [isRent])
 
   return (

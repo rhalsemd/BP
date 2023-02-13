@@ -12,6 +12,9 @@ function App() {
           * {
             color: #404040 !important;
           }
+          body {
+            overflow: hidden;
+          }
         `}
       />
 
