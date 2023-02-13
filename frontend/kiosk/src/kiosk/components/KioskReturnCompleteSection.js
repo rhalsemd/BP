@@ -226,7 +226,7 @@ const KioskReturnCompleteSection = () => {
 
     setTimeout(() => {
       navigate(`/kiosk/${id}`)
-    }, 180000)
+    }, 30000)
   }, [isReturn])
 
   return (

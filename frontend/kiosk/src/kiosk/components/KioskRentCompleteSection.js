@@ -33,7 +33,7 @@ const KioskRentSectionCompleteStyle = css`
     padding-top: 2.5vh;
 
     span {
-      font-size: 1.4em;
+      font-size: 1.2em;
     }
   }
   button {
@@ -57,7 +57,7 @@ const KioskRentCompleteSection = () => {
     }
     setTimeout(() => {
       navigate(`/kiosk/${id}`)
-    }, 18000)
+    }, 30000)
   }, [isRent])
 
   return (
