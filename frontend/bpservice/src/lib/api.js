@@ -1,3 +1,4 @@
+import { optionGroupUnstyledClasses } from "@mui/base";
 import axios from "axios";
 import dayjs from "dayjs";
 
@@ -21,7 +22,8 @@ export const getBranchRevenue = (day) => {
 export const getBranchRevenueMonth = (date) => {
   const objString = localStorage.getItem("login-admin-token");
   const obj = JSON.parse(objString);
-  const year = dayjs(date).format("YYYY");
+  console.log("api", date);
+  const year = date.$y;
   const month = dayjs(date).format("MM");
   console.log("getBranchRevenueMonth axios");
   return axios({

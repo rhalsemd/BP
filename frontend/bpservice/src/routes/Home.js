@@ -33,7 +33,7 @@ const mapBtn = css`
 `;
 
 const frame = css`
-  height: auto;
+  height: 3000vh;
   overflow: hidden;
   position: relative;
 `;
@@ -93,10 +93,10 @@ function Home() {
 
   return (
     <div css={frame}>
+      <div css={{ position: "sticky", top: "0" }}>
+        <Nav />
+      </div>
       <div className="section1">
-        <header>
-          <Nav />
-        </header>
         <HomeLogo />
         <HomeSection1 />
         <HomeSection2 />
