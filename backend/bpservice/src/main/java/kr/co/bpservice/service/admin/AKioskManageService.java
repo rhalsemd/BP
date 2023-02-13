@@ -19,7 +19,7 @@ public class AKioskManageService {
             header.append("Accept-Encoding", HTTPUtils.ACCEPT_ENCODING);
             header.append("Connection", HTTPUtils.CONNECTION);
 
-            Get get = new Get(String.format(kioskUrl, "openAll", kioskId), header);
+            Get get = new Get(String.format(kioskUrl, "open-all", kioskId), header);
 
             int responseCode = get.getResponseCode();
             if (responseCode != HttpURLConnection.HTTP_OK) {
@@ -42,7 +42,7 @@ public class AKioskManageService {
             header.append("Accept-Encoding", HTTPUtils.ACCEPT_ENCODING);
             header.append("Connection", HTTPUtils.CONNECTION);
 
-            Get get = new Get(String.format(kioskUrl, "closeAll", kioskId), header);
+            Get get = new Get(String.format(kioskUrl, "close-all", kioskId), header);
 
             int responseCode = get.getResponseCode();
             if (responseCode != HttpURLConnection.HTTP_OK) {
