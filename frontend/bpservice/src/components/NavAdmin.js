@@ -36,7 +36,6 @@ export default function Nav() {
   const 로그인 = useSelector((state) => state.loginAdminReucer.success);
 
   React.useEffect(() => {
-    console.log(로그인);
     if (!로그인 && !url) {
       alert("로그인이 필요합니다");
       navigate("/admin");

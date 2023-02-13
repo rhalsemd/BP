@@ -41,7 +41,7 @@ const 캘린더Style = css`
   width: 100vw;
   display: flex;
   justify-content: center;
-  box-shadow: 5px 5px 4px 10px #f333;
+  box-shadow: 0px 0px 15px 0px gray;
 `;
 
 const TotalIncome = ({ getBranchRevenue }) => {

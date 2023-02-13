@@ -30,7 +30,6 @@ export default function BarChart() {
     if (event.target.value == "day") {
       const month = dayjs(date).format("MM");
       dispatch(getRevenueTrend({ month, year, caseId }));
-      console.log("day");
     } else {
       dispatch(getRevenueTrendMonth({ year, caseId }));
     }
