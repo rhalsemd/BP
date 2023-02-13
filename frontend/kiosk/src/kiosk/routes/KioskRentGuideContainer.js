@@ -49,7 +49,7 @@ const KioskRentCompleteContainer = () => {
   return () => {
     audio.pause();
   };
-  }, [isPlaying]);
+  }, []);
   // 오디오
 
   // 홈화면으로
@@ -74,6 +74,7 @@ const KioskRentCompleteContainer = () => {
           <KioskRentGuideSection />
         </section>
       </div>
+      <div id="RentGuideAudio"></div>
     </div>
   )
 }
