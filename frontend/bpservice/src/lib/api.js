@@ -23,7 +23,6 @@ export const getBranchRevenueMonth = (date) => {
   const obj = JSON.parse(objString);
   const year = dayjs(date).format("YYYY");
   const month = dayjs(date).format("MM");
-  console.log("getBranchRevenueMonth axios");
   return axios({
     method: "get",
     url: `${url}/api/auth/admin/all-kiosk-money-month/${month}/${year}`,
@@ -118,7 +117,6 @@ export const getUserLog = (userId) => {
 };
 
 export const loginAdmin = (data) => {
-  console.log(data.id, data.pwd);
   return axios({
     method: "post",
     url: `${url}/api/admin/login`,
@@ -147,10 +145,48 @@ export const logoutAdmin = () => {
 export const getUserImg = (id) => {
   const objString = localStorage.getItem("login-admin-token");
   const obj = JSON.parse(objString);
-  console.log(id);
   return axios({
     method: "get",
     url: `${url}/api/auth/admin/log/get-img-url/${id}`,
+    headers: {
+      "Content-Type ": "application/json",
+      Authorization: `Bearer ${obj.value}`,
+    },
+  });
+};
+
+export const getAllKiosks = () => {
+  const objString = localStorage.getItem("login-admin-token");
+  const obj = JSON.parse(objString);
+  return axios({
+    method: "get",
+    url: `${url}/api/kiosk/home/kiosk-list`,
+    headers: {
+      "Content-Type ": "application/json",
+      Authorization: `Bearer ${obj.value}`,
+    },
+  });
+};
+
+export const getKioskOpenAxios = (id) => {
+  const objString = localStorage.getItem("login-admin-token");
+  const obj = JSON.parse(objString);
+  return axios({
+    method: "get",
+    url: `${url}/api/auth/admin/kiosk/open-all/${id}`,
+    headers: {
+      "Content-Type ": "application/json",
+      Authorization: `Bearer ${obj.value}`,
+    },
+  });
+};
+
+export const getKioskCloseAxios = (id) => {
+  const objString = localStorage.getItem("login-admin-token");
+  const obj = JSON.parse(objString);
+  return axios({
+    method: "get",
+    url: `${url}/api/auth/admin/kiosk/close-all/${id}`,
     headers: {
       "Content-Type ": "application/json",
       Authorization: `Bearer ${obj.value}`,

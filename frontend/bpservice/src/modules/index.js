@@ -30,6 +30,7 @@ import loginAdminReucer, {
   loginAdminSaga,
   adminLogoutSaga,
 } from "./loginAdmin";
+import getAllKioskReducer, { getAllKioskSaga } from "./setting";
 
 export const rootReducer = combineReducers({
   signUp,
@@ -50,6 +51,7 @@ export const rootReducer = combineReducers({
   chagneDateReducer,
   chatbot,
   loginAdminReucer,
+  getAllKioskReducer,
 });
 
 export function* rootSaga() {
@@ -74,6 +76,7 @@ export function* rootSaga() {
     userLogSaga(),
     loginAdminSaga(),
     adminLogoutSaga(),
+    getAllKioskSaga(),
   ]);
 }
 

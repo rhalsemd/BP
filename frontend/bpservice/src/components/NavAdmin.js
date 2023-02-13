@@ -55,7 +55,6 @@ export default function Nav() {
   }, [url]);
 
   const onClick = (index) => {
-    console.log("click");
     switch (index) {
       case 0:
         navigate("/admin/total-income");
@@ -66,13 +65,14 @@ export default function Nav() {
       case 2:
         navigate("/admin/users");
         break;
+      case 3:
+        navigate("/admin/kiosk-setting");
       default:
         break;
     }
   };
 
   const 로그아웃 = (e) => {
-    console.log("로그아웃");
     e.preventDefault();
     dispatch(adminLogout());
   };
@@ -97,22 +97,24 @@ export default function Nav() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {["매출 현황", "사용 현황", "사용자 목록"].map((text, index) => (
-          <ListItem key={text} disablePadding onClick={() => onClick(index)}>
-            <ListItemButton>
-              <ListItemIcon>
-                {index == 0 ? (
-                  <BarChartIcon />
-                ) : index == 1 ? (
-                  <UmbrellaIcon />
-                ) : (
-                  <AccountCircleTwoToneIcon />
-                )}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+        {["매출 현황", "사용 현황", "사용자 목록", "키오스크 관리"].map(
+          (text, index) => (
+            <ListItem key={text} disablePadding onClick={() => onClick(index)}>
+              <ListItemButton>
+                <ListItemIcon>
+                  {index == 0 ? (
+                    <BarChartIcon />
+                  ) : index == 1 ? (
+                    <UmbrellaIcon />
+                  ) : (
+                    <AccountCircleTwoToneIcon />
+                  )}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItemButton>
+            </ListItem>
+          )
+        )}
       </List>
       <Divider />
       {objString ? (
