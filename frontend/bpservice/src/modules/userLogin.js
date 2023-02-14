@@ -19,7 +19,7 @@ const errorReset = createAction(ERROR_RESET, () => undefined);
 
 export const logOut = createAction(LOGOUT, () => undefined);
 
-const API = `http://bp.ssaverytime.kr:8080`;
+const API = `https://bp.ssaverytime.kr:8080`;
 
 // 로그인 요청
 function* setLoginFnc(data) {

@@ -2,8 +2,8 @@ import { optionGroupUnstyledClasses } from "@mui/base";
 import axios from "axios";
 import dayjs from "dayjs";
 
-const url = "http://bp.ssaverytime.kr:8080";
-// const url = "http://192.168.100.176:8080";
+const url = "https://bp.ssaverytime.kr:8080";
+// const url = "https://192.168.100.176:8080";
 
 export const getBranchRevenue = (day) => {
   const objString = localStorage.getItem("login-admin-token");

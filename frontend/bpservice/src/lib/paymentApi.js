@@ -3,7 +3,7 @@ import { call, put } from "redux-saga/effects";
 import axios from "axios";
 import { SET_CASE_INFO, SET_COST } from "../modules/payment";
 
-const url = `http://bp.ssaverytime.kr:8080`;
+const url = `https://bp.ssaverytime.kr:8080`;
 
 // bootpay로 받은 데이터 DB로 전송
 export function* getBootpayFnc(data) {
