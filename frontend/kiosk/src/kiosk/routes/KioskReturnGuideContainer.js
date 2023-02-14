@@ -75,7 +75,7 @@ const KioskReturnGuideContainer = () => {
         <div>
           <KioskReturnGuideSection />
         </div>
-        <div id='ReturnGuideAudio'></div>
+        <div id='audioplay'></div>
       </div>
     </div>
   )

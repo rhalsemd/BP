@@ -74,7 +74,7 @@ const KioskRentCompleteContainer = () => {
           <KioskRentGuideSection />
         </section>
       </div>
-      <div id="RentGuideAudio"></div>
+      <div id='audioplay'></div>
     </div>
   )
 }

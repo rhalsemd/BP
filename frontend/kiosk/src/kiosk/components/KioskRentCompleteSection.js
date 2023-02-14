@@ -67,6 +67,7 @@ const KioskRentCompleteSection = () => {
   return (
     <div css={KioskRentSectionCompleteStyle}>
       <div className='KioskRentSectionCompleteHolderBtn'>
+        {isRent ? <div id='audioplay'></div> : <div id='audioplay'></div>}
         {isRent ? <span>감사합니다.</span> : <span>우산을 가져가지 않았습니다.</span>}
       </div>
       {isRent ? <span className='KioskRentSectionCompleteGuide'>오늘도 좋은하루 되세요</span> : <span className='KioskRentSectionCompleteGuide'>환불내역을 확인해주세요</span>}

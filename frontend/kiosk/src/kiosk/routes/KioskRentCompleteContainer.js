@@ -88,8 +88,6 @@ const KioskRentCompleteContainer = () => {
           <KioskRentCompleteSection />
         </section>
       </div>
-      <div id='RentCompleteAudioSuccess'></div>
-      <div id='RentCompleteAudioFail'></div>
     </div>
   )
 }

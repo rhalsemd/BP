@@ -81,8 +81,6 @@ const KiosktReturnCompleteContainer = () => {
           <KioskReturnCompleteSection />
         </section>
       </div>
-      <div id='ReturnCompleteAudioSuccess'></div>
-      <div id='ReturnCompleteAudioFail'></div>
     </div>
   )
 }
