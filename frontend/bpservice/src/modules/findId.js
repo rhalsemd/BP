@@ -23,7 +23,7 @@ const setFindIdInfoReset = createAction(
   () => undefined
 );
 
-const API = `http://bp.ssaverytime.kr:8080`;
+const API = `https://bp.ssaverytime.kr:8080`;
 
 // 인증번호 요청
 function* getFindIdFnc(data) {

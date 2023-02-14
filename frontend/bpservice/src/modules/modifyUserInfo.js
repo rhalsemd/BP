@@ -20,7 +20,7 @@ const getSidoData = createAction(GET_SIDO_DATA, () => undefined);
 const getGugun = createAction(GET_GUGUN_DATA, (data) => data);
 const getDong = createAction(GET_DONG_DATA, (data) => data);
 
-const API = `http://bp.ssaverytime.kr:8080`;
+const API = `https://bp.ssaverytime.kr:8080`;
 
 // 시도 요청하는 함수
 function* getSidoFnc() {
