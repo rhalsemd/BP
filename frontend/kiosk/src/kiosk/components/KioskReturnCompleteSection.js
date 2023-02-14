@@ -5,6 +5,30 @@ import { useEffect, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router'
 import ReceiptImg from '../assets/ReceiptWhite.png'
 
+// 오디오
+import audioFile from '../assets/KioskReturnCompleteContainerAudio.mp3'
+import NoReturnAudioFile from '../assets/KioskNoReturnAudio.mp3'
+import VolumeUpIcon from '@mui/icons-material/VolumeUp';
+
+const AudioPlayStyle = css`
+  width: 4rem;
+  height: 4rem;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  background-color: #B1B2FF;
+  
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  
+  border-radius: 50%;
+  `
+// 오디오
+
+
 const KioskReturnReceiptStyle = css`
   display: flex;
   align-items: center;
@@ -213,6 +237,42 @@ const KioskReturnCompleteSection = () => {
 
   const KioskNameURL = `https://bp.ssaverytime.kr:8080/api/kiosk/home/kiosk-name?id=${id}`
 
+  // 오디오
+  const [audio, setAudio] = useState(new Audio(audioFile));
+  const [NoReturnAudio, setNoRentAudio] = useState(new Audio(NoReturnAudioFile));
+
+  const audioPlay = () => {
+    if (audio.volume === 0) {
+      audio.currentTime = 0
+      audio.volume = 1
+      audio.play();
+    } else {
+      audio.currentTime = 100
+      audio.volume = 0
+    }
+  }
+
+  const NoaudioPlay = () => {
+    if (NoReturnAudio.volume === 0) {
+      NoReturnAudio.currentTime = 0
+      NoReturnAudio.volume = 1
+      NoReturnAudio.play();
+    } else {
+      NoReturnAudio.currentTime = 100
+      NoReturnAudio.volume = 0
+    }
+  }
+
+  useEffect(() => {
+    audio.volume = 0
+    NoReturnAudio.volume = 0
+    return () => {
+      audio.pause();
+      NoReturnAudio.pause();
+    }
+  }, [audio.volume, NoReturnAudio.volume])
+  // 오디오
+
   useEffect(() => {
     if (isBrolly == 1) {
       setIsReturn(true)
@@ -271,6 +331,16 @@ const KioskReturnCompleteSection = () => {
           </div>
         </div>}
       {isReturn ? <div id='audioplay'></div> : <div id='audioplay'></div>}
+      {/* 오디오 */}
+        {isReturn ? 
+        <div css={AudioPlayStyle} id='audioplay' onClick={audioPlay}>
+          <VolumeUpIcon fontSize='large' />
+        </div>
+        :
+        <div css={AudioPlayStyle} id='audioplay' onClick={NoaudioPlay}>
+          <VolumeUpIcon fontSize='large' />
+        </div>}
+      {/* 오디오 */}
     </div>
   )
 }
