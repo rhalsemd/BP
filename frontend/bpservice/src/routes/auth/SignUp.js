@@ -107,7 +107,7 @@ function SignUp({ signUp, signUpFailureReset }) {
           end: () => "+=0",
           id: "test",
           scrub: 1,
-          markers: true,
+          // markers: true,
         },
       });
     });
