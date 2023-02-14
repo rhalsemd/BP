@@ -28,7 +28,7 @@ function Home() {
   const setBranchSet = () => {
     axios({
       method: 'GET',
-      url: 'http://bp.ssaverytime.kr:8080/api/kiosk/home/kiosk-list'
+      url: 'https://bp.ssaverytime.kr:8080/api/kiosk/home/kiosk-list'
     })
       .then((res) => {
         setItems(res.data)

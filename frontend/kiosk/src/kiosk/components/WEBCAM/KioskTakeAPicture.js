@@ -239,8 +239,7 @@ const KioskTakeAPicture = (data) => {
 
     axios({
       method: 'POST',
-      url: 'http://bp.ssaverytime.kr:8080/api/brolly/return',
-      // url: 'http://bp.ssaverytime.kr:8080/api/auth/user/brolly/return/update/img',
+      url: 'https://bp.ssaverytime.kr:8080/api/brolly/return',
       data: {
         'brollyName': qrdata,
         'caseId': id,

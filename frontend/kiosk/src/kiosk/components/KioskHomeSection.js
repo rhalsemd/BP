@@ -44,7 +44,7 @@ const KioskHomeSection = () => {
   const [rentCnt, setRentCnt] = useState(0);
   const [returnCnt, setReturnCnt] = useState(0);
 
-  const BrollyURL = `http://bp.ssaverytime.kr:8080/api/kiosk/home/brolly/${id}`
+  const BrollyURL = `https://bp.ssaverytime.kr:8080/api/kiosk/home/brolly/${id}`
   axios({
     method: 'GET',
     url: BrollyURL,

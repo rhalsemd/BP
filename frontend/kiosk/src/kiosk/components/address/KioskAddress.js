@@ -35,7 +35,7 @@ const KioskAddress = () => {
     const getAddress = () => {
       // 키오스크 geo 에서 지점에 해당하는 위도 경도값 받아오기
       // let geoURL = `http://192.168.100.80:8080/api/kiosk/home/kiosk-geo?id=1`
-      let geoURL = `http://bp.ssaverytime.kr:8080/api/kiosk/home/kiosk-geo?id=${id}`
+      let geoURL = `https://bp.ssaverytime.kr:8080/api/kiosk/home/kiosk-geo?id=${id}`
       let addressURL = ``;
       axios.get(geoURL)
         .then((res) => {
@@ -43,7 +43,7 @@ const KioskAddress = () => {
         })
         .then((data) => {
           // addressURL = `http://192.168.100.80:8080/api/address/reverse-geo?lat=${data.lat}&lng=${data.lng}`;
-          addressURL = `http://bp.ssaverytime.kr:8080/api/address/reverse-geo?lat=${data.lat}&lng=${data.lng}`;
+          addressURL = `https://bp.ssaverytime.kr:8080/api/address/reverse-geo?lat=${data.lat}&lng=${data.lng}`;
           axios.get(addressURL)
             .then((res) => {
               setAddress(res.data.address_name)
