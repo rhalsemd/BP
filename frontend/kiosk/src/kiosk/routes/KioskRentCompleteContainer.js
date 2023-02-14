@@ -63,7 +63,7 @@ const KioskRentCompleteContainer = () => {
       Noaudio.pause();
     }
   };
-  }, [isPlaying]);
+  }, []);
   // 오디오
 
   // 홈화면으로

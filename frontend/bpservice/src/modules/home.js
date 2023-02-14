@@ -7,7 +7,7 @@ const SET_WHETHER_DATA = "home/SET_WHETHER_DATA";
 
 export const getWhetherData = createAction(GET_WHETHER_DATA, (data) => data);
 
-const API = `http://bp.ssaverytime.kr:8080`;
+const API = `https://bp.ssaverytime.kr:8080`;
 
 function* getWhetherDataFnc(data) {
   const { latitude, longitude } = data.payload;

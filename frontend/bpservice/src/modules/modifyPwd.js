@@ -15,7 +15,7 @@ export const newPwdErrorReset = createAction(
   () => undefined
 );
 
-const API = `http://bp.ssaverytime.kr:8080`;
+const API = `https://bp.ssaverytime.kr:8080`;
 
 // 비밀번호 수정 요청
 function* modifyPwdFnc(data) {

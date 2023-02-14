@@ -49,7 +49,7 @@ const KioskReturnContainer = () => {
   return () => {
     audio.pause();
   };
-  }, [isPlaying]);
+  }, []);
   // 오디오
 
   // 홈화면으로

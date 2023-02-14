@@ -12,7 +12,7 @@ export default function Test() {
         const lng = position.coords.longitude;
         axios({
           method: "get",
-          url: `http://bp.ssaverytime.kr:8080/api/weather/current-weather`,
+          url: `https://bp.ssaverytime.kr:8080/api/weather/current-weather`,
           params: {
             lat,
             lng,

@@ -56,7 +56,7 @@ const KiosktReturnCompleteContainer = () => {
       Noaudio.pause();
     }
   };
-  }, [isPlaying]);
+  }, []);
   // 오디오
 
   // 홈화면으로

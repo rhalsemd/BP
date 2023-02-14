@@ -9,7 +9,7 @@ const CURRENT_MARKER_INFO = "map/CURRENT_MARKER_INFO";
 const getMapInfo = createAction(GET_MAP_INFO, (data) => data);
 const currentMarkerInfo = createAction(CURRENT_MARKER_INFO, (info) => info);
 
-const API = `http://bp.ssaverytime.kr:8080`;
+const API = `https://bp.ssaverytime.kr:8080`;
 
 function* setApi(data) {
   const { lat, lng } = data.payload;

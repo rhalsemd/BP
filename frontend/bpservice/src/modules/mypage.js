@@ -14,7 +14,7 @@ export const getUserInfo = createAction(GET_USER_INFO);
 export const getUmbrellaInfo = createAction(GET_UMBRELLA_INFO, () => undefined);
 export const setNewAddress = createAction(SET_NEW_ADDRESS, (data) => data);
 
-const API = `http://bp.ssaverytime.kr:8080`;
+const API = `https://bp.ssaverytime.kr:8080`;
 
 // 회원정보 얻음
 function* getUserInfoFnc() {

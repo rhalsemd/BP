@@ -49,7 +49,7 @@ public class UserSchedulerService {
             cAuthService.sendSimpleMessage(emailData.get(sendEmailCount).get("email").toString(),title,msg);
         }
     }
-    @Scheduled(cron = "0 0 12 * * *", zone = "Asia/Seoul")
+    /*@Scheduled(cron = "0 0 12 * * *", zone = "Asia/Seoul")
     public void weatherAds() throws Exception {
         List<Map<String,Object>> address = userSchedulerRepository.getAddress(); //유저ID,  주소 정보를 기준으로 중복없이 가져옴
         for(int addressSize = 0; addressSize<address.size();addressSize++){
@@ -59,30 +59,14 @@ public class UserSchedulerService {
             Map<String,Object> tempWeather = weatherService.currentWeather(Double.parseDouble(tempCoordinate.get("lat").toString()),Double.parseDouble(tempCoordinate.get("lat").toString()));
             // 5mm이상인 경우 문자발송(현재는 이메일)
             if(Float.parseFloat(tempWeather.get("rain").toString())>=5.0f){
-                /*String[] sendId = address.get(addressSize).get("id").toString().split(","); //SMS 부분 현재는 아래 테스트용으로 이메일로 실행
+                String[] sendId = address.get(addressSize).get("id").toString().split(","); //SMS 부분 현재는 아래 테스트용으로 이메일로 실행
                 String[] sendPhoneNum = address.get(addressSize).get("phoneNum").toString().split(",");
                 for(int sendIdSize = 0; sendIdSize<sendId.length;sendIdSize++){
                     String msg = sendId[sendIdSize]+"님의 지역 "+address.get(addressSize).get("address").toString()+"에 비가 와요!";
                     cAuthService.sendSmsMessage(sendPhoneNum[sendIdSize],msg);
-                }*/
-                String[] sendId = address.get(addressSize).get("id").toString().split(","); //이메일로 테스트하는 부분
-                String[] sendEmail = address.get(addressSize).get("email").toString().split(",");
-                String title = "BP서비스 날씨 안내";
-                for(int sendIdSize = 0; sendIdSize<sendId.length;sendIdSize++){
-                    String msg ="";
-                    msg += "<div style='margin:100px;'>";
-                    msg += "<h1> 안녕하세요 BP입니다. </h1>";
-                    msg += "<br>";
-                    msg += "<p>"+sendId[sendIdSize]+"님의 지역 "+address.get(addressSize).get("address").toString()+"에 비가 온다고 하네요!<p>";
-                    msg += "<div align='center' style='border:1px solid black; font-family:verdana';>";
-                    msg += "<h3 style='color:blue;'>저희 서비스를 통해 우산을 대여해보세요!</h3>";
-                    msg += "<br>";
-                    msg += "<p>서비스를 이용해 주셔서 감사합니다!<p>";
-                    msg += "</div>";
-                    cAuthService.sendSimpleMessage(sendEmail[sendIdSize], title, msg);
                 }
             }
         }
-    }
+    }*/
 
 }

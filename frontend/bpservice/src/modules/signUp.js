@@ -46,7 +46,7 @@ const errorCertifycationReset = createAction(
 );
 export const clearInfo = createAction(CLEAR_INFO, () => undefined);
 
-const API = `http://bp.ssaverytime.kr:8080`;
+const API = `https://bp.ssaverytime.kr:8080`;
 
 function* getTermsOfUserFnc() {
   try {

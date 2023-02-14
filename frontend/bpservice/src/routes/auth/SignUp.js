@@ -95,42 +95,19 @@ function SignUp({ signUp, signUpFailureReset }) {
 
   useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
-
-    const animation = [
-      gsap.to(".underContent-phone", {
-        opacity: 1,
+    const spans = gsap.utils.toArray(".underContent");
+    spans.forEach((d) => {
+      gsap.to(d, {
         x: 0,
-        duration: 1,
-      }),
-      gsap.to(".underContent-address", {
         opacity: 1,
-        x: 0,
-        duration: 1,
-      }),
-      gsap.to(".underContent-email", {
-        opacity: 1,
-        x: 0,
-        duration: 1,
-      }),
-    ];
-
-    animation.forEach((item, index) => {
-      ScrollTrigger.create({
-        trigger: `.${animation[index]._targets[0].className}`,
-        scroller: "#scroller",
-        endTrigger: `.${animation[index]._targets[0].className}`,
-        start: "top+=20% 82%",
-        end: "bottom+=10% 67%",
-        scrub: 1,
-        // markers: true,
-        onEnter() {
-          item.restart();
-        },
-        onLeaveBack() {
-          gsap.to(`.${animation[index]._targets[0].className}`, {
-            x: -50,
-            opacity: 0,
-          });
+        scrollTrigger: {
+          trigger: d,
+          start: "top-=100 center",
+          scroller: "#scroller",
+          end: () => "+=0",
+          id: "test",
+          scrub: 1,
+          // markers: true,
         },
       });
     });
@@ -202,8 +179,8 @@ function SignUp({ signUp, signUpFailureReset }) {
             {/* 이름 */}
             <SignUpName info={info} setInfo={setInfo} />
 
-            <span
-              className="underContent-phone"
+            <div
+              className="underContent"
               style={{
                 opacity: "0",
                 transform: "translateX(-50px)",
@@ -211,18 +188,18 @@ function SignUp({ signUp, signUpFailureReset }) {
             >
               {/* 전화번호 / 인증 번호*/}
               <SignUpPhone info={info} setInfo={setInfo} />
-            </span>
+            </div>
 
-            <span
-              className="underContent-address"
+            <div
+              className="underContent"
               style={{ opacity: 0, transform: "translateX(-50px)" }}
             >
               {/* 주소 */}
               <SignUpAddress info={info} setInfo={setInfo} />
-            </span>
+            </div>
 
-            <span
-              className="underContent-email"
+            <div
+              className="underContent"
               style={{
                 opacity: 0,
                 transform: "translateX(-50px)",
@@ -230,7 +207,7 @@ function SignUp({ signUp, signUpFailureReset }) {
             >
               {/* 이메일 */}
               <SignUpEmail info={info} setInfo={setInfo} />
-            </span>
+            </div>
           </div>
         </div>
       </Suspense>

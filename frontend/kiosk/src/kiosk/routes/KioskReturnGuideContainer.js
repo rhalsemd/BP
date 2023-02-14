@@ -41,13 +41,17 @@ const KioskReturnGuideContainer = () => {
   const [isPlaying, setIsPlaying] = useState(true);
   const [audio, setAudio] = useState(new Audio(audioFile));
 
+  // 오디오
   useEffect(() => {
+    audio.muted = true
     audio.volume = 1
     audio.play();
-  return () => {
-    audio.pause();
-  };
-  }, [isPlaying]);
+    audio.muted = false
+
+    return () => {
+      audio.pause();
+    };
+  }, []);
   // 오디오
 
   // 홈화면으로
@@ -71,6 +75,7 @@ const KioskReturnGuideContainer = () => {
         <div>
           <KioskReturnGuideSection />
         </div>
+        <div id='audioplay'></div>
       </div>
     </div>
   )
