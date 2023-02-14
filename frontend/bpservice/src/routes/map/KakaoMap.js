@@ -1,4 +1,5 @@
 import { Suspense, lazy, useEffect } from "react";
+import { useLayoutEffect } from "react";
 
 import { useState } from "react";
 import { Map } from "react-kakao-maps-sdk";
@@ -18,7 +19,10 @@ const EventMarkerContainer = lazy(() =>
 );
 
 function KakaoMap({ getMapInfo, mapStore }) {
-  const { caseInfo } = useSelector(({ mapStore }) => mapStore);
+  const {
+    caseInfo,
+    location = { lat: 33.450705, lng: 126.570677 },
+  } = useSelector(({ mapStore }) => mapStore);
   const [isClickMarker, setIsClickMarker] = useState(false);
   const objString = localStorage.getItem("login-token");
 
@@ -48,13 +52,6 @@ function KakaoMap({ getMapInfo, mapStore }) {
     });
   }
 
-  const [mapLocation, setMapLocation] = useState({
-    lat: 36.1070711,
-    lng: 128.4180507,
-    // lat: 36.1057011010728,
-    // lng: 128.30546244287,
-  });
-
   const getLocation = () => {
     const option = {
       enableHighAccuracy: true,
@@ -66,9 +63,8 @@ function KakaoMap({ getMapInfo, mapStore }) {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
         };
-        setMapLocation((mapLocation) => {
-          return { lat: latitude, lng: longitude };
-        });
+
+        getMapInfo({ lat: latitude, lng: longitude });
       },
       null,
       option
@@ -80,23 +76,22 @@ function KakaoMap({ getMapInfo, mapStore }) {
       alert("로그인이 필요한 서비스입니다.");
       navigation("/bp/login");
     } else {
-      getMapInfo(mapLocation);
+      getLocation();
     }
-    // getLocation();
-  }, [getMapInfo, mapLocation, navigation, objString]);
+  }, []);
 
   return (
     <Suspense fallback={<LoadingPage />}>
       <Map // 지도를 표시할 Container
         id={`map`}
         // 지도의 중심좌표
-        center={mapLocation}
+        center={location}
         style={{
           // 지도의 크기
           width: "100%",
           height: "100vh",
         }}
-        level={2} // 지도의 확대 레벨
+        level={6} // 지도의 확대 레벨
       >
         {positions.map((position, index) => {
           return (

@@ -13,6 +13,7 @@ const API = `https://bp.ssaverytime.kr:8080`;
 
 function* setApi(data) {
   const { lat, lng } = data.payload;
+
   try {
     const get = yield call(() =>
       axios({
@@ -25,7 +26,11 @@ function* setApi(data) {
       })
     );
 
-    yield put({ type: SET_MAP_INFO, payload: get.data });
+    yield put({
+      type: SET_MAP_INFO,
+      payload: get.data,
+      location: { lat, lng },
+    });
   } catch (e) {}
 }
 
@@ -38,7 +43,7 @@ const initialState = {};
 const mapReducer = handleActions(
   {
     [SET_MAP_INFO]: (state, action) => {
-      return { ...state, caseInfo: action.payload };
+      return { ...state, caseInfo: action.payload, location: action.location };
     },
     [CURRENT_MARKER_INFO]: (state, action) => {
       return { ...state, currentInfo: action.payload };
