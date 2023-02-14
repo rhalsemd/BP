@@ -211,7 +211,7 @@ const KioskReturnCompleteSection = () => {
   const price = Number(queryParams.get('price')).toLocaleString('ko-KR');
   const refundMoney = Number(queryParams.get('refundMoney')).toLocaleString('ko-KR');
 
-  const KioskNameURL = `http://bp.ssaverytime.kr:8080/api/kiosk/home/kiosk-name?id=${id}`
+  const KioskNameURL = `https://bp.ssaverytime.kr:8080/api/kiosk/home/kiosk-name?id=${id}`
 
   useEffect(() => {
     if (isBrolly == 1) {
