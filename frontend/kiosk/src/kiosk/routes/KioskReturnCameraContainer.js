@@ -60,7 +60,7 @@ const KioskReturnCameraContainer = () => {
   return () => {
     audio.pause();
   };
-  }, [isPlaying]);
+  }, []);
   // 오디오
 
   // 데이터 수령

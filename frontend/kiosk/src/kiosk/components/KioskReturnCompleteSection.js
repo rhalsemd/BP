@@ -30,13 +30,13 @@ const KioskReceiptMent = css`
   align-items: center;
 
   p {
-    font-size: 2em;
+    font-size: 1.7em;
     padding-top: 3vh;
-    padding-left: 0.7vw;
+    padding-left: 4.2vw;
     margin: 0;
     margin-bottom: 3vh;
     background-color: #B1B2FF;
-    border-radius: 10px;
+    border-radius: 40px;
     width: 45vw;
     height: 10vh
   }
@@ -270,6 +270,7 @@ const KioskReturnCompleteSection = () => {
             <span className='KioskNoReturnGuide'>반납을 다시 진행해주세요</span>
           </div>
         </div>}
+      {isReturn ? <div id='audioplay'></div> : <div id='audioplay'></div>}
     </div>
   )
 }

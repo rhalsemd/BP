@@ -337,21 +337,21 @@ const KioskTakeAPicture = (data) => {
       </div>
       <div>
         <Dialog
-          sx={{ width: '900px' }}
+          sx={{ width: '100vw' }}
           open={open}
           TransitionComponent={Transition}
           keepMounted
           onClose={handleClose}
           aria-describedby="alert-dialog-slide-description"
         >
-          <DialogTitle fontSize={32} fontWeight={900}>{"우산이 인식되지 않았습니다."}</DialogTitle>
-          <DialogContent>
-            <DialogContentText fontSize={12} fontWeight={500} id="alert-dialog-slide-description">
+          <DialogTitle sx={{backgroundColor: '#EEF1FF', fontFamily: 'GangwonEduPowerExtraBoldA'}} fontSize={32} fontWeight={900}>{"우산이 인식되지 않았습니다."}</DialogTitle>
+          <DialogContent sx={{backgroundColor: '#EEF1FF'}}>
+            <DialogContentText sx={{fontFamily: 'GangwonEduPowerExtraBoldA'}} fontSize={20} fontWeight={700} id="alert-dialog-slide-description">
               우산을 꼭 펼쳐서 촬영해주세요. 우산이 인식되지 않으면 반납 처리가 되지않습니다.
             </DialogContentText>
           </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>닫기</Button>
+          <DialogActions sx={{backgroundColor: '#EEF1FF'}}>
+            <Button sx={{fontFamily: 'GangwonEduPowerExtraBoldA'}} onClick={handleClose}>닫기</Button>
           </DialogActions>
         </Dialog>
       </div>
