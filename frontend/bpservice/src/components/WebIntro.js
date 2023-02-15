@@ -4,12 +4,13 @@ import styled from "../style/WebIntro.module.css";
 function WebIntro() {
   const navigation = useNavigate();
 
-  setTimeout(() => {
+  const timer = setTimeout(() => {
     navigation("/bp");
   }, 3500);
 
   const onClick = () => {
     navigation("/bp");
+    clearTimeout(timer);
   };
 
   return (
