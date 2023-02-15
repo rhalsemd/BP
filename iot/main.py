@@ -170,6 +170,11 @@ async def open(caseId: int, holderNum: int, action: str, depositeMoney: int=0, p
     elif action == 'return':    # 반납
         driver.get(url=f'{KIOSK_HOST}/kiosk/{caseId}/return/guide/{holderNum}')
 
+    # 오디오 버튼 클릭
+    elements = driver.find_element(By.XPATH, '//*[@id="audioplay"]')
+    if elements != None:
+        elements.click()
+
     open_holder(holderNum)
 
     if action == 'rent':
@@ -189,6 +194,11 @@ async def open(caseId: int, holderNum: int, action: str, depositeMoney: int=0, p
             driver.get(url=f'{KIOSK_HOST}/kiosk/{caseId}/return/complete/{holderNum}/1?depositeMoney={depositeMoney}&period={period}&price={price}&refundMoney={refundMoney}')
         else:
             driver.get(url=f'{KIOSK_HOST}/kiosk/{caseId}/return/complete/{holderNum}/0')
+
+    # 오디오 버튼 클릭
+    elements = driver.find_element(By.XPATH, '//*[@id="audioplay"]')
+    if elements != None:
+        elements.click()
 
     return {
         'caseId': caseId
