@@ -69,7 +69,8 @@ const KioskRentContainer = () => {
   }
 
   useEffect(() => {
-    audio.volume = 0
+    audio.volume = 1
+    audio.play();
     return () => {
       audio.pause();
     }
