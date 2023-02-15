@@ -38,6 +38,12 @@ const KioskFixingContainerStyle = css`
   }
 `
 
+const blinkAnimation = keyframes`
+  50% {
+    opacity: 0;
+  }
+`;
+
 const KioskFixingContainer = () => {
   return (
     <div css={componentStyles}>
@@ -46,8 +52,13 @@ const KioskFixingContainer = () => {
           <p className="pfixing">존재하지 않는 페이지입니다.</p>
         </div>
         <div className="divnotusing">
-          <p className="preplace">다른 키오스크를 사용해 주세요!</p>
-        </div>
+          <p className="preplace">정상적인 페이지로 접속해주세요.<span css={css`
+            display: inline-block;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 3rem;
+            animation: ${blinkAnimation} 1s ease-in-out infinite;
+          `}>|</span></p>
+          </div>
       </div>
     </div>
   )
