@@ -34,18 +34,22 @@ const four_zero_four_bg = css`
   background-position: center;
 
   h1 {
-    font-size: 80px;
+    font-size: 6rem;
     text-align: center;
     font-family: 'GangwonEduPowerExtraBoldA';
-  }
-
-  h3 {
-    font-size: 80px;
   }
 `
 
 const contant_box_404 = css`
   margin-top: -50px;
+  text-align: center;
+
+  h3 {
+    font-size: 2rem;
+  }
+  p {
+    font-size: 1.2rem;
+  }
 `
 
 // const text = css`
@@ -76,9 +80,9 @@ const KioskFixingContainer = () => {
                   </div>
                   <div css={contant_box_404}>
                     <h3 className="h2">
-                      We are doing repairs.
+                      지금 키오스크가 고장났습니다.
                     </h3>
-                    <p>Please use another kiosk.</p>
+                    <p>다른 키오스크를 이용해 주시면 감사드립니다.</p>
                   </div>
                 </div>
               </div>
