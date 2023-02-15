@@ -4,7 +4,28 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import KioskHeader from '../components/KioskHeader';
 import KioskRentSection from '../components/KioskRentSection';
+
+// 오디오
 import audioFile from '../assets/KioskRentContainerAudio.mp3'
+import VolumeUpIcon from '@mui/icons-material/VolumeUp';
+
+const AudioPlayStyle = css`
+  width: 4rem;
+  height: 4rem;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  background-color: #B1B2FF;
+  
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  
+  border-radius: 50%;
+`
+// 오디오
 
 const fadeIn = keyframes`
   from {
@@ -32,18 +53,28 @@ const KioskRentStyle = css`
 const KioskRentContainer = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  
+
   // 오디오
-  const [isPlaying, setIsPlaying] = useState(true);
   const [audio, setAudio] = useState(new Audio(audioFile));
+
+  const audioPlay = () => {
+    if (audio.volume === 0) {
+      audio.currentTime = 0
+      audio.volume = 1
+      audio.play();
+    } else {
+      audio.currentTime = 100
+      audio.volume = 0
+    }
+  }
 
   useEffect(() => {
     audio.volume = 1
     audio.play();
-  return () => {
-    audio.pause();
-  };
-  }, []);
+    return () => {
+      audio.pause();
+    }
+  }, [audio.volume])
   // 오디오
 
   // 홈화면으로
@@ -67,6 +98,11 @@ const KioskRentContainer = () => {
         <section>
           <KioskRentSection />
         </section>
+        {/* 오디오 */}
+        <div css={AudioPlayStyle} id='audioplay' onClick={audioPlay}>
+          <VolumeUpIcon fontSize='large' />
+        </div>
+        {/* 오디오 */}
       </div>
     </div>
   )

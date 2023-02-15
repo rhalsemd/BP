@@ -1,8 +1,30 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router'; 
 
+// 오디오
+import audioFile from '../assets/KioskRentCompleteContainerAudio.mp3'
+import NoRentaudioFile from '../assets/KioskNoRentAudio.mp3'
+import VolumeUpIcon from '@mui/icons-material/VolumeUp';
+
+const AudioPlayStyle = css`
+  width: 4rem;
+  height: 4rem;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  background-color: #B1B2FF;
+  
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  
+  border-radius: 50%;
+  `
+// 오디오
 const KioskRentSectionCompleteStyle = css`
   display: flex;
   flex-direction: column;
@@ -51,6 +73,42 @@ const KioskRentCompleteSection = () => {
   const navigate = useNavigate();
   const [isRent, setIsRent] = useState(false);
 
+  // 오디오
+  const [audio, setAudio] = useState(new Audio(audioFile));
+  const [NoRentAudio, setNoRentAudio] = useState(new Audio(NoRentaudioFile));
+
+  const audioPlay = () => {
+    if (audio.volume === 0) {
+      audio.currentTime = 0
+      audio.volume = 1
+      audio.play();
+    } else {
+      audio.currentTime = 100
+      audio.volume = 0
+    }
+  }
+
+  const NoaudioPlay = () => {
+    if (NoRentAudio.volume === 0) {
+      NoRentAudio.currentTime = 0
+      NoRentAudio.volume = 1
+      NoRentAudio.play();
+    } else {
+      NoRentAudio.currentTime = 100
+      NoRentAudio.volume = 0
+    }
+  }
+
+  useEffect(() => {
+    audio.volume = 0
+    NoRentAudio.volume = 0
+    return () => {
+      audio.pause();
+      NoRentAudio.pause();
+    }
+  }, [audio.volume, NoRentAudio.volume])
+  // 오디오
+
   useEffect(() => {
     if (isBrolly == 1) {
       setIsRent(true)
@@ -67,10 +125,19 @@ const KioskRentCompleteSection = () => {
   return (
     <div css={KioskRentSectionCompleteStyle}>
       <div className='KioskRentSectionCompleteHolderBtn'>
-        {isRent ? <div id='audioplay'></div> : <div id='audioplay'></div>}
         {isRent ? <span>감사합니다.</span> : <span>우산을 가져가지 않았습니다.</span>}
       </div>
       {isRent ? <span className='KioskRentSectionCompleteGuide'>오늘도 좋은하루 되세요</span> : <span className='KioskRentSectionCompleteGuide'>환불내역을 확인해주세요</span>}
+      {/* 오디오 */}
+      {isRent ? 
+      <div css={AudioPlayStyle} id='audioplay' onClick={audioPlay}>
+        <VolumeUpIcon fontSize='large' />
+      </div>
+      :
+      <div css={AudioPlayStyle} id='audioplay' onClick={NoaudioPlay}>
+        <VolumeUpIcon fontSize='large' />
+      </div>}
+      {/* 오디오 */}
     </div>
   )
 }

@@ -4,8 +4,6 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import KioskHeader from '../components/KioskHeader'
 import KioskRentCompleteSection from '../components/KioskRentCompleteSection'
-import audioFile from '../assets/KioskRentCompleteContainerAudio.mp3'
-import NoRentaudioFile from '../assets/KioskNoRentAudio.mp3'
 
 const fadeIn = keyframes`
   from {
@@ -40,31 +38,6 @@ const KioskRentCompleteContainer = () => {
   const { id } = useParams();
   const { isBrolly } = useParams();
   const navigate = useNavigate();
-
-  // 오디오
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [audio, setAudio] = useState(new Audio(audioFile));
-  const [Noaudio, setNoAudio] = useState(new Audio(NoRentaudioFile));
-
-  useEffect(() => {
-    if (isBrolly == 1) {
-      audio.volume = 1
-      audio.play();
-    }
-    else if(isBrolly == 0) {
-      Noaudio.volume = 1
-      Noaudio.play();
-    }
-  return () => {
-    if (isBrolly == 1) {
-      audio.pause();
-    }
-    else if(isBrolly == 0) {
-      Noaudio.pause();
-    }
-  };
-  }, []);
-  // 오디오
 
   // 홈화면으로
   const miliUnit = 1000

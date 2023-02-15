@@ -16,6 +16,18 @@ async def open(caseId: int, holderNum: int, action: str, depositeMoney: int=0, p
     if response.status_code == 200:
         return json.loads(response.text)
 
+@app.get('/open-all/{kioskId}')
+async def open_all(kioskId):
+    response = requests.get(f'http://192.168.137.28:8000/open-all/{kioskId}')
+    if response.status_code == 200:
+        return json.loads(response.text)
+
+@app.get('/close-all/{kioskId}')
+async def close_all(kioskId):
+    response = requests.get(f'http://192.168.137.28:8000/close-all/{kioskId}')
+    if response.status_code == 200:
+        return json.loads(response.text)
+
 @app.get('/current-weather')
 async def current_weather(lat: float, lng: float):
     response = requests.get('http://192.168.137.28:8000/current-weather')

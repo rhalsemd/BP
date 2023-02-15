@@ -34,31 +34,6 @@ const KiosktReturnCompleteContainer = () => {
   const { isBrolly } = useParams();
   const navigate = useNavigate();
 
-  // 오디오
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [audio, setAudio] = useState(new Audio(audioFile));
-  const [Noaudio, setNoAudio] = useState(new Audio(NoReturnaudioFile));
-
-  useEffect(() => {
-    if (isBrolly == 1) {
-      audio.volume = 1
-      audio.play();
-    }
-    else if(isBrolly == 0) {
-      Noaudio.volume = 1
-      Noaudio.play();
-    }
-  return () => {
-    if (isBrolly == 1) {
-      audio.pause();
-    }
-    else if(isBrolly == 0) {
-      Noaudio.pause();
-    }
-  };
-  }, []);
-  // 오디오
-
   // 홈화면으로
   const miliUnit = 1000
   const seconds = 300 * miliUnit

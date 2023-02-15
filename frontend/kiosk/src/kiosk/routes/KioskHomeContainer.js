@@ -1,7 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import { css, keyframes } from '@emotion/react'
-import { useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router';
 import KioskHeader from '../components/KioskHeader'
 import KioskHomeSection from '../components/KioskHomeSection'
 
@@ -23,7 +21,6 @@ const KioskHomeContainerStyle = css`
 // 위에는 Emotion.js 입니다.
 // 밑에는 JS 입니다
 const KioskHomeContainer = () => {
-
   return (
     <div css={css`
       animation: ${fadeIn} 1s ease-in-out;

@@ -48,7 +48,7 @@ const routes = [
     element: <KioskReturnCompleteContainer />
   },
   {
-    path: '/kiosk/:id/404',
+    path: '/*',
     element: <KioskFixingContainer />
   },
 ]
