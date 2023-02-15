@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css, keyframes } from "@emotion/react";
+import { useEffect } from "react";
 
 const fadeIn = keyframes`
   from {
@@ -15,80 +16,49 @@ const componentStyles = css`
 `;
 
 const KioskFixingContainerStyle = css`
+  height: 600px !important;
   background-color: #EEF1FF;
-  height: 100%;
-`
 
-const page_404 = css`
-  padding: 100px 0;
-  background: #ffffff;
-  font-family: 'Chakra Petch', sans-serif;
-  img {
-    width: 100%;
-  }
-`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
-const four_zero_four_bg = css`
-  background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
-  height:400px;
-  background-position: center;
-
-  h1 {
-    font-size: 6rem;
+  .pfixing{
+    font-size: 4rem;
     text-align: center;
-    font-family: 'GangwonEduPowerExtraBoldA';
   }
-`
-
-const contant_box_404 = css`
-  margin-top: -50px;
-  text-align: center;
-
-  h3 {
+  .pnotusing{
+    font-size: 2.5rem;
+    text-align: center;
+  }
+  .preplace{
     font-size: 2rem;
-  }
-  p {
-    font-size: 1.2rem;
+    text-align: center;
   }
 `
 
-// const text = css`
-//   visibility: hidden !important;
-// `
-
-// const hovercheck = css`
-//   h1 {
-//     color: rebeccapurple !important;
-//   }
-
-//   &:hover .text {
-//     visibility: visible !important;
-//   }
-// `
+const blinkAnimation = keyframes`
+  50% {
+    opacity: 0;
+  }
+`;
 
 const KioskFixingContainer = () => {
   return (
     <div css={componentStyles}>
       <div css={KioskFixingContainerStyle}>
-        <section css={page_404}>
-          <div className="container">
-            <div className="row">
-              <div className="col-sm-12">
-                <div className="col-sm-12 col-sm-offset-1 text-center">
-                  <div css={four_zero_four_bg}>
-                    <h1>수리중</h1>
-                  </div>
-                  <div css={contant_box_404}>
-                    <h3 className="h2">
-                      지금 키오스크가 고장났습니다.
-                    </h3>
-                    <p>다른 키오스크를 이용해 주시면 감사드립니다.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+        <div className="divfixing">
+          <p className="pfixing">존재하지 않는 페이지입니다.</p>
+        </div>
+        <div className="divnotusing">
+          <p className="preplace">정상적인 페이지로 접속해주세요.<span css={css`
+            display: inline-block;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 3rem;
+            animation: ${blinkAnimation} 1s ease-in-out infinite;
+          `}>|</span></p>
           </div>
-        </section>
       </div>
     </div>
   )
