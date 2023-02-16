@@ -25,7 +25,7 @@ public class ALogService {
     public String getImageUrl(int id) {
         String imageName = aLogRepository.getImageName(id);
         if (imageName != null) {
-            return String.format("http://bp.ssaverytime.kr:8080/images/%s.png", imageName);
+            return String.format("https://bp.ssaverytime.kr:8080/images/%s.png", imageName);
         }
         return null;
     }
