@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { getCost } from "../../modules/payment";
 
 import styled from "../../style/Receipt.module.css";
+import Nav from "../../components/Nav";
 
 function BeforePayment() {
   const navigation = useNavigate();
@@ -42,6 +43,8 @@ function BeforePayment() {
 
   return (
     <div>
+      <Nav />
+
       <div className={styled.container}>
         <div className={styled.tab}></div>
 
