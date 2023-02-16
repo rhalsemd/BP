@@ -79,7 +79,6 @@ function* axiosUseageSaga({ payload }) {
 }
 
 function* axiosUseageMonthSaga({ payload }) {
-  console.log("saga");
   try {
     const dataGet = yield call(() => api.getUseageRevenuMonth(payload));
     yield put({
@@ -91,7 +90,6 @@ function* axiosUseageMonthSaga({ payload }) {
       payload,
     });
   } catch (e) {
-    console.log("useageSaga Error", e);
     yield put({
       type: GET_USEAGE_MONTH_FAILURE,
       payload: e,

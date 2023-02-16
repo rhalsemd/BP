@@ -53,8 +53,9 @@ export const getUseageRevenu = (day) => {
 export const getUseageRevenuMonth = (date) => {
   const objString = localStorage.getItem("login-admin-token");
   const obj = JSON.parse(objString);
-  const year = dayjs(date).format("YYYY");
+  const year = date.$y;
   const month = dayjs(date).format("MM");
+
   return axios({
     method: "get",
     url: `${url}/api/auth/admin/all-kiosk-count-month/${month}/${year}`,

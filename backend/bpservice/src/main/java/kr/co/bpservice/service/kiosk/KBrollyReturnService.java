@@ -272,7 +272,7 @@ public class KBrollyReturnService {
         Mat img = Imgcodecs.imdecode(new MatOfByte(bytes), Imgcodecs.IMREAD_COLOR);
         List<Detection> result = inferenceSession.run(img);
         for (Detection d: result) {
-            if (d.label().equals("umbrella") && d.confidence() >= 0.5f) {
+            if (d.label().equals("umbrella")) {
                 return true;
             }
         }
