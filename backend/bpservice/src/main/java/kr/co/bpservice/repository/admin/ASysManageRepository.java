@@ -67,7 +67,7 @@ public interface ASysManageRepository extends JpaRepository<BrollyRentLog,Intege
             "GROUP BY FINALDT;", nativeQuery = true)
     List<Map<String, String>> rKioskMoneyMonth(@Param("paramDate") String paramDate, @Param("paramId") String paramId);
 
-    @Query(value = "SELECT SUM(RENT_MONEY) AS TOTALMoney ,DATE_FORMAT(REG_DT,'%Y-%m') as FINALDT\n" +
+    @Query(value = "SELECT SUM(RENT_MONEY) AS TOTALMoney ,DATE_FORMAT(UPT_DT,'%Y-%m') as FINALDT\n" +
             "FROM MWS_BROLLY_RENT_LOG\n" +
             "WHERE STATE = 1 AND DATE_FORMAT(UPT_DT,'%Y') = :paramDate AND CASE_ID = :paramId \n" +
             "GROUP BY FINALDT;", nativeQuery = true)
