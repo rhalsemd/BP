@@ -62,7 +62,6 @@ public class KBrollyReturnService {
         this.inferenceSession = new YoloV5(yoloResource, cocoCpr,0.25f, 0.45f, -1);
     }
 
-
         //결제 환불 및 DB 변경
     @Transactional
     public Map<String,Object> refundMoney(String brollyName, int caseId, boolean isCancelAction){
@@ -174,7 +173,8 @@ public class KBrollyReturnService {
         return requestOpenHolder(caseId, holderNum, brolly, action); // 홀더 오픈하고 환불 진행
     }
 
-    private Map<String, Object> requestOpenHolder(Integer caseId, Integer holderNum, Brolly brolly, String action) {
+    @Transactional
+    public Map<String, Object> requestOpenHolder(Integer caseId, Integer holderNum, Brolly brolly, String action) {
         // 환불정보 사전에 계산 (FastAPI에 전달할 용도)
         Price priceInfo = priceRepository.getPrice();
         Integer depositeMoney = priceInfo.getDepositeMoney();   // 보증금
@@ -222,7 +222,8 @@ public class KBrollyReturnService {
         }
     }
 
-    private boolean imgSave(String imgData, BrollyRentLog brollyRentLog) throws IOException {
+    @Transactional
+    public boolean imgSave(String imgData, BrollyRentLog brollyRentLog) throws IOException {
         String binaryData = imgData;
         FileOutputStream stream = null;
         try {
