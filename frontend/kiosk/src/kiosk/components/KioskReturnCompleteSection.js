@@ -330,7 +330,6 @@ const KioskReturnCompleteSection = () => {
             <span className='KioskNoReturnGuide'>반납을 다시 진행해주세요</span>
           </div>
         </div>}
-      {isReturn ? <div id='audioplay'></div> : <div id='audioplay'></div>}
       {/* 오디오 */}
         {isReturn ? 
         <div css={AudioPlayStyle} id='audioplay' onClick={audioPlay}>
