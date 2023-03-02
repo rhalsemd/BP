@@ -49,9 +49,9 @@ public class UserSchedulerService {
             cAuthService.sendSimpleMessage(emailData.get(sendEmailCount).get("email").toString(),title,msg);
         }
     }
-    /*@Scheduled(cron = "0 0 12 * * *", zone = "Asia/Seoul")
+   /* @Scheduled(cron = "0 0 12 * * *", zone = "Asia/Seoul")
     public void weatherAds() throws Exception {
-        List<Map<String,Object>> address = userSchedulerRepository.getAddress(); //유저ID,  주소 정보를 기준으로 중복없이 가져옴
+        List<Map<String,Object>> address = userSchedulerRepository.getAddress(); //유저ID,이름,주소 정보를 기준으로 중복없이 가져옴
         for(int addressSize = 0; addressSize<address.size();addressSize++){
             //각 주소에 해당하는 좌표 저장
             Map<String,Object> tempCoordinate = addressService.getGeoAddress(address.get(addressSize).get("address").toString());
@@ -59,11 +59,11 @@ public class UserSchedulerService {
             Map<String,Object> tempWeather = weatherService.currentWeather(Double.parseDouble(tempCoordinate.get("lat").toString()),Double.parseDouble(tempCoordinate.get("lat").toString()));
             // 5mm이상인 경우 문자발송(현재는 이메일)
             if(Float.parseFloat(tempWeather.get("rain").toString())>=5.0f){
-                String[] sendId = address.get(addressSize).get("id").toString().split(","); //SMS 부분 현재는 아래 테스트용으로 이메일로 실행
+                String[] sendName = address.get(addressSize).get("name").toString().split(","); //SMS 부분 현재는 아래 테스트용으로 이메일로 실행
                 String[] sendPhoneNum = address.get(addressSize).get("phoneNum").toString().split(",");
-                for(int sendIdSize = 0; sendIdSize<sendId.length;sendIdSize++){
-                    String msg = sendId[sendIdSize]+"님의 지역 "+address.get(addressSize).get("address").toString()+"에 비가 와요!";
-                    cAuthService.sendSmsMessage(sendPhoneNum[sendIdSize],msg);
+                for(int sendNameSize = 0; sendNameSize<sendName.length;sendNameSize++){
+                    String msg = sendName[sendNameSize]+"님의 지역 "+address.get(addressSize).get("address").toString()+"에 비가 와요!";
+                    cAuthService.sendSmsMessage(sendPhoneNum[sendNameSize],msg);
                 }
             }
         }
