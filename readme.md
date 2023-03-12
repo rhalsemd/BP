@@ -26,6 +26,8 @@
 
 <br/>
 
+## 참여자
+
 ### Back-end
 
 | 한재용([@rigizer](https://github.com/rigizer)) | 정명관([@rhalsemd](https://github.com/rhalsemd)) | 한상우([@miracle3070](https://github.com/miracle3070)) |
@@ -39,5 +41,16 @@
 | 이주형(@dlwngud9303) | 한승준(@tmdwns950428) | 김태헌(@ggnsall) |
 |:----:|:----:|:----:|
 |<img width="200" src="image/bp-jhlee.png">|<img width="200" src="image/bp-sjhan.png">|<img width="200" src="image/bp-thkim.png">|
+
+<br/>
+
+# 발표자료
+[다운로드](data/공통PJT_구미_1반_D104_비피.pptx) (*.pptx)
+
+<br/>
+
+
+## 기간
+2023.01.03. ~ 2023.02.17.
 
 <br/>
