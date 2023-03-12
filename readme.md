@@ -30,7 +30,7 @@
 
 | 한재용([@rigizer](https://github.com/rigizer)) | 정명관([@rhalsemd](https://github.com/rhalsemd)) | 한상우([@miracle3070](https://github.com/miracle3070)) |
 |:----:|:----:|:----:|
-|<img width="200" src="image/bp-jyhan.png">|<img width="200" src="img/bp-mkjeong.png">|<img width="200" src="img/bp-swhan.png">|
+|<img width="200" src="image/bp-jyhan.png">|<img width="200" src="image/bp-mkjeong.png">|<img width="200" src="image/bp-swhan.png">|
 
 <br/>
 
@@ -38,6 +38,6 @@
 
 | 이주형(@dlwngud9303) | 한승준(@tmdwns950428) | 김태헌(@ggnsall) |
 |:----:|:----:|:----:|
-|<img width="200" src="image/bp-jhlee.png">|<img width="200" src="img/bp-sjhan.png">|<img width="200" src="img/bp-thkim.png">|
+|<img width="200" src="image/bp-jhlee.png">|<img width="200" src="image/bp-sjhan.png">|<img width="200" src="image/bp-thkim.png">|
 
 <br/>
