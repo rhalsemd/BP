@@ -87,3 +87,29 @@
 ![image](./image/bp-swused.png)
 
 <br/>
+
+## 스크린샷
+
+- <h5>우산 대여</h5>
+
+| 대여버튼 터치 | QR코드 지점확인 | 카카오페이 결제 |
+|:----:|:----:|:----:|
+|![image](./image/bp-rent-touch.png)|![image](./image/bp-rent-qrcheck.png)|![image](./image/bp-kakaopay.png)|
+
+<br/>
+<hr>
+
+- <h5>우산 반납</h5>
+
+| 반납버튼 터치 | 우산 QR코드 확인 |
+|:----:|:----:|
+|![image](./image/bp-return-touch.png)|![image](./image/bp-return-qrcheck.png)|
+
+| 우산 인식 (YOLOv5) | 반납 영수증 확인 |
+|:----:|:----:|
+|<img width="200" src="image/bp-return-yolov5.png">|<img width="200" src="image/bp-return-receipt.png">|
+
+<br/>
+<hr>
+
+<br/>
