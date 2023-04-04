@@ -107,7 +107,7 @@
 
 | 우산 인식 (YOLOv5) | 반납 영수증 확인 |
 |:----:|:----:|
-|<img width="200" src="image/bp-return-yolov5.png">|<img width="200" src="image/bp-return-receipt.png">|
+|<img height="320" src="image/bp-return-yolov5.png">|<img height="320" src="image/bp-return-receipt.png">|
 
 <br/>
 <hr>
