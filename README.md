@@ -112,4 +112,30 @@
 <br/>
 <hr>
 
+- <h5>사용자 홈페이지</h5>
+
+| 키오스크 위치조회 | 챗봇 문의 |
+|:----:|:----:|
+|![image](./image/bp-user-map.gif)|![image](./image/bp-user-chatbot.gif)|
+
+| 우산대여 히스토리 | 홍보 메세지 |
+|:----:|:----:|
+|![image](./image/bp-user-log.gif)|![image](./image/bp-user-message.gif)|
+
+<br/>
+<hr>
+
+- <h5>관리자 홈페이지</h5>
+
+| 매출현황 조회 | 사용현황 조회 |
+|:----:|:----:|
+|![image](./image/bp-sales-statistics.gif)|![image](./image/bp-admin-kiosk-status.gif)|
+
+| 사용자 목록 및 이용내역 | 키오스크 관리 |
+|:----:|:----:|
+|![image](./image/bp-admin-user-list.gif)|<img height="380" src="image/bp-admin-kiosk-manage.gif">|
+
+<br/>
+<hr>
+
 <br/>
