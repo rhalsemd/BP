@@ -38,7 +38,7 @@
 
 ### Front-end
 
-| 이주형(@dlwngud9303) | 한승준(@tmdwns950428) | 김태헌(@ggnsall) |
+| 이주형([@22JH](https://github.com/22JH)) | 한승준([@hanseungjune](https://github.com/hanseungjune)) | 김태헌([@gangnamssal](https://github.com/gangnamssal)) |
 |:----:|:----:|:----:|
 |<img width="200" src="image/bp-jhlee.png">|<img width="200" src="image/bp-sjhan.png">|<img width="200" src="image/bp-thkim.png">|
 
