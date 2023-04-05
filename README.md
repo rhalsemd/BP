@@ -19,6 +19,7 @@
 ## 목차
 - [참여자](#참여자)
 - [발표자료](#발표자료)
+- [UCC](#UCC)
 - [기간](#기간)
 - [기능구현](#기능구현)
 - [사용 기술스택](#사용 기술스택)
@@ -49,6 +50,10 @@
 
 <br/>
 
+## UCC
+[![Video](https://i.ytimg.com/vi/UFPJ9XIqRW4/maxresdefault.jpg)](https://www.youtube.com/watch?v=UFPJ9XIqRW4)
+
+<br/>
 
 ## 기간
 2023.01.03. ~ 2023.02.17.
