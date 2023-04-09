@@ -1,0 +1,10 @@
+{
+  "posts": [
+    {
+      "brolly_id": "BLY001001",
+      "kiosk_id": "1",
+      "isBrolly": true,
+      "isPay" : true,
+      "isRefunds" : true
+    }
+  ]}

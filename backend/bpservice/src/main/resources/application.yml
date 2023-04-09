@@ -1,0 +1,84 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  ssl:
+    enabled: true
+    key-store: classpath:keystore.p12
+    key-store-password: ssafy123
+    key-store-type: PKCS12
+    key-alias: 1
+
+logging:
+  level:
+    kr.co.bpservice: DEBUG
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: validate
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        physical-strategy: kr.co.bpservice.config.CamelCaseToSnakeAndUpperCaseStrategy
+
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+
+  logging:
+    level:
+      org.hibernate:
+        type.descriptor.sql: trace
+        SQL: DEBUG
+
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://15.164.73.251:3306/S08P12D104?serverTimezone=Asia/Seoul&useUnicode=true&characterEncoding=utf8
+    username: root
+    password: ssafy123
+
+  data:
+    redis:
+      port: 6379
+      host: rigizer.iptime.org
+
+jwt:
+  header: Authorization
+  secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
+  token-validity-in-seconds: 86400
+
+mail:
+  smtp:
+    auth: true
+    starttls:
+      required: true
+      enable: true
+    socketFactory:
+      class: jakarta.net.ssl.SSLSocketFactory
+      fallback: false
+      port: 465
+    port: 465
+
+image:
+  url:
+    windows: C:/Users/SSAFY/Downloads/images
+    linux: /home/ubuntu/images
+
+AdminMail:
+  id: ssafy8th.gumi@gmail.com
+  password: mgskcmzufwphqyua
+
+naver-cloud-sms:
+  accessKey: hZMpYNUxSNTcNY73KTBW
+  serviceKey: qt5P7NEBOLXPtDG6K8eNpjgopeYNjxII6Dzdmjuk
+  serviceId: ncp:sms:kr:257282496643:sms_example
+  senderPhone: 01085241881
+
+BootPay:
+  applicationID: 63d0816b3049c8001a5dc07e
+  privateKey: k1GLuWvFaq459mP5og5eOQkUFn1lbXFMVqrt9FFWFn8=

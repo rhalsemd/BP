@@ -1,0 +1,97 @@
+.box {
+  background-color: #000000;
+  color: #ffffff;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.box p {
+  font-size: 3em;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  opacity: 0;
+}
+
+.text {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  display: table;
+}
+
+.t1 {
+  animation: t-animation 1s;
+}
+
+.t2 {
+  animation: t-animation 1s;
+  animation-delay: 1s;
+}
+
+.end {
+  animation: end-animation 1s;
+  animation-delay: 2s;
+  animation-fill-mode: forwards;
+}
+
+.flicker {
+  animation: flicker 10s infinite;
+}
+
+@keyframes t-animation {
+  0% {
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes end-animation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes flicker {
+  40.1% {
+    left: 0px;
+    top: 0px;
+  }
+  40.2% {
+    left: 10px;
+    top: 8px;
+  }
+  40.3% {
+    left: 0px;
+    top: 0px;
+  }
+
+  90.1% {
+    left: 0px;
+    top: 0px;
+  }
+  90.2% {
+    left: -5px;
+    top: 3px;
+  }
+  90.3% {
+    left: 0px;
+    top: 0px;
+  }
+}

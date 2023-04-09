@@ -1,0 +1,48 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.0.1'
+	id 'io.spring.dependency-management' version '1.1.0'
+}
+
+group = 'kr.co.bpservice'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.hibernate:hibernate-validator:8.0.0.Final'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
+	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.2'
+	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.2'
+	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.2'
+	implementation 'org.springframework.boot:spring-boot-starter-mail' //메일 인증 라이브러리
+	implementation 'com.sun.mail:jakarta.mail:2.0.1'//메일 인증 라이브러리
+	implementation 'org.json:json:20220924'//json라이브러리
+	implementation 'org.apache.httpcomponents:httpclient:4.5.13' // http통신 gradle
+	implementation 'io.github.bootpay:backend:+' //부트페이 gradle
+	implementation 'com.microsoft.onnxruntime:onnxruntime:1.13.1' //yolov5를 위한 라이브러리 2개
+	implementation 'org.openpnp:opencv:4.5.5-1'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

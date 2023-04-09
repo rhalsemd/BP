@@ -1,0 +1,26 @@
+.currentBtn {
+  position: fixed;
+  top: 74%;
+  margin-left: 86%;
+  z-index: 2;
+  width: 12vw;
+  height: 5vh;
+}
+
+.backBtn {
+  position: fixed;
+  top: 3vh;
+  z-index: 2;
+  margin-left: 6vw;
+  width: 12vw;
+  height: 5vh;
+}
+
+.currentAfterBtn {
+  position: fixed;
+  top: 90%;
+  margin-left: 86%;
+  z-index: 2;
+  width: 12vw;
+  height: 5vh;
+}
