@@ -114,7 +114,7 @@ const UserTable = () => {
       setRows(() =>
         log.map((d, idx) => {
           return makeRow(
-            idx,
+            d.ID,
             d.STATE,
             d.RENT_MONEY,
             d.DEPOSITE_MONEY,
